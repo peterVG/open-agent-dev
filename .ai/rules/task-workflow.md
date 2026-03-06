@@ -1,0 +1,21 @@
+---
+description: Ensure all tasks follow the Branch-Per-Task workflow and generate required execution documentation.
+---
+
+# Task Execution Workflow 
+
+Define the Git workflow and development methodology that MUST be followed for every single task.
+
+## Branch-Per-Task
+- **Branches Required for ALL Tasks:** All work, including every Task defined in `docs/plan.md`, new features, documentation updates, and bug fixes MUST be developed on dedicated branches (e.g., `task/1.1-setup`, `feature/add-auth`, `docs/update-guide`, `fix/login-bug`). No exceptions.
+- **No Direct Pushes to Main:** The `main` branch contains only approved, stable requirements and code. You MUST NEVER commit or push code directly to the `main` branch unless explicitly told to do so in a user prompt.
+
+## Task Execution Documentation
+Before writing any code or modifying the project files for a specific task, you MUST create two planning artifacts in the `docs/tasks/` directory to track progress and design decisions:
+1. `docs/tasks/Task-[Task ID]-Plan.md`: Detail the proposed technical approach, files to be modified/created, and the verification plan for the task. Include traceability links back to PRD, SRS, and Gherkin files.
+2. `docs/tasks/Task-[Task ID]-ToDos.md`: A markdown checklist of the granular steps required to complete the task.
+
+**Active Tracking:** You MUST explicitly check off items (`- [x]`) on the `ToDos.md` checklist as work progresses and milestones are completed.
+
+**Upon completing the task**, you MUST create a third artifact:
+3. `docs/tasks/Task-[Task ID]-Walkthrough.md`: Summarize the changes made, what was tested, and the validation results.
