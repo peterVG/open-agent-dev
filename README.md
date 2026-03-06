@@ -32,47 +32,16 @@ Finally, start with tests before coding:
 ```
 
 # Setup Development Environment
-1. Clone the repository and navigate to the project root.
-2. Initialize virtual environment: `python3 -m venv venv`
-3. Activate virtual environment: `source venv/bin/activate` (`venv\Scripts\activate` on Windows)
-4. Install Python dependencies: `pip install -r requirements.txt`
-5. Install Allure CLI for test reporting:
-   - **macOS:** `brew install allure`
-   - **Linux:** `sudo apt-add-repository ppa:qameta/allure && sudo apt-get update && sudo apt-get install allure`
-   - **Windows:** `scoop install allure` (Requires Scoop)
-
 
 ## Run the application
-_Application entrypoint pending development..._
-
 
 ## Run tests
-This project uses `pytest` for unit/integration/UI tests and `behave` for BDD Gherkin tests. Both export to the Allure framework.
-
-1. **Execute Tests:**
-   ```bash
-   source venv/bin/activate
-   pytest tests/unit/ --alluredir=tests/allure-results
-   behave tests/features/ --format allure_behave.formatter:AllureFormatter --outfile tests/allure-results
-   ```
-
-2. **View Test Report:**
-   ```bash
-   allure serve tests/allure-results
-   ```
 
 ## Viewing Developer Documentation
-This project uses **Google Style Docstrings** and **pdoc** to generate interactive API documentation, as defined in `ADR-009`. 
-
-From the project root, launch the documentation server without a build step:
-```bash
-pdoc src/ -p 8080
-```
 
 # Setup Production Environment
 
 ## Deploy to Production
-_Deployment instructions pending..._
 
 ## Monitor and Update
 
