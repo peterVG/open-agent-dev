@@ -1,7 +1,7 @@
 # Getting Started
 
 ## Create a Product Vision
-Fill out [`docs/templates/product-vision.md`](./docs/templates/product-vision.md) as best as possible and save it as [`/docs/product-vision.md`](./docs/product-vision.md)
+Fill out [`docs/templates/product-vision.md`](./docs/templates/product-vision-template.md) as best as possible and save it as [`/docs/product-vision.md`](./docs/product-vision.md)
 
 ## Create a Product Requirements Document
 ```text
