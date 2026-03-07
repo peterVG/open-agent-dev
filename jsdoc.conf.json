@@ -1,0 +1,16 @@
+{
+    "source": {
+        "includePattern": ".+\\.js(doc|x)?$",
+        "include": [
+            "src"
+        ],
+        "exclude": [
+            "node_modules",
+            "tests"
+        ]
+    },
+    "opts": {
+        "destination": "./docs/api",
+        "recurse": true
+    }
+}

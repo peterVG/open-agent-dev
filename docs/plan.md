@@ -4,7 +4,7 @@ This document outlines the step-by-step implementation plan for the Memory Garde
 
 ## Phase 1: Foundation and Infrastructure
 
-- [ ] **Task 1.1: Project Setup & Package Management**
+- [x] **Task 1.1: Project Setup & Package Management**
   *   **Description:** Initialize the Node.js project, install the dependencies defined in `package.json`, and configure ESLint, Prettier, and Jest (as per ADR `001` and `003`). Set up the basic Express.js server structure.
   *   **Estimated Time:** 2 hours
   *   **Dependencies:** None

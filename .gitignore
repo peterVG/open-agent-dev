@@ -1,4 +1,7 @@
 .env
 .DS_Store
 tests/*
-!tests/README.md
+!tests/README.mdnode_modules/
+docs/api/
+coverage/
+node_modules
