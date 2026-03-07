@@ -69,7 +69,7 @@ This document outlines the step-by-step implementation plan...
   *   **Dependencies:** [Previous tasks, e.g., Task 1.1 or None]
   *   **Related Requirements:** [[SRS/PRD mapping]](../srs.md)
   *   **Related Tests:** [[Path to Gherkin file or N/A]](../../tests/features/)
-  *   **Agent Prompt:** `@AGENTS.md Begin development for Task [Task ID] in @docs/plan.md. Generate docs/tasks/Task-[Task ID]-Plan.md and docs/tasks/Task-[Task ID]-ToDos.md to capture the design and checklist. Propose code in /src and unit tests in /tests/unit/ to complement each logical code block. Upon completion, YOU MUST generate docs/tasks/Task-[Task ID]-Walkthrough.md directly in the project repository—DO NOT use an internal scratchpad.`
+  *   **Agent Prompt:** `@AGENTS.md Begin development for Task [Task ID] in @docs/plan.md. Generate docs/tasks/Task-[Task ID]-Plan.md and docs/tasks/Task-[Task ID]-ToDos.md to capture the design and checklist. Propose code in /src and unit tests in /tests/unit/ to complement each logical code block. Upon completion, YOU MUST generate docs/tasks/Task-[Task ID]-Walkthrough.md directly in the project repository—DO NOT use an internal scratchpad. If this task introduces new dependencies or changes run commands, you MUST update the root README.md Setup instructions.`
 
 ## Summary Timeline
 *   **Total Estimated Time:** [Sum of hours]
@@ -101,7 +101,7 @@ This document outlines the step-by-step implementation plan...
   *   **Dependencies:** Task 1.1
   *   **Related Requirements:** SRS-DATA-001, TC-002
   *   **Related Tests:** `tests/features/database_persistence_SRS-DATA-001.feature`
-  *   **Agent Prompt:** `@AGENTS.md Begin development for Task [Task ID] in @docs/plan.md. Generate docs/tasks/Task-[Task ID]-Plan.md and docs/tasks/Task-[Task ID]-ToDos.md to capture the design and checklist. Propose code in /src and unit tests in /tests/unit/ to complement each logical code block. Upon completion, YOU MUST generate docs/tasks/Task-[Task ID]-Walkthrough.md directly in the project repository—DO NOT use an internal scratchpad.`
+  *   **Agent Prompt:** `@AGENTS.md Begin development for Task [Task ID] in @docs/plan.md. Generate docs/tasks/Task-[Task ID]-Plan.md and docs/tasks/Task-[Task ID]-ToDos.md to capture the design and checklist. Propose code in /src and unit tests in /tests/unit/ to complement each logical code block. Upon completion, YOU MUST generate docs/tasks/Task-[Task ID]-Walkthrough.md directly in the project repository—DO NOT use an internal scratchpad. If this task introduces new dependencies or changes run commands, you MUST update the root README.md Setup instructions.`
 ```
 
 ## Workflow: PRD/SRS/Gherkin → Plan
