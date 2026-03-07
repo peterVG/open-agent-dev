@@ -8,7 +8,10 @@
 ## Core Features
 **Description:** What is the product's main functionality?
 **Placeholder:** List features like: DKG notarization, retention schedule scanning...
-> 
+>
+
+## User Requirements
+**Description:** "I want", "I need" statements.
 
 ## Technical Stack
 **Description:** Technologies and tools used (NextCloud, Arweave, OriginTrail, etc.)
