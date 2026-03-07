@@ -48,7 +48,7 @@ Every task MUST include an actionable prompt for the agent to begin development.
 For tasks that involve building user interfaces, the prompt MUST explicitly instruct the agent to write UI tests using the UI testing framework specified in the project's Architecture Decision Records (ADRs).
 For tasks that involve external dependencies (APIs, databases, filesystems), the prompt MUST explicitly instruct the agent to write Integration tests using the Integration framework specified in the ADRs.
 The implementation plan MUST include a dedicated task in the Verification phase to write and execute Performance/Load tests (e.g., Locust) using the framework specified in the ADRs.
-Additionally, the Agent Prompt for all testing tasks MUST explicitly instruct the developer to output test results using the Test Reporting framework (e.g., Allure) specified in the ADRs, AND to copy the raw CLI output of the test runs into a permanent `docs/tasks/Task-[Task ID]-Walkthrough.md` file.
+Additionally, the Agent Prompt for all testing tasks MUST explicitly instruct the developer to output test results using the Test Reporting framework (e.g., Allure) specified in the ADRs, AND to copy the raw CLI output of the test runs into a permanent `docs/tasks/Task-[Task ID]-Walkthrough.md` file. **Crucially, the prompt MUST mandate that this file is saved directly into the project's `docs/tasks/` folder and NEVER in an internal agent scratchpad.**
 Crucially, the prompt MUST also explicitly instruct the agent to check off the `- [ ]` markdown box locally inside `docs/plan.md` the moment the task is confirmed complete.
 
 ### 3. Phased, Dependency-Aware Approach
@@ -69,7 +69,7 @@ This document outlines the step-by-step implementation plan...
   *   **Dependencies:** [Previous tasks, e.g., Task 1.1 or None]
   *   **Related Requirements:** [[SRS/PRD mapping]](../srs.md)
   *   **Related Tests:** [[Path to Gherkin file or N/A]](../../tests/features/)
-  *   **Agent Prompt:** `@AGENTS.md Begin development for Task [Task ID] in @docs/plan.md. Generate docs/tasks/Task-[Task ID]-Plan.md and docs/tasks/Task-[Task ID]-ToDos.md to capture the design and checklist. Propose code in /src and unit tests in /tests/unit/ to complement each logical code block.`
+  *   **Agent Prompt:** `@AGENTS.md Begin development for Task [Task ID] in @docs/plan.md. Generate docs/tasks/Task-[Task ID]-Plan.md and docs/tasks/Task-[Task ID]-ToDos.md to capture the design and checklist. Propose code in /src and unit tests in /tests/unit/ to complement each logical code block. Upon completion, YOU MUST generate docs/tasks/Task-[Task ID]-Walkthrough.md directly in the project repository—DO NOT use an internal scratchpad.`
 
 ## Summary Timeline
 *   **Total Estimated Time:** [Sum of hours]
@@ -101,7 +101,7 @@ This document outlines the step-by-step implementation plan...
   *   **Dependencies:** Task 1.1
   *   **Related Requirements:** SRS-DATA-001, TC-002
   *   **Related Tests:** `tests/features/database_persistence_SRS-DATA-001.feature`
-  *   **Agent Prompt:** `@AGENTS.md Begin development for Task [Task ID] in @docs/plan.md. Generate docs/tasks/Task-[Task ID]-Plan.md and docs/tasks/Task-[Task ID]-ToDos.md to capture the design and checklist. Propose code in /src and unit tests in /tests/unit/ to complement each logical code block.`
+  *   **Agent Prompt:** `@AGENTS.md Begin development for Task [Task ID] in @docs/plan.md. Generate docs/tasks/Task-[Task ID]-Plan.md and docs/tasks/Task-[Task ID]-ToDos.md to capture the design and checklist. Propose code in /src and unit tests in /tests/unit/ to complement each logical code block. Upon completion, YOU MUST generate docs/tasks/Task-[Task ID]-Walkthrough.md directly in the project repository—DO NOT use an internal scratchpad.`
 ```
 
 ## Workflow: PRD/SRS/Gherkin → Plan
