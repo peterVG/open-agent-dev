@@ -1,3 +1,7 @@
+# About
+
+An opionated AI Agent project template focused on docs-as-code development. It enforces a strict Branch-Per-Task workflow and Test-Driven Development (TDD). Designed to guide AI dev agents to comply with industry standards and best practices. It is designed to be tech stack and AI agent neutral.
+
 # Getting Started
 
 ## Create a Product Vision
