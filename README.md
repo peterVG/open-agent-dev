@@ -7,6 +7,11 @@ An opionated AI Agent project template focused on docs-as-code development. It e
 ## Create a Product Vision
 Fill out [`docs/templates/product-vision.md`](./docs/templates/product-vision-template.md) as best as possible and save it as [`/docs/product-vision.md`](./docs/product-vision.md)
 
+If you want AI Agent assistance to write the product vision document, you can invoke the bundled skill:
+```text
+/product-vision I want to build [XYZ]
+```
+
 ## Create a Product Requirements Document
 ```text
 @AGENTS.md Generate a baseline PRD in /docs using the "PRD Generator" skill based on @docs/product-vision.md and the manifesto principles in the AGENTS.md file.
