@@ -48,11 +48,14 @@ Every task MUST include an actionable prompt for the agent to begin development.
 For tasks that involve building user interfaces, the prompt MUST explicitly instruct the agent to write UI tests using the UI testing framework specified in the project's Architecture Decision Records (ADRs).
 For tasks that involve external dependencies (APIs, databases, filesystems), the prompt MUST explicitly instruct the agent to write Integration tests using the Integration framework specified in the ADRs.
 The implementation plan MUST include a dedicated task in the Verification phase to write and execute Performance/Load tests (e.g., Locust) using the framework specified in the ADRs.
-Additionally, the Agent Prompt for all testing tasks MUST explicitly instruct the developer to output test results using the Test Reporting framework (e.g., Allure) specified in the ADRs, AND to copy the raw CLI output of the test runs into a permanent `docs/tasks/Task-[Task ID]-Walkthrough.md` file. **Crucially, the prompt MUST mandate that this file is saved directly into the project's `docs/tasks/` folder and NEVER in an internal agent scratchpad.** **Furthermore, the prompt MUST mandate that all test results directories (e.g. `allure-results`) are configured to generate inside the `tests/` directory (e.g., `tests/allure-results`), abiding by the `artifact-isolation.md` rule to keep the project root clean.**
+Additionally, the Agent Prompt for all testing tasks MUST explicitly instruct the developer to output test results using the Test Reporting framework (e.g., Allure) specified in the ADRs, AND to copy the raw CLI output of the test runs into a permanent `docs/tasks/Task-[Task ID]-Walkthrough.md` file. **Crucially, the prompt MUST mandate that this file is saved directly into the project's `docs/tasks/` folder and NEVER in an internal agent scratchpad.**
 Crucially, the prompt MUST also explicitly instruct the agent to check off the `- [ ]` markdown box locally inside `docs/plan.md` the moment the task is confirmed complete.
 
 ### 3. Phased, Dependency-Aware Approach
 Tasks MUST be logically grouped into Phases (e.g., Phase 1: Foundation, Phase 2: Core Logic). No task should be scheduled before its dependencies are complete. Usually, Database and Data Layer tasks precede UI tasks.
+
+### 5. Holistic UI Planning
+When defining the Implementation Plan, the agent MUST NOT silo highly coupled UI mechanics (e.g., Canvas rendering and the Avatar that controls it) into separate sequential tasks. If the interaction model of a later requirement (e.g., Avatar Steering) supersedes or fundamentally alters the interaction model of an earlier requirement (e.g., Canvas Panning), they MUST be combined into a single holistic UI/UX task to prevent building throwaway interaction code. Abide by `.ai/rules/holistic-ui.md`.
 
 ## Template Structure
 
