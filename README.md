@@ -1,8 +1,14 @@
-# About
+# About this project
 
-An opionated AI Agent project template focused on docs-as-code development. It enforces a strict Branch-Per-Task workflow and Test-Driven Development (TDD). Designed to guide AI dev agents to comply with industry standards and best practices. Tech stack and AI agent neutral.
+*Note: This section will be auto-populated by the AI Agent once the project vision and product requirements have been confirmed.*
 
-# Getting Started
+# About Open Agent Dev
+
+This project has been created using Open Agent Dev, an opionated AI Agent project template focused on docs-as-code development. 
+
+It enforces a strict Branch-Per-Task workflow and Test-Driven Development (TDD). Designed to guide AI dev agents to comply with industry standards and best practices. Tech stack and AI agent neutral.
+
+# Getting Started with Open Agent Dev
 
 ## Create a Product Vision
 Fill out [`docs/templates/product-vision.md`](./docs/templates/product-vision-template.md) as best as possible and save it as [`/docs/product-vision.md`](./docs/product-vision.md)
@@ -34,6 +40,9 @@ Next, generate the initial Architecture Decision Records (ADRs):
 ```text
 @AGENTS.md Generate an implementation plan for the project using the "Implementation Plan Writer" skill based on the @docs/prd.md, @docs/srs.md and @tests/features/ feature files. Once the implementation plan is created and the technology stack is confirmed, update the "Setup Development Environment" and "Setup Production Environment" sections in this README.md file with the actual commands needed to run the application, execute tests, view developer documentation, and deploy to production, removing the *Note:* placeholders.
 ```
+
+## Use the AGENTS.md prompts in your Implementation Plan
+These will guide you through the task list to generate and test your code in compliance with the Open Dev Agent principles and workflow.
 
 # Setup Development Environment
 
