@@ -1,6 +1,6 @@
 # Agent Skills 1.0 Compliance
 
-This Antigravity template follows the **Agent Skills 1.0 specification** to ensure compatibility with multiple AI coding assistants (Antigravity, Claude Code, Cursor, etc.).
+This template follows the **Agent Skills 1.0 specification** to ensure compatibility with multiple AI coding assistants (Antigravity, Claude Code, Cursor, etc.).
 
 ## Directory Structure
 

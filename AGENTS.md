@@ -65,6 +65,7 @@
 - **Test Reporting Mandate:** All test runs (Unit, UI, Integration, and BDD) MUST generate structured reports using the framework specified in the project's Architecture Decision Records (e.g., Allure) to provide stakeholders with a clear, visual history of test passed/failed states and coverage.
 - **Walkthrough Documentation:** When executing tests, the agent MUST copy the raw CLI output of the test runs into a permanent `docs/tasks/Task-[Task ID]-Walkthrough.md` file to provide immediate visual proof of passing tests, in addition to generating the structured test reports.
 - **Unit Test Traceability:** When code changes make a unit test obsolete or require modifications to the underlying implementation, the agent MUST explicitly update, refactor, or remove the corresponding unit tests to remain in sync with the source code.
+- **Testing Knowledge Base Integration:** Prior to generating testing plans or making testing Architecture Decision Records (ADRs), the AI agent MUST explicitly check the `.ai/kb/` and `docs/kb/` folders for any testing-related knowledge base files (e.g., `beam-testing.md`) appropriate to the project's technology stack, and use that information to inform its testing strategy, tool selection, and architectural decisions.
 - **Strict Artifact Isolation:** This principle is tactically enforced on all AI agents via the instructions in `[artifact-isolation.md](./.ai/rules/artifact-isolation.md)`.
 
 ### Platform-Agnostic Documentation
