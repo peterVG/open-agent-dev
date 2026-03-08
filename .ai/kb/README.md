@@ -15,7 +15,7 @@ Files in `.ai/kb` are intended to be explicitly referenced by users or automatic
 
 **Rule of Thumb:**
 - Use **`.ai/kb`** for high-level concepts and project vocabulary you want the AI to learn.
-- Use **`docs/references`** for dense specification documents that would waste context window tokens unless explicitly required for a highly specific task.
+- Use **`docs/references`** for dense specification documents, meant for human readears, that would waste context window tokens unless explicitly required for a highly specific task.
 
 ## What Goes Here
 
