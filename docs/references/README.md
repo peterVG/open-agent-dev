@@ -51,8 +51,8 @@ description: Creates system architecture based on technical specs
 allowed-tools:
   - google_search
 references:
-  - references/arweave/arweave-yellow-paper.pdf
-  - references/ao/ao-process-spec.md
+  - docs/references/arweave/arweave-yellow-paper.pdf
+  - .ai/kb/ao/ao-process-spec.md
 ---
 ```
 
@@ -81,15 +81,15 @@ description: Creates Software Requirements Specification
 allowed-tools:
   - google_search
 references:
-  - references/arweave/transaction-format.md
-  - references/ao/message-passing.md
+  - docs/references/arweave/transaction-format.md
+  - .ai/kb/ao/message-passing.md
 ---
 
 # SRS Generator Skill
 
 When generating an SRS for file upload:
 1. Read the PRD for business requirements
-2. Load references/arweave/transaction-format.md for technical constraints
+2. Load docs/references/arweave/transaction-format.md for technical constraints
 3. Use google_search to verify current library versions
 4. Generate SRS with accurate technical specifications
 ```
@@ -144,7 +144,7 @@ For Gemini's large context window:
 USER: Generate an SRS for file upload using Arweave
 
 AGENT: [Activates SRS Generator skill]
-AGENT: [Skill specifies references/arweave/transaction-format.md]
+AGENT: [Skill specifies docs/references/arweave/transaction-format.md]
 AGENT: [Loads ONLY that reference file]
 AGENT: [Uses google_search to verify current Arweave.js version]
 AGENT: [Generates SRS with accurate technical constraints]
