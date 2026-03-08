@@ -14,7 +14,7 @@ If you want AI Agent assistance to write the product vision document, you can in
 
 ## Create a Product Requirements Document
 ```text
-@AGENTS.md Generate a baseline PRD in /docs using the "PRD Generator" skill based on @docs/product-vision.md and the manifesto principles in the AGENTS.md file.
+@AGENTS.md Generate a baseline PRD in /docs using the "PRD Writer" skill based on @docs/product-vision.md, the uploaded files in @docs/references/, and the manifesto principles in the AGENTS.md file.
 ```
 Review and revise [`/docs/prd.md`](./docs/prd.md) as needed. Check [`/templates/prd-template.md`](./templates/prd-template.md) for additional guidance. Make sure to add any additional requirements that you think are necessary to fully define the product vision.
 
