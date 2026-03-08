@@ -19,12 +19,12 @@
 > 
 
 ## Standards, Laws, and Regulations
-**Description:** Applicable legal rules (GDPR) and technical standards (e-ARK, ERC-3643).
+**Description:** Applicable legal rules (GDPR) and technical standards (e-ARK, ERC-3643). These should be stored in the /docs/references folder.
 > 
 
 ## Technical & Legal References
-**Description:** Link to existing files in the /kb folder or upload external documentation.
-**Placeholder:** Example: [e-ARK Standards](../kb/e_ark_standards.md)
+**Description:** Link to existing files in the /docs/references folder or upload external documentation.
+**Placeholder:** Example: [e-ARK Standards](../docs/references/e_ark_standards.md)
 > 
 
 ## Target Users & Customer Profile

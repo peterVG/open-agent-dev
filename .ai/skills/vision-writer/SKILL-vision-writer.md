@@ -32,6 +32,7 @@ The agent does NOT present a wall of text. It engages in **Progressive Discovery
 
 ### Step 3: Market & Technical Grounding
 - **Verification:** Uses `Google Search` to find "Key Competitors" or verify "Standards, Laws, and Regulations" (e.g., latest e-ARK or ERC-3643 updates).
+- **Reference Uploads:** Explicitly ask the user to provide any specific "Standards, Laws, Regulations" OR "Technical and Domain References" documents, and instruct them to upload these files to the `docs/references/` folder so they can be parsed by later skills.
 - **Feasibility:** Uses `code_interpreter` for "Cost Structure" estimates (e.g., Arweave storage fees or infrastructure overhead).
 
 ### Step 4: Drafting & Iteration
