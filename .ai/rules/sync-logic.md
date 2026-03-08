@@ -4,6 +4,10 @@
 
 Whenever a task starts, refresh context from @PRD, @SRS, @architecture, and @implementation_plan. If a conflict is found between any of these documents, stop and generate a 'Conflict Artifact' for human review.
 
+## Document Synchronization
+
+If there are any changes to the `docs/product-vision.md` or `docs/prd.md` artifacts, the agent MUST review the `# About this project` section in the root `README.md` and update it to reflect the latest project vision and requirements if needed.
+
 ## Conflict Detection
 
 When reviewing the PRD, SRS, architecture, and implementation plan documents:
