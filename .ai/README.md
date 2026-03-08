@@ -11,10 +11,10 @@ This template follows the **Agent Skills 1.0 specification** to ensure compatibi
 │       └── SKILL.md         # Skill instructions (YAML + Markdown)
 ├── rules/                   # Project-specific guardrails
 │   └── sync-logic.md        # Documentation sync enforcement
-├── kb/                      # Synthesized AI knowledge base
-│   └── agent-skills-1.0.md  # Domain concepts for the AI
-└── references/              # Raw technical specifications
-    └── README.md            # Explanation of progressive disclosure
+└── kb/                      # Synthesized AI knowledge base
+    └── agent-skills-1.0.md  # Domain concepts for the AI
+
+*Note: Raw technical specifications and whitepapers are kept in `docs/references/` rather than within `.ai/` to maintain a clear separation between project documentation and AI context.*
 ```
 
 ## Why `.ai/` instead of `.agent/`?
@@ -48,7 +48,7 @@ The `.ai/` directory is the **standard** defined by Agent Skills 1.0, ensuring:
 - Contains high-level summaries, established patterns, and project conventions.
 - Loaded when the AI needs conceptual grounding (e.g., standard definitions, project vocabulary).
 
-### 4. References (`.ai/references/`)
+### 4. References (`docs/references/`)
 **Raw technical specifications** for progressive disclosure.
 - Contains deep API specs, protocol whitepapers, or large technical documents.
 - Loaded *only* when a specific Skill explicitly requests it via its YAML frontmatter, saving tokens and improving accuracy for low-level tasks.

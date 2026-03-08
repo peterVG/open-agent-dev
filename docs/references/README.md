@@ -61,16 +61,16 @@ references:
 - ✅ Saves tokens when working on unrelated tasks
 - ✅ Ensures accurate, up-to-date technical information
 
-## vs. Knowledge Base (`/kb`)
+## vs. Knowledge Base (`.ai/kb`)
 
 | Directory | Purpose | When Loaded |
 |-----------|---------|-------------|
-| `/references` | Deep technical specs, loaded by skills | Only when skill is activated |
-| `/kb` | Domain knowledge, loaded by user | When explicitly referenced with @kb/file.md |
+| `docs/references/` | Deep technical specs, loaded by skills | Only when skill is activated |
+| `.ai/kb/` | Domain knowledge, loaded by user | When explicitly referenced with `@.ai/kb/file.md` |
 
 **Rule of thumb:**
-- Use `/references` for **source material** that skills need automatically
-- Use `/kb` for **domain knowledge** you want to reference manually
+- Use `docs/references/` for **source material** that skills need automatically
+- Use `.ai/kb/` for **domain knowledge** you want to reference manually
 
 ## Example: SRS Generation with References
 

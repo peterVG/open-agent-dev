@@ -68,6 +68,12 @@
 - **Testing Knowledge Base Integration:** Prior to generating testing plans or making testing Architecture Decision Records (ADRs), the AI agent MUST explicitly check the `.ai/kb/` and `docs/kb/` folders for any testing-related knowledge base files (e.g., `beam-testing.md`) appropriate to the project's technology stack, and use that information to inform its testing strategy, tool selection, and architectural decisions.
 - **Strict Artifact Isolation:** This principle is tactically enforced on all AI agents via the instructions in `[artifact-isolation.md](./.ai/rules/artifact-isolation.md)`.
 
+### Standalone Production Code
+
+**Purpose:** Ensure that the core application codebase is completely self-contained, deployment-ready, and not permanently entangled with its surrounding project-management or AI-development tooling.
+
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[src-isolation.md](./.ai/rules/src-isolation.md)`.
+
 ### Platform-Agnostic Documentation
 
 **Purpose:** Ensure that the project does not alienate users on different operating systems by hardcoding platform-specific assumptions (e.g., assuming macOS and Homebrew are the default).
