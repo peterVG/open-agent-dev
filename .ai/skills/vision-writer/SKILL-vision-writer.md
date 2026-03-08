@@ -42,6 +42,9 @@ The agent maintains a working draft. After each section is "settled," it provide
 ### Step 5: Final Output
 Once all sections are complete, the agent generates `docs/vision.md`.
 
+### Step 6: Trigger KB Refinement
+If the user previously indicated they want any raw reference resources in `docs/references/` to be further refined into `.ai/kb/` files, explicitly invoke the **Knowledge Base Synthesizer** skill (`.ai/skills/kb-synthesizer/SKILL-kb-synthesizer.md`) to process those specific documents.
+
 ## Socratic Prompting Guidelines
 - **Ask "Why":** If a user suggests a feature, ask what "Pain" it specifically eliminates.
 - **Assumptive Probing:** "If we assume [Constraint X] is true, how does that change our 'Unfair Advantage'?"
