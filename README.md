@@ -32,10 +32,12 @@ Next, generate the initial Architecture Decision Records (ADRs):
 
 ## Generate an implementation plan to guide development
 ```text
-@AGENTS.md Generate an implementation plan for the project using the "Implementation Plan Writer" skill based on the @docs/prd.md, @docs/srs.md and @tests/features/ feature files.
+@AGENTS.md Generate an implementation plan for the project using the "Implementation Plan Writer" skill based on the @docs/prd.md, @docs/srs.md and @tests/features/ feature files. Once the implementation plan is created and the technology stack is confirmed, update the "Setup Development Environment" and "Setup Production Environment" sections in this README.md file with the actual commands needed to run the application, execute tests, view developer documentation, and deploy to production, removing the *Note:* placeholders.
 ```
 
 # Setup Development Environment
+
+*Note: These sections will be auto-populated by the AI Agent once the project's technology stack has been confirmed.*
 
 ## Run the application
 
