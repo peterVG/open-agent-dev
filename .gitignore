@@ -2,6 +2,5 @@
 .DS_Store
 tests/*
 !tests/README.md
-docs/api/
 coverage/
 node_modules
