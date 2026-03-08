@@ -5,6 +5,10 @@
 **Placeholder:** e.g., A decentralized records management system for the EU market...
 > 
 
+## Target Users & Customer Profile
+**Description:** Define the niche, customer jobs, pains, and gains.
+> 
+
 ## Core Features
 **Description:** What is the product's main functionality?
 **Placeholder:** List features like: DKG notarization, retention schedule scanning...
@@ -25,10 +29,6 @@
 ## Technical & Domain References
 **Description:** External documentation that guides the development of the product, explaining its objectives and constraints. Can be used as the source of system requirements.
 **Placeholder:** Example: [e-ARK Standards](../docs/references/e_ark_standards.md)
-> 
-
-## Target Users & Customer Profile
-**Description:** Define the niche, customer jobs, pains, and gains.
 > 
 
 ## Value Propositions
