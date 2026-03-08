@@ -24,6 +24,6 @@ If a conflict is detected, create a conflict artifact that includes:
 4. **Recommended Resolution:** Suggested approach to resolve the conflict, including a list of all project artifacts that need to be updated to resolve the conflict.
 5. **Impact Assessment:** What would break if this conflict is not resolved
 
-## READM Synchronization
+## README Synchronization
 
 If there are any changes to the `docs/product-vision.md` or `docs/prd.md` artifacts, the agent MUST review the `# About this project` section in the root `README.md` and update it to reflect the latest project vision and requirements if needed.
