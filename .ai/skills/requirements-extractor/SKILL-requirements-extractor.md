@@ -28,7 +28,7 @@ When listing an extracted requirement, you must append an exact citation includi
 
 ## Workflow
 
-1. **Identify Sources:** Look in the `docs/references/` directory for uploaded files related to "Standards, Laws, Regulations" or "Technical & Domain References".
-2. **Extract Requirements:** Scan the documents to find constraints, rules, user needs, UI preferences, application features, or functional behaviors required by the specific standards/laws.
-3. **Format & Trace:** List the requirements clearly with the Traceability Mandate format applied.
+1. **Identify Sources:** Look in the `docs/references/` directory for uploaded files".
+2. **Extract Requirements:** Scan the documents to find constraints, rules, user needs, UI preferences, application features, or functional behaviors required by the specific standards/laws. Provide a complete list, do not exclude any.
+3. **Format & Trace:** List the requirements clearly with the Traceability Mandate format applied. Sort them my section and page number from the source document.
 4. **Return to Caller:** Provide the extracted, traceable requirements back to the user or the caller skill (like the PRD Writer) for integration.

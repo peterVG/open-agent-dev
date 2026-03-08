@@ -19,6 +19,9 @@ If you want AI Agent assistance to write the product vision document, you can in
 ```
 
 ## Create a Product Requirements Document
+
+If you want to include source laws, standards, technical or domain related documents in the PRD, upload them to the `/docs/references/` directory first.
+
 ```text
 @AGENTS.md Generate a baseline PRD in /docs using the "PRD Writer" skill based on @docs/product-vision.md, the uploaded files in @docs/references/, and the manifesto principles in the AGENTS.md file.
 ```

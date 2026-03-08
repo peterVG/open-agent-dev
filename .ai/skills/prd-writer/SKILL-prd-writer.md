@@ -31,9 +31,9 @@ Read the `AGENTS.md` file to ensure the PRD aligns with the stated architectural
 ### Step 4: Draft the PRD
 Draft the `docs/prd.md` document using the structure from `docs/templates/prd-template.md`. 
 Ensure that:
-- Core features from the product vision are translated into specific functional and user requirements.
+- Core features from the product vision are translated into specific functional and user requirements. Add a source citation for each requirement derived from the product-vision.md document.
 - The extracted requirements from the `docs/references/` are heavily integrated.
-- Every extracted requirement maintains its traceability citation as provided by the Requirements Extractor.
+- Every extracted requirement from files in `docs/references/` maintains its traceability citation as provided by the Requirements Extractor.
 
 ### Step 5: Final Review
 Present the generated `docs/prd.md` to the user for review and refinement.
