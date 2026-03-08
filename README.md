@@ -62,21 +62,5 @@ These will guide you through the task list to generate and test your code in com
 ## Deploy to Production
 
 ## Monitor and Update
-
-
-# When to add GitHub MCP
-GitHub MCP (Model Context Protocol) is useful if Antigravity is interacting directly with GitHub APIs - things like creating issues, managing pull requests, reading repository metadata, etc.
-
-For simpler workflows it's not necessary, because
-
--You're already using git commands successfully
--Your workflow is primarily local development with standard git push/pull
--The Antigravity template focuses on local-first development with docs-as-code
-
-## Consider Github MCP to:
-
-- Automate issue creation from design artifacts
-- Have Antigravity create/manage pull requests directly
-- Read GitHub Actions workflow results
 - Manage repository settings or collaborators
 - Query GitHub API data (stars, forks, contributors, etc.)
