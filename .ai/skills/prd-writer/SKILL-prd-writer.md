@@ -35,5 +35,8 @@ Ensure that:
 - The extracted requirements from the `docs/references/` are heavily integrated.
 - Every extracted requirement from files in `docs/references/` maintains its traceability citation as provided by the Requirements Extractor.
 
-### Step 5: Final Review
-Present the generated `docs/prd.md` to the user for review and refinement.
+### Step 5: Update Project Overview
+Read the newly finalized `docs/prd.md` and the original `docs/product-vision.md` to synthesize a concise project overview (1-2 paragraphs). Inject this overview directly into the `# About this project` section of the root `README.md` file, replacing the placeholder note.
+
+### Step 6: Final Review
+Present the generated `docs/prd.md` and the updated `README.md` to the user for review and refinement.
