@@ -144,7 +144,7 @@ The agent will:
 1. Read this [`AGENTS.md`](./AGENTS.md) file
 2. Create [`docs/srs.md`](./docs/srs.md) with technical specifications aligned to project principles
 3. Generate initial Architecture Decision Records (ADRs) and corresponding `.ai/rules/*.md` files
-4. Generate Gherkin `.feature` files for tests
+4. Invoke the "Gherkin Writer" skill to generate Gherkin `.feature` files for tests
 5. Ensure all design decisions respect stated constraints
 
 **Remember:** Keep this file focused on vision and principles. Detailed initialization and development prompts belong in the [`README.md`](./README.md).

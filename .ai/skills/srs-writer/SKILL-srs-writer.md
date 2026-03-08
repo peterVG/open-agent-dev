@@ -142,14 +142,15 @@ AGENT: [Accurate SRS with verified technical specs]
 ## Integration with AI Agent Workflow
 
 ```
-USER: @AGENTS.md Generate a baseline SRS in /docs based on @docs/prd.md and the manifesto principles in the AGENTS.md file. Generate Gherkin scenarios for each unique requirement in @docs.srs.md and @docs/prd.md
+USER: @AGENTS.md Generate a baseline SRS in /docs based on @docs/prd.md and the manifesto principles in the AGENTS.md file. Use the "Gherkin Writer" skill to generate Gherkin scenarios for each unique requirement in @docs/srs.md and @docs/prd.md
 AGENT: [Activates SRS Generator skill]
 AGENT: [Reads AGENTS.md for AI Agent principles]
 AGENT: [Reads docs/prd.md for business, functional and non-functional requirements and constraints]
 AGENT: [Loads @docs/references for technical specifications and context]
 AGENT: [Uses google_search to verify current library versions]
 AGENT: [Creates docs/srs.md with accurate technical specifications]
-AGENT: [Creates Gherkin .feature files in the tests/features folder for each unique requirement in @docs.srs.md and @docs/prd.md]
+AGENT: [Activates Gherkin Writer skill]
+AGENT: [Creates Gherkin .feature files in the tests/features folder for each unique requirement in docs/srs.md and docs/prd.md]
 ```
 
 ## Success Criteria

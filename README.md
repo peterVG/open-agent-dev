@@ -22,7 +22,7 @@ Review and revise [`/docs/prd.md`](./docs/prd.md) as needed. Check [`/templates/
 
 First, generate the technical specifications:
 ```text
-@AGENTS.md Generate a baseline SRS in /docs using the "SRS Writer" skill based on @docs/prd.md and the manifesto principles in the AGENTS.md file. 
+@AGENTS.md Generate a baseline SRS in /docs using the "SRS Writer" skill based on @docs/prd.md and the manifesto principles in the AGENTS.md file. After generating the SRS, use the "Gherkin Writer" skill to generate Gherkin scenarios for each unique requirement in @docs/srs.md and @docs/prd.md.
 ```
 
 Next, generate the initial Architecture Decision Records (ADRs):
