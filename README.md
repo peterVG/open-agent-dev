@@ -62,5 +62,3 @@ These will guide you through the task list to generate and test your code in com
 ## Deploy to Production
 
 ## Monitor and Update
-- Manage repository settings or collaborators
-- Query GitHub API data (stars, forks, contributors, etc.)
