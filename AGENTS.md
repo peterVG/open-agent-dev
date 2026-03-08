@@ -65,7 +65,7 @@
 - **Test Reporting Mandate:** All test runs (Unit, UI, Integration, and BDD) MUST generate structured reports using the framework specified in the project's Architecture Decision Records (e.g., Allure) to provide stakeholders with a clear, visual history of test passed/failed states and coverage.
 - **Walkthrough Documentation:** When executing tests, the agent MUST copy the raw CLI output of the test runs into a permanent `docs/tasks/Task-[Task ID]-Walkthrough.md` file to provide immediate visual proof of passing tests, in addition to generating the structured test reports.
 - **Unit Test Traceability:** When code changes make a unit test obsolete or require modifications to the underlying implementation, the agent MUST explicitly update, refactor, or remove the corresponding unit tests to remain in sync with the source code.
-- **Testing Knowledge Base Integration:** Prior to generating testing plans or making testing Architecture Decision Records (ADRs), the AI agent MUST explicitly check the `.ai/kb/` and `docs/kb/` folders for any testing-related knowledge base files (e.g., `beam-testing.md`) appropriate to the project's technology stack, and use that information to inform its testing strategy, tool selection, and architectural decisions.
+- **Testing Knowledge Base Integration:** Prior to generating testing plans or making testing Architecture Decision Records (ADRs), the AI agent MUST explicitly check the `.ai/kb/` folder for any testing-related knowledge base files (e.g., `beam-testing-overview.md`) appropriate to the project's technology stack, and use that information to inform its testing strategy, tool selection, and architectural decisions.
 - **Strict Artifact Isolation:** This principle is tactically enforced on all AI agents via the instructions in `[artifact-isolation.md](./.ai/rules/artifact-isolation.md)`.
 
 ### Standalone Production Code
@@ -105,11 +105,11 @@
 
 **Purpose:** Ensure the project adheres to established industry standards for interoperability, requirements engineering, and documentation.
 
-- **Agent Skills 1.0:** The project template and agent tools comply with the Agent Skills 1.0 specification (including progressive disclosure, multi-tool support, and vendor neutrality). The framework principles are defined in [`docs/kb/agent-skills-1.0.md`](./docs/kb/agent-skills-1.0.md).
-- **Conventional Commits:** All git commits MUST use the Conventional Commits format (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`). The exact formatting rules are located in [`docs/kb/conventional-commits.md`](./docs/kb/conventional-commits.md).
-- **ISO/IEC/IEEE 29148:** The Software Requirements Specification (SRS) MUST be Unambiguous, Complete, Verifiable, Consistent, and Traceable. Specific agent instructions for these criteria are defined in [`docs/kb/iso-29148.md`](./docs/kb/iso-29148.md).
-- **ISO/IEC/IEEE 42010:** Architecture Decision Records (ADRs) MUST include the 9 specific information items required by the ISO 42010 standard for architecture descriptions as defined in [`docs/kb/iso-42010.md`](./docs/kb/iso-42010.md).
-- **RFC 2119:** All requirements documentation (PRD, SRS) must use explicit RFC 2119 terminology (e.g., MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, OPTIONAL) to define the significance of each requirement. Exact definitions are located in [`docs/kb/rfc-2119.md`](./docs/kb/rfc-2119.md).
+- **Agent Skills 1.0:** The project template and agent tools comply with the Agent Skills 1.0 specification (including progressive disclosure, multi-tool support, and vendor neutrality). The framework principles are defined in [`.ai/kb/agent-skills-1.0.md`](./.ai/kb/agent-skills-1.0.md).
+- **Conventional Commits:** All git commits MUST use the Conventional Commits format (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`). The exact formatting rules are located in [`.ai/kb/conventional-commits.md`](./.ai/kb/conventional-commits.md).
+- **ISO/IEC/IEEE 29148:** The Software Requirements Specification (SRS) MUST be Unambiguous, Complete, Verifiable, Consistent, and Traceable. Specific agent instructions for these criteria are defined in [`.ai/kb/iso-29148-srs.md`](./.ai/kb/iso-29148-srs.md).
+- **ISO/IEC/IEEE 42010:** Architecture Decision Records (ADRs) MUST include the 9 specific information items required by the ISO 42010 standard for architecture descriptions as defined in [`.ai/kb/iso-42010-adr.md`](./.ai/kb/iso-42010-adr.md).
+- **RFC 2119:** All requirements documentation (PRD, SRS) must use explicit RFC 2119 terminology (e.g., MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, OPTIONAL) to define the significance of each requirement. Exact definitions are located in [`.ai/kb/rfc-2119-req-terms.md`](./.ai/kb/rfc-2119-req-terms.md).
 
 ## Development Workflow
 
