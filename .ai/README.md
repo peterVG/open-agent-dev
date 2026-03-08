@@ -11,6 +11,8 @@ This template follows the **Agent Skills 1.0 specification** to ensure compatibi
 │       └── SKILL.md         # Skill instructions (YAML + Markdown)
 ├── rules/                   # Project-specific guardrails
 │   └── sync-logic.md        # Documentation sync enforcement
+├── scripts/                 # Executable scripts for agents
+│   └── README.md            # Details on agent scripts
 └── kb/                      # Synthesized AI knowledge base
     └── agent-skills-1.0.md  # Domain concepts for the AI
 
@@ -52,6 +54,11 @@ The `.ai/` directory is the **standard** defined by Agent Skills 1.0, ensuring:
 **Raw technical specifications** for progressive disclosure.
 - Contains deep API specs, protocol whitepapers, or large technical documents.
 - Loaded *only* when a specific Skill explicitly requests it via its YAML frontmatter, saving tokens and improving accuracy for low-level tasks.
+
+### 5. Scripts (`.ai/scripts/`)
+**Executable scripts** that the AI agent can run using the `code_interpreter` tool.
+- Used to validate logic, simulate load, or perform automated checks without deploying code.
+- Often executed by specific Skills to verify architecture decisions or calculations.
 
 ## Agent Skills 1.0 Format
 
