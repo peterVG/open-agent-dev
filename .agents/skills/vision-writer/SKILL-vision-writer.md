@@ -33,7 +33,7 @@ The agent does NOT present a wall of text. It engages in **Progressive Discovery
 ### Step 3: Market & Technical Grounding
 - **Verification:** Uses `Google Search` to find "Key Competitors" or verify "Standards, Laws, and Regulations" (e.g., latest e-ARK or ERC-3643 updates).
 - **Reference Downloads & Uploads:** Offer to download for the user any specific "Standards, Laws, Regulations" OR "Technical and Domain References" documents that they mention, and store them directly into the `docs/references/` folder. Also instruct the user to manually upload any private files to this folder.
-- **KB Refinement Prompt:** Explicitly prompt the user to ask whether any of the raw reference resources now in `docs/references/` should be further refined to create a synthesized `.ai/kb/` file.
+- **KB Refinement Prompt:** Explicitly prompt the user to ask whether any of the raw reference resources now in `docs/references/` should be further refined to create a synthesized `.agents/kb/` file.
 - **Feasibility:** Uses `code_interpreter` for "Cost Structure" estimates (e.g., Arweave storage fees or infrastructure overhead).
 
 ### Step 4: Drafting & Iteration
@@ -43,7 +43,7 @@ The agent maintains a working draft. After each section is "settled," it provide
 Once all sections are complete, the agent generates `docs/vision.md`.
 
 ### Step 6: Trigger KB Refinement
-If the user previously indicated they want any raw reference resources in `docs/references/` to be further refined into `.ai/kb/` files, explicitly invoke the **Knowledge Base Synthesizer** skill (`.ai/skills/kb-synthesizer/SKILL-kb-synthesizer.md`) to process those specific documents.
+If the user previously indicated they want any raw reference resources in `docs/references/` to be further refined into `.agents/kb/` files, explicitly invoke the **Knowledge Base Synthesizer** skill (`.agents/skills/kb-synthesizer/SKILL-kb-synthesizer.md`) to process those specific documents.
 
 ## Socratic Prompting Guidelines
 - **Ask "Why":** If a user suggests a feature, ask what "Pain" it specifically eliminates.

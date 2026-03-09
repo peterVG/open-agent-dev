@@ -22,7 +22,7 @@ The repository acts as the primary source of truth. The agent's pre-trained know
 
 ## Writing a Skill
 
-Skills in this repository (located in `.ai/skills/` or `.agent/workflows/`) should follow this standard Markdown structure:
+Skills in this repository (located in `.agents/skills/` or `.agent/workflows/`) should follow this standard Markdown structure:
 
 1.  **YAML Frontmatter:** Defining `name`, `description`, `allowed-tools`, and `references`.
 2.  **Purpose:** What the skill does.

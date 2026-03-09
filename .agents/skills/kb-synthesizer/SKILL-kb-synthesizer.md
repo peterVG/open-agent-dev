@@ -1,6 +1,6 @@
 ---
 name: Knowledge Base Synthesizer
-description: Extracts rules, constraints, and models from raw docs/references into a concise .ai/kb/ Markdown file
+description: Extracts rules, constraints, and models from raw docs/references into a concise .agents/kb/ Markdown file
 allowed-tools:
   - code_interpreter
 ---
@@ -9,7 +9,7 @@ allowed-tools:
 
 ## Purpose
 
-This skill reads raw, unstructured, or heavy technical documents (e.g., PDFs, whitepapers, legal regulations) residing in the `docs/references/` folder and synthesizes them into high-signal, token-efficient Markdown files stored in the `.ai/kb/` folder. It ensures the agents have immediate, conceptual access to project-relevant rules without wasting context window tokens reading boilerplate.
+This skill reads raw, unstructured, or heavy technical documents (e.g., PDFs, whitepapers, legal regulations) residing in the `docs/references/` folder and synthesizes them into high-signal, token-efficient Markdown files stored in the `.agents/kb/` folder. It ensures the agents have immediate, conceptual access to project-relevant rules without wasting context window tokens reading boilerplate.
 
 ## When to Use This Skill
 
@@ -33,7 +33,7 @@ Extract the core actionable information from the reference file:
 Rewrite this extracted information in clear, concise Markdown format (bullet points, clear headings). Do not copy-paste long paragraphs; synthesize the intent.
 
 ### Step 4: Traceability & Metadata
-Apply a standardized YAML header to the newly generated `.ai/kb/` file so that future agents understand its context and authority. 
+Apply a standardized YAML header to the newly generated `.agents/kb/` file so that future agents understand its context and authority. 
 Ensure the extracted points maintain explicit footnotes or line-item links back to the original section/page of the source reference document (e.g., `(Source: ERC-3643 Whitepaper, Section 4.2)`).
 
 ```markdown
@@ -52,10 +52,10 @@ domain: [e.g., Legal, Architecture, Framework]
 ```
 
 ### Step 5: Finalization
-Save the synthesized Markdown file to the `.ai/kb/` directory using an intuitive filename (e.g., `.ai/kb/erc-3643-compliance-rules.md`). Present the generated file to the user for review.
+Save the synthesized Markdown file to the `.agents/kb/` directory using an intuitive filename (e.g., `.agents/kb/erc-3643-compliance-rules.md`). Present the generated file to the user for review.
 
 ## Success Criteria
 - ✅ High Signal-to-Noise: The resulting KB file contains only actionable technical, legal, or architectural rules; all fluff has been stripped.
 - ✅ Traceability: Every rule in the KB file points back to its source in the `docs/references/` file.
 - ✅ Format: The file uses the proper YAML metadata header and concise Markdown formatting.
-- ✅ Location: The file is saved directly into the `.ai/kb/` directory.
+- ✅ Location: The file is saved directly into the `.agents/kb/` directory.

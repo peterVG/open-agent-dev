@@ -5,7 +5,7 @@ This template follows the **Agent Skills 1.0 specification** to ensure compatibi
 ## Directory Structure
 
 ```
-.ai/
+.agents/
 ├── skills/                  # Reusable capabilities
 │   └── gherkin-architect/   # BDD scenario generation
 │       └── SKILL.md         # Skill instructions (YAML + Markdown)
@@ -16,20 +16,20 @@ This template follows the **Agent Skills 1.0 specification** to ensure compatibi
 └── kb/                      # Synthesized AI knowledge base
     └── agent-skills-1.0.md  # Domain concepts for the AI
 
-*Note: Raw technical specifications and whitepapers are kept in `docs/references/` rather than within `.ai/` to maintain a clear separation between project documentation and AI context.*
+*Note: Raw technical specifications and whitepapers are kept in `docs/references/` rather than within `.agents/` to maintain a clear separation between project documentation and AI context.*
 ```
 
-## Why `.ai/` instead of `.agent/`?
+## Why `.agents/` instead of `.agent/`?
 
-The `.ai/` directory is the **standard** defined by Agent Skills 1.0, ensuring:
+The `.agents/` directory is the **standard** defined by Agent Skills 1.0, ensuring:
 - ✅ **Vendor neutrality** - Works across different AI coding assistants
 - ✅ **Portability** - Skills can be shared between projects and tools
-- ✅ **Discoverability** - AI assistants automatically detect `.ai/` directories
+- ✅ **Discoverability** - AI assistants automatically detect `.agents/` directories
 - ✅ **Future-proof** - Aligned with emerging industry standards
 
 ## Core Components
 
-### 1. Skills (`.ai/skills/`)
+### 1. Skills (`.agents/skills/`)
 **Reusable capabilities** that can be activated when needed.
 
 **Example:** `gherkin-architect/SKILL.md`
@@ -37,7 +37,7 @@ The `.ai/` directory is the **standard** defined by Agent Skills 1.0, ensuring:
 - Activated when user says "Draft Gherkin scenarios"
 - Can be copied to other projects
 
-### 2. Rules (`.ai/rules/`)
+### 2. Rules (`.agents/rules/`)
 **Project-specific guardrails** that are always enforced.
 
 **Example:** `sync-logic.md`
@@ -45,7 +45,7 @@ The `.ai/` directory is the **standard** defined by Agent Skills 1.0, ensuring:
 - Always active - checked before any code is written
 - Specific to this project's workflow
 
-### 3. Knowledge Base (`.ai/kb/`)
+### 3. Knowledge Base (`.agents/kb/`)
 **Synthesized domain knowledge** optimized for LLM conceptual understanding.
 - Contains high-level summaries, established patterns, and project conventions.
 - Loaded when the AI needs conceptual grounding (e.g., standard definitions, project vocabulary).
@@ -55,7 +55,7 @@ The `.ai/` directory is the **standard** defined by Agent Skills 1.0, ensuring:
 - Contains deep API specs, protocol whitepapers, or large technical documents.
 - Loaded *only* when a specific Skill explicitly requests it via its YAML frontmatter, saving tokens and improving accuracy for low-level tasks.
 
-### 5. Scripts (`.ai/scripts/`)
+### 5. Scripts (`.agents/scripts/`)
 **Executable scripts** that the AI agent can run using the `code_interpreter` tool.
 - Used to validate logic, simulate load, or perform automated checks without deploying code.
 - Often executed by specific Skills to verify architecture decisions or calculations.
@@ -84,7 +84,7 @@ description: Brief description of what this skill does
 
 ## Compatibility Matrix
 
-| AI Assistant | `.ai/skills/` Support | `.ai/rules/` Support |
+| AI Assistant | `.agents/skills/` Support | `.agents/rules/` Support |
 |--------------|----------------------|---------------------|
 | Antigravity  | ✅ Full              | ✅ Full             |
 | Claude Code  | ✅ Full              | ✅ Full             |
@@ -93,31 +93,31 @@ description: Brief description of what this skill does
 
 ## Migration from `.agent/`
 
-If you have an existing project using `.agent/`, migrate to `.ai/`:
+If you have an existing project using `.agent/`, migrate to `.agents/`:
 
 ```bash
 # Move skills
-mv .agent/skills .ai/skills
+mv .agent/skills .agents/skills
 
 # Move rules
-mv .agent/rules .ai/rules
+mv .agent/rules .agents/rules
 
 # Remove old directory
 rmdir .agent
 ```
 
-Then update all references in your documentation from `.agent/` to `.ai/`.
+Then update all references in your documentation from `.agent/` to `.agents/`.
 
 ## Creating New Skills
 
-1. Create a directory: `.ai/skills/my-skill/`
+1. Create a directory: `.agents/skills/my-skill/`
 2. Add `SKILL.md` with YAML frontmatter
 3. (Optional) Add `assets/` for templates or examples
 4. Reference in documentation
 
 **Example:**
 ```
-.ai/skills/api-generator/
+.agents/skills/api-generator/
 ├── SKILL.md
 └── assets/
     └── openapi-template.yaml
@@ -125,7 +125,7 @@ Then update all references in your documentation from `.agent/` to `.ai/`.
 
 ## Creating New Rules
 
-1. Create a file: `.ai/rules/my-rule.md`
+1. Create a file: `.agents/rules/my-rule.md`
 2. Write clear, enforceable guidelines
 3. Reference in README or other docs
 

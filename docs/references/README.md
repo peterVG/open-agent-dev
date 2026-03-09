@@ -52,7 +52,7 @@ allowed-tools:
   - google_search
 references:
   - docs/references/arweave/arweave-yellow-paper.pdf
-  - .ai/kb/ao/ao-process-spec.md
+  - .agents/kb/ao/ao-process-spec.md
 ---
 ```
 
@@ -61,16 +61,16 @@ references:
 - ✅ Saves tokens when working on unrelated tasks
 - ✅ Ensures accurate, up-to-date technical information
 
-## vs. Knowledge Base (`.ai/kb`)
+## vs. Knowledge Base (`.agents/kb`)
 
 | Directory | Purpose | When Loaded |
 |-----------|---------|-------------|
 | `docs/references/` | Deep technical specs, loaded by skills | Only when skill is activated |
-| `.ai/kb/` | Domain knowledge, loaded by user | When explicitly referenced with `@.ai/kb/file.md` |
+| `.agents/kb/` | Domain knowledge, loaded by user | When explicitly referenced with `@.agents/kb/file.md` |
 
 **Rule of thumb:**
 - Use `docs/references/` for **source material** that skills need automatically
-- Use `.ai/kb/` for **domain knowledge** you want to reference manually
+- Use `.agents/kb/` for **domain knowledge** you want to reference manually
 
 ## Example: SRS Generation with References
 
@@ -82,7 +82,7 @@ allowed-tools:
   - google_search
 references:
   - docs/references/arweave/transaction-format.md
-  - .ai/kb/ao/message-passing.md
+  - .agents/kb/ao/message-passing.md
 ---
 
 # SRS Generator Skill

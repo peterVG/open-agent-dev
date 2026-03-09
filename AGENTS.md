@@ -65,26 +65,26 @@
 - **Test Reporting Mandate:** All test runs (Unit, UI, Integration, and BDD) MUST generate structured reports using the framework specified in the project's Architecture Decision Records (e.g., Allure) to provide stakeholders with a clear, visual history of test passed/failed states and coverage.
 - **Walkthrough Documentation:** When executing tests, the agent MUST copy the raw CLI output of the test runs into a permanent `docs/tasks/Task-[Task ID]-Walkthrough.md` file to provide immediate visual proof of passing tests, in addition to generating the structured test reports.
 - **Unit Test Traceability:** When code changes make a unit test obsolete or require modifications to the underlying implementation, the agent MUST explicitly update, refactor, or remove the corresponding unit tests to remain in sync with the source code.
-- **Testing Knowledge Base Integration:** Prior to generating testing plans or making testing Architecture Decision Records (ADRs), the AI agent MUST explicitly check the `.ai/kb/` folder for any testing-related knowledge base files (e.g., `beam-testing-overview.md`) appropriate to the project's technology stack, and use that information to inform its testing strategy, tool selection, and architectural decisions.
-- **Strict Artifact Isolation:** This principle is tactically enforced on all AI agents via the instructions in `[artifact-isolation.md](./.ai/rules/artifact-isolation.md)`.
+- **Testing Knowledge Base Integration:** Prior to generating testing plans or making testing Architecture Decision Records (ADRs), the AI agent MUST explicitly check the `.agents/kb/` folder for any testing-related knowledge base files (e.g., `beam-testing-overview.md`) appropriate to the project's technology stack, and use that information to inform its testing strategy, tool selection, and architectural decisions.
+- **Strict Artifact Isolation:** This principle is tactically enforced on all AI agents via the instructions in `[artifact-isolation.md](./.agents/rules/artifact-isolation.md)`.
 
 ### Standalone Production Code
 
 **Purpose:** Ensure that the core application codebase is completely self-contained, deployment-ready, and not permanently entangled with its surrounding project-management or AI-development tooling.
 
-- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[src-isolation.md](./.ai/rules/src-isolation.md)`.
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[src-isolation.md](./.agents/rules/src-isolation.md)`.
 
 ### Platform-Agnostic Documentation
 
 **Purpose:** Ensure that the project does not alienate users on different operating systems by hardcoding platform-specific assumptions (e.g., assuming macOS and Homebrew are the default).
 
-- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[platform-agnostic.md](./.ai/rules/platform-agnostic.md)`.
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[platform-agnostic.md](./.agents/rules/platform-agnostic.md)`.
 
 ### Portable Documentation (Relative Links)
 
 **Purpose:** Ensure that the project's documentation remains universally portable, readable across any environment, and correctly navigable natively within GitHub.
 
-- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[links-enforce.md](./.ai/rules/links-enforce.md)`.
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[links-enforce.md](./.agents/rules/links-enforce.md)`.
 - **Strictly Relative Links:** Anytime an AI agent generates documenting artifacts, readmes, technical specs, or logs that cross-reference another file in this project, it MUST use standard Markdown relative linking (e.g., `[PRD](../prd.md)` or `[Task 1.1](./tasks/Task-1.1-Plan.md)`).
 - **Prohibited Absolute Paths:** The agent MUST NEVER write absolute file paths native to its current execution environment (e.g., `file:///Users/petervangarderen/...`) into the permanent project repository files. Absolute paths break immediately upon push to a remote repository or clone by another developer.
 
@@ -92,7 +92,7 @@
 
 **Purpose:** Guarantee that any CLI commands, build steps, or execution scripts documented for humans are actually functional and tested against current dependencies.
 
-- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[command-verification.md](./.ai/rules/command-verification.md)`.
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[command-verification.md](./.agents/rules/command-verification.md)`.
 
 ### Zero-Friction Setup
 
@@ -105,11 +105,11 @@
 
 **Purpose:** Ensure the project adheres to established industry standards for interoperability, requirements engineering, and documentation.
 
-- **Agent Skills 1.0:** The project template and agent tools comply with the Agent Skills 1.0 specification (including progressive disclosure, multi-tool support, and vendor neutrality). The framework principles are defined in [`.ai/kb/agent-skills-1.0.md`](./.ai/kb/agent-skills-1.0.md).
-- **Conventional Commits:** All git commits MUST use the Conventional Commits format (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`). The exact formatting rules are located in [`.ai/kb/conventional-commits.md`](./.ai/kb/conventional-commits.md).
-- **ISO/IEC/IEEE 29148:** The Software Requirements Specification (SRS) MUST be Unambiguous, Complete, Verifiable, Consistent, and Traceable. Specific agent instructions for these criteria are defined in [`.ai/kb/iso-29148-srs.md`](./.ai/kb/iso-29148-srs.md).
-- **ISO/IEC/IEEE 42010:** Architecture Decision Records (ADRs) MUST include the 9 specific information items required by the ISO 42010 standard for architecture descriptions as defined in [`.ai/kb/iso-42010-adr.md`](./.ai/kb/iso-42010-adr.md).
-- **RFC 2119:** All requirements documentation (PRD, SRS) must use explicit RFC 2119 terminology (e.g., MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, OPTIONAL) to define the significance of each requirement. Exact definitions are located in [`.ai/kb/rfc-2119-req-terms.md`](./.ai/kb/rfc-2119-req-terms.md).
+- **Agent Skills 1.0:** The project template and agent tools comply with the Agent Skills 1.0 specification (including progressive disclosure, multi-tool support, and vendor neutrality). The framework principles are defined in [`.agents/kb/agent-skills-1.0.md`](./.agents/kb/agent-skills-1.0.md).
+- **Conventional Commits:** All git commits MUST use the Conventional Commits format (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`). The exact formatting rules are located in [`.agents/kb/conventional-commits.md`](./.agents/kb/conventional-commits.md).
+- **ISO/IEC/IEEE 29148:** The Software Requirements Specification (SRS) MUST be Unambiguous, Complete, Verifiable, Consistent, and Traceable. Specific agent instructions for these criteria are defined in [`.agents/kb/iso-29148-srs.md`](./.agents/kb/iso-29148-srs.md).
+- **ISO/IEC/IEEE 42010:** Architecture Decision Records (ADRs) MUST include the 9 specific information items required by the ISO 42010 standard for architecture descriptions as defined in [`.agents/kb/iso-42010-adr.md`](./.agents/kb/iso-42010-adr.md).
+- **RFC 2119:** All requirements documentation (PRD, SRS) must use explicit RFC 2119 terminology (e.g., MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, OPTIONAL) to define the significance of each requirement. Exact definitions are located in [`.agents/kb/rfc-2119-req-terms.md`](./.agents/kb/rfc-2119-req-terms.md).
 
 ## Development Workflow
 
@@ -119,7 +119,7 @@
 
 **All development must follow the Branch-Per-Task workflow:**
 
-- **Active Enforcement:** The Branch-Per-Task and Execution Documentation requirements are tactically enforced on all AI agents via the instructions in `[task-workflow.md](./.ai/rules/task-workflow.md)`.
+- **Active Enforcement:** The Branch-Per-Task and Execution Documentation requirements are tactically enforced on all AI agents via the instructions in `[task-workflow.md](./.agents/rules/task-workflow.md)`.
 
 ### Architecture Decision Records (ADRs)
 
@@ -127,7 +127,7 @@
 
 - **Record Decisions, Not Conversations:** Instead of saving raw chat logs, synthesize agreed-upon decisions into lightweight markdown files in `docs/architecture/`.
 - **Naming Convention:** Prefix each ADR with a consecutive three-digit number followed by a hyphenated slug describing the decision (e.g., `001-use-sqlite-for-local-storage.md`, `002-dont-use-external-auth.md`).
-- **Active Enforcement:** The ISO 42010 required format for ADRs is tactically enforced on all AI agents via the instructions in `[adr-formatting.md](./.ai/rules/adr-formatting.md)`.
+- **Active Enforcement:** The ISO 42010 required format for ADRs is tactically enforced on all AI agents via the instructions in `[adr-formatting.md](./.agents/rules/adr-formatting.md)`.
 - **Test Runner ADR:** The selection and justification of test runners appropriate for the project's technology stack (e.g., pytest/behave for Python, Jest/Cucumber for JS, Cargo/Cucumber-rust for Rust) MUST be documented as a separate ADR.
 - **Coding Style ADR:** The selection of the language-specific coding style standard (e.g., PEP8, Airbnb Style Guide, The Go Way) and the specific tools used to enforce it (e.g., Ruff, ESLint/Prettier, gofmt) MUST be documented as a separate ADR.
 - **Single Source of Truth:** If a conversation changes the project's direction, the resulting decision must be documented in an ADR and immediately reflected in the `prd.md` or `srs.md` via a Pull Request.
@@ -143,7 +143,7 @@ Instead, strictly follow the initialization prompt sequence defined in the **"Ge
 The agent will:
 1. Read this [`AGENTS.md`](./AGENTS.md) file
 2. Create [`docs/srs.md`](./docs/srs.md) with technical specifications aligned to project principles
-3. Generate initial Architecture Decision Records (ADRs) and corresponding `.ai/rules/*.md` files
+3. Generate initial Architecture Decision Records (ADRs) and corresponding `.agents/rules/*.md` files
 4. Invoke the "Gherkin Writer" skill to generate Gherkin `.feature` files for tests
 5. Ensure all design decisions respect stated constraints
 

@@ -11,7 +11,7 @@ You should be able to copy or export *only* the `/src` directory from this repos
 ## Design Principles
 
 1. **Self-Contained Execution:** All application dependencies, configurations necessary for running the application, and the application code itself reside here.
-2. **Separation from Dev Tooling:** Project-level management tools, architectural decision records, and AI agent configuration (`.ai`, `docs`, etc.) live completely outside this directory.
+2. **Separation from Dev Tooling:** Project-level management tools, architectural decision records, and AI agent configuration (`.agents`, `docs`, etc.) live completely outside this directory.
 3. **Deployment Ready:** When building a Docker image or zipping a deployment package, pointing to the `/src` directory should be sufficient.
 
 ## What Goes Here
@@ -24,6 +24,6 @@ You should be able to copy or export *only* the `/src` directory from this repos
 ## What Does NOT Go Here
 
 - Project documentation (`/docs`)
-- AI Agent configurations and knowledge base (`/.ai`)
+- AI Agent configurations and knowledge base (`/.agents`)
 - Project-level planning and task files
 - Architectural Decision Records
