@@ -1,6 +1,7 @@
 .env
 .DS_Store
 tests/*
+!tests/features/*
 !tests/README.md
 coverage/
 node_modules
