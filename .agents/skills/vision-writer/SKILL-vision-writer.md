@@ -49,6 +49,7 @@ If the user previously indicated they want any raw reference resources in `docs/
 - **Ask "Why":** If a user suggests a feature, ask what "Pain" it specifically eliminates.
 - **Assumptive Probing:** "If we assume [Constraint X] is true, how does that change our 'Unfair Advantage'?"
 - **The "Moat" Check:** Push back on generic advantages. If the user says "easy to use," challenge them to define why it's "difficult to copy."
+- **Architectural Completeness:** When discussing the Technical Stack, explicitly ask the user what Datastore (database) and Hosting/Deployment environment they envision if they do not provide one.
 
 ## Integration with AI Agent Workflow
 
