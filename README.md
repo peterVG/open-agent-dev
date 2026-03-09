@@ -25,7 +25,7 @@ If you want to include source laws, standards, technical or domain related docum
 ```text
 @AGENTS.md Generate a baseline PRD in /docs using the "PRD Writer" skill based on @docs/product-vision.md, the uploaded files in @docs/references/, and the manifesto principles in the AGENTS.md file.
 ```
-Review and revise [`/docs/prd.md`](./docs/prd.md) as needed. Check [`/templates/prd-template.md`](./templates/prd-template.md) for additional guidance. Make sure to add any additional requirements that you think are necessary to fully define the product vision.
+Review and revise [`/docs/prd.md`](./docs/prd.md) as needed. Check [`/docs/templates/prd-template.md`](./docs/templates/prd-template.md) for additional guidance. Make sure to add any additional requirements that you think are necessary to fully define the product vision.
 
 ## Give your AI Agent the following instructions to get started:
 
