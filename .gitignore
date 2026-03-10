@@ -1,10 +1,24 @@
 .env
 .DS_Store
-tests/*
-!tests/features/
-!tests/support/
-!tests/unit/
-!tests/ui/
-!tests/README.md
-coverage/
-node_modules
+
+# Test reports & artifacts
+**/artifacts/
+**/playwright-report/
+**/allure-results/
+**/coverage/
+
+# Dependency directories
+node_modules/
+**/node_modules/
+
+# Scratch files and transient tests
+**/test-card.js
+**/screenshot.spec.js
+
+# Allow selective tracking in tests/
+**/tests/*
+!**/tests/features/
+!**/tests/support/
+!**/tests/unit/
+!**/tests/ui/
+!**/tests/README.md
