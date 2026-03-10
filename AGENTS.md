@@ -1,6 +1,8 @@
-# AGENT (e.g. Antigravity, Claude Code) Principles
+# AI AGENT Principles
 
-**Purpose:** Define which AI Agent principles guide this project.
+**Purpose:** Define the AI Agent principles guide this project.
+
+**CRITICAL INSTRUCTION:** Before beginning any implementation, scaffolding, or configuration task, you MUST use the list_dir and view_file tools to read the contents of all markdown files in .agents/rules/. You must strictly adhere to these rules over any default framework behaviors.
 
 ### Minimize Dependencies
 
