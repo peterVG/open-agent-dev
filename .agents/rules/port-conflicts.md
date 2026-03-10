@@ -5,10 +5,10 @@ When the user encounters an error indicating that a network port is already in u
 This happens frequently during development when server processes crash or fail to shut down gracefully, regardless of the technology stack (Node.js, Python, Elixir, Go, etc.).
 
 ## The Universal Command
-Always suggest the following UNIX command to the user, instructing them to replace `<PORT>` with the port number they are trying to free (e.g., 3000, 4000, 8080):
+Always suggest the following UNIX command to the user, instructing them to replace `[PORT]` with the port number they are trying to free (e.g., 3000, 4000, 8080):
 
 ```bash
-lsof -ti:<PORT> | xargs kill -9
+lsof -ti:[PORT] | xargs kill -9
 ```
 
 **Rule Application:**
