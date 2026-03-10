@@ -2,6 +2,9 @@
 .DS_Store
 tests/*
 !tests/features/
+!tests/support/
+!tests/unit/
+!tests/ui/
 !tests/README.md
 coverage/
 node_modules
