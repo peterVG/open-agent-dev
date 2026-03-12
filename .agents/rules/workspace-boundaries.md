@@ -26,4 +26,5 @@ Each application or service inside these directories must be a self-contained pr
   - `/apps/web/tests/` (The locally scoped tests)
 
 1. **No Language Tooling at Root:** You MUST NOT place language-specific dependency manifests (e.g., `package.json`, `mix.exs`, `requirements.txt`) or framework configuration files in the global repository root.
-2. **Path Resolution:** When adding CI pipelines, executing tests, or running scripts, always execute language commands (like `npm run dev` or `pytest`) from within the specific workspace sub-directory, rather than the root.
+2. **Strict Scaffolding:** When generating or scaffolding a new project (e.g., running `mix phx.new`, `npx create-next-app`, or `cargo new`), you MUST execute the command to place the output inside `apps/` or `services/`. NEVER run a scaffolding command targeting the repository root.
+3. **Path Resolution:** When adding CI pipelines, executing tests, or running scripts, always execute language commands (like `npm run dev` or `pytest`) from within the specific workspace sub-directory, rather than the root.
