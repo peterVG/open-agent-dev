@@ -13,7 +13,8 @@ When reviewing the PRD, SRS, architecture, and implementation plan documents:
 - **PRD ↔ Architecture:** Ensure implementation design aligns with product vision
 - **Implementation Plan ↔ SRS:** Verify planned implementation steps satisfy system requirements
 - **Implementation Plan ↔ Architecture:** Ensure implementation approach follows architectural patterns
-- Flag any contradictions in data models, API contracts, system boundaries, or feature specifications
+- **Codebase Reality ↔ Documentation:** If the agent discovers that the actual codebase structure (e.g. file paths, module names) deviates from what is documented in the PRD, SRS, Architecture, or Implementation Plan, the agent MUST NOT silently update the upstream documentation.
+- Flag any contradictions in data models, API contracts, system boundaries, feature specifications, or file paths.
 
 ## Conflict Artifact Format
 
