@@ -43,7 +43,7 @@ Every task MUST explicitly link back to its originating requirements (PRD/SRS) a
   - **Dependencies:** Task 2.3
   - **Related Requirements:** [SRS-SEC-001](../srs.md#srs-sec-001-local-sovereignty--transparency), [NFR-002](../prd.md#nfr-002-api-transparency)
   - **Related Tests:** [`local_sovereignty_SRS-SEC-001.feature`](../../tests/features/local_sovereignty_SRS-SEC-001.feature)
-  - **Agent Prompt:** `@AGENTS.md Begin development for Task [Task ID] in @docs/plan.md. Generate docs/tasks/Task-[Task ID]-Plan.md and docs/tasks/Task-[Task ID]-ToDos.md to capture the design and checklist. Propose the implementation code and corresponding testing suite in the appropriate directories within the repository, adhering rigorously to the established Architecture Decision Records (ADRs) for the frontend/backend tech stacks.`
+  - **Agent Prompt:** `@AGENTS.md Begin by creating a new feature branch for Task [Task ID]. Then begin development for Task [Task ID] in @docs/plan.md. Generate docs/tasks/Task-[Task ID]-Plan.md and docs/tasks/Task-[Task ID]-ToDos.md to capture the design and checklist. Propose the implementation code and corresponding testing suite in the appropriate directories within the repository, adhering rigorously to the established Architecture Decision Records (ADRs) for the frontend/backend tech stacks.`
 ```
 
 _If a task is purely structural (e.g., setting up a repository) and has no specific tests, mark Related Tests as `N/A`._
@@ -80,7 +80,7 @@ This document outlines the step-by-step implementation plan...
   - **Dependencies:** [Previous tasks, e.g., Task 1.1 or None]
   - **Related Requirements:** [[SRS/PRD mapping]](../srs.md)
   - **Related Tests:** [[Path to Gherkin file or N/A]](../../tests/features/)
-  - **Agent Prompt:** `@AGENTS.md Begin development for Task [Task ID] in @docs/plan.md. Generate docs/tasks/Task-[Task ID]-Plan.md and docs/tasks/Task-[Task ID]-ToDos.md to capture the design and checklist. Propose the implementation code and corresponding testing suite in the appropriate directories within the repository, adhering rigorously to the established Architecture Decision Records (ADRs). Upon completion, YOU MUST generate docs/tasks/Task-[Task ID]-Walkthrough.md directly in the project repository—DO NOT use an internal scratchpad. If this task introduces new dependencies or changes run commands, you MUST update the root README.md Setup instructions.`
+  - **Agent Prompt:** `@AGENTS.md Begin by creating a new feature branch for Task [Task ID]. Then begin development for Task [Task ID] in @docs/plan.md. Generate docs/tasks/Task-[Task ID]-Plan.md and docs/tasks/Task-[Task ID]-ToDos.md to capture the design and checklist. Propose the implementation code and corresponding testing suite in the appropriate directories within the repository, adhering rigorously to the established Architecture Decision Records (ADRs). Upon completion, YOU MUST generate docs/tasks/Task-[Task ID]-Walkthrough.md directly in the project repository—DO NOT use an internal scratchpad. If this task introduces new dependencies or changes run commands, you MUST update the root README.md Setup instructions.`
 
 ## Summary Timeline
 
@@ -119,7 +119,7 @@ This document outlines the step-by-step implementation plan...
   - **Dependencies:** Task 1.1
   - **Related Requirements:** SRS-DATA-001, TC-002
   - **Related Tests:** `tests/features/database_persistence_SRS-DATA-001.feature`
-  - **Agent Prompt:** `@AGENTS.md Begin development for Task [Task ID] in @docs/plan.md. Generate docs/tasks/Task-[Task ID]-Plan.md and docs/tasks/Task-[Task ID]-ToDos.md to capture the design and checklist. Propose the implementation code and corresponding testing suite in the appropriate directories within the repository, adhering rigorously to the established Architecture Decision Records (ADRs). Upon completion, YOU MUST generate docs/tasks/Task-[Task ID]-Walkthrough.md directly in the project repository—DO NOT use an internal scratchpad. If this task introduces new dependencies or changes run commands, you MUST update the root README.md Setup instructions.`
+  - **Agent Prompt:** `@AGENTS.md Begin by creating a new feature branch for Task [Task ID]. Then begin development for Task [Task ID] in @docs/plan.md. Generate docs/tasks/Task-[Task ID]-Plan.md and docs/tasks/Task-[Task ID]-ToDos.md to capture the design and checklist. Propose the implementation code and corresponding testing suite in the appropriate directories within the repository, adhering rigorously to the established Architecture Decision Records (ADRs). Upon completion, YOU MUST generate docs/tasks/Task-[Task ID]-Walkthrough.md directly in the project repository—DO NOT use an internal scratchpad. If this task introduces new dependencies or changes run commands, you MUST update the root README.md Setup instructions.`
 ```
 
 ## Workflow: PRD/SRS/Gherkin → Plan
@@ -148,13 +148,13 @@ Review the final plan, SRS, and ADRs to identify all necessary third-party libra
 
 Ensure the final Phase of the implementation plan includes a task for creating a `Dockerfile` appropriate for the finalized tech stack, and auto-populating the main `README.md` sections (Development Environment, Viewing Developer Documentation, Production Environment, How to Dockerize, etc.) based on the finalized tech stack and any Architecture Decision Records (ADRs).
 For this final task, you MUST use the following exact Agent Prompt:
-`@AGENTS.md Read the project's Architecture Decision Records (ADRs) and the finalized tech stack to create an appropriate Dockerfile. Then auto-populate the 'Setup Development Environment' (including 'Test Execution & Reporting' instructions), 'Viewing Developer Documentation', 'Setup Production Environment', and 'How to Dockerize' sections of the README.md file. Ensure installation instructions are platform-agnostic (don't assume macOS/Homebrew) or explicitly accommodate multiple operating systems as required by the ADRs. Make sure to check off the task as complete in docs/plan.md once finished.`
+`@AGENTS.md Begin by creating a new feature branch. Then read the project's Architecture Decision Records (ADRs) and the finalized tech stack to create an appropriate Dockerfile. Then auto-populate the 'Setup Development Environment' (including 'Test Execution & Reporting' instructions), 'Viewing Developer Documentation', 'Setup Production Environment', and 'How to Dockerize' sections of the README.md file. Ensure installation instructions are platform-agnostic (don't assume macOS/Homebrew) or explicitly accommodate multiple operating systems as required by the ADRs. Make sure to check off the task as complete in docs/plan.md once finished.`
 
 ### Step 7: Architecture Synthesis
 
 Ensure the _absolute final task_ of the implementation plan invokes the Architecture Writer skill to map the completed system.
 For this final task, you MUST use the following exact Agent Prompt:
-`@AGENTS.md Invoke the @architecture-writer skill. Read its instructions entirely, then execute all steps to synthesize the PRD, SRS, codebase reality, and ADRs into a comprehensive docs/architecture.md file featuring ISO 42010 viewpoints and Mermaid diagrams. Make sure to check off the task as complete in docs/plan.md once finished.`
+`@AGENTS.md Begin by creating a new feature branch. Then invoke the @architecture-writer skill. Read its instructions entirely, then execute all steps to synthesize the PRD, SRS, codebase reality, and ADRs into a comprehensive docs/architecture.md file featuring ISO 42010 viewpoints and Mermaid diagrams. Make sure to check off the task as complete in docs/plan.md once finished.`
 
 ## Output Format
 
