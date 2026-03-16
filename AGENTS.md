@@ -134,6 +134,12 @@
 - **Coding Style ADR:** The selection of the language-specific coding style standard (e.g., PEP8, Airbnb Style Guide, The Go Way) and the specific tools used to enforce it (e.g., Ruff, ESLint/Prettier, gofmt) MUST be documented as a separate ADR.
 - **Single Source of Truth:** If a conversation changes the project's direction, the resulting decision must be documented in an ADR and immediately reflected in the `prd.md` or `srs.md` via a Pull Request.
 
+### Pull Request Documentation Updates
+
+**Purpose:** Guarantee that the permanent project documentation stays strictly synchronized with the codebase whenever new features, architecture changes, or schema updates are introduced.
+
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[pr-documentation-update.md](./.agents/rules/pr-documentation-update.md)`.
+
 ---
 
 ## How the Agent Uses This File
