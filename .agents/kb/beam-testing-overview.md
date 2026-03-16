@@ -1,5 +1,21 @@
 # Testing and Quality Assurance in the BEAM Ecosystem
 
+## 🚨 TL;DR: Project Testing Standards (READ FIRST) 🚨
+Before diving into the philosophy of BEAM testing, AI agents generating code or scaffolding projects must strictly adhere to these modern project standards:
+
+### 1. BDD Feature-Driven Development Standard
+To maintain BDD functionality, we use the Elixir-native `Wallaby.Feature` macro atop ExUnit. **Crucially, traditional Gherkin parser libraries (like WhiteBread or Cabbage) are deprecated and fundamentally broken on modern Elixir (v1.15+).** Instead of `.feature` text files, BEAM architects must write native Elixir scenarios in `test/features/` to maintain ecosystem compatibility while generating rich Allure test reports.
+
+### 2. Test Artifact Isolation and Reporting
+To guarantee clean project roots, all test-generated artifacts MUST be strictly collapsed into the idiomatic Elixir `test/` directory.
+
+- **Databases:** Ecto test databases must be routed to `test/spotbrowse_test.db` in `config/test.exs` rather than the application root.
+- **Test Reports:** Structured test reports (like Allure via `junit_formatter`) must output directly to `test/allure-results/` and compile to `test/allure-report/`.
+- **UI Snapshots:** Wallaby failure screenshots must be directed to `test/wallaby_screenshots/`.
+- **Do not use plural custom directories:** Custom directories like `tests/` break native `mix test` conventions. The singular `test/` folder should exclusively contain both source logic and ephemeral test artifacts (safely `.gitignore`'d).
+
+---
+
 ## 1. Foundational Testing Philosophy: The BEAM Paradigm
 
 As a Senior BEAM Architect, one must understand that the Erlang Runtime System (ERTS) does not treat failure as an exceptional state, but as a predictable event. Our testing strategies must shift from defensive error-catching to validating system resilience.
@@ -129,8 +145,8 @@ live_isolated_component(MyComponent,
 )
 ```
 
-### 3. Level 3: Browser End-to-End (Wallaby)
-For full browser End-to-End (E2E) testing bridging multiple pages or validating JavaScript hooks alongside LiveView, **Wallaby** provides the industry standard for managing concurrent browser sessions that interact with the BEAM's WebSocket-based channels. It should be used sparingly due to execution overhead.
+### 3. Level 3: Browser End-to-End & BDD (Wallaby)
+For full browser End-to-End (E2E) testing bridging multiple pages or validating JavaScript hooks alongside LiveView, **Wallaby** provides the industry standard for managing concurrent browser sessions that interact with the BEAM's WebSocket-based channels. (See the TL;DR section above for the strict `Wallaby.Feature` BDD standard).
 
 ## 6. Testing Concurrency, Distribution, and State
 
@@ -168,6 +184,7 @@ In the BEAM, the unit of work is a Reduction. Discord’s case study revealed th
 | **Unit** | ExUnit | EUnit |
 | **Property-Based** | PropCheck | PropEr |
 | **Mocking** | Mox | N/A |
+| **BDD/Feature** | Wallaby.Feature | Common Test (ct) |
 | **Integration/Dist** | ExUnit | Common Test (ct) |
 | **System/E2E** | Wallaby | Common Test (ct) |
 
