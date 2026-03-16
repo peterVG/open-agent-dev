@@ -46,7 +46,7 @@ Review and revise [`/docs/prd.md`](./docs/prd.md) as needed. Check [`/docs/templ
 
 ## Generate an implementation plan to guide development
 ```text
-@AGENTS.md Generate an implementation plan for the project using the @.agents/skills/implementation-plan-writer skill based on the @docs/prd.md, @docs/srs.md and @tests/features/ feature files. Once the implementation plan is created and the technology stack is confirmed, update the "Setup Development Environment" and "Setup Production Environment" sections in this README.md file with the actual commands needed to run the application, execute tests, view developer documentation, and deploy to production, removing the *Note:* placeholders.
+@AGENTS.md Generate an implementation plan for the project using the @.agents/skills/implementation-plan-writer skill based on the @docs/prd.md, @docs/srs.md and @tests/features/ feature files. Once the implementation plan is created and the technology stack is confirmed, update the "Setup Development Environment" and "Setup Production Environment" sections in this README.md file with the actual commands needed to run the application, execute tests (including BDD feature tests specifically), generate and view test reports (e.g. Allure), view developer documentation, and deploy to production, removing the *Note:* placeholders.
 ```
 
 ## Use the AGENTS.md prompts in your Implementation Plan
