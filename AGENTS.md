@@ -18,6 +18,40 @@
 - **Unit Test Traceability:** When code changes make a unit test obsolete or require modifications to the underlying implementation, the agent MUST explicitly update, refactor, or remove the corresponding unit tests to remain in sync with the source code.
 - **Strict Artifact Isolation:** This principle is tactically enforced on all AI agents via the instructions in `[artifact-isolation.md](./.agents/rules/artifact-isolation.md)`.
 
+## Development Workflow
+
+**Purpose:** Define the Git workflow and development methodology that AI agents must follow.
+
+### Branch-Per-Task
+
+**All development must follow the Branch-Per-Task workflow:**
+
+- **Active Enforcement:** The Branch-Per-Task and Execution Documentation requirements are tactically enforced on all AI agents via the instructions in `[task-workflow.md](./.agents/rules/task-workflow.md)`.
+
+### Standalone Production Code
+
+**Purpose:** Ensure that the core application codebase is completely self-contained, deployment-ready, and not permanently entangled with its surrounding project-management or AI-development tooling.
+
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[src-isolation.md](./.agents/rules/src-isolation.md)`.
+
+### Strict Command Verification
+
+**Purpose:** Guarantee that any CLI commands, build steps, or execution scripts documented for humans are actually functional and tested against current dependencies.
+
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[command-verification.md](./.agents/rules/command-verification.md)`.
+
+### Pull Request Documentation Updates
+
+**Purpose:** Guarantee that the permanent project documentation stays strictly synchronized with the codebase whenever new features, architecture changes, or schema updates are introduced.
+
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[pr-documentation-update.md](./.agents/rules/pr-documentation-update.md)`.
+
+### Sync Logic Verification
+
+**Purpose:** Guarantee that upstream documentation (PRD, SRS, ADRs, Implementation Plan) is consistently aligned before writing implementation code, and to require explicit human review for any detected contradictions.
+
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[sync-logic.md](./.agents/rules/sync-logic.md)`.
+
 ### Minimize Dependencies
 
 **Purpose:** List specific constraints on external services, libraries, and vendor lock-in.
@@ -70,11 +104,7 @@
 - [e.g., "App functions fully offline, syncs when connected"]
 - [e.g., "Local storage is source of truth, cloud is backup"]
 
-### Standalone Production Code
 
-**Purpose:** Ensure that the core application codebase is completely self-contained, deployment-ready, and not permanently entangled with its surrounding project-management or AI-development tooling.
-
-- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[src-isolation.md](./.agents/rules/src-isolation.md)`.
 
 ### Platform-Agnostic Documentation
 
@@ -90,11 +120,7 @@
 - **Strictly Relative Links:** Anytime an AI agent generates documenting artifacts, readmes, technical specs, or logs that cross-reference another file in this project, it MUST use standard Markdown relative linking (e.g., `[PRD](../prd.md)` or `[Task 1.1](./tasks/Task-1.1-Plan.md)`).
 - **Prohibited Absolute Paths:** The agent MUST NEVER write absolute file paths native to its current execution environment (e.g., `file:///Users/petervangarderen/...`) into the permanent project repository files. Absolute paths break immediately upon push to a remote repository or clone by another developer.
 
-### Strict Command Verification
 
-**Purpose:** Guarantee that any CLI commands, build steps, or execution scripts documented for humans are actually functional and tested against current dependencies.
-
-- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[command-verification.md](./.agents/rules/command-verification.md)`.
 
 ### Zero-Friction Setup
 
@@ -113,29 +139,3 @@
 - **ISO/IEC/IEEE 42010:** Architecture Decision Records (ADRs) MUST include the 9 specific information items required by the ISO 42010 standard for architecture descriptions as defined in [`.agents/kb/iso-42010-adr.md`](./.agents/kb/iso-42010-adr.md).
 - **RFC 2119:** All requirements documentation (PRD, SRS) must use explicit RFC 2119 terminology (e.g., MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, OPTIONAL) to define the significance of each requirement. Exact definitions are located in [`.agents/kb/rfc-2119-req-terms.md`](./.agents/kb/rfc-2119-req-terms.md).
 
-## Development Workflow
-
-**Purpose:** Define the Git workflow and development methodology that AI agents must follow.
-
-### Branch-Per-Task
-
-**All development must follow the Branch-Per-Task workflow:**
-
-- **Active Enforcement:** The Branch-Per-Task and Execution Documentation requirements are tactically enforced on all AI agents via the instructions in `[task-workflow.md](./.agents/rules/task-workflow.md)`.
-
-### Architecture Decision Records (ADRs)
-
-**Purpose:** Document the context and justification for all significant architectural, technical, and product decisions made during AI/User collaboration.
-
-- **Record Decisions, Not Conversations:** Instead of saving raw chat logs, synthesize agreed-upon decisions into lightweight markdown files in `docs/architecture/`.
-- **Naming Convention:** Prefix each ADR with a consecutive three-digit number followed by a hyphenated slug describing the decision (e.g., `001-use-sqlite-for-local-storage.md`, `002-dont-use-external-auth.md`).
-- **Active Enforcement:** The ISO 42010 required format for ADRs is tactically enforced on all AI agents via the instructions in `[adr-formatting.md](./.agents/rules/adr-formatting.md)`.
-- **Test Runner ADR:** The selection and justification of test runners appropriate for the project's technology stack MUST be documented as a separate ADR.
-- **Coding Style ADR:** The selection of the language-specific coding style standard (e.g., PEP8, Airbnb Style Guide, The Go Way) and the specific tools used to enforce it (e.g., Ruff, ESLint/Prettier, gofmt) MUST be documented as a separate ADR.
-- **Single Source of Truth:** If a conversation changes the project's direction, the resulting decision must be documented in an ADR and immediately reflected in the `prd.md` or `srs.md` via a Pull Request.
-
-### Pull Request Documentation Updates
-
-**Purpose:** Guarantee that the permanent project documentation stays strictly synchronized with the codebase whenever new features, architecture changes, or schema updates are introduced.
-
-- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[pr-documentation-update.md](./.agents/rules/pr-documentation-update.md)`.
