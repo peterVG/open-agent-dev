@@ -52,21 +52,43 @@
 
 - **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[sync-logic.md](./.agents/rules/sync-logic.md)`.
 
-### Minimize Dependencies
+### Portable Documentation (Relative Links)
 
-**Purpose:** List specific constraints on external services, libraries, and vendor lock-in.
+**Purpose:** Ensure that the project's documentation remains universally portable, readable across any environment, and correctly navigable natively within GitHub.
 
-- [e.g., "No external databases - use [your choice] for storage"]
-- [e.g., "No authentication service - use [your approach]"]
-- [e.g., "Limit npm packages to essential utilities only"]
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[links-enforce.md](./.agents/rules/links-enforce.md)`.
+- **Strictly Relative Links:** Anytime an AI agent generates documenting artifacts, readmes, technical specs, or logs that cross-reference another file in this project, it MUST use standard Markdown relative linking (e.g., `[PRD](../prd.md)` or `[Task 1.1](./tasks/Task-1.1-Plan.md)`).
+- **Prohibited Absolute Paths:** The agent MUST NEVER write absolute file paths native to its current execution environment (e.g., `file:///Users/petervangarderen/...`) into the permanent project repository files. Absolute paths break immediately upon push to a remote repository or clone by another developer.
 
-### Scale-to-Zero
+### Platform-Agnostic Documentation
 
-**Purpose:** Explain how the architecture minimizes running costs when idle.
+**Purpose:** Ensure that the project does not alienate users on different operating systems by hardcoding platform-specific assumptions (e.g., assuming macOS and Homebrew are the default).
 
-- [e.g., "Static frontend with no server costs"]
-- [e.g., "Serverless backend - pay only for actual usage"]
-- [e.g., "No always-on databases or services"]
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[platform-agnostic.md](./.agents/rules/platform-agnostic.md)`.
+
+### Standards Compliance
+
+**Purpose:** Ensure the project adheres to established industry standards for interoperability, requirements engineering, and documentation.
+
+- **Agent Skills 1.0:** The project template and agent tools comply with the Agent Skills 1.0 specification (including progressive disclosure, multi-tool support, and vendor neutrality). The framework principles are defined in [`.agents/kb/agent-skills-1.0.md`](./.agents/kb/agent-skills-1.0.md).
+- **Conventional Commits:** All git commits MUST use the Conventional Commits format (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`). The exact formatting rules are located in [`.agents/kb/conventional-commits.md`](./.agents/kb/conventional-commits.md).
+- **ISO/IEC/IEEE 29148:** The Software Requirements Specification (SRS) MUST be Unambiguous, Complete, Verifiable, Consistent, and Traceable. Specific agent instructions for these criteria are defined in [`.agents/kb/iso-29148-srs.md`](./.agents/kb/iso-29148-srs.md).
+- **ISO/IEC/IEEE 42010:** Architecture Decision Records (ADRs) MUST include the 9 specific information items required by the ISO 42010 standard for architecture descriptions as defined in [`.agents/kb/iso-42010-adr.md`](./.agents/kb/iso-42010-adr.md).
+- **RFC 2119:** All requirements documentation (PRD, SRS) must use explicit RFC 2119 terminology (e.g., MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, OPTIONAL) to define the significance of each requirement. Exact definitions are located in [`.agents/kb/rfc-2119-req-terms.md`](./.agents/kb/rfc-2119-req-terms.md).
+
+### Security by Design
+
+**Purpose:** State security requirements and architectural decisions that protect user data.
+
+- [e.g., "Client-side encryption before data leaves the browser"]
+- [e.g., "Zero-knowledge architecture - server never sees unencrypted data"]
+- [e.g., "User controls their own encryption keys"]
+
+### Privacy by Design
+
+**Purpose:** State privacy requirements and architectural decisions that protect user identification or other information about the user that should remain private.
+
+- [e.g., the application uses W3C Verifiable Credentials]
 
 ### Modularity
 
@@ -83,44 +105,28 @@
 - [e.g., "Frontend and backend communicate only through documented endpoints"]
 - [e.g., "API designed for third-party integrations"]
 
-### Security by Design
+### Minimize Dependencies
 
-**Purpose:** State security requirements and architectural decisions that protect user data.
+**Purpose:** List specific constraints on external services, libraries, and vendor lock-in.
 
-- [e.g., "Client-side encryption before data leaves the browser"]
-- [e.g., "Zero-knowledge architecture - server never sees unencrypted data"]
-- [e.g., "User controls their own encryption keys"]
+- [e.g., "No external databases - use [your choice] for storage"]
+- [e.g., "No authentication service - use [your approach]"]
+- [e.g., "Limit npm packages to essential utilities only"]
 
-### Privacy by Design
+### Scale-to-Zero
 
-**Purpose:** State privacy requirements and architectural decisions that protect user identification or other information about the user that should remain private.
+**Purpose:** Explain how the architecture minimizes running costs when idle.
 
-- [e.g., the application uses W3C Verifiable Credentials]
+- [e.g., "Static frontend with no server costs"]
+- [e.g., "Serverless backend - pay only for actual usage"]
+- [e.g., "No always-on databases or services"]
 
-### Local-First (Optional)
+### Local-First
 
 **Purpose:** If applicable, describe how the app works offline or prioritizes local data.
 
 - [e.g., "App functions fully offline, syncs when connected"]
 - [e.g., "Local storage is source of truth, cloud is backup"]
-
-
-
-### Platform-Agnostic Documentation
-
-**Purpose:** Ensure that the project does not alienate users on different operating systems by hardcoding platform-specific assumptions (e.g., assuming macOS and Homebrew are the default).
-
-- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[platform-agnostic.md](./.agents/rules/platform-agnostic.md)`.
-
-### Portable Documentation (Relative Links)
-
-**Purpose:** Ensure that the project's documentation remains universally portable, readable across any environment, and correctly navigable natively within GitHub.
-
-- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[links-enforce.md](./.agents/rules/links-enforce.md)`.
-- **Strictly Relative Links:** Anytime an AI agent generates documenting artifacts, readmes, technical specs, or logs that cross-reference another file in this project, it MUST use standard Markdown relative linking (e.g., `[PRD](../prd.md)` or `[Task 1.1](./tasks/Task-1.1-Plan.md)`).
-- **Prohibited Absolute Paths:** The agent MUST NEVER write absolute file paths native to its current execution environment (e.g., `file:///Users/petervangarderen/...`) into the permanent project repository files. Absolute paths break immediately upon push to a remote repository or clone by another developer.
-
-
 
 ### Zero-Friction Setup
 
@@ -128,14 +134,3 @@
 
 - **Automated Initialization:** If the application requires a local database, the initialization script MUST automatically check if it exists on startup. If not, it MUST seamlessly create the database, build the required schema/tables, and seed initial data without requiring manual CLI commands from the user.
 - **Interactive Auth Prompts:** If the application requires API keys or authentication secrets, the application MUST automatically detect if they are missing on startup and interactively prompt the user for them (or generate a `.env` template automatically) rather than simply crashing with a stack trace.
-
-### Standards Compliance
-
-**Purpose:** Ensure the project adheres to established industry standards for interoperability, requirements engineering, and documentation.
-
-- **Agent Skills 1.0:** The project template and agent tools comply with the Agent Skills 1.0 specification (including progressive disclosure, multi-tool support, and vendor neutrality). The framework principles are defined in [`.agents/kb/agent-skills-1.0.md`](./.agents/kb/agent-skills-1.0.md).
-- **Conventional Commits:** All git commits MUST use the Conventional Commits format (`feat:`, `fix:`, `docs:`, `refactor:`, `test:`, `chore:`). The exact formatting rules are located in [`.agents/kb/conventional-commits.md`](./.agents/kb/conventional-commits.md).
-- **ISO/IEC/IEEE 29148:** The Software Requirements Specification (SRS) MUST be Unambiguous, Complete, Verifiable, Consistent, and Traceable. Specific agent instructions for these criteria are defined in [`.agents/kb/iso-29148-srs.md`](./.agents/kb/iso-29148-srs.md).
-- **ISO/IEC/IEEE 42010:** Architecture Decision Records (ADRs) MUST include the 9 specific information items required by the ISO 42010 standard for architecture descriptions as defined in [`.agents/kb/iso-42010-adr.md`](./.agents/kb/iso-42010-adr.md).
-- **RFC 2119:** All requirements documentation (PRD, SRS) must use explicit RFC 2119 terminology (e.g., MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, OPTIONAL) to define the significance of each requirement. Exact definitions are located in [`.agents/kb/rfc-2119-req-terms.md`](./.agents/kb/rfc-2119-req-terms.md).
-
