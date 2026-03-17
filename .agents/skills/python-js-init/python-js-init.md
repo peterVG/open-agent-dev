@@ -150,10 +150,72 @@ The `tests/` directory is logically partitioned based on testing scope:
 - Execute behavior feature maps via `behave`.
 - After a test run, compile `allure` results using the Allure CLI to generate viewable test coverage HTML reports.
 
-## Step 3: Generate Test Framework ADRs
+## Step 3: Generate linting rule
+
+Create a @.agents/rules/lint-enforce.md file that contains the following verbatim content:  
+
+---
+description: Ensure all code is strictly linted and formatted before pushing or testing.
+---
+
+# Linting and Formatting Enforcement
+
+**Purpose:** This file instructs the AI agent on exactly how to lint and format the codebase to satisfy the Test-Driven Development (TDD) linting mandate in `AGENTS.md`.
+
+## Active Tools
+
+Based on the accepted Architecture Decision Records (`docs/architecture/004-coding-style-and-linting.md`), this project uses:
+
+- **Ruff** for Python analysis and fast, PEP8-compliant code formatting (Backend).
+- **ESLint** for static code analysis (Frontend).
+- **Prettier** for opinionated code formatting (Frontend).
+
+## Execution Requirements
+
+Before running any tests, committing code, or completing an execution task, you MUST execute the following CLI commands to ensure the codebase complies with the configured standards.
+
+### 1. Format the Frontend Codebase
+
+Always run the formatter first to resolve syntactic and styling inconsistencies across all JavaScript, JSON, and Markdown files.
+
+```bash
+npx prettier --write .
+```
+
+### 2. Lint the Frontend (and auto-fix)
+
+Run the Javascript linter to catch logical errors and automatically fix any safe violations.
+
+```bash
+npx eslint . --fix
+```
+
+### 3. Lint and Format the Python Backend (and auto-fix)
+
+Run Ruff to enforce PEP8 standards, catch logical errors, and automatically fix any safe violations in the Python codebase.
+
+```bash
+ruff check . --fix
+ruff format .
+```
+
+## Agent Resolution Mandate
+
+If the `eslint` or `ruff check` commands return a non-zero exit code (indicating unresolved linting errors or warnings configured as errors), the agent **MUST NOT** proceed to testing or committing.
+
+The agent MUST:
+
+1. Review the specific CLI output of the linting errors.
+2. Formulate a plan to fix the code logic causing the violations.
+3. Apply the fixes.
+4. Rerun `npx eslint .` or `ruff check .` to verify all errors are resolved.
+
+Only when Ruff, Prettier, and ESLint all exit cleanly (code 0) is the codebase considered valid for testing or PR submission.
+
+## Step 4: Generate Test Framework ADRs
 
 Use the @.agents/rules/adr-formatting.md rule to write an ADR to the @docs/architecture/ direcory that explains the selected test runners and coding style standards.
 
-## Step 4: Update Documentation
+## Step 5: Update Documentation
 
 Update the ## Run tests section in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure.
