@@ -150,7 +150,14 @@ The `tests/` directory is logically partitioned based on testing scope:
 - Execute behavior feature maps via `behave`.
 - After a test run, compile `allure` results using the Allure CLI to generate viewable test coverage HTML reports.
 
-## Step 3: Generate linting rule
+## Step 3: Configure Documentation Generation
+
+Clear documentation is critical for maintaining the separation of concerns in a monorepo. Configure the following documentation frameworks:
+
+1. **Backend (Python):** Use `pdoc` to automatically extract docstrings (which MUST follow Google or NumPy style) and generate API documentation. Add `pdoc` to your development `requirements.txt`.
+2. **Frontend (Javascript):** Use `JSDoc` for inline comments and function signatures. If the frontend grows complex, configure `TypeDoc` (if using TypeScript) or `JSDoc`'s generator to produce static documentation sites.
+
+## Step 4: Generate linting rule
 
 Create a @.agents/rules/lint-enforce.md file that contains the following verbatim content:  
 
@@ -212,10 +219,13 @@ The agent MUST:
 
 Only when Ruff, Prettier, and ESLint all exit cleanly (code 0) is the codebase considered valid for testing or PR submission.
 
-## Step 4: Generate Test Framework ADRs
+## Step 5: Generate Architecture Decision Records (ADRs)
 
-Use the @.agents/rules/adr-formatting.md rule to write an ADR to the @docs/architecture/ direcory that explains the selected test runners and coding style standards.
+Use the @.agents/rules/adr-formatting.md rule to write ADRs to the @docs/architecture-decisions/ directory.
 
-## Step 5: Update Documentation
+Be sure to include separate ADRs specifically for the choice of: 1) test runners, UI testing frameworks, Integration testing frameworks, Performance testing frameworks, and Test Reporting frameworks; 2) Inline code documentation and Developer documentation generation frameworks; and 3) Coding style standards and linting/formatting tools.
+
+
+## Step 6: Update Documentation
 
 Update the ## Run tests section in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure.

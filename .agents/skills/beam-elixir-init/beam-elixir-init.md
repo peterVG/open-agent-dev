@@ -107,7 +107,14 @@ To ensure code quality, consistent styling, and catch potential issues early, co
 1. **Formatting:** Use the built-in `mix format` to enforce standard Elixir code style across the project.
 2. **Linting:** Add `{:credo, "~> 1.7", only: [:dev, :test], runtime: false}` to your `mix.exs` dependencies to enforce strict code analysis and best practices. Run `mix credo --strict`.
 
-## Step 3: Generate linting rule
+## Step 3: Configure Documentation Generation
+
+Elixir has robust built-in standards for documentation. You must configure the project to use these native tools:
+
+1. **Inline Documentation:** Use `@moduledoc` and `@doc` attributes to document all public modules and functions.
+2. **Developer Documentation:** Add `{:ex_doc, "~> 0.31", only: :dev, runtime: false}` to your `mix.exs` dependencies to generate HTML/Epub documentation using `mix docs`.
+
+## Step 4: Generate linting rule
 
 Create a @.agents/rules/lint-enforce.md file that contains the following verbatim content:
 
@@ -149,10 +156,12 @@ npx eslint . --fix
 ```
 *If this fails:* The agent MUST resolve any lingering JS logical errors before proceeding.
 
-## Step 4: Generate Test Framework ADRs
+## Step 5: Generate Architecture Decision Records (ADRs)
 
-Use the @.agents/rules/adr-formatting.md rule to write an ADR to the @docs/architecture/ direcory that explains the selected test runners and coding style standards.
+Use the @.agents/rules/adr-formatting.md rule to write ADRs to the @docs/architecture-decisions/ directory.
 
-## Step 5: Update Documentation
+Be sure to include separate ADRs specifically for the choice of: 1) test runners, UI testing frameworks, Integration testing frameworks, Performance testing frameworks, and Test Reporting frameworks; 2) Inline code documentation and Developer documentation generation frameworks; and 3) Coding style standards and linting/formatting tools.
+
+## Step 6: Update Documentation
 
 Update the ## Run tests section in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure.
