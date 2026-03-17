@@ -6,9 +6,13 @@ description: Ensure that shared infrastructure like Docker Compose remains centr
 
 Whether the Open Agent Dev repository is structured as a Polyglot Monorepo (Python/JS) or an Umbrella Project (BEAM/Elixir), application code is rigorously isolated in `/apps` and `/services`. However, underlying shared infrastructure MUST be centralized.
 
-## Docker Compose at the Root
+## Docker Compose for Local Backing Services (Not Apps)
 
 You MUST place the primary `docker-compose.yml` file at the repository root, **not** inside individual workspace directories (e.g., do not put it in `apps/web/`).
+
+**CRITICAL DISTINCTION:** This centralized `docker-compose.yml` is *only* to be used for spinning up **backing services** (PostgreSQL, Redis, RabbitMQ, etc.) for local development. 
+- You MUST NOT use this file to Dockerize the actual application code itself. 
+- BEAM/Elixir applications are deployed using native OTP releases on the BEAM VM. They should run natively during local development (via `mix phx.server`) while connecting to the Dockerized backing services.
 
 ### Rationale
 
