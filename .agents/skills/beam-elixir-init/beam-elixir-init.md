@@ -114,7 +114,36 @@ Elixir has robust built-in standards for documentation. You must configure the p
 1. **Inline Documentation:** Use `@moduledoc` and `@doc` attributes to document all public modules and functions.
 2. **Developer Documentation:** Add `{:ex_doc, "~> 0.31", only: :dev, runtime: false}` to your `mix.exs` dependencies to generate HTML/Epub documentation using `mix docs`.
 
-## Step 4: Generate linting rule
+## Step 4: Generate Inline Documentation Rule
+
+Create a @.agents/rules/docs-enforce.md file that contains the following verbatim content:
+
+---
+description: Ensure all code is comprehensively documented using Elixir's native documentation attributes.
+---
+
+# Inline Documentation Enforcement
+
+**Purpose:** This rule dictates how an AI agent MUST document the codebase to satisfy the Inline Documentation Mandate in `AGENTS.md`.
+
+## Active Enforcement
+
+Before declaring any coding task "complete" or writing tests, the agent MUST verify that the following components include verbose inline documentation that clearly explains their function and intended usage:
+
+1.  **ALL** Modules (using `@moduledoc`)
+2.  **ALL** Public Functions and Macros (using `@doc`)
+3.  **ALL** Complex or non-obvious private functions / code blocks (using inline `#` comments)
+
+### Elixir (Backend) Standards
+The agent MUST use standard Elixir documentation attributes. These attributes expect Markdown strings and MUST be placed immediately before the module/function definition.
+These attributes MUST be parseable by `ex_doc` to generate the final developer documentation site.
+
+### Javascript/CSS (Frontend) Standards
+For custom frontend scripts in `assets/`, the agent MUST use standard `JSDoc` syntax (using `/** ... */`) for all functions and logic blocks.
+
+*Failure to document code according to these standards violates the core AGENTS.md manifesto.*
+
+## Step 5: Generate linting rule
 
 Create a @.agents/rules/lint-enforce.md file that contains the following verbatim content:
 
@@ -156,12 +185,12 @@ npx eslint . --fix
 ```
 *If this fails:* The agent MUST resolve any lingering JS logical errors before proceeding.
 
-## Step 5: Generate Architecture Decision Records (ADRs)
+## Step 6: Generate Architecture Decision Records (ADRs)
 
 Use the @.agents/rules/adr-formatting.md rule to write ADRs to the @docs/architecture-decisions/ directory.
 
 Be sure to include separate ADRs specifically for the choice of: 1) test runners, UI testing frameworks, Integration testing frameworks, Performance testing frameworks, and Test Reporting frameworks; 2) Inline code documentation and Developer documentation generation frameworks; and 3) Coding style standards and linting/formatting tools.
 
-## Step 6: Update Documentation
+## Step 7: Update Documentation
 
 Update the ## Run tests section in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure.

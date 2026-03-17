@@ -157,7 +157,37 @@ Clear documentation is critical for maintaining the separation of concerns in a 
 1. **Backend (Python):** Use `pdoc` to automatically extract docstrings (which MUST follow Google or NumPy style) and generate API documentation. Add `pdoc` to your development `requirements.txt`.
 2. **Frontend (Javascript):** Use `JSDoc` for inline comments and function signatures. If the frontend grows complex, configure `TypeDoc` (if using TypeScript) or `JSDoc`'s generator to produce static documentation sites.
 
-## Step 4: Generate linting rule
+## Step 4: Generate Inline Documentation Rule
+
+Create a @.agents/rules/docs-enforce.md file that contains the following verbatim content:
+
+---
+description: Ensure all code is comprehensively documented using the standard inline documentation formats for this stack.
+---
+
+# Inline Documentation Enforcement
+
+**Purpose:** This rule dictates how an AI agent MUST document the codebase to satisfy the Inline Documentation Mandate in `AGENTS.md`.
+
+## Active Enforcement
+
+Before declaring any coding task "complete" or writing tests, the agent MUST verify that the following components include verbose inline documentation that clearly explains their function and intended usage:
+
+1.  **ALL** Classes
+2.  **ALL** Functions / Methods
+3.  **ALL** Modules
+4.  **ALL** Complex or non-obvious code blocks
+
+### Python (Backend) Standards
+The agent MUST use standard Python docstrings (using `"""`) adhering strictly to either the **Google** or **NumPy** docstring format.
+These docstrings MUST be parseable by `pdoc` to generate the final developer documentation site.
+
+### Javascript/TypeScript (Frontend) Standards
+The agent MUST use standard `JSDoc` syntax (using `/** ... */`) for all frontend logic, hooks, utility functions, and complex React/Vue components.
+
+*Failure to document code according to these standards violates the core AGENTS.md manifesto.*
+
+## Step 5: Generate linting rule
 
 Create a @.agents/rules/lint-enforce.md file that contains the following verbatim content:  
 
@@ -219,13 +249,12 @@ The agent MUST:
 
 Only when Ruff, Prettier, and ESLint all exit cleanly (code 0) is the codebase considered valid for testing or PR submission.
 
-## Step 5: Generate Architecture Decision Records (ADRs)
+## Step 6: Generate Architecture Decision Records (ADRs)
 
 Use the @.agents/rules/adr-formatting.md rule to write ADRs to the @docs/architecture-decisions/ directory.
 
 Be sure to include separate ADRs specifically for the choice of: 1) test runners, UI testing frameworks, Integration testing frameworks, Performance testing frameworks, and Test Reporting frameworks; 2) Inline code documentation and Developer documentation generation frameworks; and 3) Coding style standards and linting/formatting tools.
 
-
-## Step 6: Update Documentation
+## Step 7: Update Documentation
 
 Update the ## Run tests section in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure.
