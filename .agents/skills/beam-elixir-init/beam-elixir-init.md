@@ -66,10 +66,10 @@ project-root/
 
 ## Step 2: Configure Testing Frameworks
 
-## 1. BDD Feature-Driven Development Standard
+### 1. BDD Feature-Driven Development Standard
 To maintain BDD functionality, we use the Elixir-native `Wallaby.Feature` macro atop ExUnit. **Crucially, traditional Gherkin parser libraries (like WhiteBread or Cabbage) are deprecated and fundamentally broken on modern Elixir (v1.15+).** Instead of `.feature` text files, BEAM architects must write native Elixir scenarios in `test/features/` to maintain ecosystem compatibility while generating rich Allure test reports.
 
-## 2. Test Artifact Isolation and Reporting
+### 2. Test Artifact Isolation and Reporting
 To guarantee clean project roots, all test-generated artifacts MUST be strictly collapsed into the idiomatic Elixir `test/` directory.
 
 - **Databases:** Ecto test databases must be routed to `test/spotbrowse_test.db` in `config/test.exs` rather than the application root.
@@ -77,7 +77,7 @@ To guarantee clean project roots, all test-generated artifacts MUST be strictly 
 - **UI Snapshots:** Wallaby failure screenshots must be directed to `test/wallaby_screenshots/`.
 - **Do not use plural custom directories:** Custom directories like `tests/` break native `mix test` conventions. The singular `test/` folder should exclusively contain both source logic and ephemeral test artifacts (safely `.gitignore`'d).
 
-## 3. Allure Test Reporting Integration
+### 3. Allure Test Reporting Integration
 To properly configure Allure in a BEAM project, adhere to the following setup:
 
 1. **Add `junit_formatter` to dependencies:** Add `{:junit_formatter, "~> 3.3", only: [:test]}` to your `mix.exs` file to generate the XML reports.
@@ -91,7 +91,7 @@ To properly configure Allure in a BEAM project, adhere to the following setup:
    ```
 4. **Allure CLI:** Ensure that `allure-commandline` is accessible. To generate the final HTML report, run `allure generate test/allure-results -o test/allure-report --clean` and view it with `allure open test/allure-report`.
 
-## 4. PhoenixTest and Playwright Integration
+### 4. PhoenixTest and Playwright Integration
 To support robust End-to-End (E2E) and integration testing, configure both PhoenixTest and Playwright:
 
 1. **PhoenixTest Setup:** 
@@ -102,7 +102,15 @@ To support robust End-to-End (E2E) and integration testing, configure both Phoen
    - Run `npm init playwright@latest` inside your `apps/my_app_web/assets/` (or equivalent) directory.
    - Configure playwright to target the Phoenix test server port and ensure tests are output to `test/playwright-results/` to respect the artifact isolation rule.
 
+### 5. Linting and Formatting Standard
+To ensure code quality, consistent styling, and catch potential issues early, configure the following:
+1. **Formatting:** Use the built-in `mix format` to enforce standard Elixir code style across the project.
+2. **Linting:** Add `{:credo, "~> 1.7", only: [:dev, :test], runtime: false}` to your `mix.exs` dependencies to enforce strict code analysis and best practices. Run `mix credo --strict`.
 
-## Step 3: Update Documentation
+## Step 3: Generate Test Framework ADRs
 
-Update the `README.md` to document the exact commands needed to start the Elixir/Phoenix server (e.g., `mix phx.server`) and run the tests (e.g., `mix test`).
+Use the @.agents/rules/adr-formatting.md rule to write an ADR to the @docs/architecture/ direcory that explains the selected test runners and coding style standards.
+
+## Step 4: Update Documentation
+
+Update the ## Run tests section in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure.

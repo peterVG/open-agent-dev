@@ -125,9 +125,13 @@ The main test execution environment is driven by `pytest`, supported by various 
 - **Integration**: Plugs into both pytest (`allure-pytest`) and behave (`allure-behave`).
 - **Configuration**: Results are configured to output to `tests/allure-results` via `--alluredir=tests/allure-results` in `pytest.ini`.
 
-### 6. Code Formatting and Linting: `ruff`
+### 6. Code Formatting and Linting (Python Backend): `ruff`
 - **Purpose**: Ensures code quality and standard style before testing.
-- **Configuration**: Defined in `pyproject.toml` targeting Python 3.11 features.
+- **Configuration**: Defined in `pyproject.toml` targeting modern Python features.
+
+### 7. Code Formatting and Linting (Javascript Frontend): `eslint` & `prettier`
+- **Purpose**: Enforces code quality and formatting consistency for the Javascript/TypeScript frontend codebase.
+- **Configuration**: Defined in the frontend `package.json` and `.eslintrc.json`/`.prettierrc.json` within `apps/frontend/`.
 
 ## Directory Structure
 
@@ -140,13 +144,16 @@ The `tests/` directory is logically partitioned based on testing scope:
 - `tests/allure-results/`: Directory capturing real-time test output for Allure reporting.
 
 ## Best Practices
-- Run code formatting and linting via `ruff` prior to running tests.
+- Run code formatting and linting via `ruff` (backend) and `eslint`/`prettier` (frontend) prior to running tests.
 - Execute unit and integration tests via `pytest`.
 - Execute performance limits via `locust`.
 - Execute behavior feature maps via `behave`.
 - After a test run, compile `allure` results using the Allure CLI to generate viewable test coverage HTML reports.
 
+## Step 3: Generate Test Framework ADRs
 
-## Step 3: Update Documentation
+Use the @.agents/rules/adr-formatting.md rule to write an ADR to the @docs/architecture/ direcory that explains the selected test runners and coding style standards.
 
-Update the `README.md` to document the exact commands needed to start both the Python backend and the Javascript frontend using Docker Compose, and how to execute their respective test suites from within their workspace directories.
+## Step 4: Update Documentation
+
+Update the ## Run tests section in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure.
