@@ -12,26 +12,26 @@ When scaffolding a new project, you MUST create the following directory structur
 
 ```text
 project-root/
-├── config/
-├── deps/
-├── doc/
-├── ebin/
-├── include/
-├── lib/
-│   ├── my_app/
-│   └── my_app_web/
-├── priv/
-├── test/
-├── mix.exs
-├── mix.lock
+├── apps/
+│   └── my_app/
+│       ├── config/
+│       ├── deps/
+│       ├── doc/
+│       ├── ebin/
+│       ├── include/
+│       ├── lib/
+│       ├── priv/
+│       ├── test/
+│       ├── mix.exs
+│       └── mix.lock
 └── README.md
 ```
 
-Use appropriate Mix commands (`mix phx.new` or `mix new`) and system commands to generate this exact hierarchy within the repository root. 
+Use appropriate Mix commands (`mix phx.new` or `mix new`) and ensure the generation targets a subdirectory within `apps/` (e.g. `apps/my_app/`), rather than the repository root. 
 
-### Populate the README.md file to explain directory structure
+### Populate the apps/README.md file to explain directory structure
 
-Populate the README.md file to explain the directory structure. Use the following verbatim text:
+Create and populate the `apps/README.md` file to explain the application directory structure. Use the following verbatim text:
 
 The best practice for structuring a BEAM project—whether written in Erlang or Elixir—is strictly dictated by the OTP (Open Telecom Platform) framework. Because the BEAM ecosystem expects code to be bundled as self-contained OTP applications, following standard directory layouts ensures compatibility with community build tools, releases, and hot code swapping mechanisms.
 
@@ -39,30 +39,23 @@ While Elixir modernizes some of the naming conventions (like using lib/ instead 
 
 ```text
 project-root/
-├── config/       # Application configuration files (e.g., test.exs, dev.exs)
-├── deps/         # Third-party dependencies downloaded by the package manager
-├── doc/          # Generated documentation (e.g., EDoc or ExDoc)
-├── ebin/         # Compiled bytecode (.beam) and Application Resource (.app) files
-├── include/      # Public header files (.hrl) required by other applications
-├── lib/          # Main Elixir source code (or src/ for Erlang .erl files)
-│   ├── my_app/       # Core business logic and stateful GenServers
-│   └── my_app_web/   # Phoenix web interface (LiveViews, Controllers, etc.)
-├── priv/         # Non-BEAM specific files (executables, C drivers, static web assets)
-├── test/         # Test suites, ExUnit/EUnit files, and test helpers
-├── mix.exs       # Elixir project configuration and dependencies list (or Emakefile)
-└── mix.lock      # Locked versions of dependencies
+├── apps/
+│   └── my_app/
+│       ├── config/       # Application configuration files (e.g., test.exs, dev.exs)
+│       ├── deps/         # Third-party dependencies downloaded by the package manager
+│       ├── doc/          # Generated documentation (e.g., EDoc or ExDoc)
+│       ├── ebin/         # Compiled bytecode (.beam) and Application Resource files
+│       ├── include/      # Public header files (.hrl) required by other applications
+│       ├── lib/          # Main Elixir source code (or src/ for Erlang .erl files)
+│       ├── priv/         # Non-BEAM specific files (executables, static assets)
+│       ├── test/         # Test suites, ExUnit/EUnit files, and test helpers
+│       ├── mix.exs       # Elixir project configuration and dependencies list
+│       └── mix.lock      # Locked versions of dependencies
 └── README.md     # Explains this directory structure
 ```
 
-**`lib/` (Elixir) or `src/` (Erlang):** This is where all of your main source code is stored. In a Phoenix web project, this directory is logically separated into distinct contexts: your core business logic (e.g., `lib/my_app/`) and your web presentation layer (e.g., `lib/my_app_web/live/`).
-**`ebin/`:** The destination directory where the compiler places the resulting bytecode (`.beam` files). Crucially, this directory also holds the Application Resource File (`.app`), which describes the application, its version, and its dependencies to the BEAM virtual machine. (Note: In modern Elixir, the Mix build tool often manages this dynamically under a hidden `_build/` folder).
-**`priv/`:** This directory is used for any specific non-Erlang/Elixir files your application needs to function. This includes custom C drivers, system executables, or static frontend assets for web applications.
-**`include/`:** Used to store public header files (ending in `.hrl`) that might need to be included by other applications within your ecosystem. Private header files should remain hidden inside the `src/` or `lib/` directory.
-**`test/`:** Holds all your automated test files (such as EUnit, Common Test, or ExUnit suites). Keeping tests here ensures they are isolated and not distributed as part of your compiled production release.
-**`config/` (or `conf/`):** Dedicated to specific configuration files used to tune your application's environment variables for different stages, like testing or production.
-**`deps/` (or `lib/` in older setups):** Where third-party libraries and dependencies are stored.
-**`doc/`:** The destination for automatically generated documentation files, such as those created by EDoc.
-**Root Build Files:** At the root of your project, you will typically have an `Emakefile` (for Erlang) or a `mix.exs` file (for Elixir) which defines how to compile the project, tracks test coverage configurations, and lists dependencies.
+**`apps/my_app/`:** In this monorepo structure, backend and frontend Phoenix code is grouped as a standalone OTP application nestled inside `apps/`. It maintains its own `config/`, `lib/`, `deps/`, `test/`, and `mix.exs` completely independent of the global project root.
+**`lib/`**: Contains all main source code logic and context boundaries.
 
 ## Step 2: Configure Testing Frameworks
 
@@ -193,4 +186,5 @@ Be sure to include separate ADRs specifically for the choice of: 1) test runners
 
 ## Step 7: Update Documentation
 
-Update the ## Run tests section in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure.
+1. **Insert** platform-agnostic Elixir/Erlang installation instructions into the top of the `README.md` file (e.g., referencing official guides or version managers like `asdf`, `mise`, etc.) to ensure a zero-friction setup for new developers. **CRITICAL: You MUST NOT delete or overwrite any existing content in the `README.md` file when adding this section.**
+2. **Update** the `## Run tests` section (or append one if it doesn't exist) in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure. **CRITICAL: You MUST NOT delete or overwrite any existing unrelated content in the `README.md` file when updating this section.**

@@ -41,11 +41,11 @@ project-root/
     └── shared-config/       
 ```
 
-Use appropriate system commands (`mkdir`, `touch`, etc) to generate this exact hierarchy. Ensure you populate the initial files like `.gitignore`, `docker-compose.yml`, and `Dockerfile` based on standard best practices for the specific frameworks you select for the frontend and backend inside these directories.
+Use appropriate commands (e.g. `npx create-react-app`, `npx create-next-app`, `django-admin startproject`) to generate these structures within the `apps/` and `services/` subdirectories.
 
-### Populate the README.md file to explain directory structure
+### Populate the apps/README.md and/or services/README.md files to explain directory structure
 
-Populate the README.md file to explain the directory structure. Use the following verbatim text:
+Create and populate `README.md` files at the root of the `apps/` and `services/` directories (i.e., `apps/README.md` and `services/README.md`) to explain their recursive directory structures. You can use the following text as a template, adjusting for the specific stack used:
 
 For a Python/Javascript project, the best practice is a Monorepo approach that strictly separates the backend API (Python) from the frontend client application (Javascript/TypeScript).
 
@@ -257,4 +257,5 @@ Be sure to include separate ADRs specifically for the choice of: 1) test runners
 
 ## Step 7: Update Documentation
 
-Update the ## Run tests section in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure.
+1. **Insert** platform-agnostic Python/Node installation instructions into the top of the `README.md` file (e.g., referencing official guides or version managers like `asdf`, `mise`, `pyenv`, `nvm`, etc.) to ensure a zero-friction setup for new developers. **CRITICAL: You MUST NOT delete or overwrite any existing content in the `README.md` file when adding this section.**
+2. **Update** the `## Run tests` section (or append one if it doesn't exist) in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure. **CRITICAL: You MUST NOT delete or overwrite any existing unrelated content in the `README.md` file when updating this section.**
