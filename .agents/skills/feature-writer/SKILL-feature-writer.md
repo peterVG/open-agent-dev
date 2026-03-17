@@ -1,15 +1,15 @@
 ---
-name: Gherkin Writer
-description: Translates SRS requirements into executable Gherkin scenarios using BDD best practices
+name: Feature Writer
+description: Translates SRS requirements into executable BDD feature scenarios based on the initialized tech stack
 allowed-tools:
   - code_interpreter
 ---
 
-# Gherkin Architect Skill
+# Feature Writer Skill
 
 ## Purpose
 
-This skill enables the agent to translate Produce Requirement Document (PRD) specifications andSoftware Requirements Specification (SRS) requirements into well-structured Gherkin scenarios that bridge the gap between requirements and executable tests.
+This skill enables the agent to translate Product Requirement Document (PRD) specifications and Software Requirements Specification (SRS) requirements into well-structured BDD scenarios that bridge the gap between requirements and executable tests.
 
 ## When to Use This Skill
 
@@ -20,10 +20,15 @@ This skill enables the agent to translate Produce Requirement Document (PRD) spe
 
 ## Core Principles
 
-### 1. Traceability
-Every Gherkin scenario MUST map back to a specific SRS requirement.
+### 1. Identify the Tech Stack
+Before writing any output, you MUST detect the project's initialized tech stack:
+- **BEAM/Elixir Stack:** Identified by the presence of a `mix.exs` file in the root directory.
+- **Python/Javascript Stack:** Identified by a polyglot Monorepo structure, typically with a `requirements.txt` or `package.json` setup for the backend/frontend.
 
-**Format:**
+### 2. Traceability
+Every scenario MUST map back to a specific SRS requirement.
+
+**Format (Standard Gherkin):**
 ```gherkin
 # SRS-REQ-001: User must be able to upload files up to 500MB
 Feature: File Upload
@@ -274,7 +279,7 @@ Feature: Large File Upload
 
 ## Socratic Questions to Ask
 
-When drafting Gherkin, the agent should ask clarifying questions if the SRS is ambiguous:
+When drafting features, the agent should ask clarifying questions if the SRS is ambiguous:
 
 1. **Performance vs. Security Trade-offs**
    - "The SRS requires client-side encryption (SRS-SEC-002) but the PRD emphasizes speed (PRD-3.2). Should I prioritize encryption strength or upload speed in the scenarios?"
@@ -287,25 +292,31 @@ When drafting Gherkin, the agent should ask clarifying questions if the SRS is a
 
 ## Output Format
 
-When asked to draft Gherkin, the agent should:
+When asked to draft feature scenarios, the agent MUST adjust its output format and location based on the detected tech stack:
 
-1. **Create a `.feature` file** in `tests/features/`
-2. **Name the file** after the feature (e.g., `file_upload.feature`) and append the SRS requirement ID to the filename (e.g., `file_upload_SRS-UPLOAD-001.feature`)
-3. **Include SRS header traceability** comment at the top of the file
-4. **Append a Source block** at the bottom of the file mapping the Gherkin feature to both the SRS and PRD origin. (e.g. `# Source` \n `# - srs.md SRS-UPLOAD-001...`)
-5. **Write 5-7 scenarios** covering happy path, edge cases, and errors
-6. **Ask clarifying questions** if requirements are ambiguous
+### For the Python/Javascript Stack:
+1. **Format:** Use standard Gherkin `.feature` syntax.
+2. **Directory:** Create the `.feature` file in `tests/features/` (Plural `tests/`).
+3. **Naming Conventions:** Name the file after the feature (e.g., `file_upload.feature`) and append the SRS requirement ID (e.g., `file_upload_SRS-UPLOAD-001.feature`).
+4. **Traceability:** Include the SRS header traceability comment at the top, and append a Source block at the bottom mapping the feature to the SRS and PRD origin (e.g. `# Source` \n `# - srs.md SRS-UPLOAD-001...`).
+
+### For the BEAM/Elixir Stack:
+1. **Format:** Use the native Elixir `Wallaby.Feature` macros (e.g., `defmodule MyAppWeb.FileUploadFeatureTest do use Wallaby.Feature...`). Pure text `.feature` files are completely banned.
+2. **Directory:** Create the `.exs` file strictly in `test/features/` (Singular `test/`).
+3. **Naming Conventions:** Name the file following Elixir conventions (e.g., `file_upload_feature_test.exs`) and append the SRS requirement ID (e.g., `file_upload_SRS-UPLOAD-001_feature_test.exs`).
+4. **Traceability:** Include `@moduledoc` tags or comments at the top of the module for SRS traceability, and append a comment block at the bottom mapping the feature to the SRS and PRD origin.
 
 ## Integration with Antigravity Workflow
 
 ```
-USER: Using the SRS, write 5 Gherkin scenarios for file upload.
+USER: Using the SRS, write 5 scenarios for file upload.
 
-AGENT: [Activates Gherkin Architect skill]
+AGENT: [Activates Feature Writer skill]
 AGENT: [Reads @docs/srs.md]
 AGENT: [Identifies relevant requirements: SRS-UPLOAD-001, SRS-SEC-002, SRS-PERF-001]
+AGENT: [Checks repository for mix.exs] -> (Detects Python/JS Stack)
 AGENT: [Creates tests/features/file_upload.feature]
-AGENT: [Writes scenarios covering happy path, edge cases, errors]
+AGENT: [Writes standard Gherkin scenarios]
 AGENT: [Asks clarifying question if needed]
 ```
 

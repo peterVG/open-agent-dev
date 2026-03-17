@@ -17,9 +17,17 @@ Upload any reference documents to the `/docs/references/` directory. This includ
 @AGENTS.md read any reference documents in @docs/references/ and use the @.agents/skills/kb-synthesizer skill to generate a knowledge base in @.agents/kb/
 ```
 
+## Create a Product Vision
+Fill out [`docs/templates/product-vision.md`](./docs/templates/product-vision-template.md) as best as possible and save it as [`/docs/product-vision.md`](./docs/product-vision.md)
+
+If you want AI Agent assistance to write the product vision document, you can invoke the bundled skill:
+```text
+/product-vision I want to build [XYZ]. Refer to the @.agents/kb/ folder for any relevant background information.
+```
+
 ## Initialize the project
 
-Open Agent Dev currently supports Python/Javascript and BEAM/Elixir tech stacks.
+Open Agent Dev currently supports best practices for the Python/Javascript and BEAM/Elixir tech stacks.
 
 ```text
 @AGENTS.md Initialize the project using the @.agents/skills/beam-elixir-init.md skill
@@ -31,28 +39,17 @@ OR
 @AGENTS.md Initialize the project using the @.agents/skills/python-js-init.md skill
 ```
 
-
-
-
-## Create a Product Vision
-Fill out [`docs/templates/product-vision.md`](./docs/templates/product-vision-template.md) as best as possible and save it as [`/docs/product-vision.md`](./docs/product-vision.md)
-
-If you want AI Agent assistance to write the product vision document, you can invoke the bundled skill:
-```text
-/product-vision I want to build [XYZ]. Refer to the @.agents/kb/ folder for any relevant background information.
-```
-
 ## Create a Product Requirements Document
 
 ```text
-@AGENTS.md Generate a baseline product requirements document in /docs using the @. skill based on @docs/product-vision.md, the @.agents/kb/ folder and the manifesto principles in the AGENTS.md file.
+@AGENTS.md Generate a prd.md in @docs using the @.agents/skills/prd-writer skill. Base it on @docs/product-vision.md, the @.agents/kb/ folder and the principles in the AGENTS.md file.
 ```
 Review and revise [`/docs/prd.md`](./docs/prd.md) as needed. Check [`/docs/templates/prd-template.md`](./docs/templates/prd-template.md) for additional guidance. Make sure to add any additional requirements that you think are necessary to fully define the product vision.
 
 ## Create a Software Requirement Specification document and feature files
 
 ```text
-@AGENTS.md Generate a baseline SRS in /docs using the @.agents/skills/srs-writer skill based on @docs/prd.md and the manifesto principles in the AGENTS.md file. After generating the SRS, use the @.agents/skills/gherkin-writer skill to generate Gherkin scenarios for each unique requirement in @docs/srs.md and @docs/prd.md.
+@AGENTS.md Generate a srs.md in @docs using the @.agents/skills/srs-writer skill. Base it on @docs/prd.md and the principles in the AGENTS.md file. Use the @.agents/skills/feature-writer skill to generate BDD feature scenarios for each unique requirement in @docs/srs.md and @docs/prd.md.
 ```
 
 ## Next, generate the initial Architecture Decision Records (ADRs):
