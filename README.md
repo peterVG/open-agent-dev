@@ -17,6 +17,22 @@ Upload any reference documents to the `/docs/references/` directory. This includ
 @AGENTS.md read any reference documents in @docs/references/ and use the @.agents/skills/kb-synthesizer skill to generate a knowledge base in @.agents/kb/
 ```
 
+## Initialize the project
+
+Open Agent Dev currently supports Python/Javascript and BEAM/Elixir tech stacks.
+
+```text
+@AGENTS.md Initialize the project using the @.agents/skills/beam-elixir-init.md skill
+```
+
+OR
+
+```text
+@AGENTS.md Initialize the project using the @.agents/skills/python-js-init.md skill
+```
+
+
+
 
 ## Create a Product Vision
 Fill out [`docs/templates/product-vision.md`](./docs/templates/product-vision-template.md) as best as possible and save it as [`/docs/product-vision.md`](./docs/product-vision.md)
