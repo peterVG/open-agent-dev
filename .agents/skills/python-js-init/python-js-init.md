@@ -8,57 +8,91 @@ This skill guides the AI agent to initialize a new Python/Javascript project wit
 
 ## Step 1: Scaffold the Root Directory Structure
 
-For a Python/Javascript project, the best practice is a Monorepo approach that strictly separates the backend API (Python) from the frontend client application (Javascript/TypeScript).
-
 When scaffolding a new project, you MUST create the following directory structure at the root, while keeping all the files and folders that are currently also in the root directory.
 
 ```text
 project-root/
-├── docker-compose.yml       # Orchestrates the full stack (Frontend, Backend, DB, Workers
-├── .env                     # Secure storage for environment variables (DB credentials, API keys)
-├── apps/                    # Core applications (Monorepo approach)
-│   ├── frontend/            # JavaScript/TypeScript Client (e.g., React, Vue)
-│   │   ├── package.json     # Node dependencies
-│   │   ├── public/          # Static web assets
-│   │   ├── src/             # Main frontend source code
-│   │   │   ├── App.jsx      # Main UI component
-│   │   │   ├── components/  # Reusable UI elements
-│   │   │   └── api/         # API client layer to fetch data from the Python backend
-│   │   └── Dockerfile       # Frontend container configuration
+├── docker-compose.yml 
+├── .env 
+├── .gitignore 
+├── requirements.txt 
+├── README.md
+├── apps/ 
+│   ├── frontend/            
+│   │   ├── package.json     
+│   │   ├── public/          
+│   │   ├── src/             
+│   │   │   ├── App.jsx      
+│   │   │   ├── components/  
+│   │   │   └── api/         
+│   │   └── Dockerfile       
 │   │
-│   └── backend/             # Python API (e.g., FastAPI, Django, Flask) 
-│       ├── requirements.txt # Python dependencies
-│       ├── Dockerfile       # Backend container configuration
-│       └── app/             # Main Python source code
-│           ├── main.py      # Entry point for the server
-│           ├── models/      # Database definitions and schemas
-│           ├── routers/     # API endpoints and route handlers
-│           ├── database.py  # Database connection setup
-│           └── tasks/       # Background workers (e.g., Celery tasks)
-├── tests/                   # Testing tools and artifacts
-│   ├── features/            # Gherkin feature files
-│   ├── unit/                # Unit tests
-│   ├── integration/         # Integration tests
-│   ├── ui/                  # UI tests
-│   ├── performance/         # Load tests
-│   └── allure-results/      # Allure test results
-│
-└── packages/                # Shared monorepo packages
-    └── shared-config/       # Shared configs (e.g., TypeScript, Prettier, ESLint)
-
+│   └── backend/             
+│       ├── requirements.txt 
+│       ├── Dockerfile       
+│       └── app/             
+│           ├── main.py      
+│           ├── models/      
+│           ├── routers/     
+│           ├── database.py  
+│           └── tasks/  
+├── tests/     
+└── packages/                
+    └── shared-config/       
 ```
 
 Use appropriate system commands (`mkdir`, `touch`, etc) to generate this exact hierarchy. Ensure you populate the initial files like `.gitignore`, `docker-compose.yml`, and `Dockerfile` based on standard best practices for the specific frameworks you select for the frontend and backend inside these directories.
 
-## Key Architectural Principles
+### Populate the README.md file to explain directory structure
+
+Populate the README.md file to explain the directory structure. Use the following verbatim text:
+
+For a Python/Javascript project, the best practice is a Monorepo approach that strictly separates the backend API (Python) from the frontend client application (Javascript/TypeScript).
+
+The Standard Monorepo Pattern: In a dedicated monorepo, the apps/ folder is typically used to house all independent, deployable applications in the project, regardless of whether they are client-side or server-side. eg, apps/frontend (a React frontend) and apps/backend (an Express backend) sitting side-by-side.
+
+Unified Workspace Management: By treating the Python API as just another "app" within the workspace, modern monorepo tools can orchestrate tasks, cache builds, and run pipelines across both the frontend and backend uniformly without needing custom directory targeting.
+
+Co-locating Backend Logic: Putting the entire Python backend (both the web API and background workers like Celery) into a single apps/backend/ directory follows the best practice of co-locating web and worker nodes. Housing these together creates a synergy that allows them to seamlessly share components like database models and services, which fosters code reusability and prevents inconsistencies.
+
+```text
+project-root/
+├── docker-compose.yml       # Orchestrates the full stack (Frontend, Backend, DB, Workers) 
+├── .env                     # Secure storage for environment variables (DB credentials, API keys) 
+├── .gitignore               # Ignores dependencies and secrets (e.g., node_modules, .venv) 
+├── requirements.txt         # Development dependencies (testing, building, documentation)
+├── README.md                # Project documentation, setup instructions, and examples
+├── apps/                    # Core applications (Monorepo approach) 
+│   ├── frontend/            # JavaScript/TypeScript Client (e.g., React, Vue) 
+│   │   ├── package.json     # Node dependencies 
+│   │   ├── public/          # Static web assets 
+│   │   ├── src/             # Main frontend source code
+│   │   │   ├── App.jsx      # Main UI component 
+│   │   │   ├── components/  # Reusable UI elements 
+│   │   │   └── api/         # API client layer to fetch data from the Python backend 
+│   │   └── Dockerfile       # Frontend container configuration 
+│   │
+│   └── backend/             # Python API (e.g., FastAPI, Django, Flask) 
+│       ├── requirements.txt # Python dependencies 
+│       ├── Dockerfile       # Backend container configuration 
+│       └── app/             # Main Python source code 
+│           ├── main.py      # Entry point for the server 
+│           ├── models/      # Database definitions and schemas 
+│           ├── routers/     # API endpoints and route handlers 
+│           ├── database.py  # Database connection setup 
+│           └── tasks/       # Background workers (e.g., Celery tasks) 
+├── tests/                   # Test suites, ExUnit/EUnit files, and test helpers 
+└── packages/                # Shared monorepo packages 
+    └── shared-config/       # Shared configs (e.g., TypeScript, Prettier, ESLint) 
+```
 
 When writing or configuring code for this stack, you must adhere to the following principles:
 
-1. **Complete Separation**: The frontend and backend run on different ports during development (e.g., React on 5173, FastAPI on 8000) and are completely isolated. The frontend doesn't need to know the backend is written in Python; it simply makes standard HTTP requests (GET, POST, PUT, DELETE) and receives JSON in return.
-2. **The Backend (Python)**: For maintainability, the backend organizes code into logical modules like `routers/` for endpoints, `models/` for database interactions, and `tasks/` for asynchronous background jobs.
-3. **The Frontend (JavaScript)**: Client-side code is grouped into a `src/` directory containing view `components/` and an `api/` layer specifically responsible for handling all communication with the backend.
-4. **Docker Integration**: Utilizing a `docker-compose.yml` file at the root, along with individual `Dockerfile`s in the backend and frontend folders, standardizes the development environment across the team and minimizes "it works on my machine" issues.
-5. **Environment Variables**: An `.env` file at the root securely stores sensitive configuration data so it is loaded safely via tools like `python-decouple` or `dotenv` instead of hardcoding secrets into the repository.
+**Complete Separation**: The frontend and backend run on different ports during development (e.g., React on 5173, FastAPI on 8000) and are completely isolated. The frontend doesn't need to know the backend is written in Python; it simply makes standard HTTP requests (GET, POST, PUT, DELETE) and receives JSON in return.
+**The Backend (Python)**: For maintainability, the backend organizes code into logical modules like `routers/` for endpoints, `models/` for database interactions, and `tasks/` for asynchronous background jobs.
+**The Frontend (JavaScript)**: Client-side code is grouped into a `src/` directory containing view `components/` and an `api/` layer specifically responsible for handling all communication with the backend.
+**Docker Integration**: Utilizing a `docker-compose.yml` file at the root, along with individual `Dockerfile`s in the backend and frontend folders, standardizes the development environment across the team and minimizes "it works on my machine" issues.
+**Environment Variables**: An `.env` file at the root securely stores sensitive configuration data so it is loaded safely via tools like `python-decouple` or `dotenv` instead of hardcoding secrets into the repository.
 
 ## Step 2: Configure Testing Frameworks
 

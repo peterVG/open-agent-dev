@@ -4,6 +4,19 @@
 
 **CRITICAL INSTRUCTION:** Before beginning any implementation, scaffolding, or configuration task, you MUST use the list_dir and view_file tools to read the contents of all markdown files in .agents/rules/. You must strictly adhere to these rules over any default framework behaviors.
 
+### Test-driven development
+
+**Purpose:** Ensure that all code is well-tested which includes functional feature tests, unit tests integration tests, UI tests, and performance tests.
+
+- **Linting Mandate:** All code MUST be linted and formatted using the tools specified in the project's Architecture Decision Records before tests are run or code is merged. The agent MUST resolve all linting errors automatically.
+- **UI Test Mandate:** All frontend feature branches MUST include UI tests alongside standard unit tests to ensure UI components render and behave correctly.
+- **Integration Test Mandate:** Any backend task that interfaces with an external API, database, or filesystem MUST include integration tests utilizing the framework specified in the project's Architecture Decision Records.
+- **Performance Test Mandate:** Any application intended for production deployment MUST include load/performance tests using the framework specified in the project's Architecture Decision Records to simulate expected user concurrency and data volume.
+- **Test Reporting Mandate:** All test runs (Unit, UI, Integration, and BDD) MUST generate structured reports using the framework specified in the project's Architecture Decision Records to provide stakeholders with a clear, visual history of test passed/failed states and coverage. The agent MUST include explicit CLI instructions in the project README.md for how developers can execute the complete test suite (including specific commands for BDD feature tests) and how to generate/view the structured test reports.
+- **Walkthrough Documentation:** When executing tests, the agent MUST copy the raw CLI output of the test runs into a permanent `docs/tasks/Task-[Task ID]-Walkthrough.md` file to provide immediate visual proof of passing tests, in addition to generating the structured test reports.
+- **Unit Test Traceability:** When code changes make a unit test obsolete or require modifications to the underlying implementation, the agent MUST explicitly update, refactor, or remove the corresponding unit tests to remain in sync with the source code.
+- **Strict Artifact Isolation:** This principle is tactically enforced on all AI agents via the instructions in `[artifact-isolation.md](./.agents/rules/artifact-isolation.md)`.
+
 ### Minimize Dependencies
 
 **Purpose:** List specific constraints on external services, libraries, and vendor lock-in.
@@ -55,19 +68,6 @@
 
 - [e.g., "App functions fully offline, syncs when connected"]
 - [e.g., "Local storage is source of truth, cloud is backup"]
-
-### Test-driven development
-
-**Purpose:** Ensure that all code is well-tested which includes functional Gherkin feature tests, unit tests appropriate for the code language being tested (eg. pytest for Python), integration tests, UI tests, and performance tests.
-
-- **Linting Mandate:** All code MUST be linted and formatted using the tools specified in the project's Architecture Decision Records (e.g., Ruff or flake8/black for Python) before tests are run or code is merged. The agent MUST resolve all linting errors automatically.
-- **UI Test Mandate:** All frontend feature branches MUST include UI tests (e.g., via AppTest, Playwright, or Cypress as defined in the project's Architecture Decision Records) alongside standard unit tests to ensure UI components render and behave correctly.
-- **Integration Test Mandate:** Any backend task that interfaces with an external API, database, or filesystem MUST include integration tests utilizing the framework specified in the project's Architecture Decision Records (e.g. pytest-vcr to mock external API requests).
-- **Performance Test Mandate:** Any application intended for production deployment MUST include load/performance tests using the framework specified in the project's Architecture Decision Records (e.g., Locust or k6) to simulate expected user concurrency and data volume.
-- **Test Reporting Mandate:** All test runs (Unit, UI, Integration, and BDD) MUST generate structured reports using the framework specified in the project's Architecture Decision Records (e.g., Allure) to provide stakeholders with a clear, visual history of test passed/failed states and coverage. The agent MUST include explicit CLI instructions in the project README.md for how developers can execute the complete test suite (including specific commands for BDD feature tests) and how to generate/view the structured test reports (e.g., `allure generate` and `allure open`).
-- **Walkthrough Documentation:** When executing tests, the agent MUST copy the raw CLI output of the test runs into a permanent `docs/tasks/Task-[Task ID]-Walkthrough.md` file to provide immediate visual proof of passing tests, in addition to generating the structured test reports.
-- **Unit Test Traceability:** When code changes make a unit test obsolete or require modifications to the underlying implementation, the agent MUST explicitly update, refactor, or remove the corresponding unit tests to remain in sync with the source code.
-- **Strict Artifact Isolation:** This principle is tactically enforced on all AI agents via the instructions in `[artifact-isolation.md](./.agents/rules/artifact-isolation.md)`.
 
 ### Standalone Production Code
 
@@ -138,20 +138,3 @@
 **Purpose:** Guarantee that the permanent project documentation stays strictly synchronized with the codebase whenever new features, architecture changes, or schema updates are introduced.
 
 - **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[pr-documentation-update.md](./.agents/rules/pr-documentation-update.md)`.
-
----
-
-## How the Agent Uses This File
-
-When initializing a new project based on this template, **do not execute prompts from memory**. 
-
-Instead, strictly follow the initialization prompt sequence defined in the **"Getting Started"** section of the [`README.md`](./README.md).
-
-The agent will:
-1. Read this [`AGENTS.md`](./AGENTS.md) file
-2. Create [`docs/srs.md`](./docs/srs.md) with technical specifications aligned to project principles
-3. Generate initial Architecture Decision Records (ADRs) and corresponding `.agents/rules/*.md` files
-4. Invoke the "Gherkin Writer" skill to generate Gherkin `.feature` files for tests
-5. Ensure all design decisions respect stated constraints
-
-**Remember:** Keep this file focused on vision and principles. Detailed initialization and development prompts belong in the [`README.md`](./README.md).

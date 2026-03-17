@@ -8,14 +8,37 @@ This skill guides the AI agent to initialize a new BEAM/Elixir project with the 
 
 ## Step 1: Scaffold the Root Directory Structure
 
-The best practice for structuring a BEAM project—whether written in Erlang or Elixir—is strictly dictated by the OTP (Open Telecom Platform) framework. Because the BEAM ecosystem expects code to be bundled as self-contained OTP applications, following standard directory layouts ensures compatibility with community build tools, releases, and hot code swapping mechanisms.
-
-While Elixir modernizes some of the naming conventions (like using `lib/` instead of `src/`), the underlying architecture remains identical.
-
 When scaffolding a new project, you MUST create the following directory structure at the root, while keeping all the files and folders that are currently also in the root directory:
 
 ```text
-my_app/
+project-root/
+├── config/
+├── deps/
+├── doc/
+├── ebin/
+├── include/
+├── lib/
+│   ├── my_app/
+│   └── my_app_web/
+├── priv/
+├── test/
+├── mix.exs
+├── mix.lock
+└── README.md
+```
+
+Use appropriate Mix commands (`mix phx.new` or `mix new`) and system commands to generate this exact hierarchy within the repository root. 
+
+### Populate the README.md file to explain directory structure
+
+Populate the README.md file to explain the directory structure. Use the following verbatim text:
+
+The best practice for structuring a BEAM project—whether written in Erlang or Elixir—is strictly dictated by the OTP (Open Telecom Platform) framework. Because the BEAM ecosystem expects code to be bundled as self-contained OTP applications, following standard directory layouts ensures compatibility with community build tools, releases, and hot code swapping mechanisms.
+
+While Elixir modernizes some of the naming conventions (like using lib/ instead of src/), the underlying architecture remains identical. This is the standard, best-practice directory layout for a modern BEAM/Elixir project:
+
+```text
+project-root/
 ├── config/       # Application configuration files (e.g., test.exs, dev.exs)
 ├── deps/         # Third-party dependencies downloaded by the package manager
 ├── doc/          # Generated documentation (e.g., EDoc or ExDoc)
@@ -28,21 +51,18 @@ my_app/
 ├── test/         # Test suites, ExUnit/EUnit files, and test helpers
 ├── mix.exs       # Elixir project configuration and dependencies list (or Emakefile)
 └── mix.lock      # Locked versions of dependencies
+└── README.md     # Explains this directory structure
 ```
 
-Use appropriate Mix commands (`mix phx.new` or `mix new`) and system commands to generate this exact hierarchy within the repository root.
-
-## Key Directories Explained
-
-1. **`lib/` (Elixir) or `src/` (Erlang):** This is where all of your main source code is stored. In a Phoenix web project, this directory is logically separated into distinct contexts: your core business logic (e.g., `lib/my_app/`) and your web presentation layer (e.g., `lib/my_app_web/live/`).
-2. **`ebin/`:** The destination directory where the compiler places the resulting bytecode (`.beam` files). Crucially, this directory also holds the Application Resource File (`.app`), which describes the application, its version, and its dependencies to the BEAM virtual machine. (Note: In modern Elixir, the Mix build tool often manages this dynamically under a hidden `_build/` folder).
-3. **`priv/`:** This directory is used for any specific non-Erlang/Elixir files your application needs to function. This includes custom C drivers, system executables, or static frontend assets for web applications.
-4. **`include/`:** Used to store public header files (ending in `.hrl`) that might need to be included by other applications within your ecosystem. Private header files should remain hidden inside the `src/` or `lib/` directory.
-5. **`test/`:** Holds all your automated test files (such as EUnit, Common Test, or ExUnit suites). Keeping tests here ensures they are isolated and not distributed as part of your compiled production release.
-6. **`config/` (or `conf/`):** Dedicated to specific configuration files used to tune your application's environment variables for different stages, like testing or production.
-7. **`deps/` (or `lib/` in older setups):** Where third-party libraries and dependencies are stored.
-8. **`doc/`:** The destination for automatically generated documentation files, such as those created by EDoc.
-9. **Root Build Files:** At the root of your project, you will typically have an `Emakefile` (for Erlang) or a `mix.exs` file (for Elixir) which defines how to compile the project, tracks test coverage configurations, and lists dependencies.
+**`lib/` (Elixir) or `src/` (Erlang):** This is where all of your main source code is stored. In a Phoenix web project, this directory is logically separated into distinct contexts: your core business logic (e.g., `lib/my_app/`) and your web presentation layer (e.g., `lib/my_app_web/live/`).
+**`ebin/`:** The destination directory where the compiler places the resulting bytecode (`.beam` files). Crucially, this directory also holds the Application Resource File (`.app`), which describes the application, its version, and its dependencies to the BEAM virtual machine. (Note: In modern Elixir, the Mix build tool often manages this dynamically under a hidden `_build/` folder).
+**`priv/`:** This directory is used for any specific non-Erlang/Elixir files your application needs to function. This includes custom C drivers, system executables, or static frontend assets for web applications.
+**`include/`:** Used to store public header files (ending in `.hrl`) that might need to be included by other applications within your ecosystem. Private header files should remain hidden inside the `src/` or `lib/` directory.
+**`test/`:** Holds all your automated test files (such as EUnit, Common Test, or ExUnit suites). Keeping tests here ensures they are isolated and not distributed as part of your compiled production release.
+**`config/` (or `conf/`):** Dedicated to specific configuration files used to tune your application's environment variables for different stages, like testing or production.
+**`deps/` (or `lib/` in older setups):** Where third-party libraries and dependencies are stored.
+**`doc/`:** The destination for automatically generated documentation files, such as those created by EDoc.
+**Root Build Files:** At the root of your project, you will typically have an `Emakefile` (for Erlang) or a `mix.exs` file (for Elixir) which defines how to compile the project, tracks test coverage configurations, and lists dependencies.
 
 ## Step 2: Configure Testing Frameworks
 
