@@ -1,6 +1,22 @@
 # About this project
 
-*Note: This section will be auto-populated by the AI Agent once the project vision and product requirements have been confirmed.*
+*Note: These sections will be auto-populated by the AI Agent as more project information is confirmed.*
+
+# Setup Development Environment
+
+## Run the application
+
+## Run tests
+
+## Viewing Developer Documentation
+
+# Setup Production Environment
+
+## Deploy to Production
+
+## Monitor and Update
+
+---
 
 # About Open Agent Dev
 
@@ -49,29 +65,13 @@ Review and revise [`/docs/prd.md`](./docs/prd.md) as needed. Check [`/docs/templ
 ## Create a Software Requirement Specification document and Architecture Decision Records
 
 ```text
-@AGENTS.md Generate a srs.md in @docs using the @.agents/skills/srs-writer skill. Base it on @docs/prd.md and the principles in the AGENTS.md file. Use the @.agents/skills/feature-writer skill to generate BDD feature scenarios for each unique requirement in @docs/srs.md and @docs/prd.md. Use the @.agents/rules/adr-formatting.md rule to generate ADR files in the @docs/architecture-decisions/ folder based on the technical decisions in @docs/prd.md and @docs/srs.md
+@AGENTS.md Generate a srs.md in @docs using the @.agents/skills/srs-writer skill. Base it on @docs/prd.md, ADR files, BDD feature files and the principles in the AGENTS.md file. Use the @.agents/skills/feature-writer skill to generate BDD feature scenarios for each unique requirement in @docs/srs.md and @docs/prd.md. Use the @.agents/rules/adr-formatting.md rule to generate ADR files in the @docs/architecture-decisions/ folder based on the technical decisions in @docs/prd.md and @docs/srs.md. Populate the # About this project section of this README.md file with a description of the project based on the @docs/product-vision.md, @docs/prd.md, @docs/srs.md, ADR files and BDD feature files.
 ```
 
 ## Generate an implementation plan to guide development
 ```text
-@AGENTS.md Generate an implementation plan for the project using the @.agents/skills/implementation-plan-writer skill based on the @docs/prd.md, @docs/srs.md and BDD feature files. Once the implementation plan is created and the technology stack is confirmed, update the "Setup Development Environment" and "Setup Production Environment" sections in this README.md file with the actual commands needed to run the application, execute tests and view their results, view developer documentation and deploy to production, removing the *Note:* placeholders. Be sure to be specific about what directory the user must be in to run the commands.
+@AGENTS.md Generate an implementation plan for the project using the @.agents/skills/implementation-plan-writer skill based on the @docs/prd.md, @docs/srs.md, ADR files and BDD feature files. Once the implementation plan is created and the technology stack is confirmed, update the "Setup Development Environment" section in this README.md file with the actual commands needed to run the application, to execute tests, to view their results, and to view developer documentation. Be sure to be specific about what directory the user must be in to run the commands.
 ```
 
 ## Use the AGENTS.md prompts in your Implementation Plan
 Check @docs/plan.md for specific task prompts in your implementation plan.These will guide you through the task list to generate and test your code in compliance with the Open Dev Agent principles and workflow.
-
-# Setup Development Environment
-
-*Note: These sections will be auto-populated by the AI Agent once the project's technology stack has been confirmed.*
-
-## Run the application
-
-## Run tests
-
-## Viewing Developer Documentation
-
-# Setup Production Environment
-
-## Deploy to Production
-
-## Monitor and Update
