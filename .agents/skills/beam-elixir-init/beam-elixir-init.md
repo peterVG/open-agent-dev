@@ -107,10 +107,52 @@ To ensure code quality, consistent styling, and catch potential issues early, co
 1. **Formatting:** Use the built-in `mix format` to enforce standard Elixir code style across the project.
 2. **Linting:** Add `{:credo, "~> 1.7", only: [:dev, :test], runtime: false}` to your `mix.exs` dependencies to enforce strict code analysis and best practices. Run `mix credo --strict`.
 
-## Step 3: Generate Test Framework ADRs
+## Step 3: Generate linting rule
+
+Create a @.agents/rules/lint-enforce.md file that contains the following verbatim content:
+
+---
+description: Ensure all code is cleanly formatted, free of linting errors, and strictly typed before committing or testing.
+---
+
+# Strict Linting and Formatting Enforcement
+
+**Purpose:** This rule dictates the exact CLI commands that an AI agent MUST execute to validate both the Elixir backend codebase against the official Elixir Style Guide, and the Javascript frontend assets against standard ESLint/Prettier configurations.
+
+## Active Enforcement
+
+Before executing any test suite, or before declaring a coding task "complete", the agent MUST run the following commands and ensure they all pass with a zero exit code:
+
+### 1. Enforce Backend Formatting (Elixir & HEEx)
+```bash
+mix format --check-formatted
+```
+*If this fails:* The agent MUST proactively run `mix format` without the `--check-formatted` flag to auto-fix the issues before proceeding. (Note: Ensure `.formatter.exs` includes the `Phoenix.LiveView.HTMLFormatter` plugin for HEEx templates).
+
+### 2. Enforce Strict Backend Linting
+```bash
+mix credo --strict
+```
+*If this fails:* The agent MUST proactively read the Credo output, modify the offending Elixir source code to align with the official Elixir Style Guide and idiomatic standards, and re-run the command until it passes.
+
+### 3. Enforce Static Typing
+```bash
+mix dialyzer
+```
+*If this fails:* The agent MUST proactively fix the type mismatches or incorrect `@spec` definitions in the source code before proceeding.
+
+### 4. Format and Lint Frontend Assets
+Navigate to the Phoenix assets directory (e.g., `apps/my_app_web/assets/`) and run the Javascript/CSS formatters and linters:
+```bash
+npx prettier --write .
+npx eslint . --fix
+```
+*If this fails:* The agent MUST resolve any lingering JS logical errors before proceeding.
+
+## Step 4: Generate Test Framework ADRs
 
 Use the @.agents/rules/adr-formatting.md rule to write an ADR to the @docs/architecture/ direcory that explains the selected test runners and coding style standards.
 
-## Step 4: Update Documentation
+## Step 5: Update Documentation
 
 Update the ## Run tests section in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure.
