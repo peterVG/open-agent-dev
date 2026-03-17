@@ -10,6 +10,9 @@ This skill guides the AI agent to initialize a new BEAM/Elixir project with the 
 
 When scaffolding a new project, you MUST create the following directory structure at the root, while keeping all the files and folders that are currently also in the root directory:
 
+**Proposed Resolution for Workspace Boundaries:**
+When reviewing `.agents/rules/workspace-boundaries.md`, you may detect a contradiction regarding the placement of the `mix.exs` file. You MUST treat this project as a Polyglot Monorepo structure where each application inside `apps/` is fully independent (i.e., running `mix phx.new my_app` inside `apps/` instead of an umbrella project). This complies with the strict "No Language Tooling at Root" rule and is consistent with the directory structure shown below.
+
 ```text
 project-root/
 ├── apps/
