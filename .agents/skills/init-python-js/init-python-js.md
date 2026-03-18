@@ -110,7 +110,7 @@ project-root/
 │       │   │   │   ├── routers.py 
 │       │   │   │   ├── models.py
 │       │   │   │   └── schemas.py
-│       │   │   └── module-1/# e.g., Additional feature modules
+│       │   │   └── module-1/ # e.g., Additional feature modules
 │       │   │       ├── routers.py 
 │       │   │       ├── models.py
 │       │   │       └── schemas.py
@@ -269,7 +269,40 @@ Use the @.agents/rules/adr-formatting.md rule to write ADRs to the @docs/archite
 
 Be sure to include separate ADRs specifically for the choice of: 1) test runners, UI testing frameworks, Integration testing frameworks, Performance testing frameworks, and Test Reporting frameworks; 2) Inline code documentation and Developer documentation generation frameworks; and 3) Coding style standards and linting/formatting tools.
 
-## Step 8: Update Documentation
+## Step 8: Configure Global `.gitignore`
+
+The root directory already contains a `.gitignore` file. You MUST strictly append the following lines to it to ensure proper exclusion of test artifacts, dependency caches, and selective tracking for test directories across the monorepo:
+
+```text
+# Test reports & artifacts
+**/artifacts/
+**/playwright-report/
+**/allure-results/
+**/coverage/
+
+# Dependency directories
+node_modules/
+**/node_modules/
+__pycache__/
+*.pyc
+
+# Scratch files and transient tests
+**/test-card.js
+**/screenshot.spec.js
+
+# Allow selective tracking in tests/
+**/tests/*
+!**/tests/features/
+!**/tests/support/
+!**/tests/unit/
+!**/tests/ui/
+!**/tests/e2e/
+!**/tests/integration/
+!**/tests/performance/
+!**/tests/README.md
+```
+
+## Step 9: Update Documentation
 
 1. **Insert** platform-agnostic Python/Node installation instructions into the top of the `README.md` file (e.g., referencing official guides or version managers like `asdf`, `mise`, `pyenv`, `nvm`, etc.) to ensure a zero-friction setup for new developers. **CRITICAL: You MUST NOT delete or overwrite any existing content in the `README.md` file when adding this section.**
 2. **Update** the `## Run tests` section (or append one if it doesn't exist) in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure. **CRITICAL: You MUST NOT delete or overwrite any existing unrelated content in the `README.md` file when updating this section.**
