@@ -14,150 +14,170 @@ When scaffolding a new project, you MUST create the following directory structur
 project-root/
 ├── docker-compose.yml 
 ├── .env 
-├── .gitignore 
-├── requirements.txt 
-├── README.md
 ├── apps/ 
+│   ├── README.md
 │   ├── frontend/            
 │   │   ├── package.json     
 │   │   ├── public/          
 │   │   ├── src/             
-│   │   │   ├── App.jsx      
+│   │   │   ├── main.js      
 │   │   │   ├── components/  
 │   │   │   └── api/         
+│   │   ├── tests/           
+│   │   │   ├── unit/        
+│   │   │   ├── ui/          
+│   │   │   ├── e2e/         
+│   │   │   ├── features/    
+│   │   │   ├── performance/ 
+│   │   │   └── allure-results/
 │   │   └── Dockerfile       
 │   │
 │   └── backend/             
 │       ├── requirements.txt 
+│       ├── pytest.ini
 │       ├── Dockerfile       
-│       └── app/             
-│           ├── main.py      
-│           ├── models/      
-│           ├── routers/     
-│           ├── database.py  
-│           └── tasks/  
-├── tests/     
+│       ├── app/             
+│       │   ├── main.py      
+│       │   ├── core/        
+│       │   ├── modules/     
+│       │   │   ├── users/   
+│       │   │   │   ├── routers.py
+│       │   │   │   ├── models.py
+│       │   │   │   └── schemas.py
+│       │   │   └── module-1/
+│       │   │       ├── routers.py
+│       │   │       ├── models.py
+│       │   │       └── schemas.py
+│       │   └── tasks/  
+│       └── tests/
+│           ├── unit/
+│           ├── integration/
+│           ├── ui/
+│           ├── features/
+│           ├── performance/
+│           └── allure-results/
 └── packages/                
     └── shared-config/       
 ```
 
-Use appropriate commands (e.g. `npx create-react-app`, `npx create-next-app`, `django-admin startproject`) to generate these structures within the `apps/` and `services/` subdirectories.
+Use appropriate commands (e.g. `npx create-react-app`, `npx create-next-app` for frontend; `pip install` or direct directory creation for backend) to generate these structures STRICTLY within the `apps/` and `services/` subdirectories. **DO NOT generate workspace manifests or applications inside the repository root.**
 
-### Populate the apps/README.md and/or services/README.md files to explain directory structure
+## Step 2 Populate the apps/README.md and/or services/README.md files to explain directory structure
 
 Create and populate `README.md` files at the root of the `apps/` and `services/` directories (i.e., `apps/README.md` and `services/README.md`) to explain their recursive directory structures. You can use the following text as a template, adjusting for the specific stack used:
 
 For a Python/Javascript project, the best practice is a Monorepo approach that strictly separates the backend API (Python) from the frontend client application (Javascript/TypeScript).
 
-The Standard Monorepo Pattern: In a dedicated monorepo, the apps/ folder is typically used to house all independent, deployable applications in the project, regardless of whether they are client-side or server-side. eg, apps/frontend (a React frontend) and apps/backend (an Express backend) sitting side-by-side.
+The Standard Monorepo Pattern: In a dedicated monorepo, the apps/ folder is typically used to house all independent, deployable applications in the project, regardless of whether they are client-side or server-side. eg, apps/frontend (a React frontend) and apps/backend (an Express/FastAPI backend) sitting side-by-side.
 
 Unified Workspace Management: By treating the Python API as just another "app" within the workspace, modern monorepo tools can orchestrate tasks, cache builds, and run pipelines across both the frontend and backend uniformly without needing custom directory targeting.
 
-Co-locating Backend Logic: Putting the entire Python backend (both the web API and background workers like Celery) into a single apps/backend/ directory follows the best practice of co-locating web and worker nodes. Housing these together creates a synergy that allows them to seamlessly share components like database models and services, which fosters code reusability and prevents inconsistencies.
+Co-locating Backend Logic: Putting the entire Python backend (both the web API and background workers like Celery) into a single apps/backend/ directory follows the best practice of co-locating web and worker nodes. Housing these together creates a synergy that allows them to seamlessly share components. We use a domain-driven `modules/` architecture to organize features logically instead of flat `models` and `routers` folders.
+
+Global Orchestration: A `docker-compose.yml` file sits one directory higher in the global project root. This file is responsible for orchestrating the entire suite of applications within this `apps/` directory (e.g., spinning up the frontend, backend, and any required databases simultaneously) to ensure a single-command, zero-friction local development environment.
 
 ```text
 project-root/
 ├── docker-compose.yml       # Orchestrates the full stack (Frontend, Backend, DB, Workers) 
 ├── .env                     # Secure storage for environment variables (DB credentials, API keys) 
-├── .gitignore               # Ignores dependencies and secrets (e.g., node_modules, .venv) 
-├── requirements.txt         # Development dependencies (testing, building, documentation)
-├── README.md                # Project documentation, setup instructions, and examples
 ├── apps/                    # Core applications (Monorepo approach) 
-│   ├── frontend/            # JavaScript/TypeScript Client (e.g., React, Vue) 
+│   ├── README.md            # Explains the monorepo directory structures
+│   ├── frontend/            # JavaScript/TypeScript Client (e.g., React, Svelte, Vanilla JS) 
 │   │   ├── package.json     # Node dependencies 
 │   │   ├── public/          # Static web assets 
 │   │   ├── src/             # Main frontend source code
-│   │   │   ├── App.jsx      # Main UI component 
+│   │   │   ├── main.js      # Main JavaScript entry point 
 │   │   │   ├── components/  # Reusable UI elements 
 │   │   │   └── api/         # API client layer to fetch data from the Python backend 
+│   │   ├── tests/           # Dedicated Frontend Test suites
+│   │   │   ├── unit/        # Unit tests (e.g., Vitest, Jest)
+│   │   │   ├── ui/          # Component tests (e.g., Testing Library, Storybook)
+│   │   │   ├── e2e/         # End-to-end user tests (e.g., Playwright, Cypress)
+│   │   │   ├── features/    # BDD scenarios (e.g., Cucumber.js)
+│   │   │   ├── performance/ # Lighthouse or localized UI load tests
+│   │   │   └── allure-results/ # Standardized test reporting output
 │   │   └── Dockerfile       # Frontend container configuration 
 │   │
 │   └── backend/             # Python API (e.g., FastAPI, Django, Flask) 
 │       ├── requirements.txt # Python dependencies 
+│       ├── pytest.ini       # Pytest configuration
 │       ├── Dockerfile       # Backend container configuration 
-│       └── app/             # Main Python source code 
-│           ├── main.py      # Entry point for the server 
-│           ├── models/      # Database definitions and schemas 
-│           ├── routers/     # API endpoints and route handlers 
-│           ├── database.py  # Database connection setup 
-│           └── tasks/       # Background workers (e.g., Celery tasks) 
-├── tests/                   # Test suites, ExUnit/EUnit files, and test helpers 
+│       ├── app/             # Main Python source code 
+│       │   ├── main.py      # Entry point for the server 
+│       │   ├── core/        # Core configuration (e.g., database.py, security)
+│       │   ├── modules/     # Domain-driven feature modules 
+│       │   │   ├── users/   # e.g., A specific feature module
+│       │   │   │   ├── routers.py 
+│       │   │   │   ├── models.py
+│       │   │   │   └── schemas.py
+│       │   │   └── module-1/# e.g., Additional feature modules
+│       │   │       ├── routers.py 
+│       │   │       ├── models.py
+│       │   │       └── schemas.py
+│       │   └── tasks/       # Background workers (e.g., Celery tasks) 
+│       └── tests/           # Consolidated testing infrastructure
+│           ├── unit/        
+│           ├── integration/ 
+│           ├── ui/          
+│           ├── features/    
+│           ├── performance/ 
+│           └── allure-results/
 └── packages/                # Shared monorepo packages 
     └── shared-config/       # Shared configs (e.g., TypeScript, Prettier, ESLint) 
 ```
 
 When writing or configuring code for this stack, you must adhere to the following principles:
 
-**Complete Separation**: The frontend and backend run on different ports during development (e.g., React on 5173, FastAPI on 8000) and are completely isolated. The frontend doesn't need to know the backend is written in Python; it simply makes standard HTTP requests (GET, POST, PUT, DELETE) and receives JSON in return.
-**The Backend (Python)**: For maintainability, the backend organizes code into logical modules like `routers/` for endpoints, `models/` for database interactions, and `tasks/` for asynchronous background jobs.
-**The Frontend (JavaScript)**: Client-side code is grouped into a `src/` directory containing view `components/` and an `api/` layer specifically responsible for handling all communication with the backend.
+**Complete Separation**: The frontend and backend run on different ports during development (e.g., Frontend Client on 5173, FastAPI on 8000) and are completely isolated. The frontend doesn't need to know the backend is written in Python; it simply makes standard HTTP requests (GET, POST, PUT, DELETE) and receives JSON in return.
+**The Backend (Python)**: For maintainability, the backend uses a Strict Domain-Driven architecture. It organizes feature-specific code into domain-driven `modules/` (e.g., `modules/users/routers.py`) and background workers into `tasks/`. All app-wide global resources and configurations stay safely tucked in the `core/` directory, while generic health checks live directly in `main.py`.
+**The Frontend (JavaScript)**: Client-side code is framework-flexible, grouped into a `src/` directory containing view `components/` and an `api/` layer specifically responsible for handling all communication with the backend.
 **Docker Integration**: Utilizing a `docker-compose.yml` file at the root, along with individual `Dockerfile`s in the backend and frontend folders, standardizes the development environment across the team and minimizes "it works on my machine" issues.
-**Environment Variables**: An `.env` file at the root securely stores sensitive configuration data so it is loaded safely via tools like `python-decouple` or `dotenv` instead of hardcoding secrets into the repository.
+**Isolated Testing & Linting**: All global cache directories (`.pytest_cache`, `.eslintcache`) and reporting suites MUST strictly run and output within their local workspace directory (e.g. `apps/backend/tests/`) instead of the shared global repository root.
+**Testing Taxonomy**: Both apps share a comprehensive and symmetrical testing architecture supporting `unit/`, BDD `features/`, UI `performance/`, and local `allure-results/` test reporting. They only differ where execution environments demand it: The backend uses `integration/` tests to quickly verify raw HTTP interactions with databases, whereas the frontend uses `e2e/` (End-to-End) tests via tools like Playwright or Cypress to physically invoke Chromium and simulate real visual user browser sessions.
 
-## Step 2: Configure Testing Frameworks
+## Step 3: Configure Testing Frameworks
 
-The main test execution environment is driven by `pytest`, supported by various plugins and external tools.
+The main test execution environments are driven by `pytest` for the backend, and various JavaScript runners (like Vitest, Cypress, or Playwright) for the frontend.
 
 ## Tools and Frameworks
 
-### 1. Core Testing Framework: `pytest`
-- **Purpose**: Extensively used for writing and executing unit, integration, and UI tests.
-- **Configuration**: Managed via `pytest.ini` at the root directory.
-  - Automatically targets `tests/unit`, `tests/integration`, and `tests/ui`.
-  - Uses a dedicated cache directory at `tests/.pytest_cache`.
-- **References in `requirements.txt`**: `pytest`, `pytest-vcr`.
+### 1. Backend Testing Frameworks
+- **pytest & pytest-vcr**: Extensively used for writing unit and backend integration tests inside `apps/backend/tests/`. Uses `.pytest_cache`.
+- **behave**: Used for writing tests in domain-specific language (Gherkin syntax). Definitions reside under `apps/backend/tests/features`.
+- **locust**: Used to simulate user loads and measure system limitations under stress. Resides under `apps/backend/tests/performance`.
 
-### 2. HTTP Request Mocking: `pytest-vcr` / `vcrpy`
-- **Purpose**: Used for capturing and replaying HTTP interactions, allowing tests to run quickly and deterministically without hitting live endpoints.
+### 2. Frontend Testing Frameworks
+- **vitest / jest**: Core testing framework for asserting standalone functions in `apps/frontend/tests/unit`.
+- **testing-library / storybook**: Designed specifically for rendering and assessing component behavior in `apps/frontend/tests/ui`.
+- **playwright / cypress**: End-to-end framework and UI performance auditing tool utilized in `apps/frontend/tests/e2e` and `apps/frontend/tests/performance`.
+- **cucumber.js**: BDD framework executing Gherkin feature files for frontend UI flows in `apps/frontend/tests/features`.
 
-### 3. Behavior-Driven Development (BDD): `behave`
-- **Purpose**: Used for writing tests in domain-specific language (Gherkin syntax).
-- **Location**: BDD test definitions reside under `tests/features`.
-- **References in `requirements.txt`**: `behave`, `cucumber-expressions`, `cucumber-tag-expressions`.
+### 3. Global Test Reporting: `allure`
+- **Purpose**: Generates interactive and highly detailed test execution reports globally.
+- **Integration**: Plugs cleanly into both Python and JavaScript ecosystems (`allure-pytest`, `allure-behave`, `allure-playwright`, `allure-cyopress`).
+- **Configuration**: Results from both environments MUST explicitly output ONLY to their localized folders (`apps/backend/tests/allure-results` and `apps/frontend/tests/allure-results`) strictly avoiding the global root.
 
-### 4. Performance Testing: `locust`
-- **Purpose**: Used to simulate user loads and measure system limitations and responsiveness under stress.
-- **Location**: Performance scripts reside under `tests/performance`.
-- **References in `requirements.txt`**: `locust`.
-
-### 5. Test Reporting: `allure`
-- **Purpose**: Generates interactive and highly detailed test execution reports.
-- **Integration**: Plugs into both pytest (`allure-pytest`) and behave (`allure-behave`).
-- **Configuration**: Results are configured to output to `tests/allure-results` via `--alluredir=tests/allure-results` in `pytest.ini`.
-
-### 6. Code Formatting and Linting (Python Backend): `ruff`
+### 4. Code Formatting and Linting (Python Backend): `ruff`
 - **Purpose**: Ensures code quality and standard style before testing.
-- **Configuration**: Defined in `pyproject.toml` targeting modern Python features.
+- **Configuration**: Defined in `pyproject.toml` (located inside `apps/backend/`) targeting modern Python features.
 
-### 7. Code Formatting and Linting (Javascript Frontend): `eslint` & `prettier`
-- **Purpose**: Enforces code quality and formatting consistency for the Javascript/TypeScript frontend codebase.
-- **Configuration**: Defined in the frontend `package.json` and `.eslintrc.json`/`.prettierrc.json` within `apps/frontend/`.
-
-## Directory Structure
-
-The `tests/` directory is logically partitioned based on testing scope:
-- `tests/unit/`: Focused, isolated tests for individual functions and classes.
-- `tests/integration/`: Tests verifying interactions between multiple components or modules.
-- `tests/ui/`: Tests dedicated to user interface workflows.
-- `tests/features/`: BDD feature files and step definitions (`behave`).
-- `tests/performance/`: Load testing scripts (`locust`).
-- `tests/allure-results/`: Directory capturing real-time test output for Allure reporting.
+### 5. Code Formatting and Linting (Javascript Frontend): `eslint` & `prettier`
+- **Purpose**: Enforces code quality and formatting consistency for the Javascript/TypeScript codebase.
+- **Configuration**: Defined in the frontend `package.json` and config files within `apps/frontend/`.
 
 ## Best Practices
-- Run code formatting and linting via `ruff` (backend) and `eslint`/`prettier` (frontend) prior to running tests.
-- Execute unit and integration tests via `pytest`.
-- Execute performance limits via `locust`.
-- Execute behavior feature maps via `behave`.
-- After a test run, compile `allure` results using the Allure CLI to generate viewable test coverage HTML reports.
+- Run code formatting and linting via `ruff` (backend) AND `eslint`/`prettier` (frontend) explicitly **within their respective application workspaces (`cd apps/frontend/`, etc.)** prior to running tests.
+- Execute unit and integration tests via `pytest` by running the command locally within `apps/backend/`.
+- After a test run, compile `allure` results using the Allure CLI against the isolated `apps/backend/tests/allure-results` folder.
 
-## Step 3: Configure Documentation Generation
+## Step 4: Configure Documentation Generation
 
 Clear documentation is critical for maintaining the separation of concerns in a monorepo. Configure the following documentation frameworks:
 
-1. **Backend (Python):** Use `pdoc` to automatically extract docstrings (which MUST follow Google or NumPy style) and generate API documentation. Add `pdoc` to your development `requirements.txt`.
+1. **Backend (Python):** Use `pdoc` to automatically extract docstrings (which MUST follow Google or NumPy style) and generate API documentation. Add `pdoc` to your backend `requirements.txt`.
 2. **Frontend (Javascript):** Use `JSDoc` for inline comments and function signatures. If the frontend grows complex, configure `TypeDoc` (if using TypeScript) or `JSDoc`'s generator to produce static documentation sites.
 
-## Step 4: Generate Inline Documentation Rule
+## Step 5: Generate Inline Documentation Rule
 
 Create a @.agents/rules/docs-enforce.md file that contains the following verbatim content:
 
@@ -187,7 +207,7 @@ The agent MUST use standard `JSDoc` syntax (using `/** ... */`) for all frontend
 
 *Failure to document code according to these standards violates the core AGENTS.md manifesto.*
 
-## Step 5: Generate linting rule
+## Step 6: Generate linting rule
 
 Create a @.agents/rules/lint-enforce.md file that contains the following verbatim content:  
 
@@ -209,29 +229,23 @@ Based on the accepted Architecture Decision Records (`docs/architecture/004-codi
 
 ## Execution Requirements
 
-Before running any tests, committing code, or completing an execution task, you MUST execute the following CLI commands to ensure the codebase complies with the configured standards.
+Before running any tests, committing code, or completing an execution task, you MUST execute the following CLI commands to ensure the codebase complies with the configured standards. Note that commands MUST be executed inside the correct workspace boundary.
 
 ### 1. Format the Frontend Codebase
-
-Always run the formatter first to resolve syntactic and styling inconsistencies across all JavaScript, JSON, and Markdown files.
-
 ```bash
+cd apps/frontend/
 npx prettier --write .
 ```
 
 ### 2. Lint the Frontend (and auto-fix)
-
-Run the Javascript linter to catch logical errors and automatically fix any safe violations.
-
 ```bash
+cd apps/frontend/
 npx eslint . --fix
 ```
 
 ### 3. Lint and Format the Python Backend (and auto-fix)
-
-Run Ruff to enforce PEP8 standards, catch logical errors, and automatically fix any safe violations in the Python codebase.
-
 ```bash
+cd apps/backend/
 ruff check . --fix
 ruff format .
 ```
@@ -249,13 +263,13 @@ The agent MUST:
 
 Only when Ruff, Prettier, and ESLint all exit cleanly (code 0) is the codebase considered valid for testing or PR submission.
 
-## Step 6: Generate Architecture Decision Records (ADRs)
+## Step 7: Generate Architecture Decision Records (ADRs)
 
 Use the @.agents/rules/adr-formatting.md rule to write ADRs to the @docs/architecture-decisions/ directory.
 
 Be sure to include separate ADRs specifically for the choice of: 1) test runners, UI testing frameworks, Integration testing frameworks, Performance testing frameworks, and Test Reporting frameworks; 2) Inline code documentation and Developer documentation generation frameworks; and 3) Coding style standards and linting/formatting tools.
 
-## Step 7: Update Documentation
+## Step 8: Update Documentation
 
 1. **Insert** platform-agnostic Python/Node installation instructions into the top of the `README.md` file (e.g., referencing official guides or version managers like `asdf`, `mise`, `pyenv`, `nvm`, etc.) to ensure a zero-friction setup for new developers. **CRITICAL: You MUST NOT delete or overwrite any existing content in the `README.md` file when adding this section.**
 2. **Update** the `## Run tests` section (or append one if it doesn't exist) in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure. **CRITICAL: You MUST NOT delete or overwrite any existing unrelated content in the `README.md` file when updating this section.**
