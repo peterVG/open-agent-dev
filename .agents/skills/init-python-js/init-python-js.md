@@ -153,7 +153,7 @@ The main test execution environments are driven by `pytest` for the backend, and
 ### 3. Global Test Reporting: `allure`
 - **Purpose**: Generates interactive and highly detailed test execution reports globally.
 - **Integration**: Plugs cleanly into both Python and JavaScript ecosystems (`allure-pytest`, `allure-behave`, `allure-playwright`, `allure-cyopress`).
-- **Configuration**: Results from both environments MUST explicitly output ONLY to their localized folders (`apps/backend/tests/allure-results` and `apps/frontend/tests/allure-results`) strictly avoiding the global root.
+- **Configuration**: Results from both environments MUST explicitly output ONLY to their localized folders (`apps/backend/tests/allure-results` and `apps/frontend/tests/allure-results`) strictly avoiding the global root. Furthermore, backend testing suites (e.g. `pytest.ini`) MUST explicitly configure the `--clean-alluredir` flag, and frontend environments MUST run a custom `pretest` execution hook (e.g. `rm -rf tests/allure-results`) to automatically purge historical JSON payloads before initiating new test cycles.
 
 ### 4. Code Formatting and Linting (Python Backend): `ruff`
 - **Purpose**: Ensures code quality and standard style before testing.
