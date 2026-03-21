@@ -18,6 +18,6 @@ Every time a Pull Request (PR) is being prepared by the AI agent, the agent MUST
 2. **Update Core Documents:** The agent MUST verify and update (`docs/product-vision.md`, `docs/prd.md`, `docs/srs.md`) to reflect the new state of the application.
 3. **Architecture Decision Records:** The agent MUST ensure any architectural shifts (e.g. database schema changes, new core libraries, API structural changes) are formally documented as a new ADR in `docs/architecture/`.
 4. **Behavioral Tests (BDD Scenarios):** The agent MUST verify that the automated feature scenarios accurately reflect the updated acceptance criteria and system behaviors.
-   - For a **Python/JS Stack**, this means updating the Gherkin `.feature` files located in `tests/features/`.
-   - For a **BEAM/Elixir Stack**, this means updating the native Elixir `Wallaby.Feature` macros located in `test/features/`.
+   - For a **Python/JS Stack**, this means updating the Gherkin `.feature` files located idiomatic to the boundary (e.g. `apps/frontend/tests/features/`).
+   - For a **BEAM/Elixir Stack**, this means updating the native Elixir `Wallaby.Feature` macros located idiomatic to the boundary (e.g. `apps/my_app_web/test/features/`).
 5. **Commit Updates:** The agent MUST commit these documentation updates to the current branch *before* completing the Pull Request creation process.
