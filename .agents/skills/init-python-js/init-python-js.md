@@ -266,9 +266,11 @@ Only when Ruff, Prettier, and ESLint all exit cleanly (code 0) is the codebase c
 
 ## Step 7: Generate Architecture Decision Records (ADRs)
 
-Use the @.agents/rules/adr-formatting.md rule to write ADRs to the @docs/architecture-decisions/ directory.
-
-Be sure to include separate ADRs specifically for the choice of: 1) test runners, UI testing frameworks, Integration testing frameworks, Performance testing frameworks, and Test Reporting frameworks; 2) Inline code documentation and Developer documentation generation frameworks; and 3) Coding style standards and linting/formatting tools.
+Use the @.agents/rules/adr-formatting.md rule to write ADRs to the @docs/architecture-decisions/ directory. Be sure to include separate ADRs specifically for the choice of:
+1) test runners and reporting frameworks.
+2) Inline code docs generators.
+3) Coding style standards and linting tooling.
+4) The centralized 12-Factor observability stack (Loki, Redpanda, Promtail, Prometheus, Grafana).
 
 ## Step 8: Configure Global `.gitignore`
 
