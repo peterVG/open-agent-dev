@@ -25,4 +25,4 @@ The agent MUST configure the local `docker-compose.yml` to capture and route the
 
 ### 3. README Documentation
 - When standing up or modifying this containerized infrastructure, the agent MUST explicitly add instructions under the `## View logs` section (located under `# Setup Development Environment`) of the project's root `README.md` detailing how developers can spin up the full observability stack via `docker-compose`. 
-- The agent MUST document how developers can access the Grafana UI locally to query and view the emitted container logs.
+- The agent MUST document how developers can access the Grafana UI locally (providing the default `admin`/`admin` credentials), explicitly detail how to connect the Loki datastore manually (`Connections -> Data sources -> Add Loki at http://loki:3100 -> Save & test`), and explain how to use the "Log browser" under the Explore tab to visually query the newly connected Loki logs.
