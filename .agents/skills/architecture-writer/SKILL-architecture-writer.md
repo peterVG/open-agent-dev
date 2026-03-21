@@ -43,7 +43,7 @@ All technical decisions outlined in the document (frameworks, databases, CI/CD t
 
 ### 4. Codebase Reflection
 
-The document must reflect _reality_, not just aspirations. Review the actual `src/` directory, `requirements.txt`/`package.json`, and deployment files (`Dockerfile`, `.github/workflows`) to ensure the listed components genuinely exist in the codebase.
+The document must reflect _reality_, not just aspirations. Review the actual execution directories (e.g., `app/`, `src/`, or `lib/`), `requirements.txt`/`package.json`, and deployment files (`Dockerfile`, `.github/workflows`) to ensure the listed components genuinely exist in the codebase.
 
 ## Workflow: Codebase & ADRs → architecture.md
 
@@ -57,7 +57,7 @@ Review the latest `@docs/prd.md` and `@docs/srs.md` to understand the stakeholde
 
 ### Step 3: Analyze Codebase Reality
 
-Scan the codebase (`/src`, `/tests`, infrastructure files). Identify the actual tech stack, directory structures, database schemas, and external API integrations currently implemented.
+Scan the codebase (`/app`, `/src`, `/lib`, `/tests`, infrastructure files). Identify the actual tech stack, directory structures, database schemas, and external API integrations currently implemented.
 
 ### Step 4: Aggregate Architecture Decisions
 

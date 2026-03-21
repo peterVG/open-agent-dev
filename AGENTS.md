@@ -72,6 +72,19 @@
 - **ISO/IEC/IEEE 42010:** Architecture Decision Records (ADRs) MUST include the 9 specific information items required by the ISO 42010 standard for architecture descriptions as defined in [`.agents/kb/iso-42010-adr.md`](./.agents/kb/iso-42010-adr.md).
 - **RFC 2119:** All requirements documentation (PRD, SRS) must use explicit RFC 2119 terminology (e.g., MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, OPTIONAL) to define the significance of each requirement. Exact definitions are located in [`.agents/kb/rfc-2119-req-terms.md`](./.agents/kb/rfc-2119-req-terms.md).
 
+## 12 Factor Logging & Observability
+
+**Purpose:** Ensure that the application treats logs as event streams, writing unbuffered to `stdout` rather than managing logfiles, adhering to the 12-Factor App methodology. This provides the foundation for a modern event streaming and observability stack.
+
+- **Stdout Mandate:** Applications MUST NEVER route or store logs in files themselves. Each running process writes its event stream unbuffered to `stdout`.
+- **Observability Stack:** The applications MUST be instrumented and infrastructure-configured to route these stdout streams into a centralized observability stack:
+  - **Promtail:** Captures the container `stdout` streams natively.
+  - **Redpanda:** Acts as the high-throughput, Kafka-compatible message queue to buffer and distribute log events sequentially without loss.
+  - **Loki:** Indexes and stores the log streams for long-term archival.
+  - **Prometheus:** Scrapes time-series metrics emitted by the apps and services.
+  - **Grafana:** Provides the centralized UI to dashboard, introspect, and correlate the logs and metrics.
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[logging-enforce.md](./.agents/rules/logging-enforce.md)`.
+
 ## Security by Design
 
 **Purpose:** Suggest security requirements and architectural decisions that protect user data.

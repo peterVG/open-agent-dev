@@ -32,7 +32,7 @@ project-root/
 
 Use appropriate Mix commands (`mix phx.new` or `mix new`) and ensure the generation targets a subdirectory within `apps/` (e.g. `apps/my_app/`), rather than the repository root. 
 
-### Populate the apps/README.md file to explain directory structure
+## Step 2: Populate the apps/README.md file
 
 Create and populate the `apps/README.md` file to explain the application directory structure. Use the following verbatim text:
 
@@ -59,8 +59,9 @@ project-root/
 
 **`apps/my_app/`:** In this monorepo structure, backend and frontend Phoenix code is grouped as a standalone OTP application nestled inside `apps/`. It maintains its own `config/`, `lib/`, `deps/`, `test/`, and `mix.exs` completely independent of the global project root.
 **`lib/`**: Contains all main source code logic and context boundaries.
+**12-Factor Logging / Observability**: All applications must route logs as unbuffered event streams exclusively to `stdout`. The ecosystem relies on a centralized observability stack (Promtail, Loki, Redpanda, Prometheus, Grafana) orchestrated via `docker-compose` to capture and index these logs, strictly forbidding local file logging.
 
-## Step 2: Configure Testing Frameworks
+## Step 3: Configure Testing Frameworks
 
 ### 1. BDD Feature-Driven Development Standard
 To maintain BDD functionality, we use the Elixir-native `Wallaby.Feature` macro atop ExUnit. **Crucially, traditional Gherkin parser libraries (like WhiteBread or Cabbage) are deprecated and fundamentally broken on modern Elixir (v1.15+).** Instead of `.feature` text files, BEAM architects must write native Elixir scenarios in `test/features/` to maintain ecosystem compatibility while generating rich Allure test reports.
@@ -103,14 +104,14 @@ To ensure code quality, consistent styling, and catch potential issues early, co
 1. **Formatting:** Use the built-in `mix format` to enforce standard Elixir code style across the project.
 2. **Linting:** Add `{:credo, "~> 1.7", only: [:dev, :test], runtime: false}` to your `mix.exs` dependencies to enforce strict code analysis and best practices. Run `mix credo --strict`.
 
-## Step 3: Configure Documentation Generation
+## Step 4: Configure Documentation Generation
 
 Elixir has robust built-in standards for documentation. You must configure the project to use these native tools:
 
 1. **Inline Documentation:** Use `@moduledoc` and `@doc` attributes to document all public modules and functions.
 2. **Developer Documentation:** Add `{:ex_doc, "~> 0.31", only: :dev, runtime: false}` to your `mix.exs` dependencies to generate HTML/Epub documentation using `mix docs`.
 
-## Step 4: Generate Inline Documentation Rule
+## Step 5: Generate Inline Documentation Rule
 
 Create a @.agents/rules/docs-enforce.md file that contains the following verbatim content:
 
@@ -139,7 +140,7 @@ For custom frontend scripts in `assets/`, the agent MUST use standard `JSDoc` sy
 
 *Failure to document code according to these standards violates the core AGENTS.md manifesto.*
 
-## Step 5: Generate linting rule
+## Step 6: Generate linting rule
 
 Create a @.agents/rules/lint-enforce.md file that contains the following verbatim content:
 
@@ -181,13 +182,38 @@ npx eslint . --fix
 ```
 *If this fails:* The agent MUST resolve any lingering JS logical errors before proceeding.
 
-## Step 6: Generate Architecture Decision Records (ADRs)
+## Step 7: Generate Architecture Decision Records (ADRs)
 
 Use the @.agents/rules/adr-formatting.md rule to write ADRs to the @docs/architecture-decisions/ directory.
 
 Be sure to include separate ADRs specifically for the choice of: 1) test runners, UI testing frameworks, Integration testing frameworks, Performance testing frameworks, and Test Reporting frameworks; 2) Inline code documentation and Developer documentation generation frameworks; and 3) Coding style standards and linting/formatting tools.
 
-## Step 7: Update Documentation
+## Step 8: Configure Global `.gitignore`
+
+The root directory already contains a `.gitignore` file. You MUST strictly append the following lines to it to ensure proper exclusion of test artifacts, dependency caches, and selective tracking for test directories across the monorepo:
+
+```text
+# Test reports & artifacts
+**/allure-results/
+test/wallaby_screenshots/
+
+# Dependency directories
+deps/
+_build/
+
+# Scratch files and transient tests
+**/test-card.js
+**/screenshot.spec.js
+
+# Allow selective tracking in test/
+**/test/*
+!**/test/features/
+!**/test/support/
+!**/test/README.md
+```
+
+## Step 9: Update Documentation
 
 1. **Insert** platform-agnostic Elixir/Erlang installation instructions into the top of the `README.md` file (e.g., referencing official guides or version managers like `asdf`, `mise`, etc.) to ensure a zero-friction setup for new developers. **CRITICAL: You MUST NOT delete or overwrite any existing content in the `README.md` file when adding this section.**
 2. **Update** the `## Run tests` section (or append one if it doesn't exist) in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure. **CRITICAL: You MUST NOT delete or overwrite any existing unrelated content in the `README.md` file when updating this section.**
+3. **Update** the `## View logs` section (located under `# Setup Development Environment`) in the root `README.md` with explicit instructions on how to install/spin up the centralized logging tools (Loki, Redpanda, Promtail, Prometheus, Grafana) via `docker-compose`, and how to access the Grafana UI locally.

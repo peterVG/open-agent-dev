@@ -8,6 +8,8 @@
 
 ## Run tests
 
+## View logs
+
 ## Viewing Developer Documentation
 
 # Setup Production Environment
@@ -46,13 +48,13 @@ If you want AI Agent assistance to write the product vision document, you can in
 Open Agent Dev currently supports best practices for the Python/Javascript and BEAM/Elixir tech stacks.
 
 ```text
-@AGENTS.md Initialize the project using the @.agents/skills/beam-elixir-init.md skill
+@AGENTS.md Initialize the project using the @.agents/skills/init-beam-elixir.md skill
 ```
 
 OR
 
 ```text
-@AGENTS.md Initialize the project using the @.agents/skills/python-js-init.md skill
+@AGENTS.md Initialize the project using the @.agents/skills/init-python-js.md skill
 ```
 
 ## Create a Product Requirements Document

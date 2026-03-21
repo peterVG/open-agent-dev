@@ -60,11 +60,11 @@ project-root/
     └── shared-config/       
 ```
 
-Use appropriate commands (e.g. `npx create-react-app`, `npx create-next-app` for frontend; `pip install` or direct directory creation for backend) to generate these structures STRICTLY within the `apps/` and `services/` subdirectories. **DO NOT generate workspace manifests or applications inside the repository root.**
+Use appropriate commands (e.g. `npx create-react-app`, `npx create-next-app` for frontend; `pip install` or direct directory creation for backend) to generate these structures STRICTLY within the `apps/` subdirectory (under `apps/frontend/` and `apps/backend/`). **DO NOT generate workspace manifests or applications inside the repository root.**
 
-## Step 2 Populate the apps/README.md and/or services/README.md files to explain directory structure
+## Step 2 Populate the apps/README.md file to explain directory structure
 
-Create and populate `README.md` files at the root of the `apps/` and `services/` directories (i.e., `apps/README.md` and `services/README.md`) to explain their recursive directory structures. You can use the following text as a template, adjusting for the specific stack used:
+Create and populate a `README.md` file at the root of the `apps/` directory (i.e., `apps/README.md`) to explain the recursive directory structure. You can use the following text as a template, adjusting for the specific stack used:
 
 For a Python/Javascript project, the best practice is a Monorepo approach that strictly separates the backend API (Python) from the frontend client application (Javascript/TypeScript).
 
@@ -134,6 +134,7 @@ When writing or configuring code for this stack, you must adhere to the followin
 **Docker Integration**: Utilizing a `docker-compose.yml` file at the root, along with individual `Dockerfile`s in the backend and frontend folders, standardizes the development environment across the team and minimizes "it works on my machine" issues.
 **Isolated Testing & Linting**: All global cache directories (`.pytest_cache`, `.eslintcache`) and reporting suites MUST strictly run and output within their local workspace directory (e.g. `apps/backend/tests/`) instead of the shared global repository root.
 **Testing Taxonomy**: Both apps share a comprehensive and symmetrical testing architecture supporting `unit/`, BDD `features/`, UI `performance/`, and local `allure-results/` test reporting. They only differ where execution environments demand it: The backend uses `integration/` tests to quickly verify raw HTTP interactions with databases, whereas the frontend uses `e2e/` (End-to-End) tests via tools like Playwright or Cypress to physically invoke Chromium and simulate real visual user browser sessions.
+**12-Factor Logging / Observability**: All applications must route their logs as unbuffered event streams exclusively to `stdout`. The repository relies on a centralized observability stack (Promtail, Loki, Redpanda, Prometheus, Grafana) orchestrated via `docker-compose` to capture and index these logs, strictly forbidding local file logging.
 
 ## Step 3: Configure Testing Frameworks
 
@@ -306,3 +307,4 @@ __pycache__/
 
 1. **Insert** platform-agnostic Python/Node installation instructions into the top of the `README.md` file (e.g., referencing official guides or version managers like `asdf`, `mise`, `pyenv`, `nvm`, etc.) to ensure a zero-friction setup for new developers. **CRITICAL: You MUST NOT delete or overwrite any existing content in the `README.md` file when adding this section.**
 2. **Update** the `## Run tests` section (or append one if it doesn't exist) in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure. **CRITICAL: You MUST NOT delete or overwrite any existing unrelated content in the `README.md` file when updating this section.**
+3. **Update** the `## View logs` section (located under `# Setup Development Environment`) in the root `README.md` with explicit instructions on how to install/spin up the centralized logging tools (Loki, Redpanda, Promtail, Prometheus, Grafana) via `docker-compose`, and how to access the Grafana UI locally.
