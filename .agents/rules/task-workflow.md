@@ -23,3 +23,8 @@ Before writing any code or modifying the project files for a specific task, you 
 
 ## Continuous Documentation (README.md)
 You MUST NOT wait until the end of the project to document how to run the application. If your task introduces a new system dependency (e.g., PostgreSQL, Redis), a new environment variable, or changes the commands required to run/test the application, you MUST immediately update the corresponding section in the root `README.md` (e.g., `Setup Development Environment`, `Prerequisites`, `Run tests`) as part of that task's execution.
+
+## Mocking & Environment Transparency
+When executing automated tests or background commands, an agent may encounter interactive prompts or missing environment variables that block the execution pipeline. If the agent generates dummy `.env` files, mocks credentials, or bypasses interactive prompts to allow integration tests to pass autonomously:
+1. The agent MUST explicitly document these mocked values in the `docs/tasks/Task-[Task ID]-Walkthrough.md` file under a "Mocked Environment Variables" section.
+2. In the final response to the user upon task completion, the agent MUST explicitly notify the user that dummy values were temporarily inserted to unblock testing, and instruct them to replace the dummy values with real credentials before proceeding to the next task.
