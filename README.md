@@ -44,20 +44,6 @@ If you want AI Agent assistance to write the product vision document, you can in
 /product-vision I want to build [XYZ]. Refer to the @.agents/kb/ folder for any relevant background information.
 ```
 
-## Initialize the project
-
-Open Agent Dev currently supports best practices for the Python/Javascript and BEAM/Elixir tech stacks.
-
-```text
-@AGENTS.md Initialize the project using the @.agents/skills/init-beam-elixir.md skill
-```
-
-OR
-
-```text
-@AGENTS.md Initialize the project using the @.agents/skills/init-python-js.md skill
-```
-
 ## Create a Product Requirements Document
 
 ```text
@@ -69,6 +55,20 @@ Review and revise [`/docs/prd.md`](./docs/prd.md) as needed. Check [`/docs/templ
 
 ```text
 @AGENTS.md Generate a srs.md in @docs using the @.agents/skills/srs-writer skill. Base it on @docs/prd.md, ADR files, BDD feature files and the principles in the AGENTS.md file. Use the @.agents/skills/feature-writer skill to generate BDD feature scenarios for each unique requirement in @docs/srs.md and @docs/prd.md. Use the @.agents/rules/adr-formatting.md rule to generate ADR files in the @docs/architecture-decisions/ folder based on the technical decisions in @docs/prd.md and @docs/srs.md. Populate the # About this project section of this README.md file with a description of the project based on the @docs/product-vision.md, @docs/prd.md, @docs/srs.md, ADR files and BDD feature files.
+```
+
+## Initialize the project
+
+Open Agent Dev currently supports best practices for the Python/Javascript and BEAM/Elixir tech stacks.
+
+```text
+@AGENTS.md Initialize the project using the @.agents/skills/init-beam-elixir.md skill, the ADRs in @docs/architecture-decisions/, the technical stack decisions in @docs/srs.md and @docs/prd.md and the principles in the AGENTS.md file.
+```
+
+OR
+
+```text
+@AGENTS.md Initialize the project using the @.agents/skills/init-python-js.md skill, the ADRs in @docs/architecture-decisions/, the technical stack decisions in @docs/srs.md and @docs/prd.md and the principles in the AGENTS.md file.
 ```
 
 ## Generate an implementation plan to guide development
