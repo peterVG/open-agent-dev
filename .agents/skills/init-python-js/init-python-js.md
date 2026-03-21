@@ -126,6 +126,7 @@ When writing or configuring code for this stack, you must adhere to the followin
 
 **Complete Separation**: The frontend and backend run on different ports during development (e.g., Frontend Client on 5173, FastAPI on 8000) and are completely isolated. The frontend doesn't need to know the backend is written in Python; it simply makes standard HTTP requests (GET, POST, PUT, DELETE) and receives JSON in return.
 **The Backend (Python)**: For maintainability, the backend uses a Strict Domain-Driven architecture. It organizes feature-specific code into domain-driven `modules/` (e.g., `modules/users/routers.py`) and background workers into `tasks/`. All app-wide global resources and configurations stay safely tucked in the `core/` directory, while generic health checks live directly in `main.py`.
+**Python Virtual Environments**: Because the project relies on isolated workspaces, all Python execution (e.g., `pip install`, `pytest`, `uvicorn`) MUST strictly utilize a localized virtual environment (`.venv`). When generating READMEs, executing tasks, or running bash scripts, you MUST explicitly activate the environment (`source .venv/bin/activate`) to prevent system-wide OS PEP-668 conflicts.
 **The Frontend (JavaScript)**: Client-side code is framework-flexible, grouped into a `src/` directory containing view `components/` and an `api/` layer specifically responsible for handling all communication with the backend.
 **Docker Integration**: Utilizing a `docker-compose.yml` file at the root, along with individual `Dockerfile`s in the backend and frontend folders, standardizes the development environment across the team and minimizes "it works on my machine" issues.
 **Isolated Testing & Linting**: All global cache directories (`.pytest_cache`, `.eslintcache`) and reporting suites MUST strictly run and output within their local workspace directory (e.g. `apps/backend/tests/`) instead of the shared global repository root.
@@ -164,7 +165,7 @@ The main test execution environments are driven by `pytest` for the backend, and
 
 ## Best Practices
 - Run code formatting and linting via `ruff` (backend) AND `eslint`/`prettier` (frontend) explicitly **within their respective application workspaces (`cd apps/frontend/`, etc.)** prior to running tests.
-- Execute unit and integration tests via `pytest` by running the command locally within `apps/backend/`.
+- Execute unit and integration tests via `pytest` by running the command locally within `apps/backend/` sequentially after activating the python virtual environment (`source .venv/bin/activate`).
 - After a test run, compile `allure` results using the Allure CLI against the isolated `apps/backend/tests/allure-results` folder.
 
 ## Step 4: Configure Documentation Generation
