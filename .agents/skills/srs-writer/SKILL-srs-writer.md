@@ -56,7 +56,7 @@ AGENT: [Verifies that technical approach meets all constraints from PRD]
 ```
 AGENT: [Creates docs/srs.md]
 AGENT: [Maps all PRD requirements to the SRS using a dedicated **Source** section at the end of each requirement block. Format: `- [[source ID]](../prd.md) [source name]`]
-AGENT: [Ensures forward-traceability by defining an expected **Tests** section mapping to all target Gherkin, integration, performance, ui, and unit test files. Format: `- [[filename]](../tests/features/[filename])` or `- [[filename]](../tests/unit/[filename])`]
+AGENT: [Ensures forward-traceability by defining an expected **Tests** section mapping to all target Gherkin, integration, performance, ui, and unit test files. Format MUST respect the monorepo bounds defined in `.agents/rules/workspace-boundaries.md` by targeting the isolated applications (e.g. `- [[filename]](../apps/backend/tests/features/[filename])` or `- [[filename]](../apps/frontend/tests/features/[filename])`)]
 AGENT: [Ensures SRS strictly complies with ISO/IEC/IEEE 29148 (Unambiguous, Complete, Verifiable, Consistent, Traceable)]
 AGENT: [Uses "MUST" or "MUST NOT" for mandatory requirements and "SHOULD" or "SHOULD NOT" for optional requirements per RFC 2119]
 AGENT: [Includes accurate library versions and technical constraints]
