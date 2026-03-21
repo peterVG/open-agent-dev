@@ -66,7 +66,7 @@ project-root/
 **`apps/my_app/`:** In this monorepo structure, backend and frontend Phoenix code is grouped as a standalone OTP application nestled inside `apps/`. It maintains its own `config/`, `lib/`, `deps/`, `test/`, and `mix.exs` completely independent of the global project root.
 **`lib/`**: Contains all main source code logic and context boundaries.
 **Testing Taxonomy**: Both apps share a comprehensive testing architecture supporting `unit/`, `integration/`, `ui/`, BDD `features/`, `performance/`, and standardized `allure-results/` test reporting. Elixir projects route Ecto test databases specifically to their application root rather than system-wide.
-**12-Factor Logging / Observability**: All applications must route logs as unbuffered event streams exclusively to `stdout`. The ecosystem relies on a centralized observability stack (Promtail, Loki, Redpanda, Prometheus, Grafana) orchestrated via `docker-compose` to capture and index these logs, strictly forbidding local file logging.
+**Centralized Logging / Observability**: All applications must route logs as unbuffered event streams exclusively to `stdout`. The ecosystem relies on a centralized observability stack (Promtail, Loki, Redpanda, Prometheus, Grafana) orchestrated via `docker-compose` to capture and index these logs, strictly forbidding local file logging.
 
 ## Step 3: Configure Testing Frameworks
 
@@ -195,7 +195,7 @@ Use the `@.agents/rules/adr-formatting.md` rule to write ADRs to the `@docs/arch
 1) test runners and reporting frameworks.
 2) Inline code docs generators.
 3) Coding style standards and linting tooling.
-4) The centralized 12-Factor observability stack (Loki, Redpanda, Promtail, Prometheus, Grafana).
+4) The centralized observability stack (Loki, Redpanda, Promtail, Prometheus, Grafana).
 
 ## Step 8: Configure Global `.gitignore`
 

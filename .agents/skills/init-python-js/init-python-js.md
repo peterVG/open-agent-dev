@@ -134,7 +134,7 @@ When writing or configuring code for this stack, you must adhere to the followin
 **Docker Integration**: Utilizing a `docker-compose.yml` file at the root, along with individual `Dockerfile`s in the backend and frontend folders, standardizes the development environment across the team and minimizes "it works on my machine" issues.
 **Isolated Testing & Linting**: All global cache directories (`.pytest_cache`, `.eslintcache`) and reporting suites MUST strictly run and output within their local workspace directory (e.g. `apps/backend/tests/`) instead of the shared global repository root.
 **Testing Taxonomy**: Both apps share a comprehensive and symmetrical testing architecture supporting `unit/`, BDD `features/`, UI `performance/`, and local `allure-results/` test reporting. They only differ where execution environments demand it: The backend uses `integration/` tests to quickly verify raw HTTP interactions with databases, whereas the frontend uses `e2e/` (End-to-End) tests via tools like Playwright or Cypress to physically invoke Chromium and simulate real visual user browser sessions.
-**12-Factor Logging / Observability**: All applications must route their logs as unbuffered event streams exclusively to `stdout`. The repository relies on a centralized observability stack (Promtail, Loki, Redpanda, Prometheus, Grafana) orchestrated via `docker-compose` to capture and index these logs, strictly forbidding local file logging.
+**Centralized Logging / Observability**: All applications must route their logs as unbuffered event streams exclusively to `stdout`. The repository relies on a centralized observability stack (Promtail, Loki, Redpanda, Prometheus, Grafana) orchestrated via `docker-compose` to capture and index these logs, strictly forbidding local file logging.
 
 ## Step 3: Configure Testing Frameworks
 
@@ -270,7 +270,7 @@ Use the @.agents/rules/adr-formatting.md rule to write ADRs to the @docs/archite
 1) test runners and reporting frameworks.
 2) Inline code docs generators.
 3) Coding style standards and linting tooling.
-4) The centralized 12-Factor observability stack (Loki, Redpanda, Promtail, Prometheus, Grafana).
+4) The centralized observability stack (Loki, Redpanda, Promtail, Prometheus, Grafana).
 
 ## Step 8: Configure Global `.gitignore`
 

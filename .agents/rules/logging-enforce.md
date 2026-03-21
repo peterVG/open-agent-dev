@@ -5,7 +5,7 @@ description: Ensure all applications follow 12 Factor App logging rules and inte
 
 # Logging and Observability Enforcement
 
-**Purpose:** This file instructs the AI agent on exactly how to implement logging to satisfy the "12 Factor Logging & Observability" mandate in `AGENTS.md`. It serves as a unified standard applicable to any programming language or framework in the repository.
+**Purpose:** This file instructs the AI agent on exactly how to implement logging to satisfy the "Centralized Logging & Observability" mandate in `AGENTS.md`. It serves as a unified standard applicable to any programming language or framework in the repository.
 
 ## Execution Requirements
 
