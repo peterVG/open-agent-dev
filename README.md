@@ -4,12 +4,23 @@
 
 # Setup Development Environment
 
+Ensure you have installed Python 3.10+ (via `pyenv`, `mise`, or `asdf`) and Node.js 20+ (via `nvm` or `asdf`).
+
 ## Run the application
+
+To start the FastAPI backend locally, execute `uvicorn app.main:app --reload` from `apps/backend/`.
+To start the SvelteKit frontend locally, execute `npm run dev` from `apps/frontend/`.
 
 ## Run tests
 
+Execute comprehensive backend tests via `pytest` locally inside `apps/backend/`. 
+Execute frontend logic tests via `vitest` and UI flows via `npx playwright test` inside `apps/frontend/`. 
+To aggregate and view granular execution reports, run the Allure CLI explicitly targeting respective isolated environments (e.g. `allure serve apps/backend/tests/allure-results`).
+
 ## View logs
 
+Spin up the full centralized observability stack via `docker-compose up -d` at the project root.
+Access the Grafana UI locally at `http://localhost:3000` to query and view the emitted container logs using the `Loki` data source.
 
 ## Viewing Developer Documentation
 
