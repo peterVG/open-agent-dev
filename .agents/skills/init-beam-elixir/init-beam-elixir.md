@@ -25,6 +25,12 @@ project-root/
 │       ├── lib/
 │       ├── priv/
 │       ├── test/
+│       │   ├── unit/
+│       │   ├── integration/
+│       │   ├── ui/
+│       │   ├── features/
+│       │   ├── performance/
+│       │   └── allure-results/
 │       ├── mix.exs
 │       └── mix.lock
 └── README.md
@@ -51,7 +57,13 @@ project-root/
 │       ├── include/      # Public header files (.hrl) required by other applications
 │       ├── lib/          # Main Elixir source code (or src/ for Erlang .erl files)
 │       ├── priv/         # Non-BEAM specific files (executables, static assets)
-│       ├── test/         # Test suites, ExUnit/EUnit files, and test helpers
+│       ├── test/         # Consolidated testing infrastructure
+│       │   ├── unit/        
+│       │   ├── integration/ 
+│       │   ├── ui/          
+│       │   ├── features/    
+│       │   ├── performance/ 
+│       │   └── allure-results/
 │       ├── mix.exs       # Elixir project configuration and dependencies list
 │       └── mix.lock      # Locked versions of dependencies
 └── README.md     # Explains this directory structure
@@ -59,6 +71,7 @@ project-root/
 
 **`apps/my_app/`:** In this monorepo structure, backend and frontend Phoenix code is grouped as a standalone OTP application nestled inside `apps/`. It maintains its own `config/`, `lib/`, `deps/`, `test/`, and `mix.exs` completely independent of the global project root.
 **`lib/`**: Contains all main source code logic and context boundaries.
+**Testing Taxonomy**: Both apps share a comprehensive testing architecture supporting `unit/`, `integration/`, `ui/`, BDD `features/`, `performance/`, and standardized `allure-results/` test reporting. Elixir projects route Ecto test databases specifically to their application root rather than system-wide.
 **12-Factor Logging / Observability**: All applications must route logs as unbuffered event streams exclusively to `stdout`. The ecosystem relies on a centralized observability stack (Promtail, Loki, Redpanda, Prometheus, Grafana) orchestrated via `docker-compose` to capture and index these logs, strictly forbidding local file logging.
 
 ## Step 3: Configure Testing Frameworks
