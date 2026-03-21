@@ -205,8 +205,11 @@ The root directory already contains a `.gitignore` file. You MUST strictly appen
 test/wallaby_screenshots/
 
 # Dependency directories
-deps/
-_build/
+**/deps/
+**/_build/
+**/ebin/
+**/doc/
+*.beam
 
 # Scratch files and transient tests
 **/test-card.js
