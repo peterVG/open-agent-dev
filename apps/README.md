@@ -1,6 +1,6 @@
 # Apps Directory (`/apps`)
 
-This directory is an organizational **Workspace Boundary** within the Open Agent Dev monorepo.
+This directory is an organizational **Workspace Boundary** using a monorepo approach.
 
 ## Purpose
 
@@ -26,5 +26,4 @@ Each application inside this directory is considered a fully standalone project 
 - Background workers and message processors
 
 ## What Does NOT Go Here
-- **Project-wide documentation:** Rules in `.agents/`, RFCs, and ARDs remain in the global `/docs/` struct.
 - **Global Manifests:** Global language dependencies must never be hoisted out of `/apps/` to the repository root.
