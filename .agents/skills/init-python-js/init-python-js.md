@@ -56,8 +56,6 @@ project-root/
 │           ├── features/
 │           ├── performance/
 │           └── allure-results/
-└── packages/                
-    └── shared-config/       
 ```
 
 Use appropriate commands (e.g. `npx create-react-app`, `npx create-next-app` for frontend; `pip install` or direct directory creation for backend) to generate these structures STRICTLY within the `apps/` subdirectory (under `apps/frontend/` and `apps/backend/`). **DO NOT generate workspace manifests or applications inside the repository root.**
@@ -122,8 +120,6 @@ project-root/
 │           ├── features/    
 │           ├── performance/ 
 │           └── allure-results/
-└── packages/                # Shared monorepo packages 
-    └── shared-config/       # Shared configs (e.g., TypeScript, Prettier, ESLint) 
 ```
 
 When writing or configuring code for this stack, you must adhere to the following principles:
