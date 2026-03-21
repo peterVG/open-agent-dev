@@ -173,7 +173,7 @@ The main test execution environments are driven by `pytest` for the backend, and
 Clear documentation is critical for maintaining the separation of concerns in a monorepo. Configure the following documentation frameworks:
 
 1. **Backend (Python):** Use `pdoc` to automatically extract docstrings (which MUST follow Google or NumPy style) and generate API documentation. Add `pdoc` to your backend `requirements.txt`.
-2. **Frontend (Javascript):** Use `JSDoc` for inline comments and function signatures. If the frontend grows complex, configure `TypeDoc` (if using TypeScript) or `JSDoc`'s generator to produce static documentation sites.
+2. **Frontend (Javascript):** Use `JSDoc` for inline comments and function signatures. You MUST explicitly run `npm install --save-dev jsdoc` inside `apps/frontend/`, create a base `jsdoc.json` configuration file isolating parsing to the `src/` directory, and strictly wire a `"docs": "jsdoc -c jsdoc.json"` command into the frontend `package.json` scripts block!
 
 ## Step 5: Generate Inline Documentation Rule
 
