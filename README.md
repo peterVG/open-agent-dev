@@ -1,6 +1,13 @@
 # About this project
 
-*Note: These sections will be auto-populated by the AI Agent as more project information is confirmed.*
+**Arkrim Dragon** is an immersive, infinite-canvas exploratory tool designed to gamify and visualize data discovery through a fluid, continuously flying Dragon avatar. Acting as a navigational proxy across a digital galaxy, users interact with procedural celestial bodies representing open data repositories (such as the Internet Archive, Wikimedia, and Open Library) to discover and collect payloads on their avatar's tail.
+
+The system is built as a highly performant **Python/JavaScript Monorepo** tracking the strict **Open Agent Dev** manifesto principles:
+- A **SvelteKit** frontend driving raw HTML5 canvas kinematics natively for zero-stutter rendering at 60 FPS.
+- A **FastAPI** backend routing massive asynchronous data loads into local **SQLite** stores and external **DigitalOcean S3** droplets. 
+- A rigorous **Test-Driven** integration suite rigorously validated against **BDD Gherkin** `.feature` scenarios.
+- Strict decentralized **Grafana/Promtail** observability enforcing zero local `.log` file dependencies.
+- A **Zero-Friction** setup architecture dynamically mapping schema migrations automatically.
 
 # Setup Development Environment
 
