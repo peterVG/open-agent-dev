@@ -1,10 +1,11 @@
 ---
+trigger: always_on
 description: Ensure all Architecture Decision Records strictly follow the 9-point ISO 42010 structure.
 ---
 
 # Architecture Decision Records (ADRs) Formatting
 
-Document the context and justification for all significant architectural, technical, and product decisions.
+**Purpose:** Document the context and justification for all significant architectural, technical, and product decisions.
 
 1. **Record Decisions, Not Conversations:** Synthesize agreed-upon decisions into lightweight markdown files in `docs/architecture/`.
 2. **Naming Convention:** Prefix each ADR with a consecutive three-digit number followed by a hyphenated slug describing the decision (e.g., `001-use-sqlite-for-local-storage.md`).

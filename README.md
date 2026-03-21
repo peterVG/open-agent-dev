@@ -1,6 +1,43 @@
 # About this project
 
-*Note: This section will be auto-populated by the AI Agent once the project vision and product requirements have been confirmed.*
+**Arkrim Dragon** is an immersive, infinite-canvas exploratory tool designed to gamify and visualize data discovery through a fluid, continuously flying Dragon avatar. Acting as a navigational proxy across a digital galaxy, users interact with procedural celestial bodies representing open data repositories (such as the Internet Archive, Wikimedia, and Open Library) to discover and collect payloads on their avatar's tail.
+
+The system is built as a highly performant **Python/JavaScript Monorepo** tracking the strict **Open Agent Dev** manifesto principles:
+- A **SvelteKit** frontend driving raw HTML5 canvas kinematics natively for zero-stutter rendering at 60 FPS.
+- A **FastAPI** backend routing massive asynchronous data loads into local **SQLite** stores and external **DigitalOcean S3** droplets. 
+- A rigorous **Test-Driven** integration suite rigorously validated against **BDD Gherkin** `.feature` scenarios.
+- Strict decentralized **Grafana/Promtail** observability enforcing zero local `.log` file dependencies.
+- A **Zero-Friction** setup architecture dynamically mapping schema migrations automatically.
+
+# Setup Development Environment
+
+Ensure you have installed Python 3.10+ (via `pyenv`, `mise`, or `asdf`) and Node.js 20+ (via `nvm` or `asdf`).
+
+## Run the application
+
+To start the FastAPI backend locally, execute `uvicorn app.main:app --reload` from `apps/backend/`.
+To start the SvelteKit frontend locally, execute `npm run dev` from `apps/frontend/`.
+
+## Run tests
+
+Execute comprehensive backend tests via `pytest` locally inside `apps/backend/`. 
+Execute frontend logic tests via `vitest` and UI flows via `npx playwright test` inside `apps/frontend/`. 
+To aggregate and view granular execution reports, run the Allure CLI explicitly targeting respective isolated environments (e.g. `allure serve apps/backend/tests/allure-results`).
+
+## View logs
+
+Spin up the full centralized observability stack via `docker-compose up -d` at the project root.
+Access the Grafana UI locally at `http://localhost:3000` to query and view the emitted container logs using the `Loki` data source.
+
+## Viewing Developer Documentation
+
+# Setup Production Environment
+
+## Deploy to Production
+
+## Monitor and Update
+
+---
 
 # About Open Agent Dev
 
@@ -17,7 +54,6 @@ Upload any reference documents to the `/docs/references/` directory. This includ
 @AGENTS.md read any reference documents in @docs/references/ and use the @.agents/skills/kb-synthesizer skill to generate a knowledge base in @.agents/kb/
 ```
 
-
 ## Create a Product Vision
 Fill out [`docs/templates/product-vision.md`](./docs/templates/product-vision-template.md) as best as possible and save it as [`/docs/product-vision.md`](./docs/product-vision.md)
 
@@ -29,41 +65,34 @@ If you want AI Agent assistance to write the product vision document, you can in
 ## Create a Product Requirements Document
 
 ```text
-@AGENTS.md Generate a baseline product requirements document in /docs using the @. skill based on @docs/product-vision.md, the @.agents/kb/ folder and the manifesto principles in the AGENTS.md file.
+@AGENTS.md Generate a prd.md in @docs using the @.agents/skills/prd-writer skill. Base it on @docs/product-vision.md, the @.agents/kb/ folder and the principles in the AGENTS.md file.
 ```
 Review and revise [`/docs/prd.md`](./docs/prd.md) as needed. Check [`/docs/templates/prd-template.md`](./docs/templates/prd-template.md) for additional guidance. Make sure to add any additional requirements that you think are necessary to fully define the product vision.
 
-## Create a Software Requirement Specification document and feature files
+## Initialize the project
+
+Open Agent Dev currently supports best practices for the Python/Javascript and BEAM/Elixir tech stacks.
 
 ```text
-@AGENTS.md Generate a baseline SRS in /docs using the @.agents/skills/srs-writer skill based on @docs/prd.md and the manifesto principles in the AGENTS.md file. After generating the SRS, use the @.agents/skills/gherkin-writer skill to generate Gherkin scenarios for each unique requirement in @docs/srs.md and @docs/prd.md.
+@AGENTS.md Initialize the project using the @.agents/skills/init-beam-elixir.md skill, the technical stack decisions in @docs/srs.md and @docs/prd.md and the principles in the AGENTS.md file.
 ```
 
-## Next, generate the initial Architecture Decision Records (ADRs):
+OR
+
 ```text
-@AGENTS.md Generate Architecture Decision Record (ADR) files in @docs/architecture/ folder based on the technical decisions in @docs/prd.md and @docs/srs.md, following the conventions in @AGENTS.md. Be sure to include separate ADRs specifically for the choice of: 1) test runners, UI testing frameworks, Integration testing frameworks, Performance testing frameworks, and Test Reporting frameworks; 2) Inline code documentation and Developer documentation generation frameworks; and 3) Coding style standards and linting/formatting tools. Use tooling appropriate for the project's technology stack (e.g., pytest/pdoc/Ruff for Python). Based on the finalized technology stack, additionally generate a @.agents/rules/lint-enforce.md rule file that specifies the exact CLI commands required to lint and format the codebase.
+@AGENTS.md Initialize the project using the @.agents/skills/init-python-js.md skill, the technical stack decisions in @docs/srs.md and @docs/prd.md and the principles in the AGENTS.md file.
+```
+
+## Create a Software Requirement Specification document and Architecture Decision Records
+
+```text
+@AGENTS.md Generate a srs.md in @docs using the @.agents/skills/srs-writer skill. Base it on @docs/prd.md and the principles in the AGENTS.md file. Use the @.agents/skills/feature-writer skill to generate BDD feature scenarios for each unique requirement in @docs/srs.md and @docs/prd.md. Use the @.agents/rules/adr-formatting.md rule to generate ADR files in the @docs/architecture-decisions/ folder based on the technical decisions in @docs/prd.md and @docs/srs.md. Populate the # About this project section of this README.md file with a description of the project based on the @docs/product-vision.md, @docs/prd.md, @docs/srs.md, ADR files and BDD feature files.
 ```
 
 ## Generate an implementation plan to guide development
 ```text
-@AGENTS.md Generate an implementation plan for the project using the @.agents/skills/implementation-plan-writer skill based on the @docs/prd.md, @docs/srs.md and @tests/features/ feature files. Once the implementation plan is created and the technology stack is confirmed, update the "Setup Development Environment" and "Setup Production Environment" sections in this README.md file with the actual commands needed to run the application, execute tests (including BDD feature tests specifically), generate and view test reports (e.g. Allure), view developer documentation, and deploy to production, removing the *Note:* placeholders.
+@AGENTS.md Generate an implementation plan for the project using the @.agents/skills/implementation-plan-writer skill based on the @docs/prd.md, @docs/srs.md, ADR files and BDD feature files. Once the implementation plan is created and the technology stack is confirmed, update the "Setup Development Environment" section in this README.md file with the actual commands needed to run the application, to execute tests, to view their results, and to view developer documentation. Be sure to be specific about what directory the user must be in to run the commands.
 ```
 
 ## Use the AGENTS.md prompts in your Implementation Plan
 Check @docs/plan.md for specific task prompts in your implementation plan.These will guide you through the task list to generate and test your code in compliance with the Open Dev Agent principles and workflow.
-
-# Setup Development Environment
-
-*Note: These sections will be auto-populated by the AI Agent once the project's technology stack has been confirmed.*
-
-## Run the application
-
-## Run tests
-
-## Viewing Developer Documentation
-
-# Setup Production Environment
-
-## Deploy to Production
-
-## Monitor and Update

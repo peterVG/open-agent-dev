@@ -13,7 +13,7 @@ This skill enables the agent to translate Product Requirements Document (PRD), S
 
 ## When to Use This Skill
 
-- When asked to "Generate an implementation plan" using `@docs/prd.md`, `@docs/srs.md`, and `@tests/features/`
+- When asked to "Generate an implementation plan" using `@docs/prd.md` and `@docs/srs.md`
 - When breaking down agreed-upon requirements into actionable developer tasks
 - When the user references this skill explicitly
 
@@ -32,7 +32,7 @@ Every task MUST be formatted as an interactive Markdown checkbox so that progres
 
 ### 2. Strict Traceability
 
-Every task MUST explicitly link back to its originating requirements (PRD/SRS) and its associated verification tests (Gherkin feature files).
+Every task MUST explicitly link back to its originating requirements (PRD/SRS).
 
 **Format:**
 
@@ -122,11 +122,11 @@ This document outlines the step-by-step implementation plan...
   - **Agent Prompt:** `@AGENTS.md Begin by creating a new feature branch for Task [Task ID]. Then begin development for Task [Task ID] in @docs/plan.md. Generate docs/tasks/Task-[Task ID]-Plan.md and docs/tasks/Task-[Task ID]-ToDos.md to capture the design and checklist. Rigorously follow @.agents/rules/src-isolation.md to scaffold the application code in the proper isolated directory. Propose the implementation code and corresponding testing suite in the appropriate directories within the repository, adhering rigorously to the established Architecture Decision Records (ADRs). Upon completion, YOU MUST generate docs/tasks/Task-[Task ID]-Walkthrough.md directly in the project repository—DO NOT use an internal scratchpad. If this task introduces new dependencies or changes run commands, you MUST update the root README.md Setup instructions.`
 ```
 
-## Workflow: PRD/SRS/Gherkin → Plan
+## Workflow: PRD/SRS/ADRs → Plan
 
 ### Step 1: Read all Context
 
-Scan the provided PRD, SRS, and `tests/features/` directory map.
+Scan the @prd.md, @srs.md documents and the ADR files in the @docs/architecture-decisions directory.
 
 ### Step 2: Group by Phase
 
@@ -138,7 +138,7 @@ Draft the plan using the interactive `- [ ]` markdown syntax.
 
 ### Step 4: Map Tests and Requirements
 
-Carefully trace each task to its matching SRS block and Gherkin file.
+Carefully trace each task to its matching @srs.md block.
 
 ### Step 5: Gather Dependencies
 
@@ -146,34 +146,13 @@ Review the final plan, SRS, and ADRs to identify all necessary third-party libra
 
 ### Step 6: Documentation, Dockerization & Handoff
 
-Ensure the final Phase of the implementation plan includes a task for creating a `Dockerfile` appropriate for the finalized tech stack, and auto-populating the main `README.md` sections (Development Environment, Viewing Developer Documentation, Production Environment, How to Dockerize, etc.) based on the finalized tech stack and any Architecture Decision Records (ADRs).
+Ensure the final Phase of the implementation plan includes a task to populate or update the main `README.md` sections (Development Environment, Viewing Developer Documentation, Production Environment, etc.) based on the finalized tech stack and any Architecture Decision Records (ADRs).
 For this final task, you MUST use the following exact Agent Prompt:
-`@AGENTS.md Begin by creating a new feature branch. Then read the project's Architecture Decision Records (ADRs) and the finalized tech stack to create an appropriate Dockerfile. Then auto-populate the 'Setup Development Environment' (including 'Test Execution & Reporting' instructions), 'Viewing Developer Documentation', 'Setup Production Environment', and 'How to Dockerize' sections of the README.md file. Ensure installation instructions are platform-agnostic (don't assume macOS/Homebrew) or explicitly accommodate multiple operating systems as required by the ADRs. Make sure to check off the task as complete in docs/plan.md once finished.`
+`@AGENTS.md Begin by creating a new feature branch. Then read the project's Architecture Decision Records (ADRs) and the finalized tech stack to populate or update the 'Setup Development Environment' (including 'Run the Application' and 'Run tests') and 'Setup Production Environment' (including 'Deploy to Production' and 'Monitor and Update') sections of the README.md file. Ensure installation instructions are platform-agnostic (e.g., don't assume macOS/Homebrew) or explicitly accommodate multiple operating systems as required by the ADRs. However, if the project requires Dockerization, ensure the final Phase of the implementation plan includes a task to populate or update the `Dockerfile` based on the finalized tech stack and ADRs as well as include a "How to Dockerize" section in the README.md file that includes a basic overview of how Docker works and its main components.`
+Make sure to check off the task as complete in docs/plan.md once finished.`
 
 ### Step 7: Architecture Synthesis
 
 Ensure the _absolute final task_ of the implementation plan invokes the Architecture Writer skill to map the completed system.
 For this final task, you MUST use the following exact Agent Prompt:
-`@AGENTS.md Begin by creating a new feature branch. Then invoke the @architecture-writer skill. Read its instructions entirely, then execute all steps to synthesize the PRD, SRS, codebase reality, and ADRs into a comprehensive docs/architecture.md file featuring ISO 42010 viewpoints and Mermaid diagrams. Make sure to check off the task as complete in docs/plan.md once finished.`
-
-## Output Format
-
-When asked to generate an implementation plan, the agent should:
-
-1. **Create/Update `docs/plan.md`**
-2. **Use Markdown Checkboxes** for every task.
-3. **Include `Related Requirements`, `Related Tests`, and `Agent Prompt`** bullet points for every task.
-4. **Group by logical technical phases.**
-5. **Generate a Dependency File** (e.g., `requirements.txt`, `package.json`, `Cargo.toml`) that reflects all dependencies required by the finalized plan, SRS, and ADRs.
-6. **Include a penultimate task** to write a `Dockerfile` and update the repository's `README.md` with environment setup and Dockerization instructions.
-7. **Include an ultimate task** that explicitly invokes the `@architecture-writer` skill to generate `docs/architecture.md`.
-
-## Success Criteria
-
-- ✅ File successfully created as `docs/plan.md`
-- ✅ Every task is a `- [ ]` checkbox
-- ✅ Every task maps to PRD/SRS requirements
-- ✅ Every task maps to a Gherkin feature file (or is explicitly marked N/A contextually)
-- ✅ Dependencies logically flow from Phase 1 onwards
-- ✅ A fresh dependency file (e.g., `requirements.txt`) is generated identifying all required packages.
-- ✅ The plan ends with tasks to configure Docker, README.md, and then finally generate the architecture.md file via the `@architecture-writer` skill.
+`@AGENTS.md Begin by creating a new feature branch. Then invoke the @architecture-writer skill. Read its instructions entirely, then execute all steps to synthesize the @docs/prd.md, @docs/srs.md, ADRs in the @docs/architecture-decisions/ folder and an in-depth scan of the codebase reality into a comprehensive @docs/architecture.md file featuring ISO 42010 viewpoints and Mermaid diagrams. Make sure to check off the task as complete in @docs/plan.md once finished.`
