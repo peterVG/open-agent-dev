@@ -18,9 +18,6 @@ project-root/
 ├── apps/
 │   └── my_app/
 │       ├── config/
-│       ├── deps/
-│       ├── doc/
-│       ├── ebin/
 │       ├── include/
 │       ├── lib/
 │       ├── priv/
@@ -51,9 +48,6 @@ project-root/
 ├── apps/
 │   └── my_app/
 │       ├── config/       # Application configuration files (e.g., test.exs, dev.exs)
-│       ├── deps/         # Third-party dependencies downloaded by the package manager
-│       ├── doc/          # Generated documentation (e.g., EDoc or ExDoc)
-│       ├── ebin/         # Compiled bytecode (.beam) and Application Resource files
 │       ├── include/      # Public header files (.hrl) required by other applications
 │       ├── lib/          # Main Elixir source code (or src/ for Erlang .erl files)
 │       ├── priv/         # Non-BEAM specific files (executables, static assets)
