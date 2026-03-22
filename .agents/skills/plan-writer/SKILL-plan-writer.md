@@ -48,7 +48,7 @@ Every task MUST explicitly link back to its originating requirements (PRD/SRS).
 
 _If a task is purely structural (e.g., setting up a repository) and has no specific tests, mark Related Tests as `N/A`._
 
-### 4. Development Prompts
+### 3. Development Prompts
 
 Every task MUST include an actionable prompt for the agent to begin development. This prompt MUST NOT hardcode language-specific paths (like `/src` or `/tests`) unless a PRD and SRS explicitly dictate the finalized monorepo/folder architecture. Instead, instruct the agent to propose code and write tests in the "appropriate directories within the repository, adhering rigorously to the established Architecture Decision Records (ADRs)."
 For tasks that involve building user interfaces, the prompt MUST explicitly instruct the agent to write UI tests using the UI testing framework specified in the project's Architecture Decision Records (ADRs).
@@ -57,7 +57,7 @@ The implementation plan MUST include a dedicated task in the Verification phase 
 Additionally, the Agent Prompt for all testing tasks MUST explicitly instruct the developer to output test results using the Test Reporting framework (e.g., Allure) specified in the ADRs, AND to copy the raw CLI output of the test runs into a permanent `docs/tasks/Task-[Task ID]-Walkthrough.md` file. **Crucially, the prompt MUST mandate that this file is saved directly into the project's `docs/tasks/` folder and NEVER in an internal agent scratchpad.**
 Crucially, the prompt MUST also explicitly instruct the agent to check off the `- [ ]` markdown box locally inside `docs/plan.md` the moment the task is confirmed complete, commit its changes, and push its feature branch to `origin`.
 
-### 3. Phased, Dependency-Aware Approach
+### 4. Phased, Dependency-Aware Approach
 
 Tasks MUST be logically grouped into Phases (e.g., Phase 1: Foundation, Phase 2: Core Logic). No task should be scheduled before its dependencies are complete. Usually, Database and Data Layer tasks precede UI tasks.
 
@@ -136,24 +136,26 @@ Identify foundational requirements (infrastructure, DB) vs core logic vs UI.
 
 Draft the plan using the interactive `- [ ]` markdown syntax.
 
+### Step 4: Generate Output to Workspace
+
 > **CRITICAL ARTIFACT ISOLATION OVERRIDE:** You MUST save the generated checklist directly to `docs/plan.md` in the repository root. DO NOT generate an `implementation_plan.md` artifact hidden in your internal system/brain directory, as this breaks the Open Agent Dev workflow tracking requirements.
 
-### Step 4: Map Tests and Requirements
+### Step 5: Map Tests and Requirements
 
 Carefully trace each task to its matching @srs.md block.
 
-### Step 5: Gather Dependencies
+### Step 6: Gather Dependencies
 
 Review the final plan, SRS, and ADRs to identify all necessary third-party libraries and frameworks. Generate or update a fresh dependency file appropriate for the stack (e.g., `requirements.txt` for Python, `package.json` for JS).
 
-### Step 6: Documentation, Dockerization & Handoff
+### Step 7: Documentation, Dockerization & Handoff
 
 Ensure the final Phase of the implementation plan includes a task to populate or update the main `README.md` sections (Development Environment, Viewing Developer Documentation, Production Environment, etc.) based on the finalized tech stack and any Architecture Decision Records (ADRs).
 For this final task, you MUST use the following exact Agent Prompt:
 `@AGENTS.md Begin by creating a new feature branch. Then read the project's Architecture Decision Records (ADRs) and the finalized tech stack to populate or update the 'Setup Development Environment' (including 'Run the Application' and 'Run tests') and 'Setup Production Environment' (including 'Deploy to Production' and 'Monitor and Update') sections of the README.md file. Ensure installation instructions are platform-agnostic (e.g., don't assume macOS/Homebrew) or explicitly accommodate multiple operating systems as required by the ADRs. However, if the project requires Dockerization, ensure the final Phase of the implementation plan includes a task to populate or update the `Dockerfile` based on the finalized tech stack and ADRs as well as include a "How to Dockerize" section in the README.md file that includes a basic overview of how Docker works and its main components.`
 Make sure to check off the task as complete in docs/plan.md once finished. Then commit your changes and push the branch to origin.`
 
-### Step 7: Architecture Synthesis
+### Step 8: Architecture Synthesis
 
 Ensure the _absolute final task_ of the implementation plan invokes the Architecture Writer skill to map the completed system.
 For this final task, you MUST use the following exact Agent Prompt:
