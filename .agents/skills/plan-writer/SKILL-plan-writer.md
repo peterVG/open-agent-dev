@@ -136,6 +136,8 @@ Identify foundational requirements (infrastructure, DB) vs core logic vs UI.
 
 Draft the plan using the interactive `- [ ]` markdown syntax.
 
+> **CRITICAL ARTIFACT ISOLATION OVERRIDE:** You MUST save the generated checklist directly to `docs/plan.md` in the repository root. DO NOT generate an `implementation_plan.md` artifact hidden in your internal system/brain directory, as this breaks the Open Agent Dev workflow tracking requirements.
+
 ### Step 4: Map Tests and Requirements
 
 Carefully trace each task to its matching @srs.md block.
