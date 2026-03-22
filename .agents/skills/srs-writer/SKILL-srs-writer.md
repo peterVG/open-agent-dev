@@ -56,10 +56,19 @@ AGENT: [Verifies that technical approach meets all constraints from PRD]
 ```
 AGENT: [Creates docs/srs.md]
 AGENT: [Maps all PRD requirements to the SRS using a dedicated **Source** section at the end of each requirement block. Format: `- [[source ID]](../prd.md) [source name]`]
+AGENT: [**CRITICAL**: Do not omit Non-Functional Requirements (NFRs) or Technical Constraints (TCs). Every single item in the PRD—including architecture rules, performance limits, and framework restrictions—MUST be mapped 1:1 to an explicit SRS requirement block to guarantee 100% forward traceability.]
 AGENT: [Ensures forward-traceability by defining an expected **Tests** section mapping to all target Gherkin, integration, performance, ui, and unit test files. Format MUST respect the monorepo bounds defined in `.agents/rules/workspace-boundaries.md` by dynamically mapping to the active technology stack's idiomatic isolated testing vocabulary (e.g. `- [[filename]](../apps/backend/tests/features/[filename])` for Python/JS tracking, or `- [[filename]](../apps/my_app_web/test/features/[filename])` for BEAM/Elixir tracking)]
+AGENT: [If an SRS requirement cannot be validated via a standard BDD feature file (e.g., overarching NFRs or Technical Constraints), the **Tests** block MUST define alternative automated verification strategies locally. Examples include: CI/CD configuration files, static code analysis tools, locus testing bounds, or explicit UI assertions.]
 AGENT: [Ensures SRS strictly complies with ISO/IEC/IEEE 29148 (Unambiguous, Complete, Verifiable, Consistent, Traceable)]
 AGENT: [Uses "MUST" or "MUST NOT" for mandatory requirements and "SHOULD" or "SHOULD NOT" for optional requirements per RFC 2119]
 AGENT: [Includes accurate library versions and technical constraints]
+```
+
+### Step 6: Verify Traceability
+```
+AGENT: [Cross-references every F-XXX, NFR-XXX, and TC-XXX identifier listed in the PRD against the newly generated SRS document.]
+AGENT: [If any PRD identifier is missing from the SRS, the agent MUST halt, append the missing requirements, and regenerate the mapping before completing the task.]
+AGENT: [Conclude the task by appending a Summary Traceability Matrix or checklist ensuring 100% PRD coverage.]
 ```
 
 ## Example Output
@@ -158,9 +167,9 @@ AGENT: [Creates Gherkin .feature files in the tests/features folder for each uni
 A well-generated SRS should:
 - ✅ Strictly comply with ISO/IEC/IEEE 29148: Unambiguous, Complete, Verifiable, Consistent, and Traceable requirements
 - ✅ Strictly comply with RFC 2119: "MUST" or "MUST NOT" for mandatory requirements and "SHOULD" or "SHOULD NOT" for optional requirements
-- ✅ Map every single PRD feature to a numbered SRS technical requirement
+- ✅ Map 100% of PRD items (Features, Non-Functional Requirements, and Technical Constraints) mathematically to numbered SRS technical requirements
 - ✅ Use current, verified library versions (not hallucinated)
-- ✅ Include technical constraints from prd.md andreference documents
+- ✅ Include technical constraints from prd.md and reference documents
 - ✅ Validate costs/performance with executable scripts
 - ✅ Follow Antigravity principles from AGENTS.md
-- ✅ Be traceable back to PRD requirements
+- ✅ Guarantee full forward-traceability without data loss from the primary PRD
