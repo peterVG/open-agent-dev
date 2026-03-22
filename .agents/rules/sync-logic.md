@@ -11,7 +11,7 @@ When reviewing the PRD, SRS, Architecture Decision Records (ADRs), and implement
 - **PRD ↔ SRS:** Verify that system requirements in the SRS align with product requirements in the PRD
 - **SRS ↔ ADRs:** Check that architectural decisions support the system requirements
 - **PRD ↔ ADRs:** Ensure implementation design aligns with product vision
-- **Implementation Plan ↔ SRS:** Verify planned implementation steps satisfy system requirements
+- **Implementation Plan ↔ SRS:** Verify the execution Plan and ToDos explicitly capture ALL granular domain constraints (colors, formulas, boundaries, thresholds) defined in the SRS without omission or hallucination.
 - **Implementation Plan ↔ ADRs:** Ensure implementation approach follows architectural patterns
 - **Codebase Reality ↔ Documentation:** If the agent discovers that the actual codebase structure (e.g. file paths, module names) deviates from what is documented in the PRD, SRS, ADRs, or Implementation Plan, the agent MUST NOT silently update the upstream documentation.
 - Flag any contradictions in data models, API contracts, system boundaries, feature specifications, or file paths.
