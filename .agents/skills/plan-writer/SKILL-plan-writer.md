@@ -126,7 +126,7 @@ This document outlines the step-by-step implementation plan...
 
 ### Step 1: Read all Context
 
-Scan the @prd.md, @srs.md documents and the ADR files in the @docs/architecture-decisions directory.
+Scan the @prd.md, @srs.md documents and the ADR files in the @docs/architecture directory.
 
 ### Step 2: Group by Phase
 
@@ -155,4 +155,4 @@ Make sure to check off the task as complete in docs/plan.md once finished. Then 
 
 Ensure the _absolute final task_ of the implementation plan invokes the Architecture Writer skill to map the completed system.
 For this final task, you MUST use the following exact Agent Prompt:
-`@AGENTS.md Begin by creating a new feature branch. Then invoke the @architecture-writer skill. Read its instructions entirely, then execute all steps to synthesize the @docs/prd.md, @docs/srs.md, ADRs in the @docs/architecture-decisions/ folder and an in-depth scan of the codebase reality into a comprehensive @docs/architecture.md file featuring ISO 42010 viewpoints and Mermaid diagrams. Make sure to check off the task as complete in @docs/plan.md once finished. Then commit your changes and push the branch to origin.`
+`@AGENTS.md Begin by creating a new feature branch. Then invoke the @architecture-writer skill. Read its instructions entirely, then execute all steps to synthesize the @docs/prd.md, @docs/srs.md, ADRs in the @docs/architecture/ folder and an in-depth scan of the codebase reality into a comprehensive @docs/architecture/architecture.md file featuring ISO 42010 viewpoints and Mermaid diagrams. Make sure to check off the task as complete in @docs/plan.md once finished. Then commit your changes and push the branch to origin.`
