@@ -15,6 +15,8 @@ When reviewing `.agents/rules/workspace-boundaries.md`, you may detect a contrad
 
 ```text
 project-root/
+├── docker-compose.yml
+├── .env
 ├── apps/
 │   └── my_app/
 │       ├── config/
@@ -45,6 +47,8 @@ While Elixir modernizes some of the naming conventions (like using lib/ instead 
 
 ```text
 project-root/
+├── docker-compose.yml       # Orchestrates the observability stack and databases
+├── .env                     # Secure storage for environment variables (DB credentials, API keys)
 ├── apps/
 │   └── my_app/
 │       ├── config/       # Application configuration files (e.g., test.exs, dev.exs)
@@ -63,9 +67,13 @@ project-root/
 └── README.md     # Explains this directory structure
 ```
 
+When writing or configuring code for this stack, you must adhere to the following principles:
+
 **`apps/my_app/`:** In this monorepo structure, backend and frontend Phoenix code is grouped as a standalone OTP application nestled inside `apps/`. It maintains its own `config/`, `lib/`, `deps/`, `test/`, and `mix.exs` completely independent of the global project root.
 **`lib/`**: Contains all main source code logic and context boundaries.
+**Infrastructure Orchestration**: A `docker-compose.yml` file sits one directory higher in the global project root. Unlike containerized frontend/backend setups, BEAM apps natively run via their local Mix environments. This compose file is specifically responsible for orchestrating the centralized logging stack and local databases without containerizing the Elixir application itself.
 **Testing Taxonomy**: Both apps share a comprehensive testing architecture supporting `unit/`, `integration/`, `ui/`, BDD `features/`, `performance/`, and standardized `allure-results/` test reporting. Elixir projects route Ecto test databases specifically to their application root rather than system-wide.
+**Isolated Testing & Linting**: All global cache directories and reporting suites MUST strictly run and output within their local workspace directory (e.g. `apps/my_app/test/`) instead of the shared global repository root.
 **Centralized Logging / Observability**: All applications must route logs as unbuffered event streams exclusively to `stdout`. The ecosystem relies on a centralized observability stack (Promtail, Loki, Redpanda, Prometheus, Grafana) orchestrated via `docker-compose` to capture and index these logs, strictly forbidding local file logging.
 
 ## Step 3: Configure Testing Frameworks
@@ -93,7 +101,7 @@ To properly configure Allure in a BEAM project, adhere to the following setup:
      report_file: "test_results.xml",
      print_report_file: true
    ```
-4. **Allure CLI:** Ensure that `allure-commandline` is accessible. To generate the final HTML report, run `allure generate test/allure-results -o test/allure-report --clean` and view it with `allure open test/allure-report`.
+4. **Allure CLI:** Ensure that `allure-commandline` is accessible. To generate the final HTML report, run `allure generate test/allure-results -o test/allure-report --clean` and view it with `allure open test/allure-report`. You MUST configure a mix alias or test execution hook (e.g. `rm -rf test/allure-results`) to automatically purge historical JSON payloads before initiating new test cycles.
 
 ### 4. PhoenixTest and Playwright Integration
 To support robust End-to-End (E2E) and integration testing, configure both PhoenixTest and Playwright:
@@ -189,6 +197,19 @@ npx eslint . --fix
 ```
 *If this fails:* The agent MUST resolve any lingering JS logical errors before proceeding.
 
+## Agent Resolution Mandate
+
+If the linters or formatters return a non-zero exit code (indicating unresolved linting errors or warnings configured as errors), the agent **MUST NOT** proceed to testing or committing.
+
+The agent MUST:
+
+1. Review the specific CLI output of the linting errors.
+2. Formulate a plan to fix the code logic causing the violations.
+3. Apply the fixes.
+4. Rerun the failing linter to verify all errors are resolved.
+
+Only when all formatters and linters exit cleanly (code 0) is the codebase considered valid for testing or PR submission.
+
 ## Step 7: Generate Architecture Decision Records (ADRs)
 
 Use the `@.agents/rules/adr-formatting.md` rule to write ADRs to the `@docs/architecture-decisions/` directory. Be sure to include separate ADRs specifically for the choice of:
@@ -203,6 +224,9 @@ The root directory already contains a `.gitignore` file. You MUST strictly appen
 
 ```text
 # Test reports & artifacts
+**/artifacts/
+**/coverage/
+**/playwright-report/
 **/allure-results/
 test/wallaby_screenshots/
 
@@ -227,5 +251,5 @@ test/wallaby_screenshots/
 ## Step 9: Update Documentation
 
 1. **Insert** platform-agnostic Elixir/Erlang installation instructions into the top of the `README.md` file (e.g., referencing official guides or version managers like `asdf`, `mise`, etc.) to ensure a zero-friction setup for new developers. **CRITICAL: You MUST NOT delete or overwrite any existing content in the `README.md` file when adding this section.**
-2. **Update** the `## Run tests` section (or append one if it doesn't exist) in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure. **CRITICAL: You MUST NOT delete or overwrite any existing unrelated content in the `README.md` file when updating this section.**
+2. **Update** the `## Run tests` section (or append one if it doesn't exist) in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure. You MUST also explicitly instruct the user to run `npx playwright install` within their frontend setup routines so they download the necessary end-to-end testing browsers. **CRITICAL: You MUST NOT delete or overwrite any existing unrelated content in the `README.md` file when updating this section.**
 3. **Update** the `## View logs` section (located under `# Setup Development Environment`) in the root `README.md` with explicit instructions on how to install/spin up the centralized logging tools (Loki, Redpanda, Promtail, Prometheus, Grafana) via `docker-compose`, and how to access the Grafana UI locally.
