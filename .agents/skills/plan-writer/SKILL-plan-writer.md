@@ -48,16 +48,16 @@ Every task MUST explicitly link back to its originating requirements (PRD/SRS).
 
 _If a task is purely structural (e.g., setting up a repository) and has no specific tests, mark Related Tests as `N/A`._
 
-### 4. Development Prompts
+### 3. Development Prompts
 
 Every task MUST include an actionable prompt for the agent to begin development. This prompt MUST NOT hardcode language-specific paths (like `/src` or `/tests`) unless a PRD and SRS explicitly dictate the finalized monorepo/folder architecture. Instead, instruct the agent to propose code and write tests in the "appropriate directories within the repository, adhering rigorously to the established Architecture Decision Records (ADRs)."
-For tasks that involve building user interfaces, the prompt MUST explicitly instruct the agent to write UI tests using the UI testing framework specified in the project's Architecture Decision Records (ADRs).
+For tasks that involve building user interfaces, the prompt MUST explicitly instruct the agent to write UI tests using the UI testing framework specified in the project's Architecture Decision Records (ADRs). The plan MUST mandate that these UI tests contain strict DOM assertions to explicitly catch hydration mismatches and SSR crashes, and that the agent ensures tests are run against built production artifacts.
 For tasks that involve external dependencies (APIs, databases, filesystems), the prompt MUST explicitly instruct the agent to write Integration tests using the Integration framework specified in the ADRs.
 The implementation plan MUST include a dedicated task in the Verification phase to write and execute Performance/Load tests (e.g., Locust) using the framework specified in the ADRs.
 Additionally, the Agent Prompt for all testing tasks MUST explicitly instruct the developer to output test results using the Test Reporting framework (e.g., Allure) specified in the ADRs, AND to copy the raw CLI output of the test runs into a permanent `docs/tasks/Task-[Task ID]-Walkthrough.md` file. **Crucially, the prompt MUST mandate that this file is saved directly into the project's `docs/tasks/` folder and NEVER in an internal agent scratchpad.**
 Crucially, the prompt MUST also explicitly instruct the agent to check off the `- [ ]` markdown box locally inside `docs/plan.md` the moment the task is confirmed complete, commit its changes, and push its feature branch to `origin`.
 
-### 3. Phased, Dependency-Aware Approach
+### 4. Phased, Dependency-Aware Approach
 
 Tasks MUST be logically grouped into Phases (e.g., Phase 1: Foundation, Phase 2: Core Logic). No task should be scheduled before its dependencies are complete. Usually, Database and Data Layer tasks precede UI tasks.
 
