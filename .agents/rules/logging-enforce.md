@@ -1,6 +1,6 @@
 ---
 trigger: always_on
-description: Ensure all applications follow 12 Factor App logging rules and integrate with the centralized observability stack.
+description: Ensure all applications follow centralized logging rules and integrate with the observability stack.
 ---
 
 # Logging and Observability Enforcement
