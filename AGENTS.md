@@ -85,6 +85,12 @@
   - **Grafana:** Provides the centralized UI to dashboard, introspect, and correlate the logs and metrics.
 - **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[logging-enforce.md](./.agents/rules/logging-enforce.md)`.
 
+## Decoupled Execution Timelines
+
+**Purpose:** Guarantee architectural specs can survive aggressive timeline refactoring without requiring massive document rewrites by isolating execution phases from the core requirements.
+
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[decoupled-execution.md](./.agents/rules/decoupled-execution.md)`.
+
 ## Security by Design
 
 **Purpose:** Suggest security requirements and architectural decisions that protect user data.
