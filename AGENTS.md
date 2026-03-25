@@ -151,3 +151,21 @@
 - **Automated Initialization:** If the application requires a local database, the initialization script MUST automatically check if it exists on startup. If not, it MUST seamlessly create the database, build the required schema/tables, and seed initial data without requiring manual CLI commands from the user.
 - **Interactive Auth Prompts:** If the application requires API keys or authentication secrets, the application MUST automatically detect if they are missing on startup and interactively prompt the user for them (or generate a `.env` template automatically) rather than simply crashing with a stack trace.
 - **Create Installers:** Whenever possible, create installers for the application that can be used to install the application on a developer and production system. 
+
+## Keep code linear
+No deeply nested conditionals and early-exit chains. No hidden jumps. Keep the logic flat at one level as much as possible. Code should read top to bottom like a well-constructed argument — premise, reasoning, conclusion.
+
+##  Bound every loop
+Ensure there are maximum caps for polling loops, retry logic, and recursive crawlers. Provide a safe path forward for when the cap is hit.
+
+## Close every resource you open
+Every resource you open, you must close. Every connection you borrow, you must return. Resource lifetime must be declared, not assumed — and it must be correct on the error path too, not just the happy one. Don’t acquire what you can’t account for. Follow the code through every exit path and confirm it closes what it opened.
+
+## One function, one job
+Each function should do exactly one thing — small enough to be describable in a sentence without the word “and.” Do not generate monolithic functions that do many things at once because you're optimizing for task completion. You should optimize for maintainability. Apply decomposition upfront, not as a refactoring afterthought. No function longer than 60 lines.
+
+## Every exception is caught
+Every error must be logged, raised, or explicitly returned. You cannot generate empty catch blocks or unchecked return values.
+
+## Clear separation of side-effect operations
+I/O, mutations, and network calls should be named and obvious at the call site. Not hidden inside helpers, not wrapped in abstractions with meaningless names, not multiple layers deep in a chain of decorators. If a function writes to a database, its name and call site should make that clear. Do not bury API calls inside what appear to be utility functions. Ensure you have a clear structural separation between pure computation and side-effectful operations.
