@@ -1,0 +1,22 @@
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: dev_postgres
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+    volumes:
+      - ./data/postgres_data:/var/lib/postgresql/data
+  elasticsearch:
+    image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
+    container_name: dev_elastic
+    environment:
+      - discovery.type=single-node
+      - xpack.security.enabled=false # Disables passwords for easy local dev
+      - "ES_JAVA_OPTS=-Xms512m -Xmx512m" # Caps RAM at 512MB (Essential for Air)
+    ports:
+      - "9200:9200"
+    volumes:
+      - ./data/es_data:/usr/share/elasticsearch/data
