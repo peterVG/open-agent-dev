@@ -291,7 +291,7 @@ Use the `@.agents/rules/adr-formatting.md` rule to write ADRs to the `@docs/arch
 7) Advanced provisioning choices including Terraform for VMs/VPCs and Ansible for GPU/CUDA provisioning and release deploy mechanics.
 8) The architecture-agnostic Environment Detection fallback strategies in `runtime.exs` and RPC vs JSON REST decision.
 
-## Step 10: Configure Global `.gitignore`
+## Step 11: Configure Global `.gitignore`
 
 The root directory already contains a `.gitignore` file. You MUST strictly append the following lines to it to ensure proper exclusion of test artifacts, dependency caches, and selective tracking for test directories across the monorepo:
 
@@ -321,7 +321,16 @@ test/wallaby_screenshots/
 !**/test/README.md
 ```
 
-## Step 12: Update Documentation
+## Step 12: Configure Observability Configurations
+
+When initializing the observability stack, you MUST ensure that the raw configuration files required by the containers are present on the host and mapped correctly:
+
+1. **Create `config/loki/local-config.yaml`**: Give Loki a basic local storage config (e.g. `auth_enabled: false` and filesystem chunks directories).
+2. **Create `config/promtail/docker-config.yaml`**: Configure Promtail to scrape `/var/log` (or local file paths) and push them to the Loki client URL (`http://loki:3100/loki/api/v1/push`).
+3. **Create `config/prometheus/prometheus.yml`**: Configure Prometheus to scrape `localhost:9090`, `loki:3100`, and `redpanda:9644`.
+4. **Volume Mount Configurations**: Update the `docker-compose.yml` file to volume mount these local host files into the respective containers (e.g., `./config/loki/local-config.yaml:/etc/loki/local-config.yaml:ro`).
+
+## Step 13: Update Documentation
 
 1. **Insert** platform-agnostic Elixir/Erlang installation instructions into the top of the `README.md` file (e.g., referencing official guides or version managers like `asdf`, `mise`, etc.) to ensure a zero-friction setup for new developers. **CRITICAL: You MUST NOT delete or overwrite any existing content in the `README.md` file when adding this section.**
 2. **Update** the `## Run tests` section (or append one if it doesn't exist) in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure. You MUST also explicitly instruct the user to run `npx playwright install` within their frontend setup routines so they download the necessary end-to-end testing browsers. **CRITICAL: You MUST NOT delete or overwrite any existing unrelated content in the `README.md` file when updating this section.**
