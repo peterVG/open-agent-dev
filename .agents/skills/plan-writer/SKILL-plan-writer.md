@@ -43,7 +43,7 @@ Every task MUST explicitly link back to its originating requirements (PRD/SRS).
   - **Dependencies:** Task 2.3
   - **Related Requirements:** [SRS-SEC-001](../srs.md#srs-sec-001-local-sovereignty--transparency), [NFR-002](../prd.md#nfr-002-api-transparency)
   - **Related Tests:** [`local_sovereignty_SRS-SEC-001.feature`](../../tests/features/local_sovereignty_SRS-SEC-001.feature)
-  - **Agent Prompt:** `@AGENTS.md Begin by creating a new feature branch for Task [Task ID]. Then begin development... Upon completion, YOU MUST perfectly construct the docs/tasks/Task-[Task ID]-Walkthrough.md file linking explicit SRS mappings (including BOTH the ID and full human-readable title text) in heading position 2 exclusively, and delete the Plan.md and ToDos.md files to preserve zero tracking cruft natively. Then check off the Markdown box locally in docs/plan.md, commit your changes, and push the branch to origin.`
+  - **Agent Prompt:** `@AGENTS.md Begin by creating a new feature branch for Task [Task ID]. Then begin development, executing all commands strictly within the isolated apps/[App Name]/ directory (if applicable). Upon completion, YOU MUST perfectly construct the apps/[App Name]/tasks/Task-[Task ID]-Walkthrough.md file linking explicit SRS mappings (including BOTH the ID and full human-readable title text) in heading position 2 exclusively, and delete the Plan.md and ToDos.md files to preserve zero tracking cruft natively. Then check off the Markdown box locally in docs/plan.md, commit your changes, and push the branch to origin.`
 ```
 
 _If a task is purely structural (e.g., setting up a repository) and has no specific tests, mark Related Tests as `N/A`._
@@ -51,10 +51,11 @@ _If a task is purely structural (e.g., setting up a repository) and has no speci
 ### 3. Development Prompts
 
 Every task MUST include an actionable prompt for the agent to begin development. This prompt MUST NOT hardcode language-specific paths (like `/src` or `/tests`) unless a PRD and SRS explicitly dictate the finalized monorepo/folder architecture. Instead, instruct the agent to propose code and write tests in the "appropriate directories within the repository, adhering rigorously to the established Architecture Decision Records (ADRs)."
+Crucially, if the project employs a monorepo or Umbrella architecture (Python/JS or BEAM/Elixir), **the prompt MUST explicitly instruct the executing agent to run all framework tooling, tests, and configurations strictly isolated within the specific module's subdirectory** (e.g., `apps/frontend/` or `apps/arkrim_engine/`).
 For tasks that involve building user interfaces, the prompt MUST explicitly instruct the agent to write UI tests using the UI testing framework specified in the project's Architecture Decision Records (ADRs). The plan MUST mandate that these UI tests contain strict DOM assertions to explicitly catch hydration mismatches and SSR crashes, and that the agent ensures tests are run against built production artifacts.
 For tasks that involve external dependencies (APIs, databases, filesystems), the prompt MUST explicitly instruct the agent to write Integration tests using the Integration framework specified in the ADRs.
 The implementation plan MUST include a dedicated task in the Verification phase to write and execute Performance/Load tests (e.g., Locust) using the framework specified in the ADRs.
-Additionally, the Agent Prompt for all testing tasks MUST explicitly instruct the developer to output test results using the Test Reporting framework (e.g., Allure) specified in the ADRs, AND to copy the raw CLI output of the test runs into a permanent `docs/tasks/Task-[Task ID]-Walkthrough.md` file. **Crucially, the prompt MUST mandate that this file is saved directly into the project's `docs/tasks/` folder and NEVER in an internal agent scratchpad.**
+Additionally, the Agent Prompt for all testing tasks MUST explicitly instruct the developer to output test results using the Test Reporting framework (e.g., Allure) specified in the ADRs, AND to copy the raw CLI output of the test runs into a permanent `apps/[App Name]/tasks/Task-[Task ID]-Walkthrough.md` file. **Crucially, the prompt MUST mandate that this file is saved directly into the project's `apps/[App Name]/tasks/` folder and NEVER in an internal agent scratchpad.**
 Crucially, the prompt MUST also explicitly instruct the agent to check off the `- [ ]` markdown box locally inside `docs/plan.md` the moment the task is confirmed complete, commit its changes, and push its feature branch to `origin`.
 
 ### 4. Phased, Dependency-Aware Approach
@@ -80,7 +81,7 @@ This document outlines the step-by-step implementation plan...
   - **Dependencies:** [Previous tasks, e.g., Task 1.1 or None]
   - **Related Requirements:** [[SRS/PRD mapping]](../srs.md)
   - **Related Tests:** [[Path to Gherkin file or N/A]](../../tests/features/)
-  - **Agent Prompt:** `@AGENTS.md Begin by creating a new feature branch for Task [Task ID]. Then begin development... Upon completion, YOU MUST generate docs/tasks/Task-[Task ID]-Walkthrough.md directly in the project repository with clear SRS mapping (including BOTH the ID and full human-readable title text) in the secondary section, and strictly delete the internal internal tracking Plan/ToDos documents before checking off the Markdown box locally in docs/plan.md. Then commit your changes and push the branch to origin.`
+  - **Agent Prompt:** `@AGENTS.md Begin by creating a new feature branch for Task [Task ID]. Then begin development (ensuring all tool commands are run inside apps/[App Name]/ if applicable)... Upon completion, YOU MUST generate apps/[App Name]/tasks/Task-[Task ID]-Walkthrough.md directly in the project repository with clear SRS mapping (including BOTH the ID and full human-readable title text) in the secondary section, and strictly delete the internal tracking Plan/ToDos documents before checking off the Markdown box locally in docs/plan.md. Then commit your changes and push the branch to origin.`
 
 ## Summary Timeline
 
@@ -113,13 +114,13 @@ This document outlines the step-by-step implementation plan...
 ```markdown
 # GOOD
 
-- [ ] **Task 1.2: SQLite Database Schema Setup**
-  - **Description:** Write an automated initialization script...
+- [ ] **Task 1.2: [App Name] SQLite Database Schema Setup**
+  - **Description:** Write an automated initialization script for the application database...
   - **Estimated Time:** 2 hours
   - **Dependencies:** Task 1.1
   - **Related Requirements:** SRS-DATA-001, TC-002
   - **Related Tests:** `tests/features/database_persistence_SRS-DATA-001.feature`
-  - **Agent Prompt:** `@AGENTS.md Begin by creating a new feature branch for Task [Task ID]. Then begin development... Upon completion, YOU MUST generate docs/tasks/Task-[Task ID]-Walkthrough.md directly in the project repository with the native SRS cross-references (including BOTH the ID and full human-readable title text) anchored at heading slot 2 exclusively. Then delete the transient Plan.md and ToDos.md files completely. If this task introduces new dependencies or changes run commands, you MUST update the root README.md Setup instructions. After completion, check off the Markdown box locally in docs/plan.md. Then commit your changes and push the branch to origin.`
+  - **Agent Prompt:** `@AGENTS.md Begin by creating a new feature branch for Task [Task ID]. Then begin development within apps/[App Name]/. Upon completion, YOU MUST generate apps/[App Name]/tasks/Task-[Task ID]-Walkthrough.md directly in the project repository with the native SRS cross-references (including BOTH the ID and full human-readable title text) anchored at heading slot 2 exclusively. Then delete the transient Plan.md and ToDos.md files completely. If this task introduces new dependencies or changes run commands, you MUST update the root README.md Setup instructions. After completion, check off the Markdown box locally in docs/plan.md. Then commit your changes and push the branch to origin.`
 ```
 
 ## Workflow: PRD/SRS/ADRs → Plan
