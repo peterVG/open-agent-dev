@@ -114,10 +114,15 @@ To support robust End-to-End (E2E) and integration testing, configure both Phoen
    - Run `npm init playwright@latest` inside your `apps/my_app_web/assets/` (or equivalent) directory.
    - Configure playwright to target the Phoenix test server port and ensure tests are output to `test/playwright-results/` to respect the artifact isolation rule.
 
-### 5. Linting and Formatting Standard
-To ensure code quality, consistent styling, and catch potential issues early, configure the following:
+### 5. QA, Linting, and Security Analysis Standards
+To ensure code quality, predictable retries, and strict type safety, configure the following QA tools in your `mix.exs` dependencies. Instruct the agent to use the latest stable versions compatible with the stack:
+
 1. **Formatting:** Use the built-in `mix format` to enforce standard Elixir code style across the project.
-2. **Linting:** Add `{:credo, "~> 1.7", only: [:dev, :test], runtime: false}` to your `mix.exs` dependencies to enforce strict code analysis and best practices. Run `mix credo --strict`.
+2. **Credo** (`{:credo, "> 0.0.0", only: [:dev, :test], runtime: false}`): Focuses on code consistency and "teaching" idiomatic Elixir. It catches high-level design smells that bytecode analysis might ignore. Fast and should be run frequently (`mix credo --strict`).
+3. **Dialyzer/Dialyxir** (`{:dialyxir, "> 0.0.0", only: [:dev, :test], runtime: false}`): Uses "Success Typing" to catch type errors. Ensures the data boundaries and type checks are right.
+4. **Litmus** (`{:litmus, "> 0.0.0", only: [:dev, :test], runtime: false}`): Performs "purity analysis" by checking if functions have side effects that aren't explicitly declared. Vital for predictable retries (idempotency in Oban), bytecode verification across OS environments, and statically identifying potential "uncaught" exceptions.
+5. **Boundary** (`{:boundary, "> 0.0.0", runtime: false}`): Enforces a "pluggable" design by preventing one module from calling internal functions of another module without a proper public API. Requires defining boundaries in the `mix.exs` for each app. Fast and should be run frequently.
+6. **Sobelow** (`{:sobelow, "> 0.0.0", only: [:dev, :test], runtime: false}`): Essential for Phoenix LiveView frontends to identify security vulnerabilities (like XSS or insecure uploads) where pure bytecode analysis falls short.
 
 ## Step 4: Configure Documentation Generation
 
@@ -155,68 +160,87 @@ For custom frontend scripts in `assets/`, the agent MUST use standard `JSDoc` sy
 
 *Failure to document code according to these standards violates the core AGENTS.md manifesto.*
 
-## Step 6: Generate linting rule
+## Step 6: Generate QA and Linting Rule
 
-Create a @.agents/rules/lint-enforce.md file that contains the following verbatim content:
+Create a @.agents/rules/qa-enforce.md file that contains the following verbatim content:
 
 ---
-description: Ensure all code is cleanly formatted, free of linting errors, and strictly typed before committing or testing.
+description: Ensure all code is cleanly formatted, passes purity analysis, typings, and security checks before testing or committing.
 ---
 
-# Strict Linting and Formatting Enforcement
+# Parallel QA Execution and Linting Enforcement
 
-**Purpose:** This rule dictates the exact CLI commands that an AI agent MUST execute to validate both the Elixir backend codebase against the official Elixir Style Guide, and the Javascript frontend assets against standard ESLint/Prettier configurations.
+**Purpose:** This rule dictates the exact QA pipeline and CLI commands that an AI agent MUST execute to validate both the Elixir backend codebase (purity, typing, styles, boundary isolation, security) and Javascript frontend assets.
 
 ## Active Enforcement
 
-Before executing any test suite, or before declaring a coding task "complete", the agent MUST run the following commands and ensure they all pass with a zero exit code:
+Before executing any test suite, or before declaring a coding task "complete", the agent MUST successfully execute the QA checks in the following parallel execution strategy (or enforce them sequentially, ensuring all pass):
 
 ### 1. Enforce Backend Formatting (Elixir & HEEx)
 ```bash
 mix format --check-formatted
 ```
-*If this fails:* The agent MUST proactively run `mix format` without the `--check-formatted` flag to auto-fix the issues before proceeding. (Note: Ensure `.formatter.exs` includes the `Phoenix.LiveView.HTMLFormatter` plugin for HEEx templates).
+*If this fails:* Auto-fix the issues with `mix format`.
 
-### 2. Enforce Strict Backend Linting
+### 2. Style and Security Checks (Credo & Sobelow)
+* **Credo:** Checks code style and idiomatic design smells.
 ```bash
 mix credo --strict
 ```
-*If this fails:* The agent MUST proactively read the Credo output, modify the offending Elixir source code to align with the official Elixir Style Guide and idiomatic standards, and re-run the command until it passes.
+* **Sobelow:** Checks for web security vulnerabilities (XSS, insecure uploads, etc.).
+```bash
+mix sobelow
+```
+*If these fail:* Read the output, modify the offending code to align with style/security standards.
 
-### 3. Enforce Static Typing
+### 3. Type Safety Validation (Dialyzer)
+* **Dialyzer:** Builds/checks the PLT (Persistent Lookup Table) to ensure type safety.
 ```bash
 mix dialyzer
 ```
-*If this fails:* The agent MUST proactively fix the type mismatches or incorrect `@spec` definitions in the source code before proceeding.
+*If this fails:* Proactively fix type mismatches or incorrect `@spec` definitions.
 
-### 4. Format and Lint Frontend Assets
+### 4. Bytecode Purity Analysis (Litmus)
+* **Litmus:** Performs bytecode purity analysis and exception path tracing. Run each time *after* compiling to ensure functions intended to be idempotent remain pure and side-effect free.
+```bash
+mix compile && mix litmus
+```
+*If this fails:* Refactor logic to isolate side-effects explicitly and ensure core retryable paths remain pure.
+
+### 5. Encapsulation Verification (Boundary)
+* **Boundary:** Verifies no cross-app encapsulation leaks exist.
+```bash
+mix compile && mix boundary
+```
+*If this fails:* Expose the required private function via a public API or correct the unauthorized cross-module call.
+
+### 6. Format and Lint Frontend Assets
 Navigate to the Phoenix assets directory (e.g., `apps/my_app_web/assets/`) and run the Javascript/CSS formatters and linters:
 ```bash
 npx prettier --write .
 npx eslint . --fix
 ```
-*If this fails:* The agent MUST resolve any lingering JS logical errors before proceeding.
 
-## Agent Resolution Mandate
+## Agent Resolution Mandate and Strict Testing
 
-If the linters or formatters return a non-zero exit code (indicating unresolved linting errors or warnings configured as errors), the agent **MUST NOT** proceed to testing or committing.
+If any QA analyzers, linters, or formatters return a non-zero exit code, the agent **MUST NOT** proceed to testing or committing.
 
 The agent MUST:
-
-1. Review the specific CLI output of the linting errors.
+1. Review the specific CLI output of the failing QA tools.
 2. Formulate a plan to fix the code logic causing the violations.
 3. Apply the fixes.
-4. Rerun the failing linter to verify all errors are resolved.
+4. Rerun all failing checks until everything resolves cleanly.
 
-Only when all formatters and linters exit cleanly (code 0) is the codebase considered valid for testing or PR submission.
+**Testing Strictness:** The agent MUST run `mix test` ONLY IF all the above QA checks pass successfully.
 
 ## Step 7: Generate Architecture Decision Records (ADRs)
 
 Use the `@.agents/rules/adr-formatting.md` rule to write ADRs to the `@docs/architecture/` directory. Be sure to include separate ADRs specifically for the choice of:
-1) test runners and reporting frameworks.
+1) Test runners and reporting frameworks.
 2) Inline code docs generators.
-3) Coding style standards and linting tooling.
-4) The centralized observability stack (Loki, Redpanda, Promtail, Prometheus, Grafana).
+3) Parallel QA execution tools, coding style standards, and static typing tooling (including Credo, Dialyzer, and Sobelow).
+4) Bytecode purity analysis (Litmus) and boundary enforcement (Boundary) to guarantee idempotent retries and architectural encapsulation.
+5) The centralized observability stack (Loki, Redpanda, Promtail, Prometheus, Grafana).
 
 ## Step 8: Configure Global `.gitignore`
 
