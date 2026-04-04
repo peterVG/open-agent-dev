@@ -19,6 +19,7 @@ project-root/
 │   └── workflows/    # GitHub Actions for Multi-Arch releases
 ├── ansible/          # Ansible playbooks (GPU provisioning, observability, deployments)
 ├── terraform/        # Terraform configurations (local virtualization, Cloud VMs)
+├── .coderabbit.yaml  # CodeRabbit AI PR Reviewer configurations
 ├── docker-compose.yml
 ├── .env
 ├── prd.md            # Global Product Requirements Document
@@ -93,6 +94,7 @@ While Elixir modernizes some of the naming conventions (like using lib/ instead 
 
 ```text
 project-root/
+├── .coderabbit.yaml         # CodeRabbit AI PR Reviewer configurations
 ├── docker-compose.yml       # Orchestrates the observability stack and databases
 ├── .env                     # Secure storage for environment variables (DB credentials, API keys)
 ├── apps/
