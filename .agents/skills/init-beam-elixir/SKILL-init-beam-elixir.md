@@ -15,8 +15,13 @@ When reviewing `.agents/rules/workspace-boundaries.md`, you may detect a contrad
 
 ```text
 project-root/
+├── .github/
+│   └── workflows/    # GitHub Actions for Multi-Arch releases
+├── ansible/          # Ansible playbooks (GPU provisioning, observability, deployments)
+├── terraform/        # Terraform configurations (local virtualization, Cloud VMs)
 ├── docker-compose.yml
 ├── .env
+├── prd.md            # Global Product Requirements Document
 ├── apps/
 │   └── my_app/
 │       ├── config/
@@ -31,13 +36,54 @@ project-root/
 │       │   ├── performance/
 │       │   └── allure-results/
 │       ├── mix.exs
-│       └── mix.lock
+│       ├── mix.lock
+│       └── srs.md    # Local Software Requirements Specification linked to PRD
 └── README.md
 ```
 
 Use appropriate Mix commands (`mix phx.new` or `mix new`) and ensure the generation targets a subdirectory within `apps/` (e.g. `apps/my_app/`), rather than the repository root. 
 
-## Step 2: Populate the apps/README.md file
+## Step 2: Enforce Documentation Traceability & Sync
+
+Every BEAM/Elixir project MUST adhere rigidly to a Monorepo Requirements Engineering methodology. The AI agent MUST enforce the following rules when creating or updating requirements:
+
+1. **Global Source of Truth:** The root `prd.md` serves as the global orchestrator of the project's vision.
+2. **Localized Specs:** Each application in `apps/` MUST maintain its own `srs.md` containing requirements strictly bounded to that specific application/node.
+3. **Traceability Metadata:** Every `srs.md` MUST include a YAML frontmatter block at the top that explicitly links to the root PRD. For example:
+   ```yaml
+   ---
+   title: "MyApp Software Requirements Specification"
+   parent: "../../prd.md"
+   ---
+   ```
+4. **Line-by-Line Traceability:** Every requirement definition in an `srs.md` MUST explicitly link back to its parent requirement in the root `prd.md` using relative markdown links (e.g., `[PRD Req 1.2](../../prd.md#req-1.2)`).
+5. **Active Sync Enforcement:** The agent MUST strictly adhere to the `.agents/rules/sync-logic.md` rule. If an architecture change happens in one app's `srs.md`, the agent is mathematically required to trace upward and update the root `prd.md` or laterally update other apps' `srs.md` if the change breaches an API boundary.
+
+## Step 3: Enforce Distributed Methods & Orchestration
+
+Every BEAM/Elixir project MUST adhere to the following advanced orchestration and distributed architectural patterns:
+1. **Architecture Agnostic:** Code MUST be fully portable between ARM64 (Mac) and x86_64 (e.g., GX10 Blackwell) without source code changes. 
+2. **Multi-Arch Releases:** You must configure `.github/workflows/` with GitHub Actions pipelines that build distinct Elixir Releases for both ARM64 and x86_64 target architectures.
+3. **Environment Parity (`runtime.exs`):** The system MUST use `config/runtime.exs` to dynamically detect available hardware. For example, if a Blackwell GPU (or CUDA driver) is found, it must initialize the `EXLA` backend for high-speed tasks (NX/Bumblebee), otherwise it falls back to CPU/Metal-based processing for safe local testing.
+4. **Functional Isolation:** In production, the system must support deployment as independent nodes (e.g., one node runs Web UI, another strictly runs OCR engines).
+5. **Cluster & Discovery:** Nodes MUST form a cluster securely using `ERL_AFLAGS="-setcookie arkly_secret_cookie"`. Nodes must automatically discover each other using `libcluster` (via Gossip or DNSSRV).
+6. **Distributed Job Processing**: Use Oban "Engines" to designate which nodes can run specific queues, preventing under-resourced nodes from being overloaded. Use Erlang PartitionSupervisor to restrict concurrent processing tasks to match GPU core availability (preventing VRAM exhaustion).
+
+## Step 4: Enforce Technical Stack
+
+You MUST ensure the application uses and configures the following technical dependencies logically into `mix.exs` and node infrastructure:
+
+* **Job & Node Orchestration:** `oban` and `oban_web` (persistent job processing, workflows via Postgres). `broadway` for multi-stage pipelines. `libcluster` (node discovery), `horde` (Distributed Supervisor/Registry so nodes don't need hardcoded IPs), and `Distributed Erlang` / RPC (prefer RPC or Process Aliases over REST/JSON between nodes).
+* **AI & Compute Compute:** `nx`, `exla` (CUDA 12.x support), `bumblebee` (HuggingFace Transformers/Vision inside BEAM), `tesseract-elixir` (AI OCR precursor).
+* **Data & Storage:** `ecto`, Postgres, `pgvector`, Apache Age (knowledge graph), and `elasticsearch-elixir`. `ex_aws_s3` for storage alongside Phoenix `allow_upload/3`. Phoenix PubSub for live processing updates.
+* **Observability (Centralized Stack):**
+  - `opentelemetry`: Distribute tracing layer to correlate cross-node actions via Trace IDs.
+  - `logger_json`: Write unbuffered JSON objects to stdout. MUST configure to include `node()` metadata for Grafana filtering.
+  - `prom_ex` & Prometheus: Auto-capture BEAM metrics (CPU, Oban depth, processes).
+  - Promtail (sidecar scraping stdout to Redpanda buffer), Loki (Log aggregator), Grafana.
+* **Infrastructure Management:** Terraform (orchestrates local Proxmox VMs, Docker via Orbstack, or Cloud resources) and Ansible (automates GPU/CUDA 12.x provisioning, Promtail/OTel sidecars, and building/pushing Elixir Releases across the cluster).
+
+## Step 5: Populate the apps/README.md file
 
 Create and populate the `apps/README.md` file to explain the application directory structure. Use the following verbatim text:
 
@@ -76,7 +122,7 @@ When writing or configuring code for this stack, you must adhere to the followin
 **Isolated Testing & Linting**: All global cache directories and reporting suites MUST strictly run and output within their local workspace directory (e.g. `apps/my_app/test/`) instead of the shared global repository root.
 **Centralized Logging / Observability**: All applications must route logs as unbuffered event streams exclusively to `stdout`. The ecosystem relies on a centralized observability stack (Promtail, Loki, Redpanda, Prometheus, Grafana) orchestrated via `docker-compose` to capture and index these logs, strictly forbidding local file logging.
 
-## Step 3: Configure Testing Frameworks
+## Step 6: Configure Testing Frameworks
 
 ### 1. BDD Feature-Driven Development Standard
 To maintain BDD functionality, we use the Elixir-native `Wallaby.Feature` macro atop ExUnit. **Crucially, traditional Gherkin parser libraries (like WhiteBread or Cabbage) are deprecated and fundamentally broken on modern Elixir (v1.15+).** Instead of `.feature` text files, BEAM architects must write native Elixir scenarios in `test/features/` to maintain ecosystem compatibility while generating rich Allure test reports.
@@ -124,14 +170,14 @@ To ensure code quality, predictable retries, and strict type safety, configure t
 5. **Boundary** (`{:boundary, "> 0.0.0", runtime: false}`): Enforces a "pluggable" design by preventing one module from calling internal functions of another module without a proper public API. Requires defining boundaries in the `mix.exs` for each app. Fast and should be run frequently.
 6. **Sobelow** (`{:sobelow, "> 0.0.0", only: [:dev, :test], runtime: false}`): Essential for Phoenix LiveView frontends to identify security vulnerabilities (like XSS or insecure uploads) where pure bytecode analysis falls short.
 
-## Step 4: Configure Documentation Generation
+## Step 7: Configure Documentation Generation
 
 Elixir has robust built-in standards for documentation. You must configure the project to use these native tools:
 
 1. **Inline Documentation:** Use `@moduledoc` and `@doc` attributes to document all public modules and functions.
 2. **Developer Documentation:** Add `{:ex_doc, "~> 0.31", only: :dev, runtime: false}` to your `mix.exs` dependencies to generate HTML/Epub documentation using `mix docs`.
 
-## Step 5: Generate Inline Documentation Rule
+## Step 8: Generate Inline Documentation Rule
 
 Create a @.agents/rules/docs-enforce.md file that contains the following verbatim content:
 
@@ -160,7 +206,7 @@ For custom frontend scripts in `assets/`, the agent MUST use standard `JSDoc` sy
 
 *Failure to document code according to these standards violates the core AGENTS.md manifesto.*
 
-## Step 6: Generate QA and Linting Rule
+## Step 9: Generate QA and Linting Rule
 
 Create a @.agents/rules/qa-enforce.md file that contains the following verbatim content:
 
@@ -233,7 +279,7 @@ The agent MUST:
 
 **Testing Strictness:** The agent MUST run `mix test` ONLY IF all the above QA checks pass successfully.
 
-## Step 7: Generate Architecture Decision Records (ADRs)
+## Step 10: Generate Architecture Decision Records (ADRs)
 
 Use the `@.agents/rules/adr-formatting.md` rule to write ADRs to the `@docs/architecture/` directory. Be sure to include separate ADRs specifically for the choice of:
 1) Test runners and reporting frameworks.
@@ -241,8 +287,11 @@ Use the `@.agents/rules/adr-formatting.md` rule to write ADRs to the `@docs/arch
 3) Parallel QA execution tools, coding style standards, and static typing tooling (including Credo, Dialyzer, and Sobelow).
 4) Bytecode purity analysis (Litmus) and boundary enforcement (Boundary) to guarantee idempotent retries and architectural encapsulation.
 5) The centralized observability stack (Loki, Redpanda, Promtail, Prometheus, Grafana).
+6) Use of Horde for distributed registries, Oban Engines for node-specific job routing, and Erlang PartitionSupervisor for GPU execution limitation.
+7) Advanced provisioning choices including Terraform for VMs/VPCs and Ansible for GPU/CUDA provisioning and release deploy mechanics.
+8) The architecture-agnostic Environment Detection fallback strategies in `runtime.exs` and RPC vs JSON REST decision.
 
-## Step 8: Configure Global `.gitignore`
+## Step 10: Configure Global `.gitignore`
 
 The root directory already contains a `.gitignore` file. You MUST strictly append the following lines to it to ensure proper exclusion of test artifacts, dependency caches, and selective tracking for test directories across the monorepo:
 
@@ -272,7 +321,7 @@ test/wallaby_screenshots/
 !**/test/README.md
 ```
 
-## Step 9: Update Documentation
+## Step 12: Update Documentation
 
 1. **Insert** platform-agnostic Elixir/Erlang installation instructions into the top of the `README.md` file (e.g., referencing official guides or version managers like `asdf`, `mise`, etc.) to ensure a zero-friction setup for new developers. **CRITICAL: You MUST NOT delete or overwrite any existing content in the `README.md` file when adding this section.**
 2. **Update** the `## Run tests` section (or append one if it doesn't exist) in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure. You MUST also explicitly instruct the user to run `npx playwright install` within their frontend setup routines so they download the necessary end-to-end testing browsers. **CRITICAL: You MUST NOT delete or overwrite any existing unrelated content in the `README.md` file when updating this section.**
