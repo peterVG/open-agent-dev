@@ -3,7 +3,7 @@
 # Exit immediately if a command exits with a non-zero status
 set -e
 
-echo "Starting Arkrim Document Sync Validation..."
+echo "Starting Document Sync Validation..."
 
 # Get all staged files
 STAGED_FILES=$(git diff --cached --name-only)

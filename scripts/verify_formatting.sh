@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-echo "Starting Arkrim Format Validation..."
+echo "Starting Format Validation..."
 
 APPS_DIR="./apps"
 FAILED=0

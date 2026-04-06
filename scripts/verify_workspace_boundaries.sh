@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-echo "Starting Arkrim Workspace Boundary Validation..."
+echo "Starting Workspace Boundary Validation..."
 
 FORBIDDEN_FILES=(
   "mix.exs"

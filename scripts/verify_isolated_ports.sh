@@ -3,7 +3,7 @@
 # Exit immediately if a command exits with a non-zero status
 set -e
 
-echo "Starting Arkrim Port Isolation Validation..."
+echo "Starting Port Isolation Validation..."
 
 APPS_DIR="./apps"
 ALL_PORTS_STRING=""

@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
 
-# Arkrim Master Pre-Commit Hook
+# Master Pre-Commit Hook
 
 echo "========================================"
-echo "Running Arkrim Pre-Commit Hooks..."
+echo "Running Pre-Commit Hooks..."
 echo "========================================"
 
 # 1. Validate isolated ports

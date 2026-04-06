@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Arkrim Task Cleanup Validation
+# Task Cleanup Validation
 #
 # This script ensures that whenever a Walkthrough document exists for a task,
 # the corresponding Plan and ToDos documents are removed to prevent clutter.
@@ -11,7 +11,7 @@ FAILED=0
 WALKTHROUGHS=$(find apps -name "*-Walkthrough.md" 2>/dev/null)
 
 for WT in $WALKTHROUGHS; do
-  # Extract the base path and the task identifier (e.g., "apps/arkrim_engine/docs/tasks/Task-1.1")
+  # Extract the base path and the task identifier (e.g., "apps/app_abc/docs/tasks/Task-1.1")
   BASE_NAME="${WT%-Walkthrough.md}"
   
   PLAN_FILE="${BASE_NAME}-Plan.md"

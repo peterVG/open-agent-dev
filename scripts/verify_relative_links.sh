@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-echo "Starting Arkrim Portable Documentation Validation..."
+echo "Starting Portable Documentation Validation..."
 
 STAGED_FILES=$(git diff --cached --name-only | grep "\.md$" || true)
 
