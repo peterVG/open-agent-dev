@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -e
 
-echo "Starting Arkrim Centralized Logging Validation..."
+echo "Starting Centralized Logging Validation..."
 
 STAGED_FILES=$(git diff --cached --name-only | grep -E "\.ex$|\.exs$" || true)
 
