@@ -66,6 +66,6 @@ if [ "$FAILED" -ne 0 ]; then
   exit 1
 else
   echo ""
-  echo "🚀 VALIDATION PASSED: All Arkrim modules maintain strict port isolation."
+  echo "🚀 VALIDATION PASSED: All modules maintain strict port isolation."
   exit 0
 fi
