@@ -45,10 +45,10 @@
 - **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[pr-documentation-update.md](./.agents/rules/pr-documentation-update.md)`.
 
 ## Sync Logic Verification
-
 **Purpose:** Guarantee that upstream documentation (PRD, SRS, ADRs, Implementation Plan) is consistently aligned before writing implementation code, and to require explicit human review for any detected contradictions.
 
 - **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[sync-logic.md](./.agents/rules/sync-logic.md)`.
+- **Search Before Denial:** AI agents MUST explicitly search `docs/architecture/` before denying technology use or claiming an ADR doesn't exist. This is tactically enforced via `[adr-verification.md](./.agents/rules/adr-verification.md)`.
 
 ## Portable Documentation (Relative Links)
 
