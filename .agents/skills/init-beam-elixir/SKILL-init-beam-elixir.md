@@ -138,18 +138,12 @@ To guarantee clean project roots, all test-generated artifacts MUST be strictly 
 - **Do not use plural custom directories:** Custom directories like `tests/` break native `mix test` conventions. The singular `test/` folder should exclusively contain both source logic and ephemeral test artifacts (safely `.gitignore`'d).
 
 ### 3. Allure Test Reporting Integration
-To properly configure Allure in a BEAM project, adhere to the following setup:
+To properly configure Allure in a BEAM project, adhere to the following native setup:
 
-1. **Add `junit_formatter` to dependencies:** Add `{:junit_formatter, "~> 3.3", only: [:test]}` to your `mix.exs` file to generate the XML reports.
-2. **Configure ExUnit formatter:** Update your `test/test_helper.exs` to include `ExUnit.configure(formatters: [JUnitFormatter, ExUnit.CLIFormatter])`.
-3. **Set the output directory:** In `config/test.exs`, configure the extension so that the JUnit reports are sent to the correct isolated folder:
-   ```elixir
-   config :junit_formatter,
-     report_dir: "test/allure-results",
-     report_file: "test_results.xml",
-     print_report_file: true
-   ```
-4. **Allure CLI:** Ensure that `allure-commandline` is accessible. To generate the final HTML report, run `allure generate test/allure-results -o test/allure-report --clean` and view it with `allure open test/allure-report`. You MUST configure a mix alias or test execution hook (e.g. `rm -rf test/allure-results`) to automatically purge historical JSON payloads before initiating new test cycles.
+1. **Leverage the Native Formatter:** We explicitly avoid third-party libraries like `junit_formatter` or `allure_test_formatter`. Instead, Arkrim utilizes a dedicated internal application called `elixir_feature_tests`.
+2. **Add Formatter to dependencies:** Add `{:elixir_feature_tests, in_umbrella: true, only: :test}` to your application's `mix.exs` file to gain access to the BDD Step macros and the correct JSON serializers.
+3. **Configure ExUnit formatter:** Update your `test/test_helper.exs` to include `ExUnit.start(formatters: [ExUnit.CLIFormatter, ElixirFeatureTests.AllureFormatter])`.
+4. **Allure CLI:** Ensure that `allure-commandline` is accessible. To view the generated HTML report locally, run `allure serve allure-results`. The custom GenServer natively writes the JSON payloads to an `allure-results/` directory relative to where the `mix test` command was invoked. You MUST configure a mix alias or test execution hook (e.g. `rm -rf allure-results`) to automatically purge historical JSON payloads before initiating new test cycles.
 
 ### 4. PhoenixTest and Playwright Integration
 To support robust End-to-End (E2E) and integration testing, configure both PhoenixTest and Playwright:
