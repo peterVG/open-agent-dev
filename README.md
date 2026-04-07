@@ -84,3 +84,15 @@ Use this when you've just drilled down into defining a specific app in a monorep
 
 ## Use the AGENTS.md prompts in your Implementation Plan
 Check @docs/plan.md for specific task prompts in your implementation plan.These will guide you through the task list to generate and test your code in compliance with the Open Dev Agent principles and workflow.
+
+## NOTE: Branch-per-task enforcement
+A branch-per-task workflow is strictly enforced to ensure all code is reviewed before merging. Direct commits to the `main` branch is blocked by local pre-commit hooks.
+
+If you are a human developer and absolutely must push a hotfix directly to `main`, you can override this safeguard by prefixing your commit command:
+
+```bash
+FORCE_MAIN_COMMIT=1 git commit -m "emergency hotfix"
+```
+
+
+
