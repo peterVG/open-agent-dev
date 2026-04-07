@@ -30,7 +30,16 @@ Every task MUST be formatted as an interactive Markdown checkbox so that progres
   - **Description:** Initialize the Python virtual environment...
 ```
 
-### 2. Strict Traceability
+### 2. Module-Specific Task Prefixes
+
+When generating implementation plans that are NOT in the global root `docs/plan.md` (e.g., module-specific plans like `apps/[Module Name]/docs/plan.md`), you MUST prefix all Task numbers with the capitalized initials of the module name.
+For example:
+- **arkrim_engine** task 1.1 = `Task AE-1.1`
+- **arkrim_upload** task 3.5 = `Task AU-3.5`
+
+Global root tasks should remain standard without a prefix (e.g., `Task 1.1`).
+
+### 3. Strict Traceability
 
 Every task MUST explicitly link back to its originating requirements (PRD/SRS).
 
@@ -48,7 +57,7 @@ Every task MUST explicitly link back to its originating requirements (PRD/SRS).
 
 _If a task is purely structural (e.g., setting up a repository) and has no specific tests, mark Related Tests as `N/A`._
 
-### 3. Development Prompts
+### 4. Development Prompts
 
 Every task MUST include an actionable prompt for the agent to begin development. This prompt MUST NOT hardcode language-specific paths (like `/src` or `/tests`) unless a PRD and SRS explicitly dictate the finalized monorepo/folder architecture. Instead, instruct the agent to propose code and write tests in the "appropriate directories within the repository, adhering rigorously to the established Architecture Decision Records (ADRs)."
 Crucially, if the project employs a monorepo or Umbrella architecture (Python/JS or BEAM/Elixir), **the prompt MUST explicitly instruct the executing agent to run all framework tooling, tests, and configurations strictly isolated within the specific module's subdirectory** (e.g., `apps/frontend/` or `apps/arkrim_engine/`).
@@ -59,11 +68,11 @@ For all functional implementation tasks (e.g., business logic, UI features), the
 Additionally, the Agent Prompt for all testing tasks MUST explicitly instruct the developer to output test results using the Test Reporting framework (e.g., Allure) specified in the ADRs, AND to copy the raw CLI output of the test runs into a permanent `apps/[Module Name]/docs/tasks/Task-[Task ID]-Walkthrough.md` file. **Crucially, the prompt MUST mandate that this file is saved directly into the project's `apps/[Module Name]/docs/tasks/` folder and NEVER in an internal agent scratchpad.**
 Crucially, the prompt MUST also explicitly instruct the agent to check off the `- [ ]` markdown box locally inside the appropriate `docs/plan.md` the moment the task is confirmed complete, commit its changes, and push its feature branch to `origin`.
 
-### 4. Phased, Dependency-Aware Approach
+### 5. Phased, Dependency-Aware Approach
 
 Tasks MUST be logically grouped into Phases (e.g., Phase 1: Foundation, Phase 2: Core Logic). No task should be scheduled before its dependencies are complete. Usually, Database and Data Layer tasks precede UI tasks.
 
-### 5. Holistic UI Planning
+### 6. Holistic UI Planning
 
 When defining the Implementation Plan, the agent MUST NOT silo highly coupled UI mechanics (e.g., Canvas rendering and the Avatar that controls it) into separate sequential tasks. If the interaction model of a later requirement (e.g., Avatar Steering) supersedes or fundamentally alters the interaction model of an earlier requirement (e.g., Canvas Panning), they MUST be combined into a single holistic UI/UX task to prevent building throwaway interaction code. Abide by `.agents/rules/holistic-ui.md`.
 
