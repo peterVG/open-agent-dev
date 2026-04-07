@@ -20,9 +20,17 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# 3. Validate relative links
+# 3. Validate Bi-directional PRD/SRS Traceability
+./scripts/verify_srs_traceability.sh
+if [ $? -ne 0 ]; then
+  echo "❌ pre-commit failed: Traceability Validation"
+  exit 1
+fi
+
+# 4. Validate relative links
 ./scripts/verify_relative_links.sh
 if [ $? -ne 0 ]; then
+
   echo "❌ pre-commit failed: Portable Documentation Validation"
   exit 1
 fi
