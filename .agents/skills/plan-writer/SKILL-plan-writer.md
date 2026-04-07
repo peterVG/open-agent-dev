@@ -139,9 +139,11 @@ Draft the plan using the interactive `- [ ]` markdown syntax.
 
 ### Step 4: Generate Output to Workspace
 
-> **CRITICAL ARTIFACT ISOLATION OVERRIDE:** You MUST save the generated checklist directly into the project's permanent file structure depending on the plan's scope, and NEVER as an `implementation_plan.md` artifact hidden in your internal system/brain directory.
-> - **Global Project Plans:** Save to `docs/plan.md` in the repository root.
-> - **Module-Specific Plans:** If generating an implementation plan strictly for a specific application in a monorepo or umbrella structure, save to `apps/[Module Name]/docs/plan.md`.
+> **CRITICAL ARTIFACT ISOLATION OVERRIDE:** You MUST save the generated checklists directly into the project's permanent file structure depending on the plan's scope, and NEVER as an `implementation_plan.md` artifact hidden in your internal system/brain directory.
+> 
+> When architecting a system or fulfilling a holistic PRD mandate across a monorepo, you MUST generate the plans in this specific sequential order:
+> 1. **Global Project Plan:** First, generate the high-level project roadmap and save it to `docs/plan.md` in the repository root.
+> 2. **Module-Specific Plans:** Then, generate customized, highly-detailed implementation plans for each specific application/module and save them directly to `apps/[Module Name]/docs/plan.md`.
 
 ### Step 5: Map Tests and Requirements
 

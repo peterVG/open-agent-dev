@@ -69,8 +69,17 @@ OR
 ```
 
 ## Generate an implementation plan to guide development
+### The "Global Holistic Execution" Prompt
+Use this when you have updated the core PRD or added entirely new modules to a monorepo and need the AI to synthesize everything across the entire project from scratch.
 ```text
-@AGENTS.md Generate an implementation plan for the project using the @.agents/skills/implementation-plan-writer skill based on the @docs/prd.md, @docs/srs.md, ADR files and BDD feature files. Once the implementation plan is created and the technology stack is confirmed, update the "Setup Development Environment" section in this README.md file with the actual commands needed to run the application, to execute tests, to view their results, and to view developer documentation. Be sure to be specific about what directory the user must be in to run the commands.
+@AGENTS.md Invoke the @plan-writer skill. Delete any existing \plan.md` files across the repository. Then, rigorously analyze the root @docs/prd.md, all `srs.md` configurations in the `apps/` directory, and the @docs/architecture/ records. Synthesize these requirements and generate the global roadmap at `docs/plan.md`, sequentially followed by granular module-specific checklists distributed strictly into each app's respective `apps/[Module Name]/docs/plan.md` location.`
+```
+
+### The "Single Module Focus" Prompt
+Use this when you've just drilled down into defining a specific app in a monorepo (e.g., you heavily updated apps/app_123/docs/srs.md) and just want to regenerate that specific localized checklist without touching the global roadmap or other apps.
+
+```text
+@AGENTS.md Please invoke the @plan-writer skill to generate an implementation plan strictly for the \app_123` module. Read its specific @apps/app_123/docs/srs.md, the global @docs/prd.md, and relevant ADRs, and output the tracking checklist directly into @apps/app_123/docs/plan.md.`
 ```
 
 ## Use the AGENTS.md prompts in your Implementation Plan
