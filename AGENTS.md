@@ -56,7 +56,7 @@
 
 - **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[links-enforce.md](./.agents/rules/links-enforce.md)`.
 - **Strictly Relative Links:** Anytime an AI agent generates documenting artifacts, readmes, technical specs, or logs that cross-reference another file in this project, it MUST use standard Markdown relative linking (e.g., `[PRD](../prd.md)` or `[Task 1.1](./tasks/Task-1.1-Plan.md)`).
-- **Prohibited Absolute Paths:** The agent MUST NEVER write absolute file paths native to its current execution environment (e.g., `file:///Users/johnathondoe/...`) into the permanent project repository files. Absolute paths break immediately upon push to a remote repository or clone by another developer.
+- **Prohibited Absolute Paths:** The agent MUST NEVER write absolute file paths native to its current execution environment (e.g., `/Users/johnathondoe/...`) into the permanent project repository files. Absolute paths break immediately upon push to a remote repository or clone by another developer.
 
 ## Platform-Agnostic Documentation
 
@@ -73,6 +73,7 @@
 - **ISO/IEC/IEEE 29148:** The Software Requirements Specification (SRS) MUST be Unambiguous, Complete, Verifiable, Consistent, and Traceable. Specific agent instructions for these criteria are defined in [`.agents/kb/iso-29148-srs.md`](./.agents/kb/iso-29148-srs.md).
 - **ISO/IEC/IEEE 42010:** Architecture Decision Records (ADRs) MUST include the 9 specific information items required by the ISO 42010 standard for architecture descriptions as defined in [`.agents/kb/iso-42010-adr.md`](./.agents/kb/iso-42010-adr.md).
 - **RFC 2119:** All requirements documentation (PRD, SRS) must use explicit RFC 2119 terminology (e.g., MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, OPTIONAL) to define the significance of each requirement. Exact definitions are located in [`.agents/kb/rfc-2119-req-terms.md`](./.agents/kb/rfc-2119-req-terms.md).
+- **RFC 3339:** All date and time specifications in projects MUST use the RFC 3339 standard. UTC MUST be used as the default timezone for all logs, databases, and internal timestamps. Exact definitions are located in [`.agents/kb/rfc-3339-date-and-time.md`](./.agents/kb/rfc-3339-date-and-time.md).
 
 ## Centralized Logging & Observability
 
