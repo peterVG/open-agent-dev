@@ -141,9 +141,9 @@ To guarantee clean project roots, all test-generated artifacts MUST be strictly 
 To properly configure Allure in a BEAM project, adhere to the following native setup:
 
 1. **Leverage the Native Formatter:** We explicitly avoid third-party libraries like `junit_formatter` or `allure_test_formatter`. Instead, Arkrim utilizes a dedicated internal application called `elixir_feature_tests`.
-2. **Add Formatter to dependencies:** Add `{:elixir_feature_tests, in_umbrella: true, only: :test}` to your application's `mix.exs` file to gain access to the BDD Step macros and the correct JSON serializers.
+2. **Add Formatter to dependencies:** Add `{:elixir_feature_tests, path: "../elixir_feature_tests", only: :test}` to your application's `mix.exs` file to gain access to the BDD Step macros and the correct JSON serializers.
 3. **Configure ExUnit formatter:** Update your `test/test_helper.exs` to include `ExUnit.start(formatters: [ExUnit.CLIFormatter, ElixirFeatureTests.AllureFormatter])`.
-4. **Allure CLI:** Ensure that `allure-commandline` is accessible. To view the generated HTML report locally, run `allure serve allure-results`. The custom GenServer natively writes the JSON payloads to an `allure-results/` directory relative to where the `mix test` command was invoked. You MUST configure a mix alias or test execution hook (e.g. `rm -rf allure-results`) to automatically purge historical JSON payloads before initiating new test cycles.
+4. **Allure CLI:** Ensure that `allure-commandline` is accessible. To view the generated HTML report locally, run `allure serve test/allure-results`. The custom GenServer natively writes the JSON payloads to a `test/allure-results/` directory relative to where the `mix test` command was invoked. You MUST configure a mix alias or test execution hook (e.g. `rm -rf test/allure-results`) to automatically purge historical JSON payloads before initiating new test cycles.
 
 ### 4. PhoenixTest and Playwright Integration
 To support robust End-to-End (E2E) and integration testing, configure both PhoenixTest and Playwright:
