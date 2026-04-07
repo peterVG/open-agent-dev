@@ -14,7 +14,7 @@ When new technical requirements, architectural decisions, testing frameworks, or
 ## Conflict Detection (Defensive Protocol)
 
 When reviewing the PRD, SRS, Architecture Decision Records (ADRs), and implementation plan documents for drift or contradictions:
-- **PRD ↔ SRS:** Verify that system requirements in the SRS align with product requirements in the PRD
+- **PRD ↔ SRS:** Verify that system requirements in the SRS align with product requirements in the PRD, and ensure bi-directional traceability is explicitly maintained using relative markdown hyperlinks (`**Implemented In:**` in the PRD, and `**Source:** [PRD ...]` in the SRS).
 - **SRS ↔ ADRs:** Check that architectural decisions support the system requirements
 - **PRD ↔ ADRs:** Ensure implementation design aligns with product vision
 - **Implementation Plan ↔ SRS:** Verify the execution Plan and ToDos explicitly capture ALL granular domain constraints (colors, formulas, boundaries, thresholds) defined in the SRS without omission or hallucination.

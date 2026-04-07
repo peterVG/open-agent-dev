@@ -9,14 +9,8 @@ PRD_FILE="docs/prd.md"
 SRS_FILES=$(find apps -name "srs.md" 2>/dev/null)
 
 if [ ! -f "$PRD_FILE" ]; then
-  if [ "$SKIP_TRACEABILITY" == "1" ]; then
-    echo "⚠️  WARNING: Traceability Validation skipped by human override."
-    exit 0
-  else
-    echo "🚨 VALIDATION FAILED: PRD file not found at $PRD_FILE"
-    echo "   (Human override: prefix your command with SKIP_TRACEABILITY=1)"
-    exit 1
-  fi
+  echo "🚨 VALIDATION FAILED: PRD file not found at $PRD_FILE"
+  exit 1
 fi
 
 if [ -z "$SRS_FILES" ]; then
@@ -71,10 +65,39 @@ for ID in $PRD_IDS; do
   fi
 done
 
-if [ "$DEAD_LINKS" -eq 1 ] || [ "$ORPHAN_REQS" -eq 1 ]; then
+# Check 3: Do all mapped PRD requirements have a hyperlink to the SRS document?
+MISSING_LINKS=0
+for ID in $PRD_IDS; do
+  NEEDS_LINK=0
+  if [[ "$ID" == FR-* ]]; then
+    NEEDS_LINK=1
+  else
+    for REF in $SRS_REFS; do
+      if [ "$ID" == "$REF" ]; then
+        NEEDS_LINK=1
+        break
+      fi
+    done
+  fi
+
+  if [ "$NEEDS_LINK" -eq 1 ]; then
+    HAS_LINK=$(awk -v id="$ID" '
+      $0 ~ "^#+ .*"id"(:| )" { p=1 } 
+      p && /^#+ / && $0 !~ "^#+ .*"id"(:| )" { p=0 } 
+      p { print }
+    ' "$PRD_FILE" | grep -cE "\*\*Implemented In:\*\*.*\[.*\]\(.*srs\.md(#[a-zA-Z0-9_-]+)?\)" || true)
+    
+    if [ "$HAS_LINK" -eq 0 ]; then
+      echo "❌ MISSING LINK: PRD Requirement '$ID' does not have a valid '**Implemented In:**' hyperlink to an srs.md file!"
+      MISSING_LINKS=1
+    fi
+  fi
+done
+
+if [ "$DEAD_LINKS" -eq 1 ] || [ "$ORPHAN_REQS" -eq 1 ] || [ "$MISSING_LINKS" -eq 1 ]; then
   echo ""
   echo "🚨 VALIDATION FAILED: Bi-directional Traceability rule violated."
-  echo "All PRD functional and non-functional requirements must be mapped explicitly to an SRS file, and all SRS references must point to a valid PRD ID."
+  echo "All PRD functional requirements (and mapped non-functional requirements) must include a hyperlink to an SRS file, and all SRS references must point to a valid PRD ID."
   exit 1
 fi
 
