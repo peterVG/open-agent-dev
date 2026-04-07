@@ -4,6 +4,11 @@
 
 BRANCH_NAME=$(git branch --show-current)
 
+if [ -z "$BRANCH_NAME" ]; then
+  echo "❌ Branch Validation Failed: Could not determine current branch (detached HEAD or not a git repository)."
+  exit 1
+fi
+
 if [ "$BRANCH_NAME" = "main" ] || [ "$BRANCH_NAME" = "master" ]; then
   if [ "$FORCE_MAIN_COMMIT" = "1" ]; then
     echo "⚠️  WARNING: Direct commit to '$BRANCH_NAME' forced by human override."
