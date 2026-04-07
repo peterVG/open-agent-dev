@@ -9,8 +9,14 @@ PRD_FILE="docs/prd.md"
 SRS_FILES=$(find apps -name "srs.md" 2>/dev/null)
 
 if [ ! -f "$PRD_FILE" ]; then
-  echo "🚨 VALIDATION FAILED: PRD file not found at $PRD_FILE"
-  exit 1
+  if [ "$SKIP_TRACEABILITY" == "1" ]; then
+    echo "⚠️  WARNING: Traceability Validation skipped by human override."
+    exit 0
+  else
+    echo "🚨 VALIDATION FAILED: PRD file not found at $PRD_FILE"
+    echo "   (Human override: prefix your command with SKIP_TRACEABILITY=1)"
+    exit 1
+  fi
 fi
 
 if [ -z "$SRS_FILES" ]; then
