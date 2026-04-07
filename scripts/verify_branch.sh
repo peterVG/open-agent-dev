@@ -5,8 +5,15 @@
 BRANCH_NAME=$(git branch --show-current)
 
 if [ -z "$BRANCH_NAME" ]; then
-  echo "❌ Branch Validation Failed: Could not determine current branch (detached HEAD or not a git repository)."
-  exit 1
+  GIT_DIR=$(git rev-parse --git-dir 2>/dev/null)
+  if [ -d "$GIT_DIR/rebase-merge" ] || [ -d "$GIT_DIR/rebase-apply" ]; then
+    echo "⚠️  WARNING: Detached HEAD detected during active rebase. Proceeding."
+    exit 0
+  else
+    echo "❌ Branch Validation Failed: Detached HEAD state detected outside of an active rebase."
+    echo "   Committing directly in detached HEAD bypasses branch protections."
+    exit 1
+  fi
 fi
 
 if [ "$BRANCH_NAME" = "main" ] || [ "$BRANCH_NAME" = "master" ]; then
