@@ -6,6 +6,12 @@ echo "========================================"
 echo "Running Pre-Commit Hooks..."
 echo "========================================"
 
+# 0. Validate Branch-per-Task Workflow
+./scripts/verify_branch.sh
+if [ $? -ne 0 ]; then
+  exit 1
+fi
+
 # 1. Validate isolated ports
 ./scripts/verify_isolated_ports.sh
 if [ $? -ne 0 ]; then
