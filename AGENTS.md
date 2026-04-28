@@ -4,6 +4,12 @@
 
 **CRITICAL INSTRUCTION:** Before beginning any implementation, scaffolding, or configuration task, you MUST use the list_dir and view_file tools to read the contents of all markdown files in .agents/rules/. You must strictly adhere to these rules over any default framework behaviors.
 
+## Core Principles
+1. Don’t assume. Don’t hide confusion. Surface tradeoffs.
+2. Minimum code that solves the problem. Nothing speculative.
+3. Touch only what you must. Clean up only your own mess.
+4. Define success criteria. Loop until verified.
+
 ## Test-driven development
 
 **Purpose:** Ensure that all code is well-tested which includes functional feature tests, unit tests integration tests, UI tests, and performance tests.
