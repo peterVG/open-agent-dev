@@ -1,0 +1,14 @@
+AGENTS.md
+  h_6eedd30493d16f 7-12
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.3.4",
+  "base_commit_sha": "2a15f60232ce3a7b7eb55983e63f686722056ea7",
+  "prompts": {},
+  "humans": {
+    "h_6eedd30493d16f": {
+      "author": "Peter Van Garderen"
+    }
+  }
+}
