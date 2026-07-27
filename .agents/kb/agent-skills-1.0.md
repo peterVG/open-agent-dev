@@ -1,3 +1,27 @@
+---
+type: Project Standard
+title: Agent Skills 1.0 Specification
+description: Progressive disclosure, vendor neutrality, multi-tool support, and explicit grounding for
+  AI agents in this repository.
+tags:
+- agents
+- skills
+- progressive-disclosure
+- standards
+status: stable
+generated:
+  by: process:kb-synthesizer
+  at: '2026-07-26T18:00:00Z'
+sources:
+- id: agent-skills
+  resource: .agents/kb/agent-skills-1.0.md
+  title: Agent Skills 1.0 (project synthesis)
+  author: process:project-template
+kb-title: Agent Skills 1.0 Specification
+last-updated: '2026-07-26T18:00:00Z'
+domain: Agent Framework, Standards
+---
+
 # Agent Skills 1.0 Specification
 
 **Purpose:** This document outlines the core principles of the Agent Skills 1.0 framework. It defines how AI agents should interact with tools, resources, and contextual knowledge to maximize efficiency and minimize hallucinations. AI agents working in this repository MUST follow these patterns.

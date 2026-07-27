@@ -1,3 +1,27 @@
+---
+type: Project Standard
+title: RFC 2119 — Requirement Level Keywords
+description: MUST, MUST NOT, SHOULD, SHOULD NOT, MAY/OPTIONAL definitions for PRDs and SRS documents.
+resource: https://www.rfc-editor.org/rfc/rfc2119
+tags:
+- rfc
+- requirements
+- standards
+status: stable
+generated:
+  by: process:kb-synthesizer
+  at: '2026-07-26T18:00:00Z'
+sources:
+- id: rfc2119
+  resource: https://www.rfc-editor.org/rfc/rfc2119
+  title: RFC 2119
+kb-title: RFC 2119 — Requirement Level Keywords
+source-url: https://www.rfc-editor.org/rfc/rfc2119
+spec-version: '2119'
+last-updated: '2026-07-26T18:00:00Z'
+domain: Requirements Engineering, Standards
+---
+
 # RFC 2119: Key words for use in RFCs to Indicate Requirement Levels
 
 **Purpose:** This document defines the exact terminology used across all requirements documentation (PRDs, SRSs, etc.) in this project to ensure unambiguous specifications. All agents MUST strictly adhere to these definitions when reading, updating, or generating requirement documents.

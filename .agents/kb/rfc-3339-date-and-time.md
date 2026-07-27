@@ -1,3 +1,28 @@
+---
+type: Project Standard
+title: RFC 3339 — Date and Time on the Internet
+description: Internet timestamp profile of ISO 8601; UTC default for logs and internal timestamps.
+resource: https://www.rfc-editor.org/rfc/rfc3339
+tags:
+- rfc
+- time
+- timestamps
+- standards
+status: stable
+generated:
+  by: process:kb-synthesizer
+  at: '2026-07-26T18:00:00Z'
+sources:
+- id: rfc3339
+  resource: https://www.rfc-editor.org/rfc/rfc3339
+  title: RFC 3339
+kb-title: RFC 3339 — Date and Time on the Internet
+source-url: https://www.rfc-editor.org/rfc/rfc3339
+spec-version: '3339'
+last-updated: '2026-07-26T18:00:00Z'
+domain: Date and Time, Standards
+---
+
 # RFC 3339 - Date and Time on the Internet
 
 ## 1. Overview

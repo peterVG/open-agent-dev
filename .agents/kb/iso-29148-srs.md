@@ -1,3 +1,27 @@
+---
+type: Project Standard
+title: ISO/IEC/IEEE 29148 — Requirements Engineering (SRS)
+description: 'Five characteristics of a well-formed SRS: unambiguous, complete, verifiable, consistent,
+  traceable.'
+resource: https://www.iso.org/standard/72089.html
+tags:
+- iso
+- srs
+- requirements
+- standards
+status: stable
+generated:
+  by: process:kb-synthesizer
+  at: '2026-07-26T18:00:00Z'
+sources:
+- id: iso-29148
+  resource: https://www.iso.org/standard/72089.html
+  title: ISO/IEC/IEEE 29148
+kb-title: ISO/IEC/IEEE 29148 — Requirements Engineering (SRS)
+last-updated: '2026-07-26T18:00:00Z'
+domain: Requirements Engineering, Standards
+---
+
 # ISO/IEC/IEEE 29148: Systems and software engineering — Requirements engineering
 
 **Purpose:** This document defines the success criteria for a well-formed Software Requirements Specification (SRS) in this project. All AI agents MUST ensure that any generated SRS adheres to these five primary characteristics.

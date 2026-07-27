@@ -1,3 +1,28 @@
+---
+type: Project Standard
+title: Conventional Commits 1.0.0
+description: Required Git commit message format (type, scope, description) for this project.
+resource: https://www.conventionalcommits.org/en/v1.0.0/
+tags:
+- git
+- commits
+- conventional-commits
+- standards
+status: stable
+generated:
+  by: process:kb-synthesizer
+  at: '2026-07-26T18:00:00Z'
+sources:
+- id: cc-spec
+  resource: https://www.conventionalcommits.org/en/v1.0.0/
+  title: Conventional Commits 1.0.0
+kb-title: Conventional Commits 1.0.0
+source-url: https://www.conventionalcommits.org/en/v1.0.0/
+spec-version: 1.0.0
+last-updated: '2026-07-26T18:00:00Z'
+domain: Version Control, Standards
+---
+
 # Conventional Commits 1.0.0
 
 **Purpose:** This document defines the exact formatting required for all Git commit messages in this project. It ensures a standardized, parsable, and clean history. All AI agents MUST format their commits according to this specification.

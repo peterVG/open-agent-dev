@@ -1,3 +1,26 @@
+---
+type: Project Standard
+title: ISO/IEC/IEEE 42010 — Architecture Description (ADRs)
+description: Nine required information items for Architecture Decision Records in this project.
+resource: https://www.iso.org/standard/74393.html
+tags:
+- iso
+- adr
+- architecture
+- standards
+status: stable
+generated:
+  by: process:kb-synthesizer
+  at: '2026-07-26T18:00:00Z'
+sources:
+- id: iso-42010
+  resource: https://www.iso.org/standard/74393.html
+  title: ISO/IEC/IEEE 42010
+kb-title: ISO/IEC/IEEE 42010 — Architecture Description (ADRs)
+last-updated: '2026-07-26T18:00:00Z'
+domain: Architecture, Standards
+---
+
 # ISO/IEC/IEEE 42010: Systems and software engineering — Architecture description
 
 **Purpose:** This document defines the exact structure and required information for all Architecture Decision Records (ADRs) generated in this project. It ensures compliance with international standards for architecture descriptions.

@@ -1,3 +1,28 @@
+---
+type: Playbook
+title: Phoenix LiveView Development (v1.8+)
+description: CRC pattern, layered organization, and LiveView/Phoenix practices for the BEAM stack.
+resource: https://hexdocs.pm/phoenix_live_view/
+tags:
+- elixir
+- phoenix
+- liveview
+- beam
+- crc
+status: stable
+generated:
+  by: process:kb-synthesizer
+  at: '2026-07-26T18:00:00Z'
+sources:
+- id: liveview-docs
+  resource: https://hexdocs.pm/phoenix_live_view/
+  title: Phoenix LiveView Hexdocs
+kb-title: Phoenix LiveView Development (v1.8+)
+source-url: https://hexdocs.pm/phoenix_live_view/
+last-updated: '2026-07-26T18:00:00Z'
+domain: Elixir, Phoenix LiveView
+---
+
 # Phoenix LiveView Development: Core Knowledge Base (v1.8+)
 
 ## 1. Architectural Philosophy: The CRC Pattern
