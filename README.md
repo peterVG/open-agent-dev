@@ -33,6 +33,8 @@ Upload any reference documents to the `/docs/references/` directory. This includ
 @AGENTS.md read any reference documents in @docs/references/ and use the @.agents/skills/kb-synthesizer skill to generate a knowledge base in @.agents/kb/
 ```
 
+**OKF compliance:** The [`.agents/kb/`](./.agents/kb/) directory is maintained as an [Open Knowledge Format (OKF) v0.2](./.agents/kb/okf.md) Knowledge Bundle—UTF-8 markdown concepts with YAML frontmatter (`type` required), provenance, and progressive disclosure via [`index.md`](./.agents/kb/index.md). See [`.agents/kb/README.md`](./.agents/kb/README.md) for how the bundle differs from raw `docs/references/`.
+
 ## Create a Product Vision
 Fill out [`docs/templates/product-vision.md`](./docs/templates/product-vision-template.md) as best as possible and save it as [`/docs/product-vision.md`](./docs/product-vision.md)
 
