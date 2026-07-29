@@ -9,6 +9,7 @@
 2. Minimum code that solves the problem. Nothing speculative.
 3. Touch only what you must. Clean up only your own mess.
 4. Define success criteria. Loop until verified.
+5. **User-driven deletes and revisions:** When the user deletes or revises a file (or a deletion/revision appears in the workspace or git status), do **not** assume it was accidental. Do **not** restore previous content or re-add removed files without first asking whether the change was intentional and should stick. Restore only after explicit user confirmation. Tactically enforced via [`.agents/rules/no-silent-restore.md`](./.agents/rules/no-silent-restore.md).
 
 ## Test-driven development
 
