@@ -1,0 +1,14 @@
+.agents/skills/init-php-js/SKILL-init-PHP-js.md
+  h_10c93bba641ef0 1-393
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.0",
+  "base_commit_sha": "22309f722e4eff5a545dc0d7990b65ff1a134356",
+  "prompts": {},
+  "humans": {
+    "h_10c93bba641ef0": {
+      "author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
