@@ -277,7 +277,7 @@ The agent MUST:
 
 ## Step 10: Generate Architecture Decision Records (ADRs)
 
-Use the `@.agents/rules/adr-formatting.md` rule to write ADRs to the `@docs/architecture/` directory. Be sure to include separate ADRs specifically for the choice of:
+Use the `@.agents/rules/adr-formatting.md` rule to write ADRs to the `@resources/architecture/` directory. Be sure to include separate ADRs specifically for the choice of:
 1) Test runners and reporting frameworks.
 2) Inline code docs generators.
 3) Parallel QA execution tools, coding style standards, and static typing tooling (including Credo, Dialyzer, and Sobelow).

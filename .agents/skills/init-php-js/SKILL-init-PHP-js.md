@@ -4,23 +4,20 @@ description: Initialize a PHP and JavaScript WordPress plugin monorepo (C2PApres
 allowed-tools:
   - code_interpreter
 references:
-  - docs/architecture/009-open-agent-dev-stack.md
-  - docs/architecture/001-run-on-merchant-wordpress.md
-  - docs/architecture/002-two-plugin-distributions.md
-  - docs/prd.md
+  - resources/prd.md
 ---
 
 # PHP / WordPress Plugin Project Initialization
 
 This skill guides the AI agent to initialize a **PHP + JavaScript WordPress plugin** monorepo. It is the C2PApress equivalent of the Python/JS and BEAM/Elixir init skills.
 
-**When to use:** The user asks to initialize C2PApress, scaffold the plugins, or run this skill. **Do not** run [init-python-js](../init-python-js/SKILL-init-python-js.md) or [init-beam-elixir](../init-beam-elixir/SKILL-init-beam-elixir.md) for this product ([ADR 009](../../../docs/architecture/009-open-agent-dev-stack.md)).
+**When to use:** The user asks to initialize C2PApress, scaffold the plugins, or run this skill. **Do not** run [init-python-js](../init-python-js/SKILL-init-python-js.md) or [init-beam-elixir](../init-beam-elixir/SKILL-init-beam-elixir.md) for this product ([ADR 009](../../../resources/architecture/009-open-agent-dev-stack.md)).
 
 **Hard constraints (already accepted):**
-- Photo work runs **on the merchant’s WordPress** ([ADR 001](../../../docs/architecture/001-run-on-merchant-wordpress.md)).
-- Two distributions: free **Audit** on WordPress.org, paid **Pro** off-directory ([ADR 002](../../../docs/architecture/002-two-plugin-distributions.md)).
-- PHP + WP-packaged JS; WordPress database ([ADR 003](../../../docs/architecture/003-php-js-and-wp-datastore.md)).
-- Plugin logging is WordPress/PHP stdout on the **customer** host ([ADR 008](../../../docs/architecture/008-wordpress-native-logging.md)). The **local** Docker Compose stack MAY still scrape container stdout into Loki.
+- Photo work runs **on the merchant’s WordPress** ([ADR 001](../../../resources/architecture/001-run-on-merchant-wordpress.md)).
+- Two distributions: free **Audit** on WordPress.org, paid **Pro** off-directory ([ADR 002](../../../resources/architecture/002-two-plugin-distributions.md)).
+- PHP + WP-packaged JS; WordPress database ([ADR 003](../../../resources/architecture/003-php-js-and-wp-datastore.md)).
+- Plugin logging is WordPress/PHP stdout on the **customer** host ([ADR 008](../../../resources/architecture/008-wordpress-native-logging.md)). The **local** Docker Compose stack MAY still scrape container stdout into Loki.
 
 Keep every file and folder already in the repository root. Do not delete product-vision, PRD, ADRs, or `.agents/`.
 
@@ -61,7 +58,7 @@ project-root/
 │   │   │   ├── performance/
 │   │   │   ├── support/
 │   │   │   └── allure-results/
-│   │   └── docs/
+│   │   └── resources/
 │   │       └── srs.md
 │   └── c2papress-pro/             # Paid plugin (not shipped on WordPress.org)
 │       ├── c2papress-pro.php
@@ -80,7 +77,7 @@ project-root/
 │       │   ├── performance/
 │       │   ├── support/
 │       │   └── allure-results/
-│       └── docs/
+│       └── resources/
 │           └── srs.md
 └── README.md
 ```
@@ -97,18 +94,18 @@ project-root/
 
 ## Step 2: Enforce Documentation Traceability & Sync
 
-Same monorepo requirements method as the BEAM init skill, with PRD at `docs/prd.md` (this repo does not use root `prd.md`).
+Same monorepo requirements method as the BEAM init skill, with PRD at `resources/prd.md` (this repo does not use root `prd.md`).
 
-1. **Global source of truth:** [`docs/prd.md`](../../../docs/prd.md) and [`docs/product-vision.md`](../../../docs/product-vision.md).
-2. **Localized specs:** Each plugin app MUST have `docs/srs.md` bounded to that plugin (Audit vs Pro).
+1. **Global source of truth:** [`resources/prd.md`](../../../resources/prd.md) and [`resources/product-vision.md`](../../../resources/product-vision.md).
+2. **Localized specs:** Each plugin app MUST have `resources/srs.md` bounded to that plugin (Audit vs Pro).
 3. **Traceability metadata** at the top of each `srs.md`:
    ```yaml
    ---
    title: "C2PApress Audit Software Requirements Specification"
-   parent: "../../../docs/prd.md"
+   parent: "../../../resources/prd.md"
    ---
    ```
-4. **Line-by-line traceability:** Every SRS requirement MUST link to its parent in `docs/prd.md` with a relative markdown link (e.g. `[PRD F-001](../../../docs/prd.md#f-001-inspect-uploads-before-thumbnails)`).
+4. **Line-by-line traceability:** Every SRS requirement MUST link to its parent in `resources/prd.md` with a relative markdown link (e.g. `[PRD F-001](../../../resources/prd.md#f-001-inspect-uploads-before-thumbnails)`).
 5. **Sync:** Follow [sync-logic.md](../../rules/sync-logic.md). Plugin SRS changes that affect shared behaviour MUST update the root PRD and the sibling plugin SRS.
 
 ---
@@ -118,7 +115,7 @@ Same monorepo requirements method as the BEAM init skill, with PRD at `docs/prd.
 You MUST configure the following. Do not add FastAPI, Phoenix, Oban, libcluster, or a vendor photo API.
 
 **WordPress runtime (production):**
-- PHP 8.1 or newer unless a later ADR raises the floor for the C2PA engine ([ADR 004](../../../docs/architecture/004-c2pa-validate-on-host.md)).
+- PHP 8.1 or newer unless a later ADR raises the floor for the C2PA engine ([ADR 004](../../../resources/architecture/004-c2pa-validate-on-host.md)).
 - WordPress plugin bootstrap in the main PHP file (headers, `ABSPATH` guard, autoload).
 - Namespaced PHP under `src/` (PSR-4 via Composer).
 - Admin and product-page JavaScript under `assets/js/`, built or copied as WordPress enqueues — not a separate SPA talking to a Python API.
@@ -128,11 +125,11 @@ You MUST configure the following. Do not add FastAPI, Phoenix, Oban, libcluster,
 - `mysql` (or MariaDB) for WordPress.
 - WooCommerce installed in the **Pro / integration** profile; Audit-only tests MUST be runnable without WooCommerce.
 - Optional Mailpit/Mailhog for license-email tests.
-- Observability stack: Promtail, Redpanda, Loki, Prometheus, Grafana — scraping **container stdout** of the local WordPress PHP service. This stack is for developers. It MUST NOT be bundled into the plugin zips ([ADR 008](../../../docs/architecture/008-wordpress-native-logging.md)).
+- Observability stack: Promtail, Redpanda, Loki, Prometheus, Grafana — scraping **container stdout** of the local WordPress PHP service. This stack is for developers. It MUST NOT be bundled into the plugin zips ([ADR 008](../../../resources/architecture/008-wordpress-native-logging.md)).
 
 **C2PA:** Validate on the host. Do not require `exec` or a PHP extension for Audit. Pro re-sign is optional until a follow-up engine ADR.
 
-**Logging in plugin code:** Unbuffered PHP/`error_log` so php-fpm/Apache stdout can be scraped in Compose. MUST NOT open vendor log files on disk ([logging-enforce.md](../../rules/logging-enforce.md), [ADR 008](../../../docs/architecture/008-wordpress-native-logging.md)).
+**Logging in plugin code:** Unbuffered PHP/`error_log` so php-fpm/Apache stdout can be scraped in Compose. MUST NOT open vendor log files on disk ([logging-enforce.md](../../rules/logging-enforce.md), [ADR 008](../../../resources/architecture/008-wordpress-native-logging.md)).
 
 ---
 
@@ -140,7 +137,7 @@ You MUST configure the following. Do not add FastAPI, Phoenix, Oban, libcluster,
 
 Create or replace `apps/README.md` so it describes **this** stack (not FastAPI/Phoenix). Use the following text, adjusted only if plugin slugs change:
 
-The best practice for C2PApress is a monorepo of **WordPress plugins** under `apps/`. Each plugin is a standalone, zip-ready project with its own `composer.json`, `package.json`, tests, and `docs/srs.md`. The repository root stays language-agnostic: no `composer.json` or `package.json` at the root.
+The best practice for C2PApress is a monorepo of **WordPress plugins** under `apps/`. Each plugin is a standalone, zip-ready project with its own `composer.json`, `package.json`, tests, and `resources/srs.md`. The repository root stays language-agnostic: no `composer.json` or `package.json` at the root.
 
 ```text
 project-root/
@@ -200,7 +197,7 @@ Mirror the Python/JS taxonomy with WordPress-native tools.
 
 ### Best practices
 - Lint and format **inside** `apps/c2papress-audit` and `apps/c2papress-pro` before tests ([command-verification.md](../../rules/command-verification.md)).
-- TDD: tests first ([tdd-enforce.md](../../rules/tdd-enforce.md)). Walkthrough files go under `apps/<plugin>/docs/tasks/`.
+- TDD: tests first ([tdd-enforce.md](../../rules/tdd-enforce.md)). Walkthrough files go under `apps/<plugin>/resources/tasks/`.
 - `npx playwright install` is required once per developer machine; document it in the root README.
 
 ---
@@ -260,7 +257,7 @@ description: Ensure all code is strictly linted and formatted before pushing or 
 
 ## Active Tools
 
-Based on the accepted Architecture Decision Records in `docs/architecture/` for coding style:
+Based on the accepted Architecture Decision Records in `resources/architecture/` for coding style:
 
 - **PHP_CodeSniffer (WordPress Coding Standards)** and **phpcbf** for PHP.
 - **ESLint** for JavaScript static analysis.
@@ -314,7 +311,7 @@ Use [adr-formatting.md](../../rules/adr-formatting.md). **Do not duplicate** ADR
 1. Test runners and reporting (PHPUnit, Behat, Playwright, Allure, Plugin Check).
 2. Inline docs generators (phpDocumentor, JSDoc).
 3. Coding style and linting (PHPCS/WPCS, ESLint, Prettier, PHPStan/Psalm).
-4. Local Compose observability stack (Loki, Redpanda, Promtail, Prometheus, Grafana) **and** the explicit split vs [ADR 008](../../../docs/architecture/008-wordpress-native-logging.md) (local containers vs plugin on a customer host).
+4. Local Compose observability stack (Loki, Redpanda, Promtail, Prometheus, Grafana) **and** the explicit split vs [ADR 008](../../../resources/architecture/008-wordpress-native-logging.md) (local containers vs plugin on a customer host).
 
 If 001–009 are missing, stop and tell the user; do not invent a FastAPI/Phoenix stack.
 
@@ -366,7 +363,7 @@ If `config/loki/local-config.yaml`, `config/promtail/docker-config.yaml`, and `c
 3. Prometheus: scrape itself, Loki, Redpanda, and any WordPress metrics endpoint you add.
 4. Volume-mount these files read-only in `docker-compose.yml`.
 
-Plugin code still MUST NOT write log files ([ADR 008](../../../docs/architecture/008-wordpress-native-logging.md)).
+Plugin code still MUST NOT write log files ([ADR 008](../../../resources/architecture/008-wordpress-native-logging.md)).
 
 ---
 
@@ -385,7 +382,7 @@ Verify every documented command actually runs ([command-verification.md](../../r
 
 - [ ] `apps/c2papress-audit` and `apps/c2papress-pro` exist as zip-shaped plugins; no root `composer.json` / `package.json`.
 - [ ] Audit has no Pro code and no license HTTP client.
-- [ ] `docs/srs.md` exists per plugin with PRD parent links.
+- [ ] `resources/srs.md` exists per plugin with PRD parent links.
 - [ ] Test folders match the taxonomy; Allure output is under each app `tests/`.
 - [ ] `docs-enforce.md` and `lint-enforce.md` describe PHPDoc/PHPCS/JS, not Ruff or Mix.
 - [ ] New ADRs for test, docs, lint, and local observability exist and do not contradict 001–009.
