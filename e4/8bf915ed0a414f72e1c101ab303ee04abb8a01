@@ -1,0 +1,22 @@
+.agents/skills/init-beam-elixir/SKILL-init-beam-elixir.md
+  h_10c93bba641ef0 280
+.agents/skills/init-php-js/SKILL-init-PHP-js.md
+  h_10c93bba641ef0 7,14,17-20,61,80,97,99-100,105,108,118,128,132,140,200,260,314,366,385
+.agents/skills/init-python-js/SKILL-init-python-js.md
+  h_10c93bba641ef0 222,266
+.agents/skills/feature-writer/SKILL-feature-writer.md
+  h_10c93bba641ef0 16,315
+.agents/skills/init-ao-arweave-hyperbeam/SKILL-init-ao-arweave-hyperbeam.md
+  h_10c93bba641ef0 243
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "e48bf915ed0a414f72e1c101ab303ee04abb8a01",
+  "prompts": {},
+  "humans": {
+    "h_10c93bba641ef0": {
+      "author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
