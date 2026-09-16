@@ -1,0 +1,26 @@
+.agents/skills/vision-writer/SKILL-vision-writer.md
+  h_10c93bba641ef0 8,14,35-36,43,46,62,69
+.agents/skills/kb-synthesizer/SKILL-kb-synthesizer.md
+  h_10c93bba641ef0 3,12,16,29,38,108,155,159,224
+.agents/skills/prd-writer/SKILL-prd-writer.md
+  h_10c93bba641ef0 7,14,23,26,32,35-36,39,42
+.agents/skills/requirements-extractor/SKILL-requirements-extractor.md
+  h_10c93bba641ef0 12,27,31
+.agents/skills/srs-writer/SKILL-srs-writer.md
+  h_10c93bba641ef0 33,39-40,51,57,154,157-158,160,162
+.agents/skills/architecture-writer/SKILL-architecture-writer.md
+  h_10c93bba641ef0 13,42,52,56,64,68,72,76
+.agents/skills/plan-writer/SKILL-plan-writer.md
+  h_10c93bba641ef0 35,55,68-69,94,133,140,155-156,171,177
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "8aaada931fa80adedd7937bca9cdd5f2bf97ec4b",
+  "prompts": {},
+  "humans": {
+    "h_10c93bba641ef0": {
+      "author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
