@@ -10,7 +10,7 @@ allowed-tools:
 
 ## Purpose
 
-This skill enables the agent to synthesize the project's requirements (PRD/SRS), codebase structure, and Architecture Decision Records (ADRs) into a single, cohesive `docs/architecture.md` file (based on `docs/templates/architecture-template.md`). It provides developers and stakeholders with a high-level "map of the territory," ensuring documentation always reflects reality.
+This skill enables the agent to synthesize the project's requirements (PRD/SRS), codebase structure, and Architecture Decision Records (ADRs) into a single, cohesive `resources/architecture.md` file (based on `resources/templates/architecture-template.md`). It provides developers and stakeholders with a high-level "map of the territory," ensuring documentation always reflects reality.
 
 ## When to Use This Skill
 
@@ -39,7 +39,7 @@ _Note: Ensure Mermaid syntax is valid. NEVER use spaces, hyphens, or special cha
 
 ### 3. Traceability to ADRs
 
-All technical decisions outlined in the document (frameworks, databases, CI/CD tools) MUST explicitly summarize and link back to the corresponding Architecture Decision Record (`docs/architecture/[ADR].md`). If a tool is used that has no ADR, the agent should highlight this gap.
+All technical decisions outlined in the document (frameworks, databases, CI/CD tools) MUST explicitly summarize and link back to the corresponding Architecture Decision Record (`resources/architecture/[ADR].md`). If a tool is used that has no ADR, the agent should highlight this gap.
 
 ### 4. Codebase Reflection
 
@@ -49,11 +49,11 @@ The document must reflect _reality_, not just aspirations. Review the actual exe
 
 ### Step 1: Read the Blueprint Template
 
-Read the structure provided in `@docs/templates/architecture-template.md`. The output must perfectly mirror this structure.
+Read the structure provided in `@resources/templates/architecture-template.md`. The output must perfectly mirror this structure.
 
 ### Step 2: Read Core Context
 
-Review the latest `@docs/prd.md` and `@docs/srs.md` to understand the stakeholder concerns and system boundaries.
+Review the latest `@resources/prd.md` and `@resources/srs.md` to understand the stakeholder concerns and system boundaries.
 
 ### Step 3: Analyze Codebase Reality
 
@@ -61,19 +61,19 @@ Scan the codebase (`/app`, `/src`, `/lib`, `/tests`, infrastructure files). Iden
 
 ### Step 4: Aggregate Architecture Decisions
 
-Read all files matching `docs/architecture/*.md` (excluding templates/directories) to compile the log of accepted ADRs. Extract the core technologies chosen.
+Read all files matching `resources/architecture/*.md` (excluding templates/directories) to compile the log of accepted ADRs. Extract the core technologies chosen.
 
 ### Step 5: Draft the Document & Diagrams
 
-Write the new `docs/architecture.md`. For each ISO 42010 Viewpoint section, meticulously construct the required Mermaid diagram representing the current state of the system based on Steps 2-4. Populate all tables and tech stack summaries.
+Write the new `resources/architecture.md`. For each ISO 42010 Viewpoint section, meticulously construct the required Mermaid diagram representing the current state of the system based on Steps 2-4. Populate all tables and tech stack summaries.
 
 ### Step 6: Verify and Save
 
-Save the output to `docs/architecture.md`. Ensure all links to PRD/SRS/ADRs use correct relative formatting (e.g. `[PRD](./prd.md)` format). DO NOT use absolute paths.
+Save the output to `resources/architecture.md`. Ensure all links to PRD/SRS/ADRs use correct relative formatting (e.g. `[PRD](./prd.md)` format). DO NOT use absolute paths.
 
 ## Success Criteria
 
-- ✅ File successfully created/updated at `docs/architecture.md`.
+- ✅ File successfully created/updated at `resources/architecture.md`.
 - ✅ File perfectly follows the ISO 42010 header structure from the template.
 - ✅ Contains at least 4 distinct, valid Mermaid diagrams (Context, Logical, Data, Deployment).
 - ✅ Explicitly cites the project ADRs in the Technology Decisions Summary table.

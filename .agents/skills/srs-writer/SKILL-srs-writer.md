@@ -30,14 +30,14 @@ This skill demonstrates **progressive disclosure** by:
 
 ### Step 1: Read the PRD
 ```
-AGENT: [Reads @docs/prd.md]
+AGENT: [Reads @resources/prd.md]
 AGENT: [Identifies core features and business requirements]
 ```
 
 ### Step 2: Load Technical References
 ```
-AGENT: [Loads @docs/kb/rfc-2119.md and @docs/kb/iso-29148.md for standards definitions]
-AGENT: [Loads relevant reference files from the @docs/references/ folder]
+AGENT: [Loads @resources/kb/rfc-2119.md and @resources/kb/iso-29148.md for standards definitions]
+AGENT: [Loads relevant reference files from the @resources/references/ folder]
 AGENT: [Now has deep technical grounding]
 ```
 
@@ -48,13 +48,13 @@ AGENT: [Uses google_search to ensure SRS uses the most current versions of softw
 
 ### Step 4: Validate Constraints
 ```
-AGENT: [Checks @docs/prd.md for budget, technical and other constraints]
+AGENT: [Checks @resources/prd.md for budget, technical and other constraints]
 AGENT: [Verifies that technical approach meets all constraints from PRD]
 ```
 
 ### Step 5: Generate SRS
 ```
-AGENT: [Creates docs/srs.md]
+AGENT: [Creates resources/srs.md]
 AGENT: [Maps all PRD requirements to the SRS using a dedicated **Source** section at the end of each requirement block. Format: `- [[source ID]](../prd.md) [source name]`]
 AGENT: [**CRITICAL**: Do not omit Non-Functional Requirements (NFRs) or Technical Constraints (TCs). Every single item in the PRD—including architecture rules, performance limits, and framework restrictions—MUST be mapped 1:1 to an explicit SRS requirement block to guarantee 100% forward traceability.]
 AGENT: [Ensures forward-traceability by defining an expected **Tests** section mapping to all target Gherkin, integration, performance, ui, and unit test files. Format MUST respect the monorepo bounds defined in `.agents/rules/workspace-boundaries.md` by dynamically mapping to the active technology stack's idiomatic isolated testing vocabulary (e.g. `- [[filename]](../apps/backend/tests/features/[filename])` for Python/JS tracking, or `- [[filename]](../apps/my_app_web/test/features/[filename])` for BEAM/Elixir tracking)]
@@ -151,15 +151,15 @@ AGENT: [Accurate SRS with verified technical specs]
 ## Integration with AI Agent Workflow
 
 ```
-USER: @AGENTS.md Generate a baseline SRS in /docs based on @docs/prd.md and the manifesto principles in the AGENTS.md file. Use the "Gherkin Writer" skill to generate Gherkin scenarios for each unique requirement in @docs/srs.md and @docs/prd.md
+USER: @AGENTS.md Generate a baseline SRS in /docs based on @resources/prd.md and the manifesto principles in the AGENTS.md file. Use the "Gherkin Writer" skill to generate Gherkin scenarios for each unique requirement in @resources/srs.md and @resources/prd.md
 AGENT: [Activates SRS Generator skill]
 AGENT: [Reads AGENTS.md for AI Agent principles]
-AGENT: [Reads docs/prd.md for business, functional and non-functional requirements and constraints]
-AGENT: [Loads @docs/references for technical specifications and context]
+AGENT: [Reads resources/prd.md for business, functional and non-functional requirements and constraints]
+AGENT: [Loads @resources/references for technical specifications and context]
 AGENT: [Uses google_search to verify current library versions]
-AGENT: [Creates docs/srs.md with accurate technical specifications]
+AGENT: [Creates resources/srs.md with accurate technical specifications]
 AGENT: [Activates Gherkin Writer skill]
-AGENT: [Creates Gherkin .feature files in the tests/features folder for each unique requirement in docs/srs.md and docs/prd.md]
+AGENT: [Creates Gherkin .feature files in the tests/features folder for each unique requirement in resources/srs.md and resources/prd.md]
 ```
 
 ## Success Criteria

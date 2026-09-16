@@ -1,6 +1,6 @@
 ---
 name: Knowledge Base Synthesizer
-description: Synthesizes docs/references into OKF v0.2-conformant concept files under .agents/kb/
+description: Synthesizes resources/references into OKF v0.2-conformant concept files under .agents/kb/
 allowed-tools:
   - code_interpreter
 ---
@@ -9,11 +9,11 @@ allowed-tools:
 
 ## Purpose
 
-This skill reads raw technical documents in `docs/references/` (PDFs, whitepapers, specs) and synthesizes them into **high-signal, token-efficient Markdown concept files** in `.agents/kb/`.
+This skill reads raw technical documents in `resources/references/` (PDFs, whitepapers, specs) and synthesizes them into **high-signal, token-efficient Markdown concept files** in `.agents/kb/`.
 
 **Mandatory output format:** Every concept file MUST be a conformant **Open Knowledge Format (OKF) v0.2** document. The project's OKF rules live in [`.agents/kb/okf.md`](../../kb/okf.md). Agents MUST load that concept (or this skill) before writing or revising KB entries.
 
-`.agents/kb/` is treated as an **OKF Knowledge Bundle**: a directory of concept `.md` files, optional `index.md` / `log.md`, and progressive disclosure toward heavier sources under `docs/references/`.
+`.agents/kb/` is treated as an **OKF Knowledge Bundle**: a directory of concept `.md` files, optional `index.md` / `log.md`, and progressive disclosure toward heavier sources under `resources/references/`.
 
 ## When to Use This Skill
 
@@ -26,7 +26,7 @@ This skill reads raw technical documents in `docs/references/` (PDFs, whitepaper
 Before writing any KB file, the agent MUST:
 
 1. Read [`.agents/kb/okf.md`](../../kb/okf.md) (OKF v0.2 synthesis).
-2. Confirm the target reference exists under `docs/references/` (or is an internal project standard without a PDF).
+2. Confirm the target reference exists under `resources/references/` (or is an internal project standard without a PDF).
 3. Never use reserved OKF filenames for concepts: **`index.md`** and **`log.md`** only.
 
 ---
@@ -35,7 +35,7 @@ Before writing any KB file, the agent MUST:
 
 ### Step 1: Target Identification
 
-Identify which file(s) in `docs/references/` (or which project standard) to synthesize. Confirm they exist and are readable.
+Identify which file(s) in `resources/references/` (or which project standard) to synthesize. Confirm they exist and are readable.
 
 ### Step 2: Boilerplate Stripping
 
@@ -105,7 +105,7 @@ Preserve ATPix/project metadata as OKF extensions (§4.1):
 | Key | Purpose |
 |-----|---------|
 | `kb-title` | Alias of title for older tooling (SHOULD match `title`) |
-| `source-reference` | Primary path under `docs/references/` |
+| `source-reference` | Primary path under `resources/references/` |
 | `source-url` | Canonical web URL of the specification |
 | `spec-version` | Version string of the source standard |
 | `domain` | Short domain label(s) |
@@ -152,11 +152,11 @@ generated:
   at: <RFC3339 UTC>
 sources:
   - id: primary
-    resource: docs/references/<filename>
+    resource: resources/references/<filename>
     title: <Source title>
     author: process:<publisher-or-org>
 kb-title: <same as title>
-source-reference: docs/references/<filename>
+source-reference: resources/references/<filename>
 source-url: <https://…>
 spec-version: "<version>"
 last-updated: <RFC3339 UTC>
@@ -221,5 +221,5 @@ After adding or revising concepts under `.agents/kb/`:
 ## Reference
 
 - Full OKF agent reference: [`.agents/kb/okf.md`](../../kb/okf.md)
-- Upstream OKF v0.2: `docs/references/GoogleOpenKnowledgeFormat_v0.2.pdf`
+- Upstream OKF v0.2: `resources/references/GoogleOpenKnowledgeFormat_v0.2.pdf`
 - Bundle index: [`.agents/kb/index.md`](../../kb/index.md)
