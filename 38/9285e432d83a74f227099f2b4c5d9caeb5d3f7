@@ -1,0 +1,20 @@
+.agents/skills/init-rust-js/SKILL-init-rust-js.md
+  s_e70687286df151::t_3805effe67c03b 1-485
+  s_e70687286df151::t_a1682ba584d04d 486-487
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "389285e432d83a74f227099f2b4c5d9caeb5d3f7",
+  "prompts": {},
+  "sessions": {
+    "s_e70687286df151": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "01a0b0ea-4f56-77d1-a383-807131b907c6",
+        "model": "unknown"
+      },
+      "human_author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
