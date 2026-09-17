@@ -25,7 +25,7 @@ Keep every file and folder already in the repository root. Do not delete product
 
 ## Step 1: Scaffold the Root Directory Structure
 
-When reviewing `.agents/rules/workspace-boundaries.md`, you will see only Python/JS and BEAM examples. You MUST treat this project as a **polyglot monorepo** whose deployable apps are **WordPress plugins** inside `apps/`. Language manifests (`composer.json`, `package.json`, `phpunit.xml.dist`) MUST live **inside each app**, never at the repository root.
+Follow the PHP/Javascript section in [workspace-boundaries.md](../../rules/workspace-boundaries.md). Treat this project as a **polyglot monorepo** whose deployable apps are **WordPress plugins** inside `apps/`. Language manifests (`composer.json`, `package.json`, `phpunit.xml.dist`) MUST live **inside each app**, never at the repository root.
 
 ```text
 project-root/

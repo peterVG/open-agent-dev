@@ -52,16 +52,22 @@ Review and revise [`/resources/prd.md`](./resources/prd.md) as needed. Check [`/
 
 ## Initialize the project
 
-Open Agent Dev currently supports best practices for the Python/Javascript and BEAM/Elixir tech stacks.
+Open Agent Dev currently supports best practices for the Python/Javascript, BEAM/Elixir, and Rust/Javascript (Axum web + Tauri 2 desktop) tech stacks.
 
 ```text
-@AGENTS.md Initialize the project using the @.agents/skills/SKILL-init-beam-elixir.md skill, the technical stack decisions in @resources/prd.md and the principles in the AGENTS.md file.
+@AGENTS.md Initialize the project using the @.agents/skills/init-beam-elixir/SKILL-init-beam-elixir.md skill, the technical stack decisions in @resources/prd.md and the principles in the AGENTS.md file.
 ```
 
 OR
 
 ```text
-@AGENTS.md Initialize the project using the @.agents/skills/SKILL-init-python-js.md skill, the technical stack decisions in @resources/prd.md and the principles in the AGENTS.md file.
+@AGENTS.md Initialize the project using the @.agents/skills/init-python-js/SKILL-init-python-js.md skill, the technical stack decisions in @resources/prd.md and the principles in the AGENTS.md file.
+```
+
+OR
+
+```text
+@AGENTS.md Initialize the project using the @.agents/skills/init-rust-js/SKILL-init-rust-js.md skill, the technical stack decisions in @resources/prd.md and the principles in the AGENTS.md file.
 ```
 
 ## Create a Software Requirement Specification document and Architecture Decision Records

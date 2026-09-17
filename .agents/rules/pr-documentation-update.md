@@ -20,4 +20,6 @@ Every time a Pull Request (PR) is being prepared by the AI agent, the agent MUST
 4. **Behavioral Tests (BDD Scenarios):** The agent MUST verify that the automated feature scenarios accurately reflect the updated acceptance criteria and system behaviors.
    - For a **Python/JS Stack**, this means updating the Gherkin `.feature` files located idiomatic to the boundary (e.g. `apps/frontend/tests/features/`).
    - For a **BEAM/Elixir Stack**, this means updating the native Elixir `Wallaby.Feature` macros located idiomatic to the boundary (e.g. `apps/my_app_web/test/features/`).
+   - For a **PHP/JS Stack**, this means updating Behat (or the chosen single Gherkin runner) under each plugin (e.g. `apps/c2papress-audit/tests/features/`).
+   - For a **Rust/JS Stack**, this means updating the Rust `cucumber` features under each crate (e.g. `apps/backend/tests/features/`, `apps/desktop/src-tauri/tests/features/`) and frontend Gherkin under `apps/frontend/tests/features/` when that runner owns the flow.
 5. **Commit Updates:** The agent MUST commit these documentation updates to the current branch *before* completing the Pull Request creation process.

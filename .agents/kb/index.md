@@ -32,3 +32,4 @@ Progressive disclosure listing for `.agents/kb/` — an [OKF v0.2](./okf.md) Kno
 # Implementation playbooks
 
 * [Phoenix LiveView Development (v1.8+)](./phoenix-liveview.md) - CRC pattern and layered BEAM/LiveView practices.
+* [Tauri 2](./tauri-2.md) - Rust desktop host: capabilities, IPC, plugins, testing, and distribution (stable major 2).
