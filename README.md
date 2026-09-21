@@ -32,9 +32,6 @@ Upload any reference documents to the [`resources/references/`](./resources/refe
 ```text
 @AGENTS.md read any reference documents in @resources/references/ and use the @.agents/skills/kb-synthesizer skill to generate a knowledge base in @.agents/kb/
 ```
-
-**OKF compliance:** The [`.agents/kb/`](./.agents/kb/) directory is maintained as an [Open Knowledge Format (OKF) v0.2](./.agents/kb/okf.md) Knowledge Bundle—UTF-8 markdown concepts with YAML frontmatter (`type` required), provenance, and progressive disclosure via [`index.md`](./.agents/kb/index.md). See [`.agents/kb/README.md`](./.agents/kb/README.md) for how the bundle differs from raw `resources/references/`.
-
 ## Create a Product Vision
 Fill out the [product vision template](./resources/templates/product-vision-template.md) as best as possible and save it as [`resources/product-vision.md`](./resources/product-vision.md).
 
