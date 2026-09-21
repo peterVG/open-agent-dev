@@ -59,9 +59,7 @@ OR
 @AGENTS.md Initialize the project using the @.agents/skills/SKILL-init-rust-js.md skill, the technical stack decisions in @resources/prd.md and the principles in the AGENTS.md file.
 ```
 
-```text
-@AGENTS.md Initialize the project using the @.agents/skills/SKILL-init-beam-elixir.md skill, the technical stack decisions in @resources/prd.md and the principles in the AGENTS.md file.
-```
+
 OR
 
 ```text
