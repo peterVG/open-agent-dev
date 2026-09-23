@@ -1,0 +1,14 @@
+.agents/skills/plan-writer/SKILL-plan-writer.md
+  h_10c93bba641ef0 55,94,133,170
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "2822026133afb14b1ef3e1fdd3387aeae2f50b43",
+  "prompts": {},
+  "humans": {
+    "h_10c93bba641ef0": {
+      "author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
