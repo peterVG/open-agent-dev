@@ -32,9 +32,6 @@ Upload any reference documents to the [`resources/references/`](./resources/refe
 ```text
 @AGENTS.md read any reference documents in @resources/references/ and use the @.agents/skills/kb-synthesizer skill to generate a knowledge base in @.agents/kb/
 ```
-
-**OKF compliance:** The [`.agents/kb/`](./.agents/kb/) directory is maintained as an [Open Knowledge Format (OKF) v0.2](./.agents/kb/okf.md) Knowledge Bundle—UTF-8 markdown concepts with YAML frontmatter (`type` required), provenance, and progressive disclosure via [`index.md`](./.agents/kb/index.md). See [`.agents/kb/README.md`](./.agents/kb/README.md) for how the bundle differs from raw `resources/references/`.
-
 ## Create a Product Vision
 Fill out the [product vision template](./resources/templates/product-vision-template.md) as best as possible and save it as [`resources/product-vision.md`](./resources/product-vision.md).
 
@@ -52,11 +49,16 @@ Review and revise [`resources/prd.md`](./resources/prd.md) as needed. Check the 
 
 ## Initialize the project
 
-Open Agent Dev currently supports best practices for the Python/Javascript and BEAM/Elixir tech stacks.
+Open Agent Dev currently supports best practices for the Python/Javascript, Rust/Javascript, and BEAM/Elixir tech stacks.
 
 ```text
 @AGENTS.md Initialize the project using the @.agents/skills/SKILL-init-beam-elixir.md skill, the technical stack decisions in @resources/prd.md and the principles in the AGENTS.md file.
 ```
+OR
+```text
+@AGENTS.md Initialize the project using the @.agents/skills/SKILL-init-rust-js.md skill, the technical stack decisions in @resources/prd.md and the principles in the AGENTS.md file.
+```
+
 
 OR
 
