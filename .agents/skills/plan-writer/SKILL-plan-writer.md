@@ -32,7 +32,7 @@ Every task MUST be formatted as an interactive Markdown checkbox so that progres
 
 ### 2. Module-Specific Task Prefixes
 
-When generating implementation plans that are NOT in the global root `resources/plan.md` (e.g., module-specific plans like `apps/[Module Name]/resources/plan.md`), you MUST prefix all Task numbers with the capitalized initials of the module name.
+When generating implementation plans that are NOT in the global root `resources/implementation-plan.md` (e.g., module-specific plans like `apps/[Module Name]/resources/plan.md`), you MUST prefix all Task numbers with the capitalized initials of the module name.
 For example:
 - **arkrim_engine** task 1.1 = `Task AE-1.1`
 - **arkrim_upload** task 3.5 = `Task AU-3.5`
@@ -152,7 +152,7 @@ Draft the plan using the interactive `- [ ]` markdown syntax.
 > **CRITICAL ARTIFACT ISOLATION OVERRIDE:** You MUST save the generated checklists directly into the project's permanent file structure depending on the plan's scope, and NEVER as an `implementation_plan.md` artifact hidden in your internal system/brain directory.
 > 
 > When architecting a system or fulfilling a holistic PRD mandate across a monorepo, you MUST generate the plans in this specific sequential order:
-> 1. **Global Project Plan:** First, generate the high-level project roadmap and save it to `resources/plan.md` in the repository root.
+> 1. **Global Project Plan:** First, generate the high-level project roadmap and save it to `resources/implementation-plan.md` in the repository root.
 > 2. **Module-Specific Plans:** Then, generate customized, highly-detailed implementation plans for each specific application/module and save them directly to `apps/[Module Name]/resources/plan.md`.
 
 ### Step 5: Map Tests and Requirements
@@ -168,10 +168,10 @@ Review the final plan, SRS, and ADRs to identify all necessary third-party libra
 Ensure the final Phase of the implementation plan includes a task to populate or update the main `README.md` sections (Development Environment, Viewing Developer Documentation, Production Environment, etc.) based on the finalized tech stack and any Architecture Decision Records (ADRs).
 For this final task, you MUST use the following exact Agent Prompt:
 `@AGENTS.md Begin by creating a new feature branch. Then read the project's Architecture Decision Records (ADRs) and the finalized tech stack to populate or update the 'Setup Development Environment' (including 'Run the Application' and 'Run tests') and 'Setup Production Environment' (including 'Deploy to Production' and 'Monitor and Update') sections of the README.md file. Ensure installation instructions are platform-agnostic (e.g., don't assume macOS/Homebrew) or explicitly accommodate multiple operating systems as required by the ADRs. However, if the project requires Dockerization, ensure the final Phase of the implementation plan includes a task to populate or update the `Dockerfile` based on the finalized tech stack and ADRs as well as include a "How to Dockerize" section in the README.md file that includes a basic overview of how Docker works and its main components.`
-Make sure to check off the task as complete in the appropriate resources/plan.md once finished. Then commit your changes and push the branch to origin.`
+Make sure to check off the task as complete in the appropriate resources/implementation-plan.md once finished. Then commit your changes and push the branch to origin.`
 
 ### Step 8: Architecture Synthesis
 
 Ensure the _absolute final task_ of the implementation plan invokes the Architecture Writer skill to map the completed system.
 For this final task, you MUST use the following exact Agent Prompt:
-`@AGENTS.md Begin by creating a new feature branch. Then invoke the @architecture-writer skill. Read its instructions entirely, then execute all steps to synthesize the @resources/prd.md, @resources/srs.md, all srs.md files in apps/[Module Name]/resources/ and ADRs in the @resources/architecture/ folder and an in-depth scan of the codebase reality into a comprehensive @resources/architecture.md file featuring ISO 42010 viewpoints and Mermaid diagrams. Make sure to check off the task as complete in the appropriate @resources/plan.md once finished. Then commit your changes and push the branch to origin.`
+`@AGENTS.md Begin by creating a new feature branch. Then invoke the @architecture-writer skill. Read its instructions entirely, then execute all steps to synthesize the @resources/prd.md, @resources/srs.md, all srs.md files in apps/[Module Name]/resources/ and ADRs in the @resources/architecture/ folder and an in-depth scan of the codebase reality into a comprehensive @resources/architecture.md file featuring ISO 42010 viewpoints and Mermaid diagrams. Make sure to check off the task as complete in the appropriate @resources/implementation-plan.md once finished. Then commit your changes and push the branch to origin.`
