@@ -1,0 +1,14 @@
+.agents/rules/task-workflow.md
+  h_10c93bba641ef0 5,10-11,15-22,24-30,35-38,41,45,47-48
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "1b65b9a04253a301780b348208e2aa90d421737f",
+  "prompts": {},
+  "humans": {
+    "h_10c93bba641ef0": {
+      "author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
