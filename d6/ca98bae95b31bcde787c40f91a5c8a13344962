@@ -1,0 +1,18 @@
+.agents/skills/srs-writer/SKILL-srs-writer.md
+  h_10c93bba641ef0 48,50-53,74,199,203
+README.md
+  h_10c93bba641ef0 71,76,78
+resources/ui-mockups/README.md
+  h_10c93bba641ef0 5,22,26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.4",
+  "base_commit_sha": "d6ca98bae95b31bcde787c40f91a5c8a13344962",
+  "prompts": {},
+  "humans": {
+    "h_10c93bba641ef0": {
+      "author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
