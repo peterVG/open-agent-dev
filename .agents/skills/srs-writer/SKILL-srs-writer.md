@@ -45,9 +45,12 @@ AGENT: [Now has deep technical grounding]
 ### Step 3: Read UI Mockups
 ```
 AGENT: [Lists and reads every file in @resources/ui-mockups/, including images, HTML, PDF, and accompanying notes. Skip only the directory README if it contains no mockup.]
+AGENT: [Treats each mockup as a hard look-and-feel requirement for the surface it shows.]
 AGENT: [Extracts UI features: required surfaces, information shown, primary actions, navigation, and states (empty, loading, error, offline, permission-denied).]
-AGENT: [Extracts look-and-feel as measurable constraints: layout regions (presence and purpose, not pixel coordinates), visual hierarchy, control density, typography scale, color roles, and contrast.]
-AGENT: [Does NOT write screenshot-match or pixel-identical acceptance. Does NOT copy subjective language such as "clean" or "modern" unless restated as a testable constraint.]
+AGENT: [Extracts the composition a person sees: regions and what sits in each, what is visible without scrolling, grouping, hierarchy, density, typography scale, colour roles, control shape, and which status text is shown or withheld.]
+AGENT: [Allows a pixel or two of difference from browser rounding, font rasterization, and scrollbars. Does NOT require a screenshot hash or a one-pixel coordinate match.]
+AGENT: [Does NOT treat that tolerance as permission to omit the mockup's layout, default view, grouping, or designed controls. Region presence, a minimum font size, and a contrast ratio do not by themselves satisfy the mockup.]
+AGENT: [Does NOT write that the running page need not match the mockup. Does NOT call the mockup an illustration. Does NOT use subjective words such as "clean" or "modern" as the requirement; describes what the mockup shows.]
 AGENT: [If a mockup contradicts @resources/prd.md, HALT and report the conflict before generating the SRS.]
 AGENT: [If a mockup shows a surface or state with no PRD ID, still specify it, cite the mockup, and record the PRD gap in the traceability matrix.]
 ```
@@ -68,7 +71,7 @@ AGENT: [Verifies that technical approach meets all constraints from PRD]
 AGENT: [Creates resources/srs.md]
 AGENT: [Maps all PRD requirements to the SRS using a dedicated **Source** section at the end of each requirement block. Format: `- [[source ID]](../prd.md) [source name]`]
 AGENT: [Converts UI features and look-and-feel from @resources/ui-mockups/ into explicit SRS requirement blocks. Each UI-derived requirement MUST be testable, use RFC 2119 keywords, and cite the mockup with a relative link (e.g. `- [library-grid.png](./ui-mockups/library-grid.png)`). When the mockup implements a PRD feature, cite both the PRD ID and the mockup.]
-AGENT: [Look-and-feel requirements MUST state measurable visual constraints (regions, hierarchy, density, typography, color roles, contrast). They MUST NOT require the running UI to match a mockup screenshot.]
+AGENT: [Look-and-feel requirements MUST record the mockup's composition: regions and what sits in each, what is visible without scrolling, grouping, hierarchy, density, typography scale, colour roles, control shape, and which status text is shown or withheld. A pixel or two of browser rounding is acceptable. They MUST NOT be satisfied by region presence, a minimum font size, or a contrast ratio alone, and they MUST NOT say the running page need not match the mockup.]
 AGENT: [**CRITICAL**: Do not omit Non-Functional Requirements (NFRs) or Technical Constraints (TCs). Every single item in the PRD—including architecture rules, performance limits, and framework restrictions—MUST be mapped 1:1 to an explicit SRS requirement block to guarantee 100% forward traceability.]
 AGENT: [Ensures forward-traceability by defining an expected **Tests** section mapping to all target Gherkin, integration, performance, ui, and unit test files. Format MUST respect the monorepo bounds defined in `.agents/rules/workspace-boundaries.md` by dynamically mapping to the active technology stack's idiomatic isolated testing vocabulary (e.g. `- [[filename]](../apps/backend/tests/features/[filename])` for Python/JS tracking, or `- [[filename]](../apps/my_app_web/test/features/[filename])` for BEAM/Elixir tracking)]
 AGENT: [Behavioral UI features map to BDD scenarios. Look-and-feel and presentation constraints map to UI tests with explicit assertions. If an SRS requirement cannot be validated via a standard BDD feature file (e.g., overarching NFRs, Technical Constraints, or visual constraints), the **Tests** block MUST define alternative automated verification strategies locally. Examples include: CI/CD configuration files, static code analysis tools, locus testing bounds, or explicit UI assertions.]
@@ -193,9 +196,9 @@ A well-generated SRS should:
 - ✅ Strictly comply with ISO/IEC/IEEE 29148: Unambiguous, Complete, Verifiable, Consistent, and Traceable requirements
 - ✅ Strictly comply with RFC 2119: "MUST" or "MUST NOT" for mandatory requirements and "SHOULD" or "SHOULD NOT" for optional requirements
 - ✅ Map 100% of PRD items (Features, Non-Functional Requirements, and Technical Constraints) mathematically to numbered SRS technical requirements
-- ✅ Convert UI features and look-and-feel from `resources/ui-mockups/` into testable SRS requirements, with each mockup cited and no screenshot-match acceptance
+- ✅ Convert UI features and look-and-feel from `resources/ui-mockups/` into testable SRS requirements that follow each mockup's composition, with each mockup cited. A pixel or two of browser rendering difference is acceptable. A screenshot hash is not required. A requirement that can pass while the page looks unlike the mockup is incomplete.
 - ✅ Use current, verified library versions (not hallucinated)
 - ✅ Include technical constraints from prd.md and reference documents
 - ✅ Validate costs/performance with executable scripts
-- ✅ Follow Antigravity principles from AGENTS.md
+- ✅ Follow principles from AGENTS.md
 - ✅ Guarantee full forward-traceability without data loss from the primary PRD and from UI mockups
