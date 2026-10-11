@@ -1,0 +1,14 @@
+resources/templates/product-vision-template-non-profit.md
+  h_10c93bba641ef0 1-424
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "a73484da3fc357f1aba91e4a92aecb44213e46c0",
+  "prompts": {},
+  "humans": {
+    "h_10c93bba641ef0": {
+      "author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
