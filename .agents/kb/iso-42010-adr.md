@@ -27,7 +27,7 @@ domain: Architecture, Standards
 
 ## Required Information Items for ADRs
 
-Any AI Agent creating an Architecture Decision Record (ADR) in the `/docs/architecture/` directory MUST include the following 9 specific information items in the Markdown file. 
+Any AI Agent creating an Architecture Decision Record (ADR) in the `resources/architecture/ADRs/` directory MUST include the following 9 specific information items in the Markdown file. 
 
 The format MUST begin with a top-level header `# Architecture Decision Record - [Project Name]`, followed by the filename, and then the following 9 sections as Markdown headers (e.g., `## Context`, `## Decision`):
 

@@ -51,7 +51,7 @@ description: Creates system architecture based on technical specs
 allowed-tools:
   - google_search
 references:
-  - docs/references/arweave/arweave-yellow-paper.pdf
+  - resources/references/arweave/arweave-yellow-paper.pdf
   - .agents/kb/ao/ao-process-spec.md
 ---
 ```
@@ -65,11 +65,11 @@ references:
 
 | Directory | Purpose | When Loaded |
 |-----------|---------|-------------|
-| `docs/references/` | Deep technical specs, loaded by skills | Only when skill is activated |
+| `resources/references/` | Deep technical specs, loaded by skills | Only when skill is activated |
 | `.agents/kb/` | Domain knowledge, loaded by user | When explicitly referenced with `@.agents/kb/file.md` |
 
 **Rule of thumb:**
-- Use `docs/references/` for **source material** that skills need automatically
+- Use `resources/references/` for **source material** that skills need automatically
 - Use `.agents/kb/` for **domain knowledge** you want to reference manually
 
 ## Example: SRS Generation with References
@@ -81,7 +81,7 @@ description: Creates Software Requirements Specification
 allowed-tools:
   - google_search
 references:
-  - docs/references/arweave/transaction-format.md
+  - resources/references/arweave/transaction-format.md
   - .agents/kb/ao/message-passing.md
 ---
 
@@ -89,7 +89,7 @@ references:
 
 When generating an SRS for file upload:
 1. Read the PRD for business requirements
-2. Load docs/references/arweave/transaction-format.md for technical constraints
+2. Load resources/references/arweave/transaction-format.md for technical constraints
 3. Use google_search to verify current library versions
 4. Generate SRS with accurate technical specifications
 ```
@@ -144,7 +144,7 @@ For Gemini's large context window:
 USER: Generate an SRS for file upload using Arweave
 
 AGENT: [Activates SRS Generator skill]
-AGENT: [Skill specifies docs/references/arweave/transaction-format.md]
+AGENT: [Skill specifies resources/references/arweave/transaction-format.md]
 AGENT: [Loads ONLY that reference file]
 AGENT: [Uses google_search to verify current Arweave.js version]
 AGENT: [Generates SRS with accurate technical constraints]

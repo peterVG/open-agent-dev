@@ -30,7 +30,7 @@ domain: Agent Framework, Standards
 
 ### 1. Progressive Disclosure (Context Optimization)
 To avoid overwhelming the agent's context window (which leads to hallucinations and cognitive degradation), agents MUST NOT load all available information upfront. 
-*   **Actionable Rule:** Agents must selectively load reference materials or technical specifications (e.g., from `/docs/kb/` or `/docs/references/`) *only* when the current task explicitly requires that deep domain knowledge.
+*   **Actionable Rule:** Agents must selectively load reference materials or technical specifications (e.g., from `.agents/kb/` or `resources/references/`) *only* when the current task explicitly requires that deep domain knowledge.
 
 ### 2. Vendor Neutrality
 Agent skills and instructions MUST NOT be hardcoded to rely on the proprietary quirks of a single AI model (e.g., Claude, Gemini, OpenAI). 
@@ -42,7 +42,7 @@ Agents are expected to combine multiple specialized tools dynamically to solve c
 
 ### 4. Explicit Grounding (Knowledge Bases)
 The repository acts as the primary source of truth. The agent's pre-trained knowledge is secondary.
-*   **Actionable Rule:** Whenever a standard, terminology, or framework rule is defined in `/docs/kb/` or `AGENTS.md`, the agent MUST adopt that definition over its own internal biases. 
+*   **Actionable Rule:** Whenever a standard, terminology, or framework rule is defined in `.agents/kb/` or `AGENTS.md`, the agent MUST adopt that definition over its own internal biases. 
 
 ## Writing a Skill
 

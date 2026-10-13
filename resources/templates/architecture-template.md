@@ -8,8 +8,8 @@
 ### 1.3 References
 - **PRD:** [PRD](../prd.md)
 - **SRS:** [SRS](../srs.md)
-- **Implementation Plan:** [Project Plan](../plan.md)
-- **ADRs:** [ADRs](../architecture/)
+- **Implementation Plan:** [Project Plan](../implementation-plan.md)
+- **ADRs:** [ADRs](../architecture/ADRs/)
 
 ### 1.4 Architectural Principles
 - **KISS:** Minimize dependencies, maximize simplicity

@@ -9,9 +9,9 @@ references:
 
 # Rust / JavaScript Project Initialization
 
-This skill guides the AI agent to initialize a **Rust + JavaScript** monorepo. It is the Rust equivalent of the Python/JS, PHP/JS, and BEAM/Elixir init skills. The same JavaScript UI is hosted two ways: an **Axum web application** and a **Tauri 2 desktop application**.
+This skill guides the AI agent to initialize a **Rust + JavaScript** monorepo. It is the Rust equivalent of the Python/JS and BEAM/Elixir init skills. The same JavaScript UI is hosted two ways: an **Axum web application** and a **Tauri 2 desktop application**.
 
-**When to use:** The user asks to initialize a Rust project, scaffold Axum and/or Tauri 2, or run this skill. **Do not** run [init-python-js](../init-python-js/SKILL-init-python-js.md), [init-beam-elixir](../init-beam-elixir/SKILL-init-beam-elixir.md), or [init-php-js](../init-php-js/SKILL-init-PHP-js.md) for this stack.
+**When to use:** The user asks to initialize a Rust project, scaffold Axum and/or Tauri 2, or run this skill. **Do not** run [init-python-js](../init-python-js/SKILL-init-python-js.md) or [init-beam-elixir](../init-beam-elixir/SKILL-init-beam-elixir.md) for this stack.
 
 **Hard constraints (already accepted unless a later ADR supersedes them):**
 - Language manifests (`Cargo.toml`, `package.json`, `rust-toolchain.toml`) MUST live **inside each app**, never at the repository root.
@@ -132,7 +132,7 @@ Use Cargo and the frontend scaffolder **inside** `apps/` (`cargo new` in `apps/c
 
 ## Step 2: Enforce Documentation Traceability & Sync
 
-Same monorepo requirements method as the BEAM and PHP init skills, with PRD at `resources/prd.md` (this repo does not use root `prd.md`).
+Same monorepo requirements method as the BEAM init skill, with PRD at `resources/prd.md` (this repo does not use root `prd.md`).
 
 1. **Global source of truth:** [`resources/prd.md`](../../../resources/prd.md) and [`resources/product-vision.md`](../../../resources/product-vision.md).
 2. **Localized specs:** Each app MUST have `resources/srs.md` bounded to that app (`core`, `backend`, `frontend`, `desktop`).
@@ -347,7 +347,7 @@ description: Ensure all code is strictly linted and formatted before pushing or 
 
 ## Active Tools
 
-Based on the accepted Architecture Decision Records in `resources/architecture/` for coding style:
+Based on the accepted Architecture Decision Records in `resources/architecture/ADRs/` for coding style:
 
 - **rustfmt** (`cargo fmt`) for Rust formatting.
 - **Clippy** (`cargo clippy -D warnings`) for Rust static analysis.
@@ -395,7 +395,7 @@ Only when rustfmt, Clippy, Prettier, and ESLint all exit cleanly is the codebase
 
 ## Step 10: Generate Architecture Decision Records
 
-Use [adr-formatting.md](../../rules/adr-formatting.md). Write ADRs to `resources/architecture/`. Be sure to include separate ADRs specifically for:
+Use [adr-formatting.md](../../rules/adr-formatting.md). Write ADRs to `resources/architecture/ADRs/`. Be sure to include separate ADRs specifically for:
 
 1. Test runners and reporting (cargo test/nextest, cucumber, Criterion, Playwright, WebdriverIO embedded driver, Allure).
 2. Inline docs generators (`cargo doc`, JSDoc).
@@ -406,7 +406,7 @@ Use [adr-formatting.md](../../rules/adr-formatting.md). Write ADRs to `resources
 7. The centralized observability stack (Loki, Redpanda, Promtail, Prometheus, Grafana) and the split between containerized web logs and native desktop stdout.
 8. Distribution: web container/binary versus Tauri installers (NSIS/MSI, dmg/app, AppImage/deb/rpm), signing, and whether the updater plugin is in scope.
 
-Verify current crate/npm names and versions before writing ADRs ([command-verification.md](../../rules/command-verification.md), [dependency-management.md](../../rules/dependency-management.md)). Search `resources/architecture/` before claiming an ADR does not exist ([adr-verification.md](../../rules/adr-verification.md)).
+Verify current crate/npm names and versions before writing ADRs ([command-verification.md](../../rules/command-verification.md), [dependency-management.md](../../rules/dependency-management.md)). Search `resources/architecture/ADRs/` before claiming an ADR does not exist ([adr-verification.md](../../rules/adr-verification.md)).
 
 ---
 

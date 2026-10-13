@@ -30,8 +30,6 @@ domain: Identifiers, Standards
 
 **TL;DR:** A UUID is **128 bits**, no central registry. This document’s variant is **10xx**. Version is the high nibble of octet 6. Text form is **hex-and-dash** (`8-4-4-4-12`). URN is `urn:uuid:` plus that hex. **UUIDv4** is 122 random bits plus version/variant. Treat values as **opaque**. Use a **CSPRNG**. Do **not** treat possession of a UUID as a security capability. This RFC **obsoletes RFC 4122**.
 
-ImageSquid newly generated domain IDs use UUIDv4 per [ADR 021](../../resources/architecture/021-uuid-v4-identifiers.md).
-
 ---
 
 ## Novice Mental Model
@@ -259,6 +257,6 @@ Where feasible, store the **128-bit binary** value (text is 288 bits). **SHOULD 
 
 ## Why RFC 9562 replaced RFC 4122 (Source: §2.1)
 
-UUIDv4 has poor B-tree locality. UUIDv1 uses a rare 100 ns Gregorian epoch, needs introspection to sort, and can expose MAC addresses. RFC 4122 mixed generate vs store requirements and left errata. UUIDv6/v7/v8 and the best-practice section address those issues. ImageSquid still selects **UUIDv4** for domain IDs because they must not encode capture or generation time ([ADR 021](../../resources/architecture/021-uuid-v4-identifiers.md)).
+UUIDv4 has poor B-tree locality. UUIDv1 uses a rare 100 ns Gregorian epoch, needs introspection to sort, and can expose MAC addresses. RFC 4122 mixed generate vs store requirements and left errata. UUIDv6/v7/v8 and the best-practice section address those issues.
 
 [^rfc9562]: RFC 9562 Universally Unique IDentifiers (UUIDs), May 2024

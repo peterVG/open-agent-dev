@@ -23,12 +23,12 @@
 > 
 
 ## Standards, Laws, and Regulations
-**Description:** Applicable legal rules (GDPR) and technical standards (e-ARK, ERC-3643). These should be stored in the /docs/references folder. Can be used as the source of system requirements.
+**Description:** Applicable legal rules (GDPR) and technical standards (e-ARK, ERC-3643). These should be stored in the resources/references folder. Can be used as the source of system requirements.
 > 
 
 ## Technical & Domain References
 **Description:** External documentation that guides the development of the product, explaining its objectives and constraints. Can be used as the source of system requirements.
-**Placeholder:** Example: [e-ARK Standards](../docs/references/e_ark_standards.md)
+**Placeholder:** Example: [e-ARK Standards](../references/e_ark_standards.md)
 > 
 
 ## Value Propositions

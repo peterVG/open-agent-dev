@@ -12,8 +12,8 @@ description: Ensure all applications follow centralized logging rules and integr
 When configuring application code, CI/CD pipelines, or generating Docker Compose environments across any tech stack, the agent MUST strictly enforce the following rules:
 
 ### 1. Application Logging (Stdout Only)
-- **Zero File Logging:** Applications MUST NEVER attempt to route or store their own log files on disk. (e.g., Python `FileHandler`, Node.js file transports, Elixir file backends, PHP vendor log files, Rust `tracing-appender` file guards, and Tauri log-plugin file targets are strictly forbidden).
-- **Stdout Only:** All applications MUST configure their respective logging frameworks (e.g., `structlog`/`logging` for Python, `pino`/`console` for Node.js, `Logger` for Elixir, PHP `error_log` / unbuffered php-fpm stdout, and Rust `tracing` + `tracing-subscriber`) to output their event streams exclusively and unbuffered to `stdout`.
+- **Zero File Logging:** Applications MUST NEVER attempt to route or store their own log files on disk. (e.g., Python `FileHandler`, Node.js file transports, Elixir file backends, Rust `tracing-appender` file guards, and Tauri log-plugin file targets are strictly forbidden).
+- **Stdout Only:** All applications MUST configure their respective logging frameworks (e.g., `structlog`/`logging` for Python, `pino`/`console` for Node.js, `Logger` for Elixir, and Rust `tracing` + `tracing-subscriber`) to output their event streams exclusively and unbuffered to `stdout`.
 
 ### 2. Infrastructure Topology
 The agent MUST configure the local `docker-compose.yml` to capture and route these container logs into the mandated centralized observability stack:

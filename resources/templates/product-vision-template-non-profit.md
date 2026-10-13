@@ -277,7 +277,7 @@ Identify relevant accessibility, privacy, security, records, intellectual proper
 
 **Purpose:** Give human and AI authors a verifiable source base.
 
-Keep supporting materials or reference notes in `docs/references/` when available and permitted. Use relative links to files that actually exist; otherwise provide an authoritative URL and identify any access gap.
+Keep supporting materials or reference notes in `resources/references/` when available and permitted. Use relative links to files that actually exist; otherwise provide an authoritative URL and identify any access gap.
 
 | ID | Title, author/organization, version/date | File or URL and relevant section | What it supports | Limitations or verification status |
 | --- | --- | --- | --- | --- |

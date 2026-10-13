@@ -39,7 +39,7 @@ _Note: Ensure Mermaid syntax is valid. NEVER use spaces, hyphens, or special cha
 
 ### 3. Traceability to ADRs
 
-All technical decisions outlined in the document (frameworks, databases, CI/CD tools) MUST explicitly summarize and link back to the corresponding Architecture Decision Record (`resources/architecture/[ADR].md`). If a tool is used that has no ADR, the agent should highlight this gap.
+All technical decisions outlined in the document (frameworks, databases, CI/CD tools) MUST explicitly summarize and link back to the corresponding Architecture Decision Record (`resources/architecture/ADRs/[ADR].md`). If a tool is used that has no ADR, the agent should highlight this gap.
 
 ### 4. Codebase Reflection
 
@@ -61,7 +61,7 @@ Scan the codebase (`/app`, `/src`, `/lib`, `/tests`, infrastructure files). Iden
 
 ### Step 4: Aggregate Architecture Decisions
 
-Read all files matching `resources/architecture/*.md` (excluding templates/directories) to compile the log of accepted ADRs. Extract the core technologies chosen.
+Read all files matching `resources/architecture/ADRs/*.md` (excluding templates/directories) to compile the log of accepted ADRs. Extract the core technologies chosen.
 
 ### Step 5: Draft the Document & Diagrams
 
@@ -71,10 +71,19 @@ Write the new `resources/architecture.md`. For each ISO 42010 Viewpoint section,
 
 Save the output to `resources/architecture.md`. Ensure all links to PRD/SRS/ADRs use correct relative formatting (e.g. `[PRD](./prd.md)` format). DO NOT use absolute paths.
 
+**Rewrite template-relative links.** The template's links are relative to `resources/templates/`, but the output lives one level up in `resources/`. Before saving, rewrite every relative link copied from the template so it resolves from `resources/architecture.md`:
+
+- `../prd.md` → `./prd.md`, `../srs.md` → `./srs.md`, `../implementation-plan.md` → `./implementation-plan.md`
+- `../architecture/ADRs/` → `./architecture/ADRs/`
+- Individual ADRs MUST be linked as `./architecture/ADRs/NNN-slug.md`, using the real filename found in Step 4.
+
+Then confirm that every relative link in the saved file points to an existing file or directory (e.g. `ls` each target from `resources/`). Fix or flag any link that does not resolve.
+
 ## Success Criteria
 
 - ✅ File successfully created/updated at `resources/architecture.md`.
 - ✅ File perfectly follows the ISO 42010 header structure from the template.
 - ✅ Contains at least 4 distinct, valid Mermaid diagrams (Context, Logical, Data, Deployment).
 - ✅ Explicitly cites the project ADRs in the Technology Decisions Summary table.
+- ✅ Every relative link resolves from `resources/architecture.md` (no leftover template-relative `../` links).
 - ✅ Strictly reflects the _actual_ codebase state at the time of execution.

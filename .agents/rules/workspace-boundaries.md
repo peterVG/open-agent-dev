@@ -16,11 +16,7 @@ If initialized with the BEAM/Elixir stack, the application is structured as a st
 - **`/apps`**: In an Umbrella project, *both* backend logic and frontend web interfaces are stored as separate OTP applications inside the `/apps` directory (e.g., `apps/my_app/` and `apps/my_app_web/`).
 - **Targeted Tooling**: The root contains the global umbrella configuration (`mix.exs`, `config/`), but all substantive code must execute within the scoped `apps/` folders.
 
-## 3. PHP/Javascript Stack (WordPress plugins)
-If initialized with the PHP/JS stack, the application is structured as a polyglot Monorepo containing `/apps` exclusively.
-- **`/apps`**: Houses zip-ready WordPress plugins (e.g., `apps/c2papress-audit/` and `apps/c2papress-pro/`) and an optional shared Composer library (e.g., `apps/c2papress-shared/`). Each plugin is a standalone deployable. Do not generate `apps/frontend` + `apps/backend` (FastAPI/SPA) or Phoenix OTP apps for this stack.
-
-## 4. Rust/Javascript Stack (Web + Tauri desktop)
+## 3. Rust/Javascript Stack (Web + Tauri desktop)
 If initialized with the Rust/JS stack, the application is structured as a polyglot Monorepo containing `/apps` exclusively.
 - **`/apps`**: Houses independent crates and the shared UI (e.g., `apps/core/`, `apps/backend/`, `apps/frontend/`, `apps/desktop/`). The Axum web host and the Tauri 2 desktop host are separate deployables. Do not add a root `Cargo.toml` workspace.
 
@@ -42,16 +38,6 @@ Each application inside the apps directory must be a self-contained project with
   - `/apps/my_app/lib/`
   - `/apps/my_app/test/`
 
-**PHP/JS Stack Example:**
-- `/apps/c2papress-audit/`
-  - `/apps/c2papress-audit/composer.json`
-  - `/apps/c2papress-audit/package.json`
-  - `/apps/c2papress-audit/src/`
-  - `/apps/c2papress-audit/assets/`
-- `/apps/c2papress-pro/`
-  - `/apps/c2papress-pro/composer.json`
-  - `/apps/c2papress-pro/src/`
-
 **Rust/JS Stack Example:**
 - `/apps/core/`
   - `/apps/core/Cargo.toml`
@@ -67,7 +53,7 @@ Each application inside the apps directory must be a self-contained project with
   - `/apps/desktop/src-tauri/src/`
   - `/apps/desktop/src-tauri/tauri.conf.json`
 
-1. **No Language Tooling at Root:** You MUST NOT place language-specific dependency manifests (e.g., `package.json`, `mix.exs`, `requirements.txt`, `composer.json`, `Cargo.toml`, `rust-toolchain.toml`) or framework configuration files in the global repository root.
-2. **Strict Scaffolding:** When generating or scaffolding a new project (e.g., running `mix phx.new`, `npx create-next-app`, `cargo new`, Composer plugin scaffolds, or `npm create tauri-app`), you MUST execute the command to place the output inside `apps/`. NEVER run a scaffolding command targeting the repository root. If a scaffolder writes `package.json` next to `src-tauri/` (Tauri), relocate the frontend into `apps/frontend/` and the Rust host into `apps/desktop/src-tauri/`.
-3. **Path Resolution:** When adding CI pipelines, executing tests, or running scripts, always execute language commands (like `npm run dev`, `pytest`, `mix test`, `phpunit`, `cargo test`, or `npx tauri`) from within the specific workspace sub-directory, rather than the root. For Tauri, the Cargo crate root is `apps/desktop/src-tauri/`.
+1. **No Language Tooling at Root:** You MUST NOT place language-specific dependency manifests (e.g., `package.json`, `mix.exs`, `requirements.txt`, `Cargo.toml`, `rust-toolchain.toml`) or framework configuration files in the global repository root.
+2. **Strict Scaffolding:** When generating or scaffolding a new project (e.g., running `mix phx.new`, `npx create-next-app`, `cargo new`, or `npm create tauri-app`), you MUST execute the command to place the output inside `apps/`. NEVER run a scaffolding command targeting the repository root. If a scaffolder writes `package.json` next to `src-tauri/` (Tauri), relocate the frontend into `apps/frontend/` and the Rust host into `apps/desktop/src-tauri/`.
+3. **Path Resolution:** When adding CI pipelines, executing tests, or running scripts, always execute language commands (like `npm run dev`, `pytest`, `mix test`, `cargo test`, or `npx tauri`) from within the specific workspace sub-directory, rather than the root. For Tauri, the Cargo crate root is `apps/desktop/src-tauri/`.
 4. **Unique Port Assignments:** When scaffolding any new service or web module within the `/apps` directory, you MUST explicitly hardcode a unique HTTP port for its development server (e.g. `config/dev.exs`, `vite.config.ts`, Axum bind address, or Tauri `build.devUrl`) by scanning the repository's existing applications and incrementing exactly +1 to ensure no two workspaces ever clash on the same port locally.
