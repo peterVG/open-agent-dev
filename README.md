@@ -33,7 +33,7 @@ Upload any reference documents to the [`resources/references/`](./resources/refe
 @AGENTS.md read any reference documents in @resources/references/ and use the @.agents/skills/kb-synthesizer skill to generate a knowledge base in @.agents/kb/
 ```
 ## Create a Product Vision
-Fill out the [product vision template](./resources/templates/product-vision-template.md) as best as possible and save it as [`resources/product-vision.md`](./resources/product-vision.md). If this is a product for a non-profit project, use the [alternate template](./resources/product-vision-non-profit.md).
+Fill out the [product vision template](./resources/templates/product-vision-template.md) as best as possible and save it as [`resources/product-vision.md`](./resources/product-vision.md). If this is a product for a non-profit project, use the [alternate template](./resources/product-vision-template-non-profit.md).
 
 If you want AI Agent assistance to write the product vision document, you can invoke the bundled skill:
 ```text
