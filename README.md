@@ -26,6 +26,9 @@ It enforces a strict Branch-Per-Task workflow and Test-Driven Development (TDD).
 
 # Getting Started with Open Agent Dev
 
+## Clone this repo
+`git clone` this repository to your local development machine. Then delete the existing `.git` directory and run a `git init` to start a new project using the resources in this Open Agent Dev repo as your starting scaffold. 
+
 ## Upload reference documents if you have any
 Upload any reference documents to the [`resources/references/`](./resources/references/) directory. This includes technical specifications, API references, RFC documents, industry standards, academic papers, technical architecture documents, research papers, library documentation, framework guides, platform specifications, etc.
 
