@@ -1,0 +1,21 @@
+.agents/rules/adr-formatting.md
+  s_89fb2b305cdb99::t_7715aaf6cb057c 11
+.agents/skills/architecture-writer/SKILL-architecture-writer.md
+  s_89fb2b305cdb99::t_cfc09a9d735c89 78
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "4f41ba6e23295064911304c06c809dab03bc2299",
+  "prompts": {},
+  "sessions": {
+    "s_89fb2b305cdb99": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f1630f4c-3cc8-43bb-a348-7f0f10e7ad50",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
