@@ -24,8 +24,7 @@
 - **Walkthrough Documentation:** When executing tests, the agent MUST copy the raw CLI output of the test runs into a permanent `apps/[Module Name]/docs/tasks/Task-[Task ID]-Walkthrough.md` file to provide immediate visual proof of passing tests, in addition to generating the structured test reports.
 - **Unit Test Traceability:** When code changes make a unit test obsolete or require modifications to the underlying implementation, the agent MUST explicitly update, refactor, or remove the corresponding unit tests to remain in sync with the source code.
 - **Strict Artifact Isolation:** This principle is tactically enforced on all AI agents via the instructions in `[artifact-isolation.md](./.agents/rules/artifact-isolation.md)`.
-- **PR Review Mandate:** All proposed Pull Requests MUST be reviewed by an external AI agent (specifically Cubit) acting as a Senior Software Engineer. The agent will analyze code changes, enforce project paradigms, check for logic flaws, and provide change requests before human merge. 
-- **Cubic Workflow:** After pushing PRs to Github, wait for Cubit's GitHub review. Ask the agent to "check cubic comments" or "fix cubic issues". Push the fixes and repeat until the pull request is clean.
+- **PR Review Mandate:** All proposed Pull Requests MUST be reviewed by an external AI agent acting as a Senior Software Engineer. The agent will analyze code changes, enforce project paradigms, check for logic flaws, and provide change requests. Any identified issues will be fixed and pushed to the PR before final human review and merge to main branch. 
 
 ## Branch-Per-Task
 
