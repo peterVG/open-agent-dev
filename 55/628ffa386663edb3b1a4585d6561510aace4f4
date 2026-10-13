@@ -1,0 +1,25 @@
+.agents/rules/holistic-ui.md
+  s_1a7182683df6ef::t_fc47aed322da45 7
+resources/templates/product-vision-template.md
+  s_1a7182683df6ef::t_fc47aed322da45 31
+.agents/rules/centralized-infrastructure.md
+  s_1a7182683df6ef::t_fc47aed322da45 26-27
+README.md
+  s_1a7182683df6ef::t_fc47aed322da45 89
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "55628ffa386663edb3b1a4585d6561510aace4f4",
+  "prompts": {},
+  "sessions": {
+    "s_1a7182683df6ef": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f7de7533-de64-4b3c-98b7-0e6182734647",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
