@@ -1,0 +1,106 @@
+.agents/skills/init-beam-elixir/SKILL-init-beam-elixir.md
+  s_1a7182683df6ef::t_9f9a962a229073 280
+.agents/skills/plan-writer/SKILL-plan-writer.md
+  s_1a7182683df6ef::t_6917eb748fd1d1 35,55,69,94,133,156
+  s_1a7182683df6ef::t_9f9a962a229073 140,177
+.agents/rules/workspace-boundaries.md
+  s_1a7182683df6ef::t_212bb6b0b68a36 19,56-58
+.agents/README.md
+  s_1a7182683df6ef::t_fe315f6e81333a 19,53
+.agents/rules/task-workflow.md
+  s_1a7182683df6ef::t_e070f888ad447e 11,19,21,25
+.agents/rules/holistic-ui.md
+  s_1a7182683df6ef::t_6917eb748fd1d1 7
+.agents/rules/src-isolation.md
+  s_1a7182683df6ef::t_212bb6b0b68a36 19
+resources/templates/product-vision-template.md
+  s_1a7182683df6ef::t_fe315f6e81333a 26,31
+.agents/rules/sync-logic.md
+  s_1a7182683df6ef::t_fe315f6e81333a 35
+  s_1a7182683df6ef::t_43c470b1824d5e 11,17
+  s_1a7182683df6ef::t_6917eb748fd1d1 5
+.agents/rules/centralized-infrastructure.md
+  s_1a7182683df6ef::t_212bb6b0b68a36 7,27
+.agents/kb/ietf-9562-uuid.md
+  s_1a7182683df6ef::t_70d4756c43e73a 260
+.agents/skills/kb-synthesizer/SKILL-kb-synthesizer.md
+  s_1a7182683df6ef::t_9e91272590fbdd 103
+.agents/skills/architecture-writer/SKILL-architecture-writer.md
+  s_1a7182683df6ef::t_9f9a962a229073 42,64
+  s_1a7182683df6ef::t_046f3675543a6a 88
+  s_1a7182683df6ef::t_6917eb748fd1d1 76
+  s_1a7182683df6ef::t_af53ae4fa49361 74-75,77-81
+.agents/rules/pr-documentation-update.md
+  s_1a7182683df6ef::t_9f9a962a229073 19
+  s_1a7182683df6ef::t_fe315f6e81333a 13,18
+README.md
+  s_1a7182683df6ef::t_6917eb748fd1d1 89,96,100
+  s_1a7182683df6ef::t_9f9a962a229073 81
+AGENTS.md
+  s_1a7182683df6ef::t_fe315f6e81333a 24
+  s_1a7182683df6ef::t_9f9a962a229073 57
+  s_1a7182683df6ef::t_ffb35a4c7e8134 80
+.agents/kb/conventional-commits.md
+  s_1a7182683df6ef::t_fe315f6e81333a 50
+.agents/rules/adr-verification.md
+  s_1a7182683df6ef::t_9f9a962a229073 6
+resources/references/README.md
+  s_1a7182683df6ef::t_fe315f6e81333a 54,68,72,84,92,147
+resources/templates/architecture-template.md
+  s_1a7182683df6ef::t_9f9a962a229073 12
+  s_1a7182683df6ef::t_6917eb748fd1d1 11
+.agents/kb/index.md
+  s_1a7182683df6ef::t_fe315f6e81333a 11
+  s_1a7182683df6ef::t_9e91272590fbdd 5
+.agents/rules/logging-enforce.md
+  s_1a7182683df6ef::t_212bb6b0b68a36 15-16
+.agents/kb/README.md
+  s_1a7182683df6ef::t_fe315f6e81333a 4,34,39,43,53-54
+.agents/rules/decoupled-execution.md
+  s_1a7182683df6ef::t_43c470b1824d5e 7
+  s_1a7182683df6ef::t_6917eb748fd1d1 8-9
+.agents/skills/init-ao-arweave-hyperbeam/SKILL-init-ao-arweave-hyperbeam.md
+  s_1a7182683df6ef::t_9f9a962a229073 243
+.agents/skills/init-rust-js/SKILL-init-rust-js.md
+  s_1a7182683df6ef::t_9f9a962a229073 350,398,409
+  s_1a7182683df6ef::t_26cb55c1343ee4 14
+  s_1a7182683df6ef::t_212bb6b0b68a36 12,135
+.agents/kb/okf.md
+  s_1a7182683df6ef::t_9e91272590fbdd 24,504
+scripts/verify_task_cleanup.sh
+  s_1a7182683df6ef::t_fe315f6e81333a 14
+.agents/skills/init-python-js/SKILL-init-python-js.md
+  s_1a7182683df6ef::t_70d4756c43e73a 222
+  s_1a7182683df6ef::t_9f9a962a229073 266
+.agents/kb/agent-skills-1.0.md
+  s_1a7182683df6ef::t_fe315f6e81333a 33,45
+.agents/rules/adr-formatting.md
+  s_1a7182683df6ef::t_9f9a962a229073 10
+resources/templates/product-vision-template-non-profit.md
+  s_1a7182683df6ef::t_fe315f6e81333a 280
+scripts/verify_srs_traceability.sh
+  s_1a7182683df6ef::t_43c470b1824d5e 8
+.agents/kb/iso-42010-adr.md
+  s_1a7182683df6ef::t_9f9a962a229073 30
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "5a5abda1587ef0d9fa62eb0a5568f3fd6dd64572",
+  "prompts": {},
+  "humans": {
+    "h_10c93bba641ef0": {
+      "author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_1a7182683df6ef": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "f7de7533-de64-4b3c-98b7-0e6182734647",
+        "model": "claude-opus-5-5"
+      },
+      "human_author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
