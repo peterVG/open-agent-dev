@@ -75,7 +75,7 @@ Save the output to `resources/architecture.md`. Ensure all links to PRD/SRS/ADRs
 
 - `../prd.md` → `./prd.md`, `../srs.md` → `./srs.md`, `../implementation-plan.md` → `./implementation-plan.md`
 - `../architecture/ADRs/` → `./architecture/ADRs/`
-- Individual ADRs MUST be linked as `./architecture/ADRs/NNN-slug.md`, using the real filename found in Step 4.
+- Individual ADRs MUST be linked as `./architecture/ADRs/ADR-NNN-slug.md`, using the real filename found in Step 4.
 
 Then confirm that every relative link in the saved file points to an existing file or directory (e.g. `ls` each target from `resources/`). Fix or flag any link that does not resolve.
 
