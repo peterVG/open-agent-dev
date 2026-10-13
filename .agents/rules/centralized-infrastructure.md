@@ -23,8 +23,8 @@ If the project is a Rust/JS monorepo, this centralized `docker-compose.yml` runs
 ### Rationale
 
 1. **Zero-Friction Setup:** A developer should be able to clone the repository and run `docker compose up -d` exactly once at the root to instantly provision all databases, message queues, and caches required for the entire project.
-2. **Shared Services across Workspaces:** If the repository contains a backend API in `apps/backend/` and a worker service in `apps/worker/`, they will often need to talk to the exact same Postgres database or Redis cache. Even within a pure Elixir Umbrella project containing `apps/my_app` and `apps/my_app_web`, both OTP apps connect to the same backing database. PHP plugins share one local WordPress/MySQL instance. Rust `apps/core`, `apps/backend`, and `apps/desktop` share Compose-backed data stores when they persist state. Centralizing the `docker-compose.yml` prevents duplicate databases from being spun up.
-3. **Language Agnosticism:** While `package.json`, `mix.exs`, or `Cargo.toml` are specific to a single tech stack and belong inside their workspaces, a Docker container running PostgreSQL (or local WordPress) is entirely language-agnostic and serves as horizontal infrastructure for the whole repo.
+2. **Shared Services across Workspaces:** If the repository contains a backend API in `apps/backend/` and a worker service in `apps/worker/`, they will often need to talk to the exact same Postgres database or Redis cache. Even within a pure Elixir Umbrella project containing `apps/my_app` and `apps/my_app_web`, both OTP apps connect to the same backing database. Rust `apps/core`, `apps/backend`, and `apps/desktop` share Compose-backed data stores when they persist state. Centralizing the `docker-compose.yml` prevents duplicate databases from being spun up.
+3. **Language Agnosticism:** While `package.json`, `mix.exs`, or `Cargo.toml` are specific to a single tech stack and belong inside their workspaces, a Docker container running PostgreSQL (or Redis) is entirely language-agnostic and serves as horizontal infrastructure for the whole repo.
 
 ## Implementation
 

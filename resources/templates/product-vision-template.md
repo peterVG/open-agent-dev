@@ -28,7 +28,7 @@
 
 ## Technical & Domain References
 **Description:** External documentation that guides the development of the product, explaining its objectives and constraints. Can be used as the source of system requirements.
-**Placeholder:** Example: [e-ARK Standards](../references/e_ark_standards.md)
+**Placeholder:** Example: [e-ARK Standards](./references/e_ark_standards.md)
 > 
 
 ## Value Propositions

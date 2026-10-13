@@ -86,7 +86,7 @@ Review and revise [`resources/srs.md`](./resources/srs.md) as needed. Presentati
 ### The "Global Holistic Execution" Prompt
 Use this when you have updated the core PRD or added entirely new modules to a monorepo and need the AI to synthesize everything across the entire project from scratch.
 ```text
-@AGENTS.md Invoke the @plan-writer skill. Delete any existing \implementation-plan.md` files across the repository. Then, rigorously analyze @resources/prd.md, @resources/srs.md if it exists, all `srs.md` configurations in the `apps/` directory, and the @resources/architecture/ADRs/ records. Synthesize these requirements and generate the global roadmap at `resources/implementation-plan.md`, sequentially followed by granular module-specific checklists distributed strictly into each app's respective `apps/[Module Name]/resources/implementation-plan.md` location.`
+@AGENTS.md Invoke the @plan-writer skill. Delete any existing `implementation-plan.md` files across the repository. Then, rigorously analyze @resources/prd.md, @resources/srs.md if it exists, all `srs.md` configurations in the `apps/` directory, and the @resources/architecture/ADRs/ records. Synthesize these requirements and generate the global roadmap at `resources/implementation-plan.md`, sequentially followed by granular module-specific checklists distributed strictly into each app's respective `apps/[Module Name]/resources/implementation-plan.md` location.
 ```
 
 ### The "Single Module Focus" Prompt
