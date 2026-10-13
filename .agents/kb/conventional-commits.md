@@ -47,7 +47,7 @@ Agents MUST use one of the following types for every commit:
 | :--- | :--- |
 | **`feat:`** | A new feature or requirement implementation (correlates with a MINOR release in semantic versioning). |
 | **`fix:`** | A bug fix (correlates with a PATCH release in semantic versioning). |
-| **`docs:`** | Documentation only changes (e.g., updating `README.md`, `AGENTS.md`, or the `/docs/kb/`). |
+| **`docs:`** | Documentation only changes (e.g., updating `README.md`, `AGENTS.md`, or the `.agents/kb/`). |
 | **`style:`** | Changes that do not affect the meaning of the code (white-space, formatting, missing semi-colons, etc). |
 | **`refactor:`** | A code change that neither fixes a bug nor adds a feature (e.g., renaming variables, extracting functions). |
 | **`perf:`** | A code change that improves performance. |

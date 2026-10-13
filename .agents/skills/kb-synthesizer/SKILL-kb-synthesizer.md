@@ -100,7 +100,7 @@ status: stable
 
 #### Project extension keys (MAY — MUST NOT be rejected by consumers)
 
-Preserve ATPix/project metadata as OKF extensions (§4.1):
+Preserve project metadata as OKF extensions (§4.1):
 
 | Key | Purpose |
 |-----|---------|

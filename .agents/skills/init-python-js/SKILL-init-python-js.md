@@ -219,7 +219,7 @@ description: Ensure all code is strictly linted and formatted before pushing or 
 
 ## Active Tools
 
-Based on the accepted Architecture Decision Records (`resources/architecture/004-coding-style-and-linting.md`), this project uses:
+Based on the accepted coding style and linting Architecture Decision Record in `resources/architecture/ADRs/`, this project uses:
 
 - **Ruff** for Python analysis and fast, PEP8-compliant code formatting (Backend).
 - **ESLint** for static code analysis (Frontend).
@@ -263,7 +263,7 @@ Only when Ruff, Prettier, and ESLint all exit cleanly (code 0) is the codebase c
 
 ## Step 7: Generate Architecture Decision Records (ADRs)
 
-Use the @.agents/rules/adr-formatting.md rule to write ADRs to the @resources/architecture/ directory. Be sure to include separate ADRs specifically for the choice of:
+Use the @.agents/rules/adr-formatting.md rule to write ADRs to the @resources/architecture/ADRs/ directory. Be sure to include separate ADRs specifically for the choice of:
 1) test runners and reporting frameworks.
 2) Inline code docs generators.
 3) Coding style standards and linting tooling.

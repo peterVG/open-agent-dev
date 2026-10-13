@@ -240,7 +240,7 @@ Only when all tools exit cleanly (code 0) is the codebase considered valid for t
 
 ## Step 7: Generate Architecture Decision Records (ADRs)
 
-Use the @.agents/rules/adr-formatting.md rule to write ADRs to the @resources/architecture/ directory. Be sure to include separate ADRs specifically for the choice of:
+Use the @.agents/rules/adr-formatting.md rule to write ADRs to the @resources/architecture/ADRs/ directory. Be sure to include separate ADRs specifically for the choice of:
 1) Lua test runners and JS reporting frameworks.
 2) Output to Arweave / AO message dispatch protocols (aoconnect).
 3) Utilizing AOS SQLite for in-WASM state rather than decentralized NoSQL.

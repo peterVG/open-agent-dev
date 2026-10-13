@@ -16,7 +16,7 @@ This template follows the **Agent Skills 1.0 specification** to ensure compatibi
 └── kb/                      # Synthesized AI knowledge base
     └── agent-skills-1.0.md  # Domain concepts for the AI
 
-*Note: Raw technical specifications and whitepapers are kept in `docs/references/` rather than within `.agents/` to maintain a clear separation between project documentation and AI context.*
+*Note: Raw technical specifications and whitepapers are kept in `resources/references/` rather than within `.agents/` to maintain a clear separation between project documentation and AI context.*
 ```
 
 ## Why `.agents/` instead of `.agent/`?
@@ -50,7 +50,7 @@ The `.agents/` directory is the **standard** defined by Agent Skills 1.0, ensuri
 - Contains high-level summaries, established patterns, and project conventions.
 - Loaded when the AI needs conceptual grounding (e.g., standard definitions, project vocabulary).
 
-### 4. References (`docs/references/`)
+### 4. References (`resources/references/`)
 **Raw technical specifications** for progressive disclosure.
 - Contains deep API specs, protocol whitepapers, or large technical documents.
 - Loaded *only* when a specific Skill explicitly requests it via its YAML frontmatter, saving tokens and improving accuracy for low-level tasks.

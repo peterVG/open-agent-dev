@@ -2,13 +2,13 @@
 okf_version: "0.2"
 ---
 
-# ATPix Agent Knowledge Bundle
+# Agent Knowledge Bundle
 
 Progressive disclosure listing for `.agents/kb/` — an [OKF v0.2](./okf.md) Knowledge Bundle. Open a concept only when the task needs that domain.
 
 # Bundle orientation
 
-* [Knowledge Base Bundle Guide](./README.md) - Purpose of this directory vs `docs/references/` and OKF conventions.
+* [Knowledge Base Bundle Guide](./README.md) - Purpose of this directory vs `resources/references/` and OKF conventions.
 * [Open Knowledge Format (OKF) 0.2](./okf.md) - How to produce and consume OKF concepts (required reading for kb-synthesizer).
 
 # Protocols & product platforms
@@ -17,7 +17,6 @@ Progressive disclosure listing for `.agents/kb/` — an [OKF v0.2](./okf.md) Kno
 * [AT Protocol Blacksky Tutorial](./at-protocol-blacksky-tutorial.md) - Identity foundations and Permissioned Data proposal 0016 (draft).
 * [AT Protocol (atproto) v2 — Combined](./at-protocol-v2.md) - Combined public protocol + permissioned data reference (draft).
 * [HappyView](./happyview.md) - Schema-driven App View framework for AT Protocol.
-* [C2PA (Content Credentials)](./c2pa.md) - Manifest lifecycle, validation states, and UX obligations.
 * [Oxford Common File Layout (OCFL) 1.1](./ocfl.md) - Versioned object layout for FS and S3-compatible stores.
 
 # Project standards

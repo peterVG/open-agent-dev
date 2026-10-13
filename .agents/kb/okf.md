@@ -9,15 +9,10 @@ generated:
   by: process:kb-synthesizer
   at: 2026-07-26T00:00:00Z
 sources:
-  - id: okf-spec-0.2
-    resource: docs/references/GoogleOpenKnowledgeFormat_v0.2.pdf
-    title: Open Knowledge Format (OKF) Version 0.2
-    author: process:google-knowledge-catalog
   - id: okf-spec-github
     resource: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
     title: OKF SPEC.md on GoogleCloudPlatform/knowledge-catalog
 kb-title: Open Knowledge Format (OKF) 0.2 — Technical Reference
-source-reference: docs/references/GoogleOpenKnowledgeFormat_v0.2.pdf
 source-url: https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md
 spec-version: "0.2"
 last-updated: 2026-07-26T00:00:00Z
@@ -26,9 +21,7 @@ domain: Knowledge Representation, Agents, Provenance, Attestation
 
 # Open Knowledge Format (OKF) 0.2
 
-**Purpose:** Synthesized reference for AI agents implementing or consuming **OKF v0.2** knowledge corpora in ATPix. Covers bundle layout, concept frontmatter, provenance/trust/lifecycle, actors, indexes, logs, and Attested Computations. This file is itself a conformant OKF concept (`type` required; optional families present).[^okf-spec-0.2]
-
-For the full self-contained normative text, load `docs/references/GoogleOpenKnowledgeFormat_v0.2.pdf` or the upstream [SPEC.md](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md) via Progressive Disclosure.
+**Purpose:** Synthesized reference for AI agents implementing or consuming **OKF v0.2** knowledge corpora. Covers bundle layout, concept frontmatter, provenance/trust/lifecycle, actors, indexes, logs, and Attested Computations. This file is itself a conformant OKF concept (`type` required; optional families present).[^okf-spec-github]
 
 **TL;DR:** OKF is a **directory of UTF-8 markdown files with YAML frontmatter**. No schema registry, no central authority, no required SDK. A **Knowledge Bundle** distributes **Concepts** (one `.md` file each). Only always-required frontmatter key is `type`. v0.2 adds first-class **provenance** (`sources`), **trust** (`generated` / `verified`), **lifecycle** (`status` / `stale_after`), and **Attested Computation** concepts so agents can prove a number was produced the sanctioned way.
 
@@ -508,7 +501,7 @@ flowchart TB
 
 ---
 
-## Agent Implementation Rules (ATPix)
+## Agent Implementation Rules
 
 1. **Write conformant concepts:** every concept `.md` gets YAML frontmatter with non-empty `type`. Never name concepts `index.md` or `log.md`.
 2. **Prefer structural bodies** and bundle-relative links starting with `/` for stable graphs.
@@ -558,7 +551,6 @@ bundles/finance/
 
 | Resource | Role |
 |----------|------|
-| `docs/references/GoogleOpenKnowledgeFormat_v0.2.pdf` | Local snapshot of SPEC |
 | [OKF SPEC.md](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md) | Upstream normative source |
 | [.agents/kb/ocfl.md](./ocfl.md) | Object storage layout (orthogonal; package OKF bundles *inside* OCFL if preserving corpora) |
 | [.agents/kb/agent-skills-1.0.md](./agent-skills-1.0.md) | Agent Skills packaging (may back `executor.resource`) |
@@ -582,5 +574,4 @@ bundles/finance/
 | Are receipts in git? | **No** — runtime only |
 | v0.1 `timestamp`? | Prefer `generated.at`; MAY fall back |
 
-[^okf-spec-0.2]: Open Knowledge Format (OKF) Version 0.2 — local snapshot
 [^okf-spec-github]: OKF SPEC.md on GoogleCloudPlatform/knowledge-catalog
