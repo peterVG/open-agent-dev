@@ -1,0 +1,21 @@
+scripts/docs/test_verify_branch.py
+  s_2e8e12c7bb07b5::t_62ea1dd8e213c8 21-23,25-26,41
+scripts/verify_doc_sync.sh
+  s_2e8e12c7bb07b5::t_67aa41174a1e44 42-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "26e6e3ec6b9ab6b076fbd1023470c131418a6a98",
+  "prompts": {},
+  "sessions": {
+    "s_2e8e12c7bb07b5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3351fd42-7f5d-4c29-947e-e7a421c4a5c1",
+        "model": "unknown"
+      },
+      "human_author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
