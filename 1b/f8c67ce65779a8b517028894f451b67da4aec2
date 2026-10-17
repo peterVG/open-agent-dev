@@ -1,0 +1,29 @@
+.agents/rules/local-verification.md
+  s_2e8e12c7bb07b5::t_612e67fa41033b 22,36-38,40,42,48
+.agents/rules/task-workflow.md
+  s_2e8e12c7bb07b5::t_21d98687597cbe 13,15-17,23,25,29
+AGENTS.md
+  s_2e8e12c7bb07b5::t_a7aad2b549896d 5,14,21-22,28,34,40,46,48,54,59-60,66,74,95,99,105,109,111-113,117,119,125-126,130,132-135,141-143,149-151,155,157-158
+scripts/docs/test_verify_branch.py
+  s_2e8e12c7bb07b5::t_1618caf297c20d 1-114
+scripts/verify_branch.sh
+  s_2e8e12c7bb07b5::t_19a9f983984613 2,12-13,17-20
+scripts/verify_doc_sync.sh
+  s_2e8e12c7bb07b5::t_baec40c91e8927 44-45
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "1bf8c67ce65779a8b517028894f451b67da4aec2",
+  "prompts": {},
+  "sessions": {
+    "s_2e8e12c7bb07b5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3351fd42-7f5d-4c29-947e-e7a421c4a5c1",
+        "model": "unknown"
+      },
+      "human_author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
