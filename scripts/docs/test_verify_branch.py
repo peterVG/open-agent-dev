@@ -18,7 +18,12 @@ import unittest
 from pathlib import Path
 
 SCRIPT = Path(__file__).resolve().parent.parent / "verify_branch.sh"
+# Isolate the temp repositories from the developer's global and system git
+# config (e.g. commit.gpgsign, hooks, templates) so the tests run the same on
+# every machine.
 GIT_ENV = {
+    "GIT_CONFIG_GLOBAL": os.devnull,
+    "GIT_CONFIG_NOSYSTEM": "1",
     "GIT_AUTHOR_NAME": "Test",
     "GIT_AUTHOR_EMAIL": "test@example.org",
     "GIT_COMMITTER_NAME": "Test",
@@ -33,7 +38,7 @@ def run_git(repo, *args):
         repo: Path of the repository working tree.
         *args: Arguments passed to git.
     """
-    subprocess.run(["git", *args], cwd=repo, check=True, capture_output=True, env={**os.environ, **GIT_ENV})
+    subprocess.run(["git", "-c", "commit.gpgsign=false", *args], cwd=repo, check=True, capture_output=True, env={**os.environ, **GIT_ENV})
 
 
 def run_verify_branch(repo):
