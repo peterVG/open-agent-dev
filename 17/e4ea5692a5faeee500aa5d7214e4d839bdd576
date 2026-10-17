@@ -1,0 +1,31 @@
+.agents/rules/local-verification.md
+  h_10c93bba641ef0 1-47
+  s_2e8e12c7bb07b5::t_ff6b7d43b6928b 48
+.agents/rules/task-workflow.md
+  h_10c93bba641ef0 4,13,15-16,22,24,28-35
+AGENTS.md
+  h_10c93bba641ef0 5,14,21-22,28,34,40,42-50,54,56,59-60,62,66,70,74,76,87,95,99,101,105,107,109,111-114,116,118,120-124,126,130-133,135,137,139-142,144,148-151,153,157-160,162,164,166-169,171,179,182,185,188,191,194
+scripts/verify_branch.sh
+  h_10c93bba641ef0 2,6,9-18,21-23,32,37-47
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "17e4ea5692a5faeee500aa5d7214e4d839bdd576",
+  "prompts": {},
+  "humans": {
+    "h_10c93bba641ef0": {
+      "author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  },
+  "sessions": {
+    "s_2e8e12c7bb07b5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "3351fd42-7f5d-4c29-947e-e7a421c4a5c1",
+        "model": "unknown"
+      },
+      "human_author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
