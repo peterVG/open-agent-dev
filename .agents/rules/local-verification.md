@@ -19,7 +19,7 @@ license: CC-BY
 ## MUST
 
 - Put every new gate in a `scripts/verify_*.sh` script and call it from `scripts/pre-commit.sh`. One script, one gate, non-zero exit on failure, a message that names the fix.
-- Make each gate discover what to check (for example, every stack present under `apps/`) rather than naming specific products, so the scripts work unchanged in any repository that follows the same layout.
+- Make each gate discover what to check rather than naming specific products, so the scripts work unchanged in any repository that follows the same layout. The bundled formatting and test gates support Rust (`apps/<app>/Cargo.toml`), npm (`apps/<app>/package.json` or `apps/<app>/<pkg>/package.json`), Elixir (`apps/<app>/mix.exs`) and Python (`apps/<app>/pyproject.toml` or `requirements.txt`); a workspace of any other stack or layout is skipped silently, so add a handler for it when you introduce one.
 - Run `bash scripts/pre-commit.sh` from the repository root before every push, or install it once: `ln -s ../../scripts/pre-commit.sh .git/hooks/pre-commit`.
 - Keep the gates platform-agnostic ([platform-agnostic.md](./platform-agnostic.md)) and verify any command they run ([command-verification.md](./command-verification.md)).
 - Document a new gate, its environment variables and its runtime in the root README "Run tests" section in the same change.
@@ -33,16 +33,16 @@ license: CC-BY
 | 0 | `verify_branch.sh` | No direct commits to `main`; branch name is `<type>/<slug>` with a permitted Conventional Commit type ([task-workflow.md](./task-workflow.md)) |
 | 1 | `verify_isolated_ports.sh` | Unique dev, preview and bind ports ([port-conflicts.md](./port-conflicts.md)) |
 | 2 | `verify_doc_sync.sh` | Source changes ship with documentation changes ([sync-logic.md](./sync-logic.md)) |
-| 3 | `verify_srs_traceability.sh` | PRD and SRS IDs resolve both ways |
-| 4 | `verify_relative_links.sh` | No absolute paths in staged Markdown ([links-enforce.md](./links-enforce.md)) |
-| 5 | `verify_workspace_boundaries.sh` | No language or dependency manifests at the repository root ([workspace-boundaries.md](./workspace-boundaries.md)) |
+| 3 | `verify_srs_traceability.sh` | PRD requirement headings are well formed, every `[PRD <ID>]` reference in an SRS resolves to a PRD heading, and every PRD `F-`, `NFR-` and `TC-` requirement has an `SRS-<ID>` heading in the product SRS |
+| 4 | `verify_relative_links.sh` | No absolute `file:` URLs (three slashes) in staged Markdown ([links-enforce.md](./links-enforce.md)); other absolute paths are caught only by review |
+| 5 | `verify_workspace_boundaries.sh` | None of the common language or dependency manifests listed in the script (e.g. `package.json`, `pyproject.toml`, `mix.exs`) sit at the repository root ([workspace-boundaries.md](./workspace-boundaries.md)) |
 | 6 | `verify_centralized_logging.sh` | No file logging ([logging-enforce.md](./logging-enforce.md)) |
-| 7 | `verify_formatting.sh` | Formatting check for every stack under `apps/` (for example `cargo fmt`, `prettier`, `mix format`, `ruff`) |
+| 7 | `verify_formatting.sh` | Formatting for each supported stack under `apps/`: `cargo fmt`, `prettier`, `mix format`, `ruff` |
 | 8 | `verify_docs.sh` | ADR structure, PRD allocation, relative links and anchors, standalone workspace link boundaries, task cleanup (`scripts/docs/`) |
-| 9 | `verify_tests.sh` | Lint and tests for every stack under `apps/` (for example Clippy, `cargo test`, rustdoc, npm `lint`/`check`/`test`, `mix test`, `pytest`); end-to-end tests only with `VERIFY_E2E=1` |
+| 9 | `verify_tests.sh` | Lint and tests for each supported stack under `apps/`: Clippy, `cargo test` and rustdoc; npm `lint`/`check`/`test`; `mix test`; `pytest`. End-to-end tests only with `VERIFY_E2E=1` |
 
 A repository that adopts this rule MAY add, remove or reorder gates to fit its stack, but MUST keep this table in sync with `scripts/pre-commit.sh` in the same change.
 
 ## Agent resolution mandate
 
-If any step exits non-zero, the agent MUST NOT commit or push. Read the output, fix the cause, and rerun `bash scripts/pre-commit.sh` until it exits 0. Do not weaken a verifier to make it pass; an owner decision is required to change what a gate checks ([no-silent-restore.md](./no-silent-restore.md)).
+If any step exits non-zero, the agent MUST NOT commit or push. Read the output, fix the cause, and rerun `bash scripts/pre-commit.sh` until it exits 0. Do not weaken a verifier to make it pass; an owner decision is required to change what a gate checks.

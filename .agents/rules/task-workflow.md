@@ -10,29 +10,23 @@ Define the Git workflow and development methodology that MUST be followed for ev
 
 ## Branch-Per-Task
 
-- **Branches Required for ALL Tasks:** All work, including every Task defined in [resources/implementation-plan.md](../../resources/implementation-plan.md), new features, documentation updates, and bug fixes MUST be developed on dedicated branches (e.g., `task/0.1-portable-domain-contracts`, `task/co-0.5-command-ports`, `docs/update-guide`, `fix/login-bug`). No exceptions.
+- **Branches Required for ALL Tasks:** All work, including every Task defined in `resources/implementation-plan.md`, new features, documentation updates, and bug fixes MUST be developed on dedicated branches named `<type>/<slug>`, where `<type>` is a permitted Conventional Commit type (e.g., `feat/0.1-project-scaffold`, `feat/be-0.5-user-endpoints`, `docs/update-guide`, `fix/login-bug`). No exceptions. `scripts/verify_branch.sh` rejects any other prefix.
 - **Mandatory Push on Completion:** Upon completing a task (after all code is written, tests pass, and the Walkthrough document is generated), you MUST commit all work on your feature branch using Conventional Commits and push the branch to the remote origin (`git push --set-upstream origin <branch-name>`). Do not leave finished task branches persisting only in your local environment.
-- **Pull Request and Cubic Loop:** After the push, open a pull request against `main` and run the Cubic review loop in [pr-review-loop.md](./pr-review-loop.md) until no Cubic comments remain. Then merge the PR into `main`.
-- **No Direct Pushes to Main:** The `main` branch contains only approved, stable requirements and code. You MUST NEVER commit or push code directly to the `main` branch unless explicitly told to do so in a user prompt. Merging a PR that has finished the Cubic loop is the only way agent work reaches `main`.
+- **Pull Requests:** After the push, you MAY open a pull request against `main`, push further commits to it, and fix and reply to review comments on it.
+- **Human-Only Merge:** Only a human operator MAY approve and merge a pull request into `main`. You MUST NOT merge your own or any other pull request.
+- **No Direct Pushes to Main:** The `main` branch contains only approved, stable requirements and code. You MUST NEVER commit or push code directly to the `main` branch unless explicitly told to do so in a user prompt.
 
 ## Global versus module prompts
 
 The Task ID for the branch, Plan, ToDos, and Walkthrough is the ID in the pasted Agent Prompt.
 
-When that prompt is a **global** row (`Task 0.1`, `Task 0.2`, …), read that row’s **Description** in [resources/implementation-plan.md](../../resources/implementation-plan.md). The Description is the dispatch list of module slices (for example Task 0.1 → [CO-0.1](../../apps/filesquid/crates/core/resources/plan.md) through [CO-0.4](../../apps/filesquid/crates/core/resources/plan.md)). Complete those slices in that session on one branch. Write `apps/<module>/resources/tasks/Task-<global-ID>-Walkthrough.md` (for Task 0.1: `apps/filesquid/crates/core/resources/tasks/Task-0.1-Walkthrough.md`). Check the module boxes in `apps/<module>/resources/plan.md` and the global box in the implementation plan.
+When that prompt is a **global** row (`Task 0.1`, `Task 0.2`, …), read that row’s **Description** in `resources/implementation-plan.md`. The Description is the dispatch list of module slices (for example Task 0.1 → `BE-0.1` through `BE-0.4` in `apps/<module>/resources/implementation-plan.md`). Complete those slices in that session on one branch. Write `apps/<module>/resources/tasks/Task-<global-ID>-Walkthrough.md` (for Task 0.1: `apps/<module>/resources/tasks/Task-0.1-Walkthrough.md`). Check the module boxes in `apps/<module>/resources/implementation-plan.md` and the global box in the implementation plan.
 
-When the pasted prompt is a **module** row (`CO-0.5`, `IS-1.3`, …), the Task ID is that module ID and the branch is one crate slice. Plan dispatch, module versus global paste rules, and the session table stay in [resources/implementation-plan.md](../../resources/implementation-plan.md).
+When the pasted prompt is a **module** row (`BE-0.5`, `FE-1.3`, …), the Task ID is that module ID and the branch is one module slice. Plan dispatch, module versus global paste rules, and the session table stay in `resources/implementation-plan.md`.
 
 ## Task Execution Documentation
 
-Artifact directories for FileSquid (written below as `apps/<module>/resources/tasks/`):
-
-- Rust module or host crate: `apps/filesquid/crates/<module>/resources/tasks/` (e.g., `apps/filesquid/crates/core/resources/tasks/`).
-- FileSquid default UI: `apps/filesquid/ui/resources/tasks/`.
-- ImageSquid distribution: `apps/imagesquid/resources/tasks/`.
-- Product documentation (vision, PRD, SRS, ADRs, plans): repository-root `resources/tasks/`. Documentation work has no module plan; it is part of the global task in [resources/implementation-plan.md](../../resources/implementation-plan.md) that names it.
-
-Use the directory of the module that owns the Task ID prefix (for example `CO-` → `crates/core`, `UI-` → `apps/filesquid/ui`, `IS-` → `apps/imagesquid`). The former shared `FE-` task prefix was retired on 2026-10-16 because the product visions use `FE-###` for feature requirements; a task ID always carries its plan's own prefix.
+Artifact directory: `apps/<module>/resources/tasks/` (example: `apps/backend/resources/tasks/`).
 
 Before writing any code or modifying the project files for a specific task, you MUST create two planning artifacts there to track progress and design decisions:
 

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SPDX-FileCopyrightText: 2026 Peter Van Garderen
+# SPDX-FileCopyrightText: 2026 Pieter Van Garderen
 #
 # SPDX-License-Identifier: MIT
 #
@@ -9,11 +9,15 @@ BRANCH_NAME=$(git branch --show-current)
 GIT_DIR=$(git rev-parse --git-dir 2>/dev/null)
 
 # During an active rebase HEAD is detached; validate the branch being rebased instead.
+# A rebase started from detached HEAD records the literal "detached HEAD" in head-name;
+# that case falls through to the detached-HEAD failure below.
 REBASE_HEAD_FILE=""
 [ -f "$GIT_DIR/rebase-merge/head-name" ] && REBASE_HEAD_FILE="$GIT_DIR/rebase-merge/head-name"
 [ -f "$GIT_DIR/rebase-apply/head-name" ] && REBASE_HEAD_FILE="$GIT_DIR/rebase-apply/head-name"
-if [ -z "$BRANCH_NAME" ] && [ -n "$REBASE_HEAD_FILE" ]; then
-  BRANCH_NAME=$(sed 's#^refs/heads/##' "$REBASE_HEAD_FILE")
+REBASED_REF=""
+[ -z "$BRANCH_NAME" ] && [ -n "$REBASE_HEAD_FILE" ] && REBASED_REF=$(cat "$REBASE_HEAD_FILE")
+if [[ "$REBASED_REF" == refs/heads/* ]]; then
+  BRANCH_NAME=${REBASED_REF#refs/heads/}
   echo "ℹ️  Active rebase detected; validating the rebased branch '$BRANCH_NAME'."
 fi
 
