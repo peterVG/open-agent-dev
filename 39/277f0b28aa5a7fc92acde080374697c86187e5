@@ -1,0 +1,69 @@
+.agents/kb/beam-elixir-stack.md
+  s_c80418be71a7b5::t_218932ad05cc0b 110
+.agents/kb/tauri-2.md
+  s_c80418be71a7b5::t_d1095010c9f5cb 21
+.agents/rules/centralized-infrastructure.md
+  s_c80418be71a7b5::t_17c7e96720632c 13
+.agents/rules/docs-enforce.md
+  s_c80418be71a7b5::t_43c9160ace0490 32
+.agents/rules/logging-enforce.md
+  s_c80418be71a7b5::t_e228d183856bae 22-23,26
+.agents/rules/port-conflicts.md
+  s_c80418be71a7b5::t_843aef8a7cce8b 24
+.agents/scripts/README.md
+  s_c80418be71a7b5::t_dae506a764f216 31,38,46,202,204,209-210,212-216,219,223-235,239,244-245,250-258,262-264,270-275,277,281-285,291-294
+.agents/skills/feature-writer/SKILL-feature-writer.md
+  s_c80418be71a7b5::t_7f36368fefd4d6 27-33,318,333
+.agents/skills/init-beam-elixir/SKILL-init-beam-elixir.md
+  s_c80418be71a7b5::t_2ee0c27b20efd4 103,187
+.agents/skills/init-rust-js/SKILL-init-rust-js.md
+  s_c80418be71a7b5::t_cebc753a7bda20 254
+.agents/skills/srs-writer/SKILL-srs-writer.md
+  s_c80418be71a7b5::t_9c5650b2e7bfd7 128,137
+README.md
+  s_c80418be71a7b5::t_b4cfb82e2904a7 120,127
+config/prometheus/prometheus.yml
+  s_fa89b3552542e7::t_7a028e91e39170 14-18
+data/README.md
+  s_fa89b3552542e7::t_9c6d6949ff700a 6-10
+docker-compose.yml
+  s_fa89b3552542e7::t_2cac1d8c3feb68 1-6,12-17,63-64,81-82,111-112,115,121-122,136
+resources/templates/prd-template.md
+  s_c80418be71a7b5::t_0634cdde507988 20-23,72
+scripts/verify_centralized_logging.sh
+  s_c80418be71a7b5::t_345aa067e549be 9-10,12-13,15,17,30-31,36-54
+scripts/verify_formatting.sh
+  s_c80418be71a7b5::t_cb8e07bd78f82a 16-17,72-82,85,87-90,93
+scripts/verify_isolated_ports.sh
+  s_fa89b3552542e7::t_bd51dba3b55a16 38-41,48
+scripts/verify_srs_traceability.sh
+  s_fa89b3552542e7::t_3cab230491c5b4 10-12,14-19,25-65,69-70,74-78,80,82-88,96
+scripts/verify_tests.sh
+  s_c80418be71a7b5::t_fae6f06a88626d 27-29,117-127,130-134,137
+scripts/verify_workspace_boundaries.sh
+  s_fa89b3552542e7::t_e871b1e8f345d0 12-13,19-20,22,26
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "39277f0b28aa5a7fc92acde080374697c86187e5",
+  "prompts": {},
+  "sessions": {
+    "s_c80418be71a7b5": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "agent-af59552b8ee251636",
+        "model": "unknown"
+      },
+      "human_author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    },
+    "s_fa89b3552542e7": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "agent-a6eb615c746802e9f",
+        "model": "unknown"
+      },
+      "human_author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
