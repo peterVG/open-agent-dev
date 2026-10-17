@@ -1,0 +1,179 @@
+.agents/README.md
+  s_ad188c11c81d1f::t_ef5ca0bd6758a6 3,9-28,34,37-38,45,47,53,69,72,80,98-99,125-126,133,165-166
+.agents/kb/README.md
+  s_ad188c11c81d1f::t_d9dbfd35da6adf 38,43,47-48
+.agents/kb/agent-skills-1.0.md
+  s_ad188c11c81d1f::t_8765c27ad2aeb9 37,41,49
+.agents/kb/beam-elixir-stack.md
+  s_d468acf14d2d6f::t_5ebeb5e1501ad0 2-29,31,34-47,50-60,63-119
+.agents/kb/conventional-commits.md
+  s_ad188c11c81d1f::t_85761d2caf6d16 73-74
+.agents/kb/ietf-9562-uuid.md
+  s_ad188c11c81d1f::t_1f76bbc1ab7ab8 251
+.agents/kb/index.md
+  s_ad188c11c81d1f::t_183df5ec2744ac 26-27
+.agents/kb/okf.md
+  s_ad188c11c81d1f::t_1be4bbfffc8804 138,205,209,283,370,374,517
+.agents/kb/tauri-2.md
+  s_ad188c11c81d1f::t_fb1c4cb88785da 19,21,52-53,650,731
+.agents/rules/adr-formatting.md
+  s_d468acf14d2d6f::t_9941b429bebd06 5
+.agents/rules/adr-verification.md
+  s_d468acf14d2d6f::t_d8ce1699b39714 3
+.agents/rules/artifact-isolation.md
+  s_d468acf14d2d6f::t_78a7e8e3cb6f57 4
+.agents/rules/centralized-infrastructure.md
+  s_d468acf14d2d6f::t_06fe13b73fb713 4,9,13,16,28
+.agents/rules/command-verification.md
+  s_d468acf14d2d6f::t_f53bdab4d763d5 4
+.agents/rules/decoupled-execution.md
+  s_d468acf14d2d6f::t_0e714e6a1e39ca 3
+.agents/rules/dependency-management.md
+  s_d468acf14d2d6f::t_5e96bf2a761dbc 3
+.agents/rules/docs-enforce.md
+  s_d468acf14d2d6f::t_9e81ec7ff0fbb6 4,27-37
+.agents/rules/holistic-ui.md
+  s_d468acf14d2d6f::t_7ea7e63bdd9b20 3,9
+.agents/rules/links-enforce.md
+  s_d468acf14d2d6f::t_1805c2b6abbb03 4,12
+.agents/rules/logging-enforce.md
+  s_d468acf14d2d6f::t_13a21fba821344 5,21,30
+.agents/rules/no-silent-restore.md
+  s_d468acf14d2d6f::t_26f1f833c05ef6 3,35
+.agents/rules/platform-agnostic.md
+  s_d468acf14d2d6f::t_7ae297c2c15a25 4,11-12
+.agents/rules/port-conflicts.md
+  s_d468acf14d2d6f::t_0bb849c9e7f0c8 3,12-15,18,21-29,32-33
+.agents/rules/pr-documentation-update.md
+  s_d468acf14d2d6f::t_988c7ac7538e5f 4
+.agents/rules/src-isolation.md
+  s_d468acf14d2d6f::t_3aa88e2b1b23f4 4,14,23-24
+.agents/rules/sync-logic.md
+  s_d468acf14d2d6f::t_b654eb75c79b25 3,10,15-16
+.agents/rules/task-workflow.md
+  s_d468acf14d2d6f::t_748dfd0856c556 4
+.agents/rules/tdd-enforce.md
+  s_d468acf14d2d6f::t_7a51802d4f37bd 3
+.agents/rules/test-cleanup.md
+  s_d468acf14d2d6f::t_7946822ee96e85 3,13,15-16
+.agents/rules/workspace-boundaries.md
+  s_d468acf14d2d6f::t_8a39a838fb033d 5,16-19
+.agents/scripts/README.md
+  s_ad188c11c81d1f::t_2180d5112f8ff8 3-5,20,31,46,51,58,60,67,74,79,149,164,202,204,209-212,214-215,218-244,248-256,260-262,264,267-268,270
+.agents/skills/architecture-writer/SKILL-architecture-writer.md
+  s_d468acf14d2d6f::t_9cf62d153b02b2 8,40
+.agents/skills/feature-writer/SKILL-feature-writer.md
+  s_d468acf14d2d6f::t_f7145ac21f1e25 7,26-30,45,50,52,57,59,129,145,233,236-237,245,254,303,309,313-322,330-331,344
+.agents/skills/init-beam-elixir/SKILL-init-beam-elixir.md
+  s_d468acf14d2d6f::t_1033669f3c14e6 2-7,9,14-16,20,22,27,30-32,46-47,49,53-58,65-67,71,74-75,79-86,90,92-99,101-115,135,150,152-154,160,163,165-166,171-188,194-195,198-199,202,205,207-208,215,219,248,251,256,286-287,289,291,293-294,314-315,318,320-322,334-335,367
+.agents/skills/init-python-js/SKILL-init-python-js.md
+  s_d468acf14d2d6f::t_bec1d11304dd1f 2,4-5,7,66,160
+.agents/skills/init-rust-js/SKILL-init-rust-js.md
+  s_d468acf14d2d6f::t_b9d7553bd0c618 9,123,137,155,219,306,484
+.agents/skills/kb-synthesizer/SKILL-kb-synthesizer.md
+  s_d468acf14d2d6f::t_e1052fd626bebf 7,22,110,120,122,138,224
+.agents/skills/plan-writer/SKILL-plan-writer.md
+  s_d468acf14d2d6f::t_5ec6530266f76e 7,18,32,39-40,55-56,65,79,94-95,142,154,162,172-173
+.agents/skills/prd-writer/SKILL-prd-writer.md
+  s_d468acf14d2d6f::t_facdfc6680ed4e 5,9
+.agents/skills/requirements-extractor/SKILL-requirements-extractor.md
+  s_d468acf14d2d6f::t_a0496a7c361758 7,33,35
+.agents/skills/srs-writer/SKILL-srs-writer.md
+  s_d468acf14d2d6f::t_8296f3fa56c42c 5,10,29,62,78,98,112-114,122-123,126-128,140-141,165-166,174,176,183,189,191-192
+.agents/skills/vision-writer/SKILL-vision-writer.md
+  s_d468acf14d2d6f::t_05f8eb2ed9bb95 5,10,19,32,36,39,58,60-61,64,67
+AGENTS.md
+  s_d3a934a8e43ee1::t_95e335a915f20c 5,14,21,28,34,40,46,51-52,58,66,87,91,97,115
+README.md
+  s_d3a934a8e43ee1::t_6d18a3f4fe4800 23,45,57,60,64,69,94,98,101,120-129,141-144
+apps/README.md
+  s_d3a934a8e43ee1::t_00d8b489e0874f 14-15,17-24
+config/promtail/docker-config.yaml
+  s_d3a934a8e43ee1::t_34b7a42be17691 12-14
+data/README.md
+  s_d3a934a8e43ee1::t_cbfbfc1d5f5645 5-7
+docker-compose.yml
+  s_d3a934a8e43ee1::t_5f76928ede1182 1-6,8,17,29,42,51-53,55,61-126
+docs/README.md
+  s_d3a934a8e43ee1::t_6242404d4e6c28 3,7
+resources/references/README.md
+  s_d3a934a8e43ee1::t_e2e66b01db8867 12-13,31-34,42,46,49,51-52,76,79,81-82,85,87,89-90,100-101,104,115,117,119-120,133,141,143-144,146
+resources/templates/architecture-template.md
+  s_d3a934a8e43ee1::t_d4244356476a20 97
+resources/templates/prd-template.md
+  s_d3a934a8e43ee1::t_bfe6cf4efa6b32 1,17,20-23,27,59-60,63-64,67-68,72-73,77-79,82-93
+resources/templates/product-vision-template-non-profit.md
+  s_d3a934a8e43ee1::t_f3d5a4fc6c8abd 17
+resources/templates/product-vision-template.md
+  s_d3a934a8e43ee1::t_c92c46472305bc 1,5,14,21-22,26,31
+scripts/docs/check_links.py
+  s_d3a934a8e43ee1::t_a970e470471667 2-4
+scripts/docs/check_prd_allocation.py
+  s_d3a934a8e43ee1::t_2d07e56c6ff96c 2-4
+scripts/docs/check_workspace_links.py
+  s_d3a934a8e43ee1::t_5c44698ce45559 2-4
+scripts/docs/test_check_prd_allocation.py
+  s_d3a934a8e43ee1::t_574eebe41b1de0 1-3
+scripts/docs/test_check_workspace_links.py
+  s_d3a934a8e43ee1::t_cc15626d8bdb99 1-3
+scripts/docs/validate-adrs.mjs
+  s_d3a934a8e43ee1::t_11ff4df7a136c8 1-3
+scripts/docs/validate-adrs.test.mjs
+  s_d3a934a8e43ee1::t_bc27f1469834ba 1-3
+scripts/pre-commit.sh
+  s_d3a934a8e43ee1::t_46ecfbebc8a865 2,61,75
+scripts/verify_branch.sh
+  s_d3a934a8e43ee1::t_d176b3f4b31477 2
+scripts/verify_centralized_logging.sh
+  s_d3a934a8e43ee1::t_c029602e09314d 2,6-14,20,28-38,40-43
+scripts/verify_doc_sync.sh
+  s_d3a934a8e43ee1::t_883b9840adc49f 2,6-7,22,25
+scripts/verify_docs.sh
+  s_d3a934a8e43ee1::t_778fa9487c4cc2 2
+scripts/verify_formatting.sh
+  s_d3a934a8e43ee1::t_4902ca3ec722e1 2,6,15-17,67-87,93
+scripts/verify_isolated_ports.sh
+  s_d3a934a8e43ee1::t_aef613df8b9691 2,6-11,16,19,22,24-25,27-28,30-34,36,38-40,42-44,46-55,57-60,62-70,78-81
+scripts/verify_relative_links.sh
+  s_d468acf14d2d6f::t_6c2483d71345b4 2,12
+scripts/verify_srs_traceability.sh
+  s_d3a934a8e43ee1::t_52a95e390e1085 2,14-15,25-26
+scripts/verify_task_cleanup.sh
+  s_d3a934a8e43ee1::t_7550a3575a3662 2
+scripts/verify_tests.sh
+  s_d3a934a8e43ee1::t_1e730e9d9a1c5a 2,6,25-28,111-124,130
+scripts/verify_workspace_boundaries.sh
+  s_d3a934a8e43ee1::t_41942d4b2babfe 2,16-21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d37da4822b3c2527ff2e0bd7c3e97845d7beea34",
+  "prompts": {},
+  "sessions": {
+    "s_ad188c11c81d1f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "agent-a217d490d49ce061c",
+        "model": "unknown"
+      },
+      "human_author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    },
+    "s_d3a934a8e43ee1": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "agent-a99349f3df8f92309",
+        "model": "unknown"
+      },
+      "human_author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    },
+    "s_d468acf14d2d6f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "89b657b4-bd43-4d9e-a4fc-f91c166c010b",
+        "model": "unknown"
+      },
+      "human_author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
