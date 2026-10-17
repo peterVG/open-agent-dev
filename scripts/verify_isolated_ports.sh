@@ -35,16 +35,17 @@ for APP_PATH in "$APPS_DIR"/*; do
 
   echo "🔍 Validating $APP_NAME..."
 
-  # Extract target dev port using regex search
-  # Matches: port: 4000
-  DEV_PORT=$(grep -oE 'port:[[:space:]]*[0-9]+' "$DEV_EXS" | grep -oE '[0-9]+' | head -n 1 || true)
+  # Extract the endpoint's dev port from its `http: [...]` keyword list only,
+  # so other `port:` keys (for example an Ecto Repo's `port: 5432`) are ignored.
+  # Matches: http: [ip: {127, 0, 0, 1}, port: 4000]  and  http: [port: 4000]
+  DEV_PORT=$(grep -oE 'http:[[:space:]]*\[[^]]*port:[[:space:]]*[0-9]+' "$DEV_EXS" | grep -oE '[0-9]+$' | head -n 1 || true)
 
   # Extract target fallback runtime port using regex search
   # Matches: System.get_env("PORT", "4000")
   RUNTIME_PORT=$(grep -oE 'System\.get_env\("PORT",[[:space:]]*"[0-9]+"\)' "$RUNTIME_EXS" | grep -oE '[0-9]+' | head -n 1 || true)
 
   if [ -z "$DEV_PORT" ]; then
-    echo "❌ ERROR ($APP_NAME): Could not find 'port: XXXX' in dev.exs"
+    echo "❌ ERROR ($APP_NAME): Could not find 'http: [..., port: XXXX]' in dev.exs"
     FAILED=1
     continue
   fi

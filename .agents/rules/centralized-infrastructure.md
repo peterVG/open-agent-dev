@@ -10,7 +10,7 @@ Whether the Open Agent Dev repository is structured as a Polyglot Monorepo (Pyth
 
 ## Docker Compose
 
-Docker Compose is the default local infrastructure tool unless an ADR selects otherwise. You MUST place the primary `docker-compose.yml` file at the repository root, **not** inside individual workspace directories (e.g., do not put it in `apps/web/`).
+Docker Compose is the default local infrastructure tool unless an ADR selects otherwise. When Docker Compose is the selected tool (the default), you MUST place the primary `docker-compose.yml` file at the repository root, **not** inside individual workspace directories (e.g., do not put it in `apps/web/`), and the rules in this section apply. If an ADR selects a different tool, apply the same principle: keep its shared configuration centralized at the repository root.
 
 **CRITICAL DISTINCTION FOR BEAM/ELIXIR PROJECTS:** 
 If the project is a BEAM/Elixir project, this centralized `docker-compose.yml` is *only* to be used for spinning up **backing services** (PostgreSQL, Redis, RabbitMQ, etc.) for local development. 

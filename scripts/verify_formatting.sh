@@ -13,8 +13,8 @@
 #     been run in that package; the check fails with that instruction otherwise.
 #   - Elixir: `mix format --check-formatted` in each app with a mix.exs.
 #   - Python: `ruff format --check .` and `ruff check .` in each app with a
-#     pyproject.toml or requirements.txt. Skipped with a message when ruff is
-#     not on PATH.
+#     pyproject.toml or requirements.txt. Uses the app's .venv ruff when present,
+#     else ruff on PATH; fails with an install hint when neither exists.
 #
 # Usage: ./scripts/verify_formatting.sh   (from the repository root)
 
@@ -69,15 +69,28 @@ is_python_app() {
   [ -f "$1/pyproject.toml" ] || [ -f "$1/requirements.txt" ]
 }
 
+find_python_tool() {
+  # $1 = app directory, $2 = tool name. Prints the absolute path of the app's
+  # virtualenv copy of the tool (.venv/bin or, on Windows, .venv/Scripts), else
+  # the tool on PATH, else nothing. Pure lookup.
+  local dir="$1" tool="$2" candidate
+  for candidate in "$dir/.venv/bin/$tool" "$dir/.venv/Scripts/$tool.exe"; do
+    [ -x "$candidate" ] && { echo "$(cd "$(dirname "$candidate")" && pwd)/$(basename "$candidate")"; return; }
+  done
+  command -v "$tool" 2>/dev/null || true
+}
+
 check_python_app() {
   # $1 = app directory holding pyproject.toml or requirements.txt
-  local dir="$1"
+  local dir="$1" ruff
   echo "🔍 Validating Python formatting and lint in $dir..."
-  if ! command -v ruff >/dev/null 2>&1; then
-    echo "⚠️  [SKIPPING] $dir: ruff is not installed. Install it to check Python formatting."
+  ruff=$(find_python_tool "$dir" ruff)
+  if [ -z "$ruff" ]; then
+    echo "❌ ERROR ($dir): ruff not found in $dir/.venv or on PATH. Install it (for example 'pip install ruff' in the app's virtualenv) first."
+    FAILED=1
     return
   fi
-  if (cd "$dir" && ruff format --check . >/dev/null 2>&1 && ruff check . >/dev/null 2>&1); then
+  if (cd "$dir" && "$ruff" format --check . >/dev/null 2>&1 && "$ruff" check . >/dev/null 2>&1); then
     echo "✅ $dir is properly formatted."
   else
     echo "❌ ERROR ($dir): Python format or lint violation. Run 'ruff format .' and 'ruff check .' in $dir."

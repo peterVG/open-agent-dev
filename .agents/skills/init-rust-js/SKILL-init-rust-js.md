@@ -251,7 +251,7 @@ When writing or configuring code for this stack, you must adhere to the followin
 
 **Testing taxonomy:** `unit/`, `integration/`, `ui/`, BDD `features/`, `e2e/`, `performance/`, `allure-results/`.
 
-**Centralized logging:** Unbuffered stdout only. Promtail → Redpanda → Loki, Prometheus, Grafana via Compose.
+**Centralized logging:** Unbuffered stdout only. Promtail → Loki, Prometheus, Grafana via Compose (Redpanda buffering between Promtail and Loki is optional, ADR-backed, and enabled via the `buffering` Compose profile).
 
 ---
 

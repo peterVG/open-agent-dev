@@ -24,10 +24,13 @@ This skill enables the agent to translate Product Requirement Document (PRD) spe
 
 ### 1. Identify the Tech Stack
 Before writing any output, you MUST detect the tech stack of the app you are writing features for. Each app lives under `apps/<app>/`; there is no language tooling at the repository root.
-- **BEAM/Elixir Stack:** Identified by a `mix.exs` file in the app directory (e.g. `apps/my_app/mix.exs`).
-- **Rust/JavaScript Stack:** Identified by a `Cargo.toml` file in the app directory (e.g. `apps/backend/Cargo.toml`, `apps/desktop/src-tauri/Cargo.toml`).
-- **Python/Javascript Stack:** Identified by a `requirements.txt`, `pyproject.toml`, or `package.json` in the app directory (e.g. `apps/backend/`, `apps/frontend/`).
-- **Otherwise:** Follow the testing ADR in `resources/architecture/ADRs/` for the BDD framework, file format, and directory.
+
+Check the manifests in the target `apps/<app>/` directory in this order and stop at the first match (an app may contain several manifests, e.g. a Rust app with a `package.json` for its frontend):
+1. **BEAM/Elixir Stack:** a `mix.exs` file at the app root (e.g. `apps/my_app/mix.exs`).
+2. **Rust/JavaScript Stack:** a `Cargo.toml` file at the app root (e.g. `apps/api/Cargo.toml`) or in a Tauri crate nested inside the app directory at `src-tauri/` (e.g. `apps/desktop/src-tauri/Cargo.toml`, where `apps/desktop/` is the app and `src-tauri/` is its Rust crate).
+3. **Python/Javascript Stack:** a `pyproject.toml` or `requirements.txt` file at the app root (e.g. `apps/backend/pyproject.toml`).
+4. **JavaScript Stack (Python/Javascript conventions):** otherwise, a `package.json` file at the app root (e.g. `apps/frontend/package.json`).
+5. **Otherwise:** Follow the testing ADR in `resources/architecture/ADRs/` for the BDD framework, file format, and directory.
 
 ### 2. Traceability
 Every scenario MUST map back to a specific SRS requirement.
@@ -312,7 +315,7 @@ When asked to draft feature scenarios, the agent MUST adjust its output format a
 
 ### For the Rust/JavaScript Stack:
 1. **Format:** Use standard Gherkin `.feature` syntax executed by `cucumber` (cucumber-rs), with step definitions in a Rust test harness.
-2. **Directory:** Create the `.feature` file in the crate's `tests/features/` directory (e.g. `apps/backend/tests/features/`, `apps/desktop/src-tauri/tests/features/`). Register the harness as a `[[test]]` target with `harness = false` in that crate's `Cargo.toml`.
+2. **Directory:** Create the `.feature` file in the crate's `tests/features/` directory (e.g. `apps/api/tests/features/` for an app-root crate, or `apps/desktop/src-tauri/tests/features/` for the Tauri crate nested inside the `apps/desktop/` app). Register the harness as a `[[test]]` target with `harness = false` in that crate's `Cargo.toml`.
 3. **Naming Conventions:** Name the file after the feature and append the SRS requirement ID (e.g., `file_upload_SRS-UPLOAD-001.feature`).
 4. **Traceability:** Include the SRS header traceability comment at the top, and append a Source block at the bottom mapping the feature to the SRS and PRD origin.
 
@@ -327,7 +330,7 @@ USER: Using the SRS, write 5 scenarios for file upload.
 AGENT: [Activates Feature Writer skill]
 AGENT: [Reads @resources/srs.md]
 AGENT: [Identifies relevant requirements: SRS-UPLOAD-001, SRS-SEC-002, SRS-PERF-001]
-AGENT: [Checks apps/backend/ for mix.exs, Cargo.toml, or requirements.txt] -> (Detects Python/JS Stack)
+AGENT: [Checks apps/backend/ in precedence order for mix.exs, Cargo.toml (app root or src-tauri/), pyproject.toml/requirements.txt, then package.json] -> (Finds pyproject.toml: detects Python/JS Stack)
 AGENT: [Creates apps/backend/tests/features/file_upload_SRS-UPLOAD-001.feature]
 AGENT: [Writes standard Gherkin scenarios]
 AGENT: [Asks clarifying question if needed]

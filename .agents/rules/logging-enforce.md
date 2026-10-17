@@ -19,11 +19,11 @@ When configuring application code, CI/CD pipelines, or generating Docker Compose
 
 ### 2. Infrastructure Topology
 The agent MUST configure the local `docker-compose.yml` to capture and route these container logs into the recommended centralized observability stack (or the ADR-selected equivalent):
-- **Promtail:** Configured to read Docker/container stdout logs natively.
-- **Redpanda:** Configured as a high-throughput, Kafka-compatible event broker buffer.
-- **Loki:** Configured to receive indices from Redpanda/Promtail and securely store them for long-term archival.
+- **Promtail:** Configured to read Docker/container stdout logs natively and, by default, push them directly to Loki.
+- **Loki:** Configured to receive log streams from Promtail (or from Redpanda when buffering is enabled) and securely store them for long-term archival.
 - **Prometheus:** Configured to scrape `/metrics` endpoints from the applications.
 - **Grafana:** Configured with Loki as the logging data source and Prometheus as the metrics data source.
+- **Redpanda (optional):** Only when an ADR calls for high-throughput buffering, configure Redpanda as a Kafka-compatible event broker between Promtail and Loki, behind the opt-in `buffering` Compose profile (`docker compose --profile buffering up`) so the default topology remains Promtail → Loki.
 
 ### 3. README Documentation
 - When standing up or modifying this containerized infrastructure, the agent MUST explicitly add instructions under the `## View logs` section (located under `# Setup Development Environment`) of the project's root `README.md` detailing how developers can spin up the full observability stack via `docker-compose`. 

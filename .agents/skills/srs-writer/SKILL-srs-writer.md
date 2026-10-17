@@ -125,7 +125,7 @@ Files MUST be stored durably in S3-compatible object storage.
 **Cost Validation:**
 - Executed a cost estimation script (e.g. `scripts/validation/estimate_storage_costs.py`, illustrative path)
 - Estimated cost: per-GB storage and transfer pricing from the provider selected in the storage ADR
-- Projected monthly volume × unit price compared against the $100/month budget ✅ Within budget
+- Projected monthly volume × unit price compared against the $100/month budget, e.g. (illustrative figures only) 500 GB stored × $0.023/GB + 200 GB egress × $0.09/GB = $11.50 + $18.00 = $29.50/month ✅ Within budget
 
 **Source**
 - `[prd.md](../prd.md)` F-001 File Upload
@@ -134,7 +134,7 @@ Files MUST be stored durably in S3-compatible object storage.
 - [`large_file_upload_SRS-UPLOAD-001.feature`](../tests/features/large_file_upload_SRS-UPLOAD-001.feature)
 
 ### SRS-UPLOAD-001.3: Chunking Strategy
-Files larger than 100MB MUST be chunked.
+Files larger than the multipart threshold defined in the storage ADR MUST be chunked.
 
 **Technical Specification:**
 - Chunk size: per the storage ADR (e.g. the provider's recommended multipart part size)

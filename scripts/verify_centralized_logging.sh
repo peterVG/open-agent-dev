@@ -6,22 +6,19 @@
 # Reject staged source files that write logs to disk instead of stdout.
 #
 # Each supported stack is checked with its own patterns, matched against the
-# staged files with that stack's extensions:
+# staged (index) content of files with that stack's extensions, so an unstaged
+# working-tree edit cannot hide a violation that is still in the commit:
 #   - Elixir (.ex, .exs): LoggerFileBackend, or a "*.log" path literal.
-#   - Python (.py): logging.FileHandler and the rotating file handlers.
+#   - Python (.py): FileHandler and the rotating/watched file handlers, whether
+#     called as logging.FileHandler(...) or imported and called bare.
 #   - JavaScript/TypeScript (.js, .mjs, .cjs, .ts, .mts, .cts, .jsx, .tsx):
-#     fs.createWriteStream( on a line that names a .log file.
+#     createWriteStream( on a line that names a file ending in ".log".
 #   - Rust (.rs): tracing_appender::rolling file appenders.
+# Paths containing whitespace are handled (NUL-delimited file list).
 
 set -e
 
 echo "Starting Centralized Logging Validation..."
-
-STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR)
-
-if [ -z "$STAGED_FILES" ]; then
-  exit 0
-fi
 
 FAILED=0
 
@@ -30,21 +27,31 @@ log_pattern_for() {
   # file's stack, or nothing when the stack is not checked. Pure lookup.
   case "$1" in
     *.ex|*.exs) echo 'LoggerFileBackend|\.log"' ;;
-    *.py) echo 'logging\.FileHandler|(logging\.handlers\.)?(Rotating|TimedRotating|Watched)FileHandler' ;;
-    *.js|*.mjs|*.cjs|*.ts|*.mts|*.cts|*.jsx|*.tsx) echo 'createWriteStream\(.*\.log' ;;
+    *.py) echo '\b(Rotating|TimedRotating|Watched)?FileHandler\(' ;;
+    *.js|*.mjs|*.cjs|*.ts|*.mts|*.cts|*.jsx|*.tsx) echo 'createWriteStream\(.*\.log['"'"'"`]' ;;
     *.rs) echo 'tracing_appender::rolling' ;;
   esac
 }
 
-for FILE in $STAGED_FILES; do
-  [ -f "$FILE" ] || continue
-  PATTERN=$(log_pattern_for "$FILE")
-  [ -n "$PATTERN" ] || continue
-  if grep -qiE "$PATTERN" "$FILE"; then
-    echo "❌ ERROR: File logging destination detected in $FILE!"
-    FAILED=1
-  fi
-done
+staged_file_matches() {
+  # $1 = staged path, $2 = extended regex. True when the staged (index) copy
+  # of the file contains the pattern. Reads from the git index.
+  git show ":$1" 2>/dev/null | grep -qiE "$2"
+}
+
+check_staged_file() {
+  # $1 = staged path. Sets FAILED=1 when its staged content logs to a file.
+  local file="$1" pattern
+  pattern=$(log_pattern_for "$file")
+  [ -n "$pattern" ] || return 0
+  staged_file_matches "$file" "$pattern" || return 0
+  echo "❌ ERROR: File logging destination detected in $file!"
+  FAILED=1
+}
+
+while IFS= read -r -d '' FILE; do
+  check_staged_file "$FILE"
+done < <(git diff --cached --name-only -z --diff-filter=ACMR)
 
 if [ "$FAILED" -ne 0 ]; then
   echo ""

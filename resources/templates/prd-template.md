@@ -17,10 +17,10 @@
 **User Story:** As a [name of actor type], I want to [action] to create [result] because [benefit]
 
 ### Acceptance Criteria
-- eg, User can pick an available appointment slot from a calendar
-- eg, User can add a note for the clinic (reason for visit)
-- eg, Slots already taken are not selectable
-- eg, User receives a confirmation upon completion
+- [e.g., User can select an item from a list]
+- [e.g., User can add an optional note to their submission]
+- [e.g., Items that are unavailable cannot be selected]
+- [e.g., User receives a confirmation upon completion]
 
 ## F-002: [Feature Name]
 **Priority:** [Mandatory/Optional]
@@ -69,7 +69,7 @@
 
 
 ## Success Criteria
-- eg, User can book an appointment in under 1 minute
+- eg, User can complete the primary task in under 1 minute
 - eg, Search returns results in under 2 seconds
 
 # Release Criteria

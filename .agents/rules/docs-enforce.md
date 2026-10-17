@@ -29,7 +29,7 @@ The agent MUST use `@moduledoc` for every module and `@doc` (with `@spec`) for e
 These attributes MUST be parseable by `ExDoc` (`mix docs`) to generate the final developer documentation site.
 
 ### Rust Standards
-The agent MUST use `///` doc comments for every public item (structs, enums, traits, functions, methods) and `//!` for crate- and module-level documentation, including `# Errors` and `# Panics` sections where applicable.
+The agent MUST use `///` doc comments for every public item (structs, enums, traits, functions, methods) and `//!` for crate- and module-level documentation, including `# Errors` and `# Panics` sections where applicable. Private functions and complex blocks MUST use `//` comments explaining intent.
 These comments MUST be parseable by `rustdoc` (`cargo doc`) to generate the final developer documentation site.
 
 ### Other Stacks

@@ -107,7 +107,7 @@ Follow `AGENTS.md` §10 and [logging-enforce.md](../rules/logging-enforce.md):
 * **Logger to stdout:** Configure `Logger` to write unbuffered to `stdout`, structured as JSON (e.g. `LoggerJSON`). No file backends.
 * **Telemetry & metrics:** Use `:telemetry` events with `PromEx` (or `TelemetryMetricsPrometheus`) to expose a `/metrics` endpoint for Prometheus, including BEAM-specific metrics (process count, memory, run queues).
 * **Tracing:** OpenTelemetry for distributed traces across nodes and services.
-* **Pipeline:** The recommended stack (or the ADR-selected equivalent) is Promtail → Redpanda → Loki for logs, Prometheus for metrics, and Grafana for dashboards.
+* **Pipeline:** The default stack (or the ADR-selected equivalent) is Promtail → Loki for logs, Prometheus for metrics, and Grafana for dashboards. Redpanda is an optional high-throughput buffering layer between Promtail and Loki; add it only when an ADR calls for it (enabled via the opt-in `buffering` Compose profile: `docker compose --profile buffering up`).
 
 # Optional, only when the PRD/ADRs require it
 

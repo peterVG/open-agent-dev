@@ -1,9 +1,20 @@
-# Local development stack: observability services plus example datastores.
+# Local development stack: observability services plus opt-in extras.
+#
+#   docker compose up -d                                 # observability only
+#   docker compose --profile datastores up -d            # + example Postgres
+#   docker compose --profile buffering up -d             # + Redpanda buffer
+#   docker compose --profile datastores --profile buffering up -d   # everything
 #
 # Credentials below are defaults for local development only. Override them
 # with environment variables (or a git-ignored .env file) and never reuse them
 # in a deployed environment. Published ports bind to 127.0.0.1 so the services
 # are not reachable from other machines on the network.
+#
+# Credential variables only take effect the first time a service initializes
+# its persistent data directory under ./data/. Changing them later has no
+# effect on existing data. To rotate or reset credentials, stop the service and
+# delete its data directory (data/grafana_data/ for Grafana, data/postgres_data/
+# for Postgres), then start it again. Deleting the directory erases its data.
 
 services:
   # ----------------------------------------------------
@@ -49,6 +60,8 @@ services:
     environment:
       - TZ=UTC
       # Local development only: override via environment or .env.
+      # Applied on first initialization of data/grafana_data/ only; to change
+      # them later, stop grafana and delete data/grafana_data/.
       - GF_SECURITY_ADMIN_USER=${GF_SECURITY_ADMIN_USER:-admin}
       - GF_SECURITY_ADMIN_PASSWORD=${GF_SECURITY_ADMIN_PASSWORD:-admin}
     ports:
@@ -65,6 +78,8 @@ services:
   # Redpanda (Kafka-compatible) is not wired into the pipeline by default:
   # Promtail pushes straight to Loki. Start it with
   # `docker compose --profile buffering up` when log volume needs a buffer.
+  # Its Prometheus scrape job is commented out in
+  # config/prometheus/prometheus.yml; uncomment it when enabling this profile.
   redpanda:
     image: docker.redpanda.com/redpandadata/redpanda:v23.2.2
     profiles: ["buffering"]
@@ -93,14 +108,18 @@ services:
   # OPTIONAL: example datastores
   # ----------------------------------------------------
   # Example only: remove or replace these per your database ADR
-  # (resources/architecture/ADRs/).
+  # (resources/architecture/ADRs/). Opt-in: start them with
+  # `docker compose --profile datastores up`.
   postgres:
     image: postgres:16-alpine
+    profiles: ["datastores"]
     ports:
       - "127.0.0.1:5432:5432"
     environment:
       - TZ=UTC
       # Local development only: override via environment or .env.
+      # Applied on first initialization of data/postgres_data/ only; to change
+      # them later, stop postgres and delete data/postgres_data/.
       - POSTGRES_USER=${POSTGRES_USER:-postgres}
       - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-postgres}
     volumes:
@@ -114,6 +133,7 @@ services:
   # Example search index. Uncomment if your ADRs call for Elasticsearch.
   # elasticsearch:
   #   image: docker.elastic.co/elasticsearch/elasticsearch:8.12.0
+  #   profiles: ["datastores"]
   #   environment:
   #     - TZ=UTC
   #     - discovery.type=single-node

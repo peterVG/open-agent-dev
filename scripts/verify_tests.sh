@@ -24,8 +24,9 @@
 #       7. mix test
 #   - Python (a directory under apps/ holding a pyproject.toml or
 #     requirements.txt):
-#       8. pytest (skipped with a message when pytest is not on PATH; lint
-#          runs in verify_formatting.sh via ruff)
+#       8. pytest (the app's .venv pytest when present, else pytest on PATH;
+#          fails with an install hint when neither exists; lint runs in
+#          verify_formatting.sh via ruff)
 #
 # Environment:
 #   VERIFY_SKIP_TESTS=1  skip this script (work-in-progress commits only;
@@ -113,13 +114,27 @@ is_python_app() {
   [ -f "$1/pyproject.toml" ] || [ -f "$1/requirements.txt" ]
 }
 
+find_python_tool() {
+  # $1 = app directory, $2 = tool name. Prints the absolute path of the app's
+  # virtualenv copy of the tool (.venv/bin or, on Windows, .venv/Scripts), else
+  # the tool on PATH, else nothing. Pure lookup.
+  local dir="$1" tool="$2" candidate
+  for candidate in "$dir/.venv/bin/$tool" "$dir/.venv/Scripts/$tool.exe"; do
+    [ -x "$candidate" ] && { echo "$(cd "$(dirname "$candidate")" && pwd)/$(basename "$candidate")"; return; }
+  done
+  command -v "$tool" 2>/dev/null || true
+}
+
 run_python_app() {
   # $1 = app directory holding pyproject.toml or requirements.txt
-  if ! command -v pytest >/dev/null 2>&1; then
-    echo "⚠️  [SKIPPING] $1: pytest is not installed. Install it to run Python tests."
+  local pytest
+  pytest=$(find_python_tool "$1" pytest)
+  if [ -z "$pytest" ]; then
+    echo "❌ ERROR ($1): pytest not found in $1/.venv or on PATH. Install it (for example 'pip install pytest' in the app's virtualenv) first."
+    FAILED=1
     return
   fi
-  run_step "Pytest" "$1" pytest
+  run_step "Pytest" "$1" "$pytest"
 }
 
 for APP_PATH in "$APPS_DIR"/*; do

@@ -18,7 +18,7 @@ status: stable
 generated:
   by: process:kb-synthesizer
   at: '2026-09-16T22:38:58Z'
-stale_after: '2027-04-30'
+stale_after: '2026-09-30'
 spec-version: '0.2'
 research-as-of: '2026-09-16'
 scope:

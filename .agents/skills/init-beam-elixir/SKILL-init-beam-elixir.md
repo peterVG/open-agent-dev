@@ -100,7 +100,7 @@ You MUST configure the following dependencies in each app's `mix.exs` and suppor
   - `logger_json`: Write unbuffered JSON objects to stdout. MUST configure to include `node()` metadata for Grafana filtering.
   - `prom_ex` & Prometheus: Auto-capture BEAM metrics (CPU, Oban queue depth, processes).
   - `opentelemetry`: Distributed tracing layer to correlate actions via Trace IDs.
-  - Promtail (scraping stdout to a Redpanda buffer), Loki (log aggregator), Grafana.
+  - Promtail (scraping stdout and pushing directly to Loki; an optional Redpanda buffer only when an ADR calls for it, via the `buffering` Compose profile), Loki (log aggregator), Grafana.
 
 ### Optional — only if the PRD/ADRs require it
 
@@ -184,7 +184,7 @@ Allure reads JUnit XML results natively. Configure ExUnit to emit JUnit XML into
    ExUnit.configure(formatters: [JUnitFormatter, ExUnit.CLIFormatter])
    ExUnit.start()
    ```
-4. **Purge stale results:** Configure a mix alias (e.g. `test: ["cmd rm -rf test/allure-results", "test"]`, or an equivalent cross-platform task) so historical results are removed before each test cycle.
+4. **Purge stale results:** Configure a cross-platform mix alias (e.g. `test: [fn _ -> File.rm_rf!("test/allure-results") end, "test"]`) so historical results are removed before each test cycle.
 5. **Allure CLI:** Ensure the Allure command-line tool is installed. Generate the HTML report with `allure generate test/allure-results -o test/allure-report --clean`, or view it locally with `allure serve test/allure-results`.
 
 ### 4. PhoenixTest and Playwright Integration

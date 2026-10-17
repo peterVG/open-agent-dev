@@ -21,7 +21,7 @@ lsof -ti:<port> | xargs kill -9
 **Windows (Command Prompt or PowerShell):**
 
 ```bat
-netstat -ano | findstr :<port>
+netstat -ano | findstr LISTENING | findstr :<port>
 taskkill /PID <pid> /F
 ```
 
