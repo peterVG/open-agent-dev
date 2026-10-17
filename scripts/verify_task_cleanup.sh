@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
-
-# Task Cleanup Validation
+# SPDX-FileCopyrightText: 2026 Peter Van Garderen <petervg@iona.ltd>
+#
+# SPDX-License-Identifier: MIT
+#
+# Fail when a task Walkthrough exists but its Plan or ToDos document was not removed.
 #
 # This script ensures that whenever a Walkthrough document exists for a task,
 # the corresponding Plan and ToDos documents are removed to prevent clutter.

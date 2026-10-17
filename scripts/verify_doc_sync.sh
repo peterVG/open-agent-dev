@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+# SPDX-FileCopyrightText: 2026 Peter Van Garderen <petervg@iona.ltd>
+#
+# SPDX-License-Identifier: MIT
+#
+# Require a Markdown documentation change whenever staged Elixir code changes.
 
 # Exit immediately if a command exits with a non-zero status
 set -e

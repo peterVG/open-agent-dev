@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+# SPDX-FileCopyrightText: 2026 Peter Van Garderen <petervg@iona.ltd>
+#
+# SPDX-License-Identifier: MIT
+#
+# Reject staged Elixir files that write logs to disk instead of stdout.
+
 set -e
 
 echo "Starting Centralized Logging Validation..."

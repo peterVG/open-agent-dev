@@ -36,7 +36,7 @@ Upload any reference documents to the [`resources/references/`](./resources/refe
 @AGENTS.md read any reference documents in @resources/references/ and use the @.agents/skills/kb-synthesizer skill to generate a knowledge base in @.agents/kb/
 ```
 ## Create a Product Vision
-Fill out the [product vision template](./resources/templates/product-vision-template.md) as best as possible and save it as [`resources/product-vision.md`](./resources/product-vision.md).
+Fill out the [product vision template](./resources/templates/product-vision-template.md) as best as possible and save it as `resources/product-vision.md`.
 
 If this is a product for a non-profit project, use the [alternate template](./resources/templates/product-vision-template-non-profit.md) to create a product vision document.
 
@@ -50,7 +50,7 @@ If you want AI Agent assistance to write the product vision document, you can in
 ```text
 @AGENTS.md Generate a prd.md in @resources using the @.agents/skills/prd-writer skill. Base it on @resources/product-vision.md, the @.agents/kb/ folder and the principles in the AGENTS.md file.
 ```
-Review and revise [`resources/prd.md`](./resources/prd.md) as needed. Check the [PRD template](./resources/templates/prd-template.md) for additional guidance. Make sure to add any additional requirements that you think are necessary to fully define the product vision.
+Review and revise `resources/prd.md` as needed. Check the [PRD template](./resources/templates/prd-template.md) for additional guidance. Make sure to add any additional requirements that you think are necessary to fully define the product vision.
 
 ## Initialize the project
 
@@ -73,14 +73,14 @@ OR
 
 ## Add UI mockups and examples
 
-Store wireframes, mockups, flows, and look-and-feel examples in [`resources/ui-mockups/`](./resources/ui-mockups/). Each file is a hard look-and-feel requirement for the surface it shows. Outcome-level product needs stay in [`resources/prd.md`](./resources/prd.md). See [`resources/ui-mockups/README.md`](./resources/ui-mockups/README.md) for what to include and how they are recorded as requirements.
+Store wireframes, mockups, flows, and look-and-feel examples in [`resources/ui-mockups/`](./resources/ui-mockups/). Each file is a hard look-and-feel requirement for the surface it shows. Outcome-level product needs stay in `resources/prd.md`. See [`resources/ui-mockups/README.md`](./resources/ui-mockups/README.md) for what to include and how they are recorded as requirements.
 
 ## Create a Software Requirement Specification document and Architecture Decision Records
 
 ```text
 @AGENTS.md Generate a srs.md in @resources [or @apps/app_123/resources] using the @.agents/skills/srs-writer skill. Base it on @resources/prd.md, the UI mockups and examples in @resources/ui-mockups/, and the principles in the AGENTS.md file. Treat every file in @resources/ui-mockups/ as a hard look-and-feel requirement. Record the surfaces, information, states, interactions, and the composition a person sees: regions and what sits in each, what is visible without scrolling, grouping, hierarchy, density, typography scale, colour roles, control shape, and which status text is shown or withheld. Write those as RFC 2119 requirements that comply with ISO/IEC/IEEE 29148, and cite each mockup in the Source block. A pixel or two of browser rendering difference is acceptable. Do not require a screenshot hash, and do not write that the page need not match the mockup. Use the @.agents/rules/adr-formatting.md rule to generate ADR files in the @resources/architecture/ADRs/ folder based on the technical decisions in @resources/prd.md and @resources/srs.md. Populate the # About this project section of this README.md file with a description of the project based on the @resources/product-vision.md, @resources/prd.md, @resources/srs.md, ADR files and BDD feature files.
 ```
-Review and revise [`resources/srs.md`](./resources/srs.md) as needed. Presentation and look-and-feel requirements extracted from mockups MUST follow each mockup's composition and MUST be testable. A pixel or two of browser rendering difference is acceptable. A screenshot hash is not required. A requirement that can pass while the page looks unlike the mockup is incomplete.
+Review and revise `resources/srs.md` as needed. Presentation and look-and-feel requirements extracted from mockups MUST follow each mockup's composition and MUST be testable. A pixel or two of browser rendering difference is acceptable. A screenshot hash is not required. A requirement that can pass while the page looks unlike the mockup is incomplete.
 
 ## Generate an implementation plan to guide development
 ### The "Global Holistic Execution" Prompt
@@ -106,4 +106,28 @@ If you are a human developer and absolutely must push a hotfix directly to `main
 
 ```bash
 FORCE_MAIN_COMMIT=1 git commit -m "emergency hotfix"
+```
+
+## Pre-commit validation scripts
+
+The gates in [`scripts/`](./scripts/) are the project's local CI. Install the hook once per clone (any platform with Git):
+
+```bash
+cp scripts/pre-commit.sh .git/hooks/pre-commit
+chmod +x .git/hooks/pre-commit
+```
+
+[`pre-commit.sh`](./scripts/pre-commit.sh) then runs these checks in order and stops at the first failure: branch-per-task, port isolation, document sync, PRD/SRS traceability, portable links, workspace boundaries, centralized logging, formatting, documentation, and finally lint and tests. Every check can also be run by hand from the repository root, for example `./scripts/verify_tests.sh`.
+
+The scripts discover the stacks present under `apps/` (Rust `Cargo.toml`, npm `package.json`, Elixir `mix.exs`) and the documents present under `resources/`, so they need no per-project edits. Three knobs exist:
+
+- `VERIFY_SKIP_TESTS=1` skips the lint and test gate for a work-in-progress commit. Run `./scripts/verify_tests.sh` before pushing.
+- `VERIFY_E2E=1` also runs each npm package's `test:e2e` script, which is slow.
+- `STANDALONE_WORKSPACES` in [`verify_docs.sh`](./scripts/verify_docs.sh) lists `apps/` workspaces that must stay extractable to their own repository. Documents may not link across those boundaries. It is empty by default.
+
+The documentation validators under [`scripts/docs/`](./scripts/docs/) need `node` and `python3` and carry their own unit tests, which the documentation gate runs. To run them alone:
+
+```bash
+node --test scripts/docs/validate-adrs.test.mjs
+python3 -m unittest discover -s scripts/docs -p "test_*.py"
 ```

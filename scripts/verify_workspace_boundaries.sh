@@ -1,4 +1,10 @@
 #!/usr/bin/env bash
+# SPDX-FileCopyrightText: 2026 Peter Van Garderen <petervg@iona.ltd>
+#
+# SPDX-License-Identifier: MIT
+#
+# Fail when a language or dependency manifest sits at the repository root instead of under apps/.
+
 set -e
 
 echo "Starting Workspace Boundary Validation..."
