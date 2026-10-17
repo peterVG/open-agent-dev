@@ -1,0 +1,85 @@
+.agents/rules/tdd-enforce.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 1-5
+.agents/rules/task-workflow.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 3-4
+.agents/skills/init-rust-js/SKILL-init-rust-js.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 8-9
+.agents/rules/adr-verification.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 1-5
+.agents/rules/holistic-ui.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 1-5
+.agents/rules/no-silent-restore.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 1-5
+.agents/rules/docs-enforce.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 3-4
+.agents/rules/beam-stack-methodologies.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 1-5
+.agents/rules/src-isolation.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 3-4
+.agents/skills/init-beam-elixir/SKILL-init-beam-elixir.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 3-4
+.agents/skills/init-python-js/SKILL-init-python-js.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 3-4
+.agents/rules/platform-agnostic.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 3-4
+.agents/skills/plan-writer/SKILL-plan-writer.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 6-7
+.agents/skills/init-ao-arweave-hyperbeam/SKILL-init-ao-arweave-hyperbeam.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 3-4
+.agents/rules/links-enforce.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 3-4
+.agents/skills/requirements-extractor/SKILL-requirements-extractor.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 6-7
+.agents/skills/srs-writer/SKILL-srs-writer.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 9-10
+.agents/skills/architecture-writer/SKILL-architecture-writer.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 7-8
+.agents/skills/vision-writer/SKILL-vision-writer.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 9-10
+.agents/skills/kb-synthesizer/SKILL-kb-synthesizer.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 6-7
+.agents/rules/sync-logic.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 1-5
+.agents/skills/prd-writer/SKILL-prd-writer.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 8-9
+.agents/skills/feature-writer/SKILL-feature-writer.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 6-7
+.agents/rules/decoupled-execution.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 1-5
+.agents/rules/command-verification.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 3-4
+.agents/rules/artifact-isolation.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 3-4
+.agents/rules/centralized-infrastructure.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 3-4
+.agents/rules/logging-enforce.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 4-5
+.agents/rules/test-cleanup.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 1-5
+.agents/rules/port-conflicts.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 1-5
+.agents/rules/dependency-management.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 1-5
+.agents/rules/adr-formatting.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 4-5
+.agents/rules/pr-documentation-update.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 3-4
+.agents/rules/workspace-boundaries.md
+  s_02ca68dd04dbf9::t_512bfec9bb9d2a 4-5
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "544ff518bc57cec59361b7819c61b2cfb4979a76",
+  "prompts": {},
+  "sessions": {
+    "s_02ca68dd04dbf9": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "98a5f50d-35d9-400c-8cf7-8f295da640e1",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
