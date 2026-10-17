@@ -3,6 +3,8 @@ name: Knowledge Base Synthesizer
 description: Synthesizes resources/references into OKF v0.2-conformant concept files under .agents/kb/
 allowed-tools:
   - code_interpreter
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
 ---
 
 # Knowledge Base (KB) Synthesizer Skill

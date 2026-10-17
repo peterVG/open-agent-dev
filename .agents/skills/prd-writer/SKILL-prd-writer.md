@@ -5,6 +5,8 @@ allowed-tools:
   - google_search
 references:
   - resources/templates/prd-template.md
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
 ---
 
 # PRD Writer Skill (PRD Generator)

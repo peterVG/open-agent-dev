@@ -1,5 +1,7 @@
 ---
 description: Ensure each workspace's core execution directory (e.g., app/, src/, lib/, or src-tauri/src/) remains standalone, exportable, and free of global development tooling.
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
 ---
 
 # Source Directory Isolation Rule

@@ -1,5 +1,7 @@
 ---
 description: Initialize a new AO / Arweave / Hyperbeam project with best practice root directory structure
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
 ---
 
 # AO / Arweave / Hyperbeam Project Initialization

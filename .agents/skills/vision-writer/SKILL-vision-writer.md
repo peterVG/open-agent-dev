@@ -6,6 +6,8 @@ allowed-tools:
   - code_interpreter
 references:
   - resources/templates/product-vision-template.md
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
 ---
 
 # Product Vision Architect Skill

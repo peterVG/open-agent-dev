@@ -1,3 +1,8 @@
+---
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
+---
+
 # TDD Enforcement Rule
 
 **Rule ID:** TDD-ENFORCE  

@@ -3,6 +3,8 @@ name: Implementation Plan Writer
 description: Generates an interactive, traceable implementation plan based on PRD, SRS, and Gherkin files
 allowed-tools:
   - code_interpreter
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
 ---
 
 # Implementation Plan Writer Skill

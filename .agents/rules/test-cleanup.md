@@ -1,3 +1,8 @@
+---
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
+---
+
 # Automated Test Report Cleanup
 
 When configuring test suites that generate report artifacts (e.g., Allure results, Playwright traces, HTML coverage reports), you must ensure that historical test data is automatically cleared before each new test run to prevent "ghost" failures from polluting the reports.

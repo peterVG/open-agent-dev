@@ -1,5 +1,7 @@
 ---
 description: Ensure all code is comprehensively documented using the standard inline documentation formats for this stack.
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
 ---
 
 # Inline Documentation Enforcement

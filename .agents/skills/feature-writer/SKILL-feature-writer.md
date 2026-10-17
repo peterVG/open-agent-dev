@@ -3,6 +3,8 @@ name: Feature Writer
 description: Translates SRS requirements into executable BDD feature scenarios based on the initialized tech stack
 allowed-tools:
   - code_interpreter
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
 ---
 
 # Feature Writer Skill

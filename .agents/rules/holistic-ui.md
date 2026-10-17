@@ -1,3 +1,8 @@
+---
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
+---
+
 # Holistic UI Planning and Implementation
 
 ## Context

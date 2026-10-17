@@ -1,5 +1,7 @@
 ---
 description: Ensure that generated documentation does not blindly assume the host OS is macOS or Linux.
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
 ---
 
 # Platform-Agnostic Documentation

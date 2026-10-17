@@ -1,6 +1,8 @@
 ---
 trigger: always_on
 description: Ensure the repository explicitly defines workspace boundaries (apps/) to maintain a language-agnostic root and proper separation of concerns.
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
 ---
 
 # Root Workspace Project Boundaries

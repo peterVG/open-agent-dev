@@ -5,6 +5,8 @@ allowed-tools:
   - code_interpreter
 references:
   - ../../kb/tauri-2.md
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
 ---
 
 # Rust / JavaScript Project Initialization

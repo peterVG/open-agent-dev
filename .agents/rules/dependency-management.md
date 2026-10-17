@@ -1,3 +1,8 @@
+---
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
+---
+
 # Dependency Version Management
 
 When scaffolding new projects or generating package manifests, you must prevent environment mismatch warnings and ensure modern package support by following these rules across all technology stacks (Node.js, Python, Elixir, Go, etc.):

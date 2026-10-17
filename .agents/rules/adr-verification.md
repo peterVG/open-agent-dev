@@ -1,3 +1,8 @@
+---
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
+---
+
 # Architectural Decision Verification
 
 **Purpose:** Eliminate AI context-window decay and architectural hallucinations by mandating deterministic filesystem checks before declaring any technology as unauthorized.

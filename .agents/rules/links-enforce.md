@@ -1,5 +1,7 @@
 ---
 description: Enforce portable documentation and always use relative links in markdown instead of absolute paths.
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
 ---
 
 # Portable Documentation and Linking

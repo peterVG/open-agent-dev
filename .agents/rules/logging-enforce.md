@@ -1,6 +1,8 @@
 ---
 trigger: always_on
 description: Ensure all applications follow centralized logging rules and integrate with the observability stack.
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
 ---
 
 # Logging and Observability Enforcement

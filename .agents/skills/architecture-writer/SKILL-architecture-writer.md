@@ -4,6 +4,8 @@ description: Reads PRD, SRS, current codebase, and ADRs to synthesize a top-leve
 allowed-tools:
   - file_system
   - code_interpreter
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
 ---
 
 # Architecture Writer Skill

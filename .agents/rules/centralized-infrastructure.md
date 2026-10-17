@@ -1,5 +1,7 @@
 ---
 description: Ensure that shared infrastructure like Docker Compose remains centralized at the repository root for all workspaces to utilize.
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
 ---
 
 # Centralized Infrastructure

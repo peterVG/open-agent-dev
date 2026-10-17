@@ -3,6 +3,8 @@ name: Requirements Extractor
 description: Extracts functional and user requirements from technical and domain reference documents.
 allowed-tools:
   - code_interpreter
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
 ---
 
 # Requirements Extractor Skill

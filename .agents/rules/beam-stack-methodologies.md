@@ -1,3 +1,8 @@
+---
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
+---
+
 # Technology Stack
 ## Frontend & Real-time UX
 Specific components that handle how the user interacts with the system.

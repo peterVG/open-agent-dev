@@ -1,3 +1,8 @@
+---
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
+---
+
 # Decoupled Execution Timelines
 
 **Purpose:** Guarantee architectural specs can survive aggressive timeline refactoring without requiring massive document rewrites or excessive token consumption.

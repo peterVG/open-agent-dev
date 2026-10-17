@@ -1,5 +1,7 @@
 ---
 description: Initialize a new BEAM/Elixir project with best practice root directory structure
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
 ---
 
 # BEAM/Elixir Project Initialization

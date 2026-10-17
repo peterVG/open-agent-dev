@@ -1,6 +1,8 @@
 ---
 trigger: always_on
 description: Ensure all Architecture Decision Records strictly follow the 9-point ISO 42010 structure.
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
 ---
 
 # Architecture Decision Records (ADRs) Formatting

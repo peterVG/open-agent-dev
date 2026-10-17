@@ -6,6 +6,8 @@ allowed-tools:
   - code_interpreter
 references:
   - resources/ui-mockups/
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
 ---
 
 # SRS Generator Skill

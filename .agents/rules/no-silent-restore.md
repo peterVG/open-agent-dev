@@ -1,3 +1,8 @@
+---
+copyright: Pieter Van Garderen (2026)
+license: CC-BY
+---
+
 # No Silent Restore of User File Changes
 
 **Purpose:** Prevent AI agents from undoing intentional human deletes or revisions by automatically restoring prior content.
