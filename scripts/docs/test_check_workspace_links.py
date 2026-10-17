@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Pieter Van Garderen
+#
+# SPDX-License-Identifier: MIT
 """Unit tests for check_workspace_links.py.
 
 The link analysis is pure (text in, messages out), so no files or git

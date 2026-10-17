@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SPDX-FileCopyrightText: 2026 Peter Van Garderen <petervg@iona.ltd>
+# SPDX-FileCopyrightText: 2026 Pieter Van Garderen
 #
 # SPDX-License-Identifier: MIT
 #
@@ -9,7 +9,7 @@ set -e
 
 echo "Starting Portable Documentation Validation..."
 
-STAGED_FILES=$(git diff --cached --name-only | grep "\.md$" || true)
+STAGED_FILES=$(git diff --cached --name-only --diff-filter=ACMR | grep "\.md$" || true)
 
 if [ -z "$STAGED_FILES" ]; then
   exit 0

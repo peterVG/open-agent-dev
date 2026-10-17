@@ -1,12 +1,12 @@
 ---
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # Holistic UI Planning and Implementation
 
 ## Context
-When implementing user interfaces (UI) and user experiences (UX), requirements are often broken down into sequential tasks. This can lead to implementing a "throwaway" interaction model for early tasks, only to have it completely replaced by a subsequent task (e.g., implementing drag-to-pan in Task A, only to replace it with avatar-steered-panning in Task B).
+When implementing user interfaces (UI) and user experiences (UX), requirements are often broken down into sequential tasks. This can lead to implementing a "throwaway" interaction model for early tasks, only to have it completely replaced by a subsequent task (e.g., building a modal edit form in Task A, only to replace it with inline editing in Task B).
 
 ## Rule
 Before beginning development on any frontend or UI task, the agent MUST review subsequent UI tasks in the project plan (`resources/implementation-plan.md`) and the relevant Software Requirements Specifications (`resources/srs.md` or `apps/[Module Name]/resources/srs.md`). 

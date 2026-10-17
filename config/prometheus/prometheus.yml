@@ -11,9 +11,11 @@ scrape_configs:
     static_configs:
       - targets: ['loki:3100']
 
-  - job_name: redpanda
-    static_configs:
-      - targets: ['redpanda:9644']
+  # Redpanda is opt-in (docker compose --profile buffering up). Uncomment this
+  # job when you enable that profile; otherwise its target is always down.
+  # - job_name: redpanda
+  #   static_configs:
+  #     - targets: ['redpanda:9644']
 
   - job_name: apps
     static_configs:

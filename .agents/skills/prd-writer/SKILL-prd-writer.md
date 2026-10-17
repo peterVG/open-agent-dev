@@ -2,11 +2,11 @@
 name: PRD Writer
 description: Generates a baseline Product Requirements Document (PRD) based on product vision and reference materials.
 allowed-tools:
-  - google_search
+  - web_search
 references:
   - resources/templates/prd-template.md
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # PRD Writer Skill (PRD Generator)

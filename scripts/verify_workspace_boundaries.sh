@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SPDX-FileCopyrightText: 2026 Peter Van Garderen <petervg@iona.ltd>
+# SPDX-FileCopyrightText: 2026 Pieter Van Garderen
 #
 # SPDX-License-Identifier: MIT
 #
@@ -9,10 +9,22 @@ set -e
 
 echo "Starting Workspace Boundary Validation..."
 
+# Common language and dependency manifests, not an exhaustive list. Add any
+# other manifest your stack uses at its root to keep it out of the repo root.
 FORBIDDEN_FILES=(
   "mix.exs"
   "package.json"
   "requirements.txt"
+  "pyproject.toml"
+  "setup.py"
+  "Pipfile"
+  "Cargo.toml"
+  "rust-toolchain.toml"
+  "go.mod"
+  "pom.xml"
+  "build.gradle"
+  "build.gradle.kts"
+  "composer.json"
   "Gemfile"
 )
 

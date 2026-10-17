@@ -9,8 +9,8 @@ The `references/` directory implements **Progressive Disclosure** - the agent on
 ## What Goes Here
 
 ### Technical Specifications
-- Protocol documentation (e.g., Arweave protocol specs)
-- API references (e.g., AO Process API)
+- Protocol documentation (e.g., the OAuth 2.0 specification)
+- API references (e.g., a payment provider's REST API)
 - RFC documents
 - Industry standards
 
@@ -28,13 +28,10 @@ The `references/` directory implements **Progressive Disclosure** - the agent on
 
 ```
 references/
-├── arweave/
-│   ├── arweave-yellow-paper.pdf
-│   ├── transaction-format.md
-│   └── fee-calculation.md
-├── ao/
-│   ├── ao-process-spec.md
-│   └── message-passing.md
+├── payments-api/
+│   ├── payments-api-overview.pdf
+│   ├── charge-object.md
+│   └── webhook-events.md
 └── standards/
     ├── oauth2-rfc6749.md
     └── jwt-rfc7519.md
@@ -42,17 +39,17 @@ references/
 
 ## How Skills Use References
 
-Skills specify when to load references using the `references` field in their YAML frontmatter:
+Skills specify when to load references using a `references` field in their YAML frontmatter. This field is a convention of this project, not part of the Agent Skills specification; agents honour it because the skill instructions tell them to.
 
 ```yaml
 ---
-name: Architecture Generator
+name: architecture-writer
 description: Creates system architecture based on technical specs
 allowed-tools:
-  - google_search
+  - web_search
 references:
-  - resources/references/arweave/arweave-yellow-paper.pdf
-  - .agents/kb/ao/ao-process-spec.md
+  - resources/references/payments-api/payments-api-overview.pdf
+  - .agents/kb/payments/payment-flows.md
 ---
 ```
 
@@ -76,21 +73,21 @@ references:
 
 ```yaml
 ---
-name: SRS Generator
+name: srs-writer
 description: Creates Software Requirements Specification
 allowed-tools:
-  - google_search
+  - web_search
 references:
-  - resources/references/arweave/transaction-format.md
-  - .agents/kb/ao/message-passing.md
+  - resources/references/payments-api/charge-object.md
+  - .agents/kb/payments/payment-flows.md
 ---
 
-# SRS Generator Skill
+# SRS Writer Skill
 
-When generating an SRS for file upload:
+When generating an SRS for online payments:
 1. Read the PRD for business requirements
-2. Load resources/references/arweave/transaction-format.md for technical constraints
-3. Use google_search to verify current library versions
+2. Load resources/references/payments-api/charge-object.md for technical constraints
+3. Use web_search to verify current library versions
 4. Generate SRS with accurate technical specifications
 ```
 
@@ -100,11 +97,11 @@ When generating an SRS for file upload:
 One topic per file. Don't create massive reference documents.
 
 **Good:**
-- `arweave-transaction-format.md`
-- `arweave-fee-calculation.md`
+- `payments-api-charge-object.md`
+- `payments-api-webhook-events.md`
 
 **Bad:**
-- `arweave-everything.md`
+- `payments-api-everything.md`
 
 ### 2. Use Standard Formats
 - Markdown (`.md`) for text documentation
@@ -115,12 +112,12 @@ One topic per file. Don't create massive reference documents.
 Add a header to each reference file:
 
 ```markdown
-# Arweave Transaction Format
+# Payments API: Charge Object
 
-**Source:** https://docs.arweave.org/developers/server/http-api
+**Source:** https://example.com/docs/payments-api/charges
 **Version:** 2.7
-**Last Updated:** 2024-01-15
-**Relevant To:** File upload, data storage
+**Last Updated:** 2026-01-15
+**Relevant To:** Checkout, refunds
 
 [Content...]
 ```
@@ -133,7 +130,7 @@ Keep references up to date. When a spec changes:
 
 ## Progressive Disclosure Benefits
 
-For Gemini's large context window:
+For agents with large context windows:
 - **Token Efficiency:** Don't load 50-page specs unless needed
 - **Accuracy:** Agent uses current, verified information
 - **Focus:** Agent only sees relevant technical details for the current task
@@ -141,12 +138,12 @@ For Gemini's large context window:
 ## Example Workflow
 
 ```
-USER: Generate an SRS for file upload using Arweave
+USER: Generate an SRS for online payments using the payments API
 
-AGENT: [Activates SRS Generator skill]
-AGENT: [Skill specifies resources/references/arweave/transaction-format.md]
+AGENT: [Activates srs-writer skill]
+AGENT: [Skill specifies resources/references/payments-api/charge-object.md]
 AGENT: [Loads ONLY that reference file]
-AGENT: [Uses google_search to verify current Arweave.js version]
+AGENT: [Uses web_search to verify the current SDK version]
 AGENT: [Generates SRS with accurate technical constraints]
 ```
 

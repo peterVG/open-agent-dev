@@ -35,17 +35,17 @@ Files in `.agents/kb` are intended to be explicitly referenced by users or autom
 
 | Directory | Purpose | Use Case | When Loaded |
 |-----------|---------|----------|-------------|
-| `.agents/kb/` | Synthesized AI knowledge, domain concepts, project conventions. | "How do we do things here?" | Loaded when conceptually relevant or explicitly referenced (e.g., `@.agents/kb/beam-testing.md`). |
+| `.agents/kb/` | Synthesized AI knowledge, domain concepts, project conventions. | "How do we do things here?" | Loaded when conceptually relevant or explicitly referenced (e.g., `@.agents/kb/conventional-commits.md`). |
 | `resources/references/` | Raw technical specifications, whitepapers, third-party docs. | "What are the exact technical details of this protocol/API?" | Loaded via **Progressive Disclosure** only when a specific AI Skill explicitly requests the file. |
 
 **Rule of Thumb:**
 - Use **`.agents/kb`** for high-level concepts and project vocabulary you want the AI to learn.
-- Use **`resources/references`** for dense specification documents, meant for human readears, that would waste context window tokens unless explicitly required for a highly specific task.
+- Use **`resources/references`** for dense specification documents, meant for human readers, that would waste context window tokens unless explicitly required for a highly specific task.
 
 ## What Goes Here
 
-- **Best Practices:** e.g., `beam-testing.md`, `python-testing.md`.
-- **Project Standards:** e.g., `conventional-commits.md`.
+- **Stack References & Best Practices:** e.g., [`beam-elixir-stack.md`](./beam-elixir-stack.md), [`tauri-2.md`](./tauri-2.md).
+- **Project Standards:** e.g., [`conventional-commits.md`](./conventional-commits.md).
 - **Glossary/Concepts:** Definitions of domain-specific terms.
 
 ## What Does NOT Go Here

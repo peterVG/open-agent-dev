@@ -2,12 +2,12 @@
 name: SRS Writer
 description: Creates Software Requirements Specification from PRD, technical references, and UI mockups
 allowed-tools:
-  - google_search
+  - web_search
   - code_interpreter
 references:
   - resources/ui-mockups/
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # SRS Generator Skill
@@ -26,7 +26,7 @@ This skill generates a Software Requirements Specification (SRS) from a Product 
 
 This skill demonstrates **progressive disclosure** by:
 1. **Loading references only when activated** - Saves tokens when working on other tasks
-2. **Using google_search** - Verifies current library versions (e.g., latest Arweave.js)
+2. **Using web_search** - Verifies current library versions (e.g., the latest object storage SDK)
 3. **Using code_interpreter** - Validates technical calculations (e.g., storage costs)
 
 ## Workflow
@@ -59,7 +59,7 @@ AGENT: [If a mockup shows a surface or state with no PRD ID, still specify it, c
 
 ### Step 4: Verify Current Versions
 ```
-AGENT: [Uses google_search to ensure SRS uses the most current versions of software libraries and references]
+AGENT: [Uses web_search to ensure SRS uses the most current versions of software libraries and references]
 ```
 
 ### Step 5: Validate Constraints
@@ -75,7 +75,7 @@ AGENT: [Maps all PRD requirements to the SRS using a dedicated **Source** sectio
 AGENT: [Converts UI features and look-and-feel from @resources/ui-mockups/ into explicit SRS requirement blocks. Each UI-derived requirement MUST be testable, use RFC 2119 keywords, and cite the mockup with a relative link (e.g. `- [library-grid.png](./ui-mockups/library-grid.png)`). When the mockup implements a PRD feature, cite both the PRD ID and the mockup.]
 AGENT: [Look-and-feel requirements MUST record the mockup's composition: regions and what sits in each, what is visible without scrolling, grouping, hierarchy, density, typography scale, colour roles, control shape, and which status text is shown or withheld. A pixel or two of browser rounding is acceptable. They MUST NOT be satisfied by region presence, a minimum font size, or a contrast ratio alone, and they MUST NOT say the running page need not match the mockup.]
 AGENT: [**CRITICAL**: Do not omit Non-Functional Requirements (NFRs) or Technical Constraints (TCs). Every single item in the PRD—including architecture rules, performance limits, and framework restrictions—MUST be mapped 1:1 to an explicit SRS requirement block to guarantee 100% forward traceability.]
-AGENT: [Ensures forward-traceability by defining an expected **Tests** section mapping to all target Gherkin, integration, performance, ui, and unit test files. Format MUST respect the monorepo bounds defined in `.agents/rules/workspace-boundaries.md` by dynamically mapping to the active technology stack's idiomatic isolated testing vocabulary (e.g. `- [[filename]](../apps/backend/tests/features/[filename])` for Python/JS tracking, or `- [[filename]](../apps/my_app_web/test/features/[filename])` for BEAM/Elixir tracking)]
+AGENT: [Ensures forward-traceability by defining an expected **Tests** section mapping to all target Gherkin, integration, performance, ui, and unit test files. Format MUST respect the monorepo bounds defined in `.agents/rules/workspace-boundaries.md` by dynamically mapping to the active technology stack's idiomatic isolated testing vocabulary (e.g. `- [[filename]](../apps/backend/tests/features/[filename])` for Python/JS tracking, or `- [[filename]](../apps/my_app/test/features/[filename])` for BEAM/Elixir tracking)]
 AGENT: [Behavioral UI features map to BDD scenarios. Look-and-feel and presentation constraints map to UI tests with explicit assertions. If an SRS requirement cannot be validated via a standard BDD feature file (e.g., overarching NFRs, Technical Constraints, or visual constraints), the **Tests** block MUST define alternative automated verification strategies locally. Examples include: CI/CD configuration files, static code analysis tools, locus testing bounds, or explicit UI assertions.]
 AGENT: [Ensures SRS strictly complies with ISO/IEC/IEEE 29148 (Unambiguous, Complete, Verifiable, Consistent, Traceable)]
 AGENT: [Uses "MUST" or "MUST NOT" for mandatory requirements and "SHOULD" or "SHOULD NOT" for optional requirements per RFC 2119]
@@ -95,7 +95,7 @@ AGENT: [Conclude the task by appending a Summary Traceability Matrix or checklis
 **From PRD:**
 ```markdown
 ## Feature: File Upload
-Users should be able to upload datasets up to 500MB for permanent storage.
+Users should be able to upload datasets up to 500MB for long-term storage.
 Budget: $100/month for storage costs.
 ```
 
@@ -109,9 +109,9 @@ Budget: $100/month for storage costs.
 The system MUST support file uploads up to 500MB.
 
 **Technical Implementation:**
-- Use Arweave.js v1.14.4 (verified via google_search)
-- Chunk files larger than 100MB per Arweave transaction limits
-- Transaction format per references/arweave/transaction-format.md
+- Use the S3-compatible object storage SDK selected in the storage ADR, at its current stable version (verified via web_search)
+- Chunk files larger than the multipart threshold defined in the storage ADR
+- Upload protocol per the storage provider's API reference (e.g. `resources/references/object-storage/multipart-upload.md`, illustrative path)
 
 **Source**
 - `[prd.md](../prd.md)` F-001 File Upload
@@ -119,13 +119,13 @@ The system MUST support file uploads up to 500MB.
 **Tests**
 - [`large_file_upload_SRS-UPLOAD-001.feature`](../tests/features/large_file_upload_SRS-UPLOAD-001.feature)
 
-### SRS-UPLOAD-001.2: Permanent Storage
-Files MUST be stored permanently on Arweave.
+### SRS-UPLOAD-001.2: Durable Storage
+Files MUST be stored durably in S3-compatible object storage.
 
 **Cost Validation:**
-- Executed scripts/validation/calculate_storage_fees.py
-- Estimated cost: $0.005/MB = $2.50 per 500MB file
-- 40 files/month = $100/month ✅ Within budget
+- Executed a cost estimation script (e.g. `scripts/validation/estimate_storage_costs.py`, illustrative path)
+- Estimated cost: per-GB storage and transfer pricing from the provider selected in the storage ADR
+- Projected monthly volume × unit price compared against the $100/month budget, e.g. (illustrative figures only) 500 GB stored × $0.023/GB + 200 GB egress × $0.09/GB = $11.50 + $18.00 = $29.50/month ✅ Within budget
 
 **Source**
 - `[prd.md](../prd.md)` F-001 File Upload
@@ -134,11 +134,11 @@ Files MUST be stored permanently on Arweave.
 - [`large_file_upload_SRS-UPLOAD-001.feature`](../tests/features/large_file_upload_SRS-UPLOAD-001.feature)
 
 ### SRS-UPLOAD-001.3: Chunking Strategy
-Files larger than 100MB MUST be chunked.
+Files larger than the multipart threshold defined in the storage ADR MUST be chunked.
 
 **Technical Specification:**
-- Chunk size: 100MB (per Arweave transaction limits)
-- Use AO message passing for chunk coordination (per references/ao/message-passing.md)
+- Chunk size: per the storage ADR (e.g. the provider's recommended multipart part size)
+- Track chunk completion server-side so a failed part can be retried without restarting the upload (per the provider's multipart upload documentation)
 - Implement resumable uploads per SRS-PERF-003
 
 **Source**
@@ -162,8 +162,8 @@ The upload surface MUST show transfer progress as a percentage while a file is u
 
 ### Without Progressive Disclosure
 ```
-AGENT: [Loads ALL references upfront: 50 pages of Arweave docs]
-AGENT: [Loads ALL references upfront: 30 pages of AO specs]
+AGENT: [Loads ALL references upfront: 50 pages of framework docs]
+AGENT: [Loads ALL references upfront: 30 pages of protocol specs]
 AGENT: [Loads ALL references upfront: OAuth, JWT, etc.]
 AGENT: [Context window: 80% full before even starting]
 AGENT: [Hallucinates library versions because context is full]
@@ -171,25 +171,25 @@ AGENT: [Hallucinates library versions because context is full]
 
 ### With Progressive Disclosure
 ```
-AGENT: [Loads ONLY Arweave and AO references - 10 pages]
+AGENT: [Loads ONLY the storage and upload references relevant to this PRD - 10 pages]
 AGENT: [Context window: 20% full]
-AGENT: [Uses google_search for current versions]
+AGENT: [Uses web_search for current versions]
 AGENT: [Accurate SRS with verified technical specs]
 ```
 
 ## Integration with AI Agent Workflow
 
 ```
-USER: @AGENTS.md Generate a baseline SRS in @resources based on @resources/prd.md, @resources/ui-mockups/, and the manifesto principles in the AGENTS.md file. Use the "Gherkin Writer" skill to generate Gherkin scenarios for each unique requirement in @resources/srs.md and @resources/prd.md
+USER: @AGENTS.md Generate a baseline SRS in @resources based on @resources/prd.md, @resources/ui-mockups/, and the manifesto principles in the AGENTS.md file. Use the `feature-writer` skill to generate BDD feature scenarios for each unique requirement in @resources/srs.md and @resources/prd.md
 AGENT: [Activates SRS Generator skill]
 AGENT: [Reads AGENTS.md for AI Agent principles]
 AGENT: [Reads resources/prd.md for business, functional and non-functional requirements and constraints]
 AGENT: [Loads @resources/references for technical specifications and context]
 AGENT: [Reads @resources/ui-mockups/ and converts UI features and look-and-feel into testable SRS requirements]
-AGENT: [Uses google_search to verify current library versions]
+AGENT: [Uses web_search to verify current library versions]
 AGENT: [Creates resources/srs.md with accurate technical specifications]
-AGENT: [Activates Gherkin Writer skill]
-AGENT: [Creates Gherkin .feature files in the tests/features folder for each unique requirement in resources/srs.md and resources/prd.md]
+AGENT: [Activates the feature-writer skill (../feature-writer/SKILL-feature-writer.md)]
+AGENT: [Creates BDD feature scenarios in each app's stack-specific features folder for each unique requirement in resources/srs.md and resources/prd.md]
 ```
 
 ## Success Criteria

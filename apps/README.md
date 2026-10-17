@@ -11,12 +11,17 @@ By keeping applications strictly within `/apps/`, the repository root remains cl
 Each application inside this directory is considered a fully standalone project with its own tooling, tests, dependencies, and configuration layers.
 
 **Python/JS Stack Example (Monorepo):**
-- `/apps/frontend/` (The actual source code for the SvelteKit application)
-- `/apps/backend/` (The independent configuration and domains for the FastAPI service)
+- `/apps/frontend/` (for example, a SvelteKit application)
+- `/apps/backend/` (for example, a FastAPI service)
 
-**BEAM/Elixir Stack Example (Umbrella):**
-- `/apps/my_app/` (The backend core logic layer)
-- `/apps/my_app_web/` (The standalone Phoenix web layer)
+**Rust/JS Stack Example (Monorepo):**
+- `/apps/core/` (for example, a shared domain crate)
+- `/apps/backend/` (for example, an Axum web service)
+- `/apps/frontend/` (for example, a Vite web UI)
+
+**BEAM/Elixir Stack Example (one app per folder):**
+- `/apps/my_app/` (for example, the backend core logic layer)
+- `/apps/my_app_web/` (for example, a standalone Phoenix web layer)
 
 ## What Goes Here
 - Client-facing web applications

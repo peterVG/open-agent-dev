@@ -94,7 +94,7 @@ graph TB
             D[Docker Container]
         end
         subgraph "Data Tier"
-            F[(SQLite Volume)]
+            F[(Database)]
         end
         D --> F
     end

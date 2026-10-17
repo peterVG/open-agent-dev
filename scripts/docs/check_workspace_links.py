@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# SPDX-FileCopyrightText: 2026 Pieter Van Garderen
+#
+# SPDX-License-Identifier: MIT
 """Check that documents do not link across the boundary of a standalone workspace.
 
 Purpose:

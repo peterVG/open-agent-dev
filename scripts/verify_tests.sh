@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# SPDX-FileCopyrightText: 2026 Peter Van Garderen <petervg@iona.ltd>
+# SPDX-FileCopyrightText: 2026 Pieter Van Garderen
 #
 # SPDX-License-Identifier: MIT
 #
-# Lint and test validation: run clippy, cargo test, npm, and mix test gates for every stack under apps/.
+# Lint and test validation: run clippy, cargo test, npm, mix test, and pytest gates for every stack under apps/.
 #
 # This repository has no hosted CI; these are the gates that would otherwise
 # run there. Like verify_formatting.sh, it discovers every stack present under
@@ -22,6 +22,11 @@
 #          (end-to-end runs usually build and start the app; slow)
 #   - Elixir (a directory under apps/ holding a mix.exs):
 #       7. mix test
+#   - Python (a directory under apps/ holding a pyproject.toml or
+#     requirements.txt):
+#       8. pytest (the app's .venv pytest when present, else pytest on PATH;
+#          fails with an install hint when neither exists; lint runs in
+#          verify_formatting.sh via ruff)
 #
 # Environment:
 #   VERIFY_SKIP_TESTS=1  skip this script (work-in-progress commits only;
@@ -104,11 +109,40 @@ run_elixir_app() {
   run_step "ExUnit" "$1" mix test
 }
 
+is_python_app() {
+  # $1 = app directory. True when it holds a Python project manifest.
+  [ -f "$1/pyproject.toml" ] || [ -f "$1/requirements.txt" ]
+}
+
+find_python_tool() {
+  # $1 = app directory, $2 = tool name. Prints the absolute path of the app's
+  # virtualenv copy of the tool (.venv/bin or, on Windows, .venv/Scripts), else
+  # the tool on PATH, else nothing. Pure lookup.
+  local dir="$1" tool="$2" candidate
+  for candidate in "$dir/.venv/bin/$tool" "$dir/.venv/Scripts/$tool.exe"; do
+    [ -x "$candidate" ] && { echo "$(cd "$(dirname "$candidate")" && pwd)/$(basename "$candidate")"; return; }
+  done
+  command -v "$tool" 2>/dev/null || true
+}
+
+run_python_app() {
+  # $1 = app directory holding pyproject.toml or requirements.txt
+  local pytest
+  pytest=$(find_python_tool "$1" pytest)
+  if [ -z "$pytest" ]; then
+    echo "❌ ERROR ($1): pytest not found in $1/.venv or on PATH. Install it (for example 'pip install pytest' in the app's virtualenv) first."
+    FAILED=1
+    return
+  fi
+  run_step "Pytest" "$1" "$pytest"
+}
+
 for APP_PATH in "$APPS_DIR"/*; do
   [ -d "$APP_PATH" ] || continue
   [ -f "$APP_PATH/Cargo.toml" ] && run_rust_workspace "$APP_PATH"
   [ -f "$APP_PATH/package.json" ] && run_npm_package "$APP_PATH"
   [ -f "$APP_PATH/mix.exs" ] && run_elixir_app "$APP_PATH"
+  is_python_app "$APP_PATH" && run_python_app "$APP_PATH"
   for SUB_PATH in "$APP_PATH"/*; do
     [ -d "$SUB_PATH" ] && [ -f "$SUB_PATH/package.json" ] && run_npm_package "$SUB_PATH"
   done

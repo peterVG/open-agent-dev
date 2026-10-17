@@ -1,6 +1,8 @@
 # Scripts Directory
 
-This directory contains **executable scripts** that the AI agent can run using the `code_interpreter` tool to validate logic, simulate load, or perform automated checks.
+This directory contains **task-specific helper scripts** that the AI agent can run using the agent's shell or code-execution tool to validate logic, simulate load, or perform automated checks.
+
+> **Note:** The repository's actual verification gates (pre-commit checks for branches, formatting, docs, links, logging, ports, tests, and workspace boundaries) live in the top-level [`scripts/`](../../scripts/) directory. This folder is for ad hoc, task-specific helpers. The script names and code below are illustrative examples, not files shipped with the template.
 
 ## Purpose
 
@@ -15,7 +17,7 @@ Scripts enable the agent to:
 ### Validation Scripts
 Scripts that verify business logic or calculations:
 - `validate_chunking_logic.py` - Verify file chunking algorithm
-- `calculate_storage_fees.py` - Estimate Arweave storage costs
+- `calculate_storage_fees.py` - Estimate object-storage costs for expected data volume
 - `verify_encryption.py` - Test encryption/decryption logic
 
 ### Simulation Scripts
@@ -26,14 +28,14 @@ Scripts that simulate system behavior:
 
 ### Analysis Scripts
 Scripts that analyze or report on data:
-- `analyze_retention_policy.py` - Verify records retention logic
+- `expected_rate_limits.py` - Calculate expected API rate-limit behaviour from SRS parameters
 - `audit_dependencies.py` - Check for "high gravity" dependencies
 - `generate_coverage_report.py` - Test coverage analysis
 
 ## Example Structure
 
 ```
-scripts/
+.agents/scripts/
 ├── validation/
 │   ├── validate_chunking_logic.py
 │   └── calculate_storage_fees.py
@@ -41,40 +43,40 @@ scripts/
 │   ├── simulate_concurrent_uploads.py
 │   └── generate_test_data.py
 └── analysis/
-    └── analyze_retention_policy.py
+    └── expected_rate_limits.py
 ```
 
 ## How Skills Use Scripts
 
-Skills can execute scripts using the `code_interpreter` tool:
+Skills can execute scripts using the agent's shell or code-execution tool:
 
 ```yaml
 ---
 name: Architecture Validator
 description: Validates system architecture decisions
 allowed-tools:
-  - code_interpreter
+  - code-execution
 scripts:
-  - scripts/validation/calculate_storage_fees.py
+  - .agents/scripts/validation/calculate_storage_fees.py
 ---
 
 # Architecture Validator Skill
 
 When validating the file upload architecture:
 1. Read the architecture.md
-2. Execute scripts/validation/calculate_storage_fees.py
+2. Execute .agents/scripts/validation/calculate_storage_fees.py
 3. Verify that estimated costs align with PRD budget constraints
 4. Report any issues
 ```
 
 ## Example Script: Chunking Validation
 
-**`scripts/validation/validate_chunking_logic.py`:**
+**`.agents/scripts/validation/validate_chunking_logic.py`:**
 
 ```python
 #!/usr/bin/env python3
 """
-Validates file chunking logic for Arweave uploads.
+Validates file chunking logic for multipart uploads to cloud object storage.
 
 Usage:
     python validate_chunking_logic.py --file-size 450 --chunk-size 100
@@ -144,7 +146,7 @@ if __name__ == "__main__":
 USER: Verify that our chunking logic meets the SRS requirements
 
 AGENT: [Activates Architecture Validator skill]
-AGENT: [Skill specifies scripts/validation/validate_chunking_logic.py]
+AGENT: [Skill specifies .agents/scripts/validation/validate_chunking_logic.py]
 AGENT: [Executes script with test cases]
 AGENT: [Reports results]
 
@@ -159,7 +161,7 @@ OUTPUT:
 
 ### 1. Make Scripts Executable
 ```bash
-chmod +x scripts/validation/validate_chunking_logic.py
+chmod +x .agents/scripts/validation/validate_chunking_logic.py
 ```
 
 ### 2. Include Documentation
@@ -197,72 +199,99 @@ Scripts are only loaded and executed when:
 
 This saves tokens and execution time when scripts aren't needed.
 
-## Example: Local-First Records Retention
+## Example: API Rate-Limit Expected-Value Calculator
 
-**`scripts/analysis/analyze_retention_policy.py`:**
+**`.agents/scripts/analysis/expected_rate_limits.py`:**
 
 ```python
 #!/usr/bin/env python3
 """
-Analyzes records retention policy for compliance.
+Calculates the expected behaviour of a fixed-window API rate-limit policy
+from the SRS parameters.
 
-Validates that retention periods meet legal requirements
-and calculates storage costs for permanent archival.
+Given a limit, a window, and a burst size from one client, it computes how
+many requests SHOULD be accepted and how many SHOULD be rejected with
+HTTP 429 before the window resets. It does NOT exercise the live limiter:
+compare its output with the responses observed in an integration or load
+test to confirm the real limiter matches the SRS.
+
+Usage:
+    python expected_rate_limits.py --limit 100 --window 60 --requests 150
 """
 
-import json
-from datetime import datetime, timedelta
+import argparse
+import sys
 
-def analyze_retention(records_file, retention_years=7):
-    """Analyze records retention policy."""
-    with open(records_file) as f:
-        records = json.load(f)
-    
-    results = {
-        "total_records": len(records),
-        "compliant": 0,
-        "non_compliant": 0,
-        "permanent": 0,
-        "estimated_cost_usd": 0
+
+def find_invalid_inputs(limit, window_s, requests):
+    """Return a list of messages describing invalid input parameters."""
+    problems = []
+    if limit < 1:
+        problems.append(f"--limit must be >= 1, got {limit}")
+    if window_s < 1:
+        problems.append(f"--window must be >= 1, got {window_s}")
+    if requests < 0:
+        problems.append(f"--requests must be >= 0, got {requests}")
+    return problems
+
+
+def simulate_window(limit, requests):
+    """Return the expected (accepted, rejected) counts for one window."""
+    accepted = min(requests, limit)
+    return accepted, requests - accepted
+
+
+def expected_rate_limits(limit, window_s, requests):
+    """Compute the expected accept/429/reset behaviour from the SRS parameters."""
+    accepted, rejected = simulate_window(limit, requests)
+    errors = []
+
+    # SRS-API-012: The window MUST be between 1 and 3600 seconds
+    if window_s > 3600:
+        errors.append(f"Window {window_s}s is outside the SRS range 1-3600s")
+
+    return {
+        "expected_accepted": accepted,              # SRS-API-010
+        "expected_429_responses": rejected,         # SRS-API-011
+        "expected_reset_after_s": window_s,         # SRS-API-012
+        "errors": errors,
     }
-    
-    for record in records:
-        created = datetime.fromisoformat(record["created_at"])
-        retention_end = created + timedelta(days=retention_years * 365)
-        
-        if record["retention_type"] == "permanent":
-            results["permanent"] += 1
-            results["compliant"] += 1
-            # Arweave permanent storage cost estimation
-            size_mb = record["size_mb"]
-            cost_per_mb = 0.005  # Example rate
-            results["estimated_cost_usd"] += size_mb * cost_per_mb
-        elif datetime.now() < retention_end:
-            results["compliant"] += 1
-        else:
-            results["non_compliant"] += 1
-    
-    return results
+
 
 if __name__ == "__main__":
-    import sys
-    results = analyze_retention(sys.argv[1])
-    print(json.dumps(results, indent=2))
+    parser = argparse.ArgumentParser(
+        description="Calculate expected rate-limit behaviour from SRS parameters"
+    )
+    parser.add_argument("--limit", type=int, required=True)
+    parser.add_argument("--window", type=int, default=60)
+    parser.add_argument("--requests", type=int, required=True)
+    args = parser.parse_args()
+
+    invalid = find_invalid_inputs(args.limit, args.window, args.requests)
+    if invalid:
+        print({"errors": invalid}, file=sys.stderr)
+        sys.exit(2)
+
+    results = expected_rate_limits(args.limit, args.window, args.requests)
+    print(results)
+    sys.exit(1 if results["errors"] else 0)
 ```
 
 **Agent uses this to:**
-1. Validate retention logic before deployment
-2. Estimate storage costs for budget planning
-3. Verify compliance with legal requirements
+1. Derive the expected number of accepted requests, HTTP 429 responses, and the reset time from the SRS parameters
+2. Compare those expected values with the responses observed in an integration or load test against the real limiter
+3. Check edge cases (exactly at the limit, one over, out-of-range window) before writing the test assertions
 
-## Integration with Antigravity Workflow
+This script only calculates expected values; it does not prove the deployed limiter behaves correctly. That proof comes from the integration or load test that asserts the observed responses match these values.
+
+## Integration with the Agent Workflow
 
 ```
-1. Write SRS requirement: "Records must be retained for 7 years"
-2. Create validation script: scripts/analysis/analyze_retention_policy.py
-3. Agent executes script during architecture validation
-4. Script verifies logic meets SRS-RET-001
-5. Agent reports compliance status
+1. Write SRS requirement: "A client MUST NOT exceed 100 requests per 60-second window"
+2. Create calculator script: .agents/scripts/analysis/expected_rate_limits.py
+3. Agent executes script to compute the expected accepted/429/reset values for SRS-API-010 to SRS-API-012
+4. Integration or load test sends the burst to the real limiter and records the observed responses
+5. Agent compares observed with expected values and reports compliance status
 ```
 
 Scripts become **executable documentation** that proves your system meets requirements!

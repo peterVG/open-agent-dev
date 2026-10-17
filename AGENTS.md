@@ -2,7 +2,7 @@
 
 **Purpose:** Define the principles that AI agents working on this project must follow and implement.
 
-**CRITICAL INSTRUCTION:** Before beginning any implementation, scaffolding, or configuration task, you MUST use the list_dir and view_file tools to read the contents of all markdown files in .agents/rules/. You must strictly adhere to these rules over any default framework behaviors.
+**CRITICAL INSTRUCTION:** Before beginning any implementation, scaffolding, or configuration task, you MUST list and read the contents of all markdown files in `.agents/rules/`. You must strictly adhere to these rules over any default framework behaviors.
 
 **CRITICAL INSTRUCTION** When the user deletes or revises a file (or a deletion/revision appears in the workspace or git status), do **not** assume it was accidental. Do **not** restore previous content or re-add removed files without first asking whether the change was intentional and should stick. Restore only after explicit user confirmation. Tactically enforced via [`.agents/rules/no-silent-restore.md`](./.agents/rules/no-silent-restore.md).
 
@@ -11,51 +11,51 @@
 **Purpose:** Ensure that all code is well-tested which includes functional feature tests, unit tests integration tests, UI tests, and performance tests.
 
 - **Linting Mandate:** All code MUST be linted and formatted using the tools specified in the project's Architecture Decision Records before tests are run or code is merged. The agent MUST resolve all linting errors automatically.
-- **UI Test Mandate:** All frontend feature branches MUST include comprehensive UI tests alongside standard unit tests to ensure UI components render and behave correctly. Crucially, these UI tests MUST execute against built production artifacts (not just dev servers) and MUST include explicit, rigorous DOM assertions that verify components mount without triggering server-side rendering (SSR) or browser hydration errors. Superficial tests that lack strict visual DOM state assertions are strictly forbidden.
+- **UI Test Mandate:** All frontend feature branches MUST include comprehensive UI tests alongside standard unit tests to ensure UI components render and behave correctly. Crucially, these UI tests MUST execute against built production artifacts (not just dev servers) and MUST include explicit, rigorous assertions on rendered UI state; for web frontends these are DOM assertions that verify components mount without triggering server-side rendering (SSR) or browser hydration errors. Superficial tests that lack strict visual or DOM state assertions are strictly forbidden.
 - **Integration Test Mandate:** Any backend task that interfaces with an external API, database, or filesystem MUST include integration tests utilizing the framework specified in the project's Architecture Decision Records.
 - **Performance Test Mandate:** Any application intended for production deployment MUST include load/performance tests using the framework specified in the project's Architecture Decision Records to simulate expected user concurrency and data volume.
 - **Test Reporting Mandate:** All test runs (Unit, UI, Integration, and BDD) MUST generate structured reports using the framework specified in the project's Architecture Decision Records to provide stakeholders with a clear, visual history of test passed/failed states and coverage. The agent MUST include explicit CLI instructions in the project README.md for how developers can execute the complete test suite (including specific commands for BDD feature tests) and how to generate/view the structured test reports.
 - **Inline Documentation Mandate:** The AI agent MUST write comprehensive inline documentation for ALL classes, functions, modules, and complex code blocks. This documentation must clearly explain the purpose, arguments, return values, and intended usage of the code. This is a strict requirement for all languages and frameworks, enforced via the specific standards configured in the initializing project template.
 - **Walkthrough Documentation:** When executing tests, the agent MUST copy the raw CLI output of the test runs into a permanent `apps/[Module Name]/resources/tasks/Task-[Task ID]-Walkthrough.md` file to provide immediate visual proof of passing tests, in addition to generating the structured test reports.
 - **Unit Test Traceability:** When code changes make a unit test obsolete or require modifications to the underlying implementation, the agent MUST explicitly update, refactor, or remove the corresponding unit tests to remain in sync with the source code.
-- **Strict Artifact Isolation:** This principle is tactically enforced on all AI agents via the instructions in `[artifact-isolation.md](./.agents/rules/artifact-isolation.md)`.
+- **Strict Artifact Isolation:** This principle is tactically enforced on all AI agents via the instructions in [artifact-isolation.md](./.agents/rules/artifact-isolation.md).
 - **PR Review Mandate:** All proposed Pull Requests MUST be reviewed by an external AI agent acting as a Senior Software Engineer. The agent will analyze code changes, enforce project paradigms, check for logic flaws, and provide change requests. Any identified issues will be fixed and pushed to the PR before final human review and merge to main branch. 
 
 ## 2. Branch-Per-Task
 
 **All development must follow the Git Branch per Task workflow:**
 
-- **Active Enforcement:** The Branch-Per-Task and Execution Documentation requirements are tactically enforced on all AI agents via the instructions in `[task-workflow.md](./.agents/rules/task-workflow.md)`.
+- **Active Enforcement:** The Branch-Per-Task and Execution Documentation requirements are tactically enforced on all AI agents via the instructions in [task-workflow.md](./.agents/rules/task-workflow.md).
 
 ## 3. Standalone Production Code
 
 **Purpose:** Ensure that the core application codebase is completely self-contained, deployment-ready, and not permanently entangled with its surrounding project-management or AI-development tooling.
 
-- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[src-isolation.md](./.agents/rules/src-isolation.md)`.
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in [src-isolation.md](./.agents/rules/src-isolation.md).
 
 ## 4. Strict Command Verification
 
 **Purpose:** Guarantee that any CLI commands, build steps, or execution scripts documented for humans are actually functional and tested against current dependencies.
 
-- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[command-verification.md](./.agents/rules/command-verification.md)`.
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in [command-verification.md](./.agents/rules/command-verification.md).
 
 ## 5. Pull Request Documentation Updates
 
 **Purpose:** Guarantee that the permanent project documentation stays strictly synchronized with the codebase whenever new features, architecture changes, or schema updates are introduced.
 
-- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[pr-documentation-update.md](./.agents/rules/pr-documentation-update.md)`.
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in [pr-documentation-update.md](./.agents/rules/pr-documentation-update.md).
 
 ## 6. Sync Logic Verification
 **Purpose:** Guarantee that upstream documentation (PRD, SRS, ADRs, Implementation Plan) is consistently aligned before writing implementation code, and to require explicit human review for any detected contradictions.
 
-- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[sync-logic.md](./.agents/rules/sync-logic.md)`.
-- **Search Before Denial:** AI agents MUST explicitly search `resources/architecture/ADRs/` before denying technology use or claiming an ADR doesn't exist. This is tactically enforced via `[adr-verification.md](./.agents/rules/adr-verification.md)`.
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in [sync-logic.md](./.agents/rules/sync-logic.md).
+- **Search Before Denial:** AI agents MUST explicitly search `resources/architecture/ADRs/` before denying technology use or claiming an ADR doesn't exist. This is tactically enforced via [adr-verification.md](./.agents/rules/adr-verification.md).
 
 ## 7. Portable Documentation (Relative Links)
 
 **Purpose:** Ensure that the project's documentation remains universally portable, readable across any environment, and correctly navigable natively within Git hosting services like Github.
 
-- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[links-enforce.md](./.agents/rules/links-enforce.md)`.
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in [links-enforce.md](./.agents/rules/links-enforce.md).
 - **Strictly Relative Links:** Anytime an AI agent generates documenting artifacts, readmes, technical specs, or logs that cross-reference another file in this project, it MUST use standard Markdown relative linking (e.g., `[PRD](../prd.md)` or `[Task 1.1](./tasks/Task-1.1-Plan.md)`).
 - **Prohibited Absolute Paths:** The agent MUST NEVER write absolute file paths native to its current execution environment (e.g., `/Users/johnathondoe/...`) into the permanent project repository files. Absolute paths break immediately upon push to a remote repository or clone by another developer.
 
@@ -63,7 +63,7 @@
 
 **Purpose:** Ensure that the project does not alienate users on different operating systems by hardcoding platform-specific assumptions (e.g., assuming macOS and Homebrew are the default).
 
-- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[platform-agnostic.md](./.agents/rules/platform-agnostic.md)`.
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in [platform-agnostic.md](./.agents/rules/platform-agnostic.md).
 
 ## 9. Standards Compliance
 
@@ -84,17 +84,17 @@
 - **Observability Stack:** The applications MUST be instrumented and infrastructure-configured to route these stdout streams into a centralized observability tool.
 - **Technical stack** The recommended stack of observability tools is:
   - **Promtail:** Captures the container `stdout` streams natively.
-  - **Redpanda:** Acts as the high-throughput, Kafka-compatible message queue to buffer and distribute log events sequentially without loss.
+  - **Redpanda (optional):** A Kafka-compatible message queue for high-throughput buffering, added between Promtail and Loki when log volume requires it. The bundled `docker-compose.yml` defines it behind the opt-in `buffering` profile but does not wire it in; Promtail pushes directly to Loki by default.
   - **Loki:** Indexes and stores the log streams for long-term archival.
   - **Prometheus:** Scrapes time-series metrics emitted by the apps and services.
   - **Grafana:** Provides the centralized UI to dashboard, introspect, and correlate the logs and metrics.
-- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[logging-enforce.md](./.agents/rules/logging-enforce.md)`.
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in [logging-enforce.md](./.agents/rules/logging-enforce.md).
 
 ## 11. Decoupled Execution Timelines
 
 **Purpose:** Guarantee architectural specs can survive aggressive timeline refactoring without requiring massive document rewrites by isolating execution phases from the core requirements.
 
-- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in `[decoupled-execution.md](./.agents/rules/decoupled-execution.md)`.
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in [decoupled-execution.md](./.agents/rules/decoupled-execution.md).
 
 ## 12. Security by Design
 
@@ -112,7 +112,7 @@
 
 ## 14. Modularity
 
-**Purpose:** Ensure that the application is modular and can be easily extended in the future by divinding functionality into modules. Each module should be self-contained and have a clear interface.
+**Purpose:** Ensure that the application is modular and can be easily extended in the future by dividing functionality into modules. Each module should be self-contained and have a clear interface.
 
 - [e.g., "The application is divided into modules that can be independently developed and tested"]
 - [e.g., "The application is divided into modules that can be independently deployed and scaled"]

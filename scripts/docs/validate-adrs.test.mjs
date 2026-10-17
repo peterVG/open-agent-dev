@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Pieter Van Garderen
+//
+// SPDX-License-Identifier: MIT
 /**
  * Unit tests for validate-adrs.mjs. Every test builds its own ADR directory
  * in a temporary folder, so the tests do not depend on this repository's

@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SPDX-FileCopyrightText: 2026 Peter Van Garderen <petervg@iona.ltd>
+# SPDX-FileCopyrightText: 2026 Pieter Van Garderen
 #
 # SPDX-License-Identifier: MIT
 #
@@ -58,7 +58,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# 7. Validate formatting (Rust, TypeScript, Elixir)
+# 7. Validate formatting for detected stacks
 ./scripts/verify_formatting.sh
 if [ $? -ne 0 ]; then
   echo "❌ pre-commit failed: Formatting Validation"
@@ -72,7 +72,7 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# 9. Lint and tests (Clippy, Cargo workspace and per-crate tests, rustdoc, UI lint/check/tests).
+# 9. Lint and tests for detected stacks (see scripts/verify_tests.sh for the per-stack steps).
 #    No hosted CI: this is the gate before a push. VERIFY_SKIP_TESTS=1 skips it for WIP commits.
 ./scripts/verify_tests.sh
 if [ $? -ne 0 ]; then

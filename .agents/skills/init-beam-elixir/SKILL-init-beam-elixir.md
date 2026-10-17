@@ -1,30 +1,35 @@
 ---
-description: Initialize a new BEAM/Elixir project with best practice root directory structure
+name: BEAM/Elixir Project Initialization
+description: Initialize a new BEAM/Elixir (Phoenix) project with best practice root directory structure, apps/ isolation, ExUnit, Allure reporting, QA tooling, and the observability compose stack.
+allowed-tools:
+  - code_interpreter
+references:
+  - ../../kb/beam-elixir-stack.md
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # BEAM/Elixir Project Initialization
 
-This skill guides the AI agent to initialize a new BEAM/Elixir project with the optimal directory structure dictated by the OTP (Open Telecom Platform) framework.
+This skill guides the AI agent to initialize a new BEAM/Elixir project with the optimal directory structure dictated by the OTP (Open Telecom Platform) framework. It defines a generic Phoenix baseline. Anything beyond that baseline is added only when the PRD or an ADR requires it.
+
+For stack background (OTP conventions, distribution, job processing, tooling trade-offs), load [`.agents/kb/beam-elixir-stack.md`](../../kb/beam-elixir-stack.md) before starting.
 
 ## Step 1: Scaffold the Root Directory Structure
 
-When scaffolding a new project, you MUST create the following directory structure at the root, while keeping all the files and folders that are currently also in the root directory:
+When scaffolding a new project, you MUST create the following directory structure at the root, while keeping all the files and folders that are currently also in the root directory.
 
-**Proposed Resolution for Workspace Boundaries:**
-When reviewing `.agents/rules/workspace-boundaries.md`, you may detect a contradiction regarding the placement of the `mix.exs` file. You MUST treat this project as a Polyglot Monorepo structure where each application inside `apps/` is fully independent (i.e., running `mix phx.new my_app` inside `apps/` instead of an umbrella project). This complies with the strict "No Language Tooling at Root" rule and is consistent with the directory structure shown below.
+Each BEAM application (or umbrella project) lives under `apps/<app>/`, fully independent of the others (i.e., run `mix phx.new my_app` inside `apps/`). There is **no root `mix.exs`**. This complies with the "No Language Tooling at Root" rule in [`workspace-boundaries.md`](../../rules/workspace-boundaries.md).
 
 ```text
 project-root/
 ├── .github/
-│   └── workflows/    # GitHub Actions for Multi-Arch releases
-├── ansible/          # Ansible playbooks (GPU provisioning, observability, deployments)
-├── terraform/        # Terraform configurations (local virtualization, Cloud VMs)
-├── .coderabbit.yaml  # CodeRabbit AI PR Reviewer configurations
+│   └── workflows/    # CI pipelines (test, QA, release builds)
 ├── docker-compose.yml
 ├── .env
-├── prd.md            # Global Product Requirements Document
+├── resources/
+│   ├── product-vision.md
+│   └── prd.md        # Global Product Requirements Document
 ├── apps/
 │   └── my_app/
 │       ├── config/
@@ -38,11 +43,18 @@ project-root/
 │       │   ├── features/
 │       │   ├── performance/
 │       │   └── allure-results/
+│       ├── resources/
+│       │   └── srs.md    # Local Software Requirements Specification linked to PRD
 │       ├── mix.exs
-│       ├── mix.lock
-│       └── srs.md    # Local Software Requirements Specification linked to PRD
+│       └── mix.lock
 └── README.md
 ```
+
+The following are **optional** and are added only when the PRD or an ADR calls for them:
+
+- `terraform/` and `ansible/` for infrastructure provisioning and release deployment.
+- Multi-architecture release pipelines in `.github/workflows/`.
+- An AI PR reviewer configuration file at the root (vendor per ADR).
 
 Use appropriate Mix commands (`mix phx.new` or `mix new`) and ensure the generation targets a subdirectory within `apps/` (e.g. `apps/my_app/`), rather than the repository root. **CRITICAL: When scaffolding any new service or web module within the `/apps` directory, you MUST explicitly hardcode a unique HTTP port for its development server (e.g. `config/dev.exs`) by scanning the repository's existing applications and incrementing exactly +1 to ensure no two workspaces ever clash on the same port locally.** 
 
@@ -50,41 +62,57 @@ Use appropriate Mix commands (`mix phx.new` or `mix new`) and ensure the generat
 
 Every BEAM/Elixir project MUST adhere rigidly to a Monorepo Requirements Engineering methodology. The AI agent MUST enforce the following rules when creating or updating requirements:
 
-1. **Global Source of Truth:** The root `prd.md` serves as the global orchestrator of the project's vision.
-2. **Localized Specs:** Each application in `apps/` MUST maintain its own `srs.md` containing requirements strictly bounded to that specific application/node.
-3. **Traceability Metadata:** Every `srs.md` MUST include a YAML frontmatter block at the top that explicitly links to the root PRD. For example:
+1. **Global Source of Truth:** `resources/prd.md` (with `resources/product-vision.md`) serves as the global orchestrator of the project's vision.
+2. **Localized Specs:** Each application in `apps/` MUST maintain its own `apps/<app>/resources/srs.md` containing requirements strictly bounded to that specific application/node.
+3. **Traceability Metadata:** Every `srs.md` MUST include a YAML frontmatter block at the top that explicitly links to the PRD. For example:
    ```yaml
    ---
    title: "MyApp Software Requirements Specification"
-   parent: "../../prd.md"
+   parent: "../../../resources/prd.md"
    ---
    ```
-4. **Line-by-Line Traceability:** Every requirement definition in an `srs.md` MUST explicitly link back to its parent requirement in the root `prd.md` using relative markdown links (e.g., `[PRD Req 1.2](../../prd.md#req-1.2)`).
-5. **Active Sync Enforcement:** The agent MUST strictly adhere to the `.agents/rules/sync-logic.md` rule. If an architecture change happens in one app's `srs.md`, the agent is mathematically required to trace upward and update the root `prd.md` or laterally update other apps' `srs.md` if the change breaches an API boundary.
+4. **Line-by-Line Traceability:** Every requirement definition in an `srs.md` MUST explicitly link back to its parent requirement in `resources/prd.md` using relative markdown links (e.g., `[PRD F-001](../../../resources/prd.md#f-001-example)`).
+5. **Active Sync Enforcement:** The agent MUST strictly adhere to the [`sync-logic.md`](../../rules/sync-logic.md) rule. If an architecture change happens in one app's `srs.md`, the agent MUST trace upward and update `resources/prd.md`, or laterally update other apps' `srs.md` if the change breaches an API boundary.
 
 ## Step 3: Enforce Distributed Methods & Orchestration
 
-Every BEAM/Elixir project MUST adhere to the following advanced orchestration and distributed architectural patterns:
-1. **Architecture Agnostic:** Code MUST be fully portable between ARM64 (Mac) and x86_64 (e.g., GX10 Blackwell) without source code changes. 
-2. **Multi-Arch Releases:** You must configure `.github/workflows/` with GitHub Actions pipelines that build distinct Elixir Releases for both ARM64 and x86_64 target architectures.
-3. **Environment Parity (`runtime.exs`):** The system MUST use `config/runtime.exs` to dynamically detect available hardware. For example, if a Blackwell GPU (or CUDA driver) is found, it must initialize the `EXLA` backend for high-speed tasks (NX/Bumblebee), otherwise it falls back to CPU/Metal-based processing for safe local testing.
-4. **Functional Isolation:** In production, the system must support deployment as independent nodes (e.g., one node runs Web UI, another strictly runs OCR engines).
-5. **Cluster & Discovery:** Nodes MUST form a cluster securely using `ERL_AFLAGS="-setcookie arkly_secret_cookie"`. Nodes must automatically discover each other using `libcluster` (via Gossip or DNSSRV).
-6. **Distributed Job Processing**: Use Oban "Engines" to designate which nodes can run specific queues, preventing under-resourced nodes from being overloaded. Use Erlang PartitionSupervisor to restrict concurrent processing tasks to match GPU core availability (preventing VRAM exhaustion).
+Every BEAM/Elixir project MUST follow these baseline patterns. Items marked *conditional* apply only when the PRD or ADRs require them.
+
+1. **Architecture Agnostic:** Code MUST be portable between ARM64 and x86_64 without source code changes.
+2. **Environment Parity (`runtime.exs`):** The system MUST use `config/runtime.exs` for all environment-specific configuration (secrets, URLs, ports, feature flags) read from environment variables at boot.
+3. **Hardware Detection (conditional):** If the project uses Nx-based compute, `runtime.exs` SHOULD detect available hardware. If a CUDA-capable GPU is present, initialize the `EXLA` backend; otherwise fall back to the CPU backend for safe local testing.
+4. **Functional Isolation (conditional):** If the PRD requires it, the system SHOULD support deployment as independent nodes (e.g., one node runs the web UI, another runs compute-heavy workers).
+5. **Cluster & Discovery (conditional):** If multiple nodes are deployed, they MUST form a cluster with a cookie read from an environment variable (e.g. `RELEASE_COOKIE`). The cookie MUST NEVER be hard-coded in source, config files, or scripts. Nodes SHOULD discover each other using `libcluster` (e.g. via Gossip or DNSSRV).
+6. **Job Processing:** Use Oban for persistent background jobs. *Conditional:* in a multi-node deployment, configure Oban queues per node so under-resourced nodes are not overloaded, and use Erlang `PartitionSupervisor` (or bounded queue concurrency) to cap concurrent compute-heavy tasks to the available hardware (e.g. GPU memory).
 
 ## Step 4: Enforce Technical Stack
 
-You MUST ensure the application uses and configures the following technical dependencies logically into `mix.exs` and node infrastructure:
+### Mandatory baseline
 
-* **Job & Node Orchestration:** `oban` and `oban_web` (persistent job processing, workflows via Postgres). `broadway` for multi-stage pipelines. `libcluster` (node discovery), `horde` (Distributed Supervisor/Registry so nodes don't need hardcoded IPs), and `Distributed Erlang` / RPC (prefer RPC or Process Aliases over REST/JSON between nodes).
-* **AI & Compute Compute:** `nx`, `exla` (CUDA 12.x support), `bumblebee` (HuggingFace Transformers/Vision inside BEAM), `tesseract-elixir` (AI OCR precursor).
-* **Data & Storage:** `ecto`, Postgres, `pgvector`, Apache Age (knowledge graph), and `elasticsearch-elixir`. `ex_aws_s3` for storage alongside Phoenix `allow_upload/3`. Phoenix PubSub for live processing updates.
-* **Observability (Centralized Stack):**
-  - `opentelemetry`: Distribute tracing layer to correlate cross-node actions via Trace IDs.
+You MUST configure the following dependencies in each app's `mix.exs` and supporting infrastructure:
+
+* **Web:** `phoenix` and `phoenix_live_view`.
+* **Data:** `ecto` / `ecto_sql` with Postgres (`postgrex`).
+* **Jobs & Messaging:** `oban` for persistent job processing; Phoenix PubSub for live updates.
+* **Testing:** ExUnit with `wallaby` and/or `phoenix_test` (see Step 6).
+* **QA:** `credo`, `dialyxir`, `sobelow` (see Step 6).
+* **Observability (Centralized Stack, per AGENTS.md §10):**
   - `logger_json`: Write unbuffered JSON objects to stdout. MUST configure to include `node()` metadata for Grafana filtering.
-  - `prom_ex` & Prometheus: Auto-capture BEAM metrics (CPU, Oban depth, processes).
-  - Promtail (sidecar scraping stdout to Redpanda buffer), Loki (Log aggregator), Grafana.
-* **Infrastructure Management:** Terraform (orchestrates local Proxmox VMs, Docker via Orbstack, or Cloud resources) and Ansible (automates GPU/CUDA 12.x provisioning, Promtail/OTel sidecars, and building/pushing Elixir Releases across the cluster).
+  - `prom_ex` & Prometheus: Auto-capture BEAM metrics (CPU, Oban queue depth, processes).
+  - `opentelemetry`: Distributed tracing layer to correlate actions via Trace IDs.
+  - Promtail (scraping stdout and pushing directly to Loki; an optional Redpanda buffer only when an ADR calls for it, via the `buffering` Compose profile), Loki (log aggregator), Grafana.
+
+### Optional — only if the PRD/ADRs require it
+
+Do not add these by default. Each one needs an ADR justifying it.
+
+* **Pipelines & Distribution:** `broadway` for multi-stage pipelines; `libcluster` (node discovery); `horde` (distributed Supervisor/Registry); Distributed Erlang / RPC between nodes (prefer RPC or process aliases over REST/JSON between BEAM nodes).
+* **Admin UI:** `oban_web`.
+* **ML & Compute:** `nx`, `exla` (CUDA support), `bumblebee` (Hugging Face models inside the BEAM).
+* **Vector Search:** `pgvector`.
+* **Search:** a search engine client (e.g. Elasticsearch or OpenSearch) if Postgres full-text search is insufficient.
+* **Object Storage:** S3-compatible object storage via e.g. `ex_aws_s3`, alongside Phoenix `allow_upload/3`.
+* **Infrastructure Management:** Terraform (VMs, networks, or cloud resources) and Ansible (host provisioning, observability sidecars, and building/pushing Elixir Releases).
 
 ## Step 5: Populate the apps/README.md file
 
@@ -96,7 +124,6 @@ While Elixir modernizes some of the naming conventions (like using lib/ instead 
 
 ```text
 project-root/
-├── .coderabbit.yaml         # CodeRabbit AI PR Reviewer configurations
 ├── docker-compose.yml       # Orchestrates the observability stack and databases
 ├── .env                     # Secure storage for environment variables (DB credentials, API keys)
 ├── apps/
@@ -105,6 +132,7 @@ project-root/
 │       ├── include/      # Public header files (.hrl) required by other applications
 │       ├── lib/          # Main Elixir source code (or src/ for Erlang .erl files)
 │       ├── priv/         # Non-BEAM specific files (executables, static assets)
+│       ├── resources/    # App-level SRS and implementation plan
 │       ├── test/         # Consolidated testing infrastructure
 │       │   ├── unit/        
 │       │   ├── integration/ 
@@ -119,65 +147,76 @@ project-root/
 
 When writing or configuring code for this stack, you must adhere to the following principles:
 
-**`apps/my_app/`:** In this monorepo structure, backend and frontend Phoenix code is grouped as a standalone OTP application nestled inside `apps/`. It maintains its own `config/`, `lib/`, `deps/`, `test/`, and `mix.exs` completely independent of the global project root.
+**`apps/my_app/`:** In this monorepo structure, backend and frontend Phoenix code is grouped as a standalone OTP application nestled inside `apps/`. It maintains its own `config/`, `lib/`, `deps/`, `test/`, and `mix.exs` completely independent of the global project root. There is no root `mix.exs`.
 **`lib/`**: Contains all main source code logic and context boundaries.
-**Infrastructure Orchestration**: A `docker-compose.yml` file sits one directory higher in the global project root. Unlike containerized frontend/backend setups, BEAM apps natively run via their local Mix environments. This compose file is specifically responsible for orchestrating the centralized logging stack and local databases without containerizing the Elixir application itself.
-**Testing Taxonomy**: Both apps share a comprehensive testing architecture supporting `unit/`, `integration/`, `ui/`, BDD `features/`, `performance/`, and standardized `allure-results/` test reporting. Elixir projects route Ecto test databases specifically to their application root rather than system-wide.
-**Isolated Testing & Linting**: All global cache directories and reporting suites MUST strictly run and output within their local workspace directory (e.g. `apps/my_app/test/`) instead of the shared global repository root.
+**Infrastructure Orchestration**: A `docker-compose.yml` file sits in the global project root. BEAM apps natively run via their local Mix environments. This compose file is responsible for orchestrating the centralized logging stack and local databases without containerizing the Elixir application itself.
+**Testing Taxonomy**: Every app shares a comprehensive testing architecture supporting `unit/`, `integration/`, `ui/`, BDD `features/`, `performance/`, and standardized `allure-results/` test reporting. Test databases and artifacts are scoped to the application, not system-wide.
+**Isolated Testing & Linting**: All cache directories and reporting suites MUST run and output within their local workspace directory (e.g. `apps/my_app/test/`) instead of the shared repository root.
 **Centralized Logging / Observability**: All applications must route logs as unbuffered event streams exclusively to `stdout`. The ecosystem relies on a centralized observability stack (Promtail, Loki, Redpanda, Prometheus, Grafana) orchestrated via `docker-compose` to capture and index these logs, strictly forbidding local file logging.
 
 ## Step 6: Configure Testing Frameworks
 
 ### 1. BDD Feature-Driven Development Standard
-To maintain BDD functionality, we use the Elixir-native `Wallaby.Feature` macro atop ExUnit. **Crucially, traditional Gherkin parser libraries (like WhiteBread or Cabbage) are deprecated and fundamentally broken on modern Elixir (v1.15+).** Instead of `.feature` text files, BEAM architects must write native Elixir scenarios in `test/features/` to maintain ecosystem compatibility while generating rich Allure test reports.
+To maintain BDD functionality, use the Elixir-native `Wallaby.Feature` macro (or PhoenixTest) atop ExUnit. Traditional Gherkin parser libraries (like WhiteBread or Cabbage) are not maintained for current Elixir versions; avoid them. Instead of `.feature` text files, write native Elixir scenarios in `test/features/` to maintain ecosystem compatibility while generating Allure test reports. Use the [`feature-writer`](../feature-writer/SKILL-feature-writer.md) skill to translate SRS requirements into these scenarios.
 
 ### 2. Test Artifact Isolation and Reporting
-To guarantee clean project roots, all test-generated artifacts MUST be strictly collapsed into the idiomatic Elixir `test/` directory.
+To guarantee clean project roots, all test-generated artifacts MUST be collapsed into the idiomatic Elixir `test/` directory.
 
-- **Databases:** Ecto test databases must be routed to `test/spotbrowse_test.db` in `config/test.exs` rather than the application root.
-- **Test Reports:** Structured test reports (like Allure via `junit_formatter`) must output directly to `test/allure-results/` and compile to `test/allure-report/`.
+- **Databases:** Postgres test databases use an app-scoped name (e.g. `my_app_test#{System.get_env("MIX_TEST_PARTITION")}`) in `config/test.exs`. If an ADR selects SQLite, route the file to `test/my_app_test.db` rather than the application root.
+- **Test Reports:** Structured test reports MUST output directly to `test/allure-results/` and compile to `test/allure-report/` (see Section 3).
 - **UI Snapshots:** Wallaby failure screenshots must be directed to `test/wallaby_screenshots/`.
 - **Do not use plural custom directories:** Custom directories like `tests/` break native `mix test` conventions. The singular `test/` folder should exclusively contain both source logic and ephemeral test artifacts (safely `.gitignore`'d).
 
 ### 3. Allure Test Reporting Integration
-To properly configure Allure in a BEAM project, adhere to the following native setup:
+Allure reads JUnit XML results natively. Configure ExUnit to emit JUnit XML into `test/allure-results/`:
 
-1. **Leverage the Native Formatter:** We explicitly avoid third-party libraries like `junit_formatter` or `allure_test_formatter`. Instead, Arkrim utilizes a dedicated internal application called `elixir_feature_tests`.
-2. **Add Formatter to dependencies:** Add `{:elixir_feature_tests, path: "../elixir_feature_tests", only: :test}` to your application's `mix.exs` file to gain access to the BDD Step macros and the correct JSON serializers.
-3. **Configure ExUnit formatter:** Update your `test/test_helper.exs` to include `ExUnit.start(formatters: [ExUnit.CLIFormatter, ElixirFeatureTests.AllureFormatter])`.
-4. **Allure CLI:** Ensure that `allure-commandline` is accessible. To view the generated HTML report locally, run `allure serve test/allure-results`. The custom GenServer natively writes the JSON payloads to a `test/allure-results/` directory relative to where the `mix test` command was invoked. You MUST configure a mix alias or test execution hook (e.g. `rm -rf test/allure-results`) to automatically purge historical JSON payloads before initiating new test cycles.
+1. **Add the formatter dependency:** Add `{:junit_formatter, "> 0.0.0", only: :test}` to the app's `mix.exs` (use the latest stable version).
+2. **Configure the output directory** in `config/test.exs`:
+   ```elixir
+   config :junit_formatter,
+     report_dir: "test/allure-results",
+     report_file: "junit-results.xml",
+     automatic_create_dir?: true,
+     include_filename?: true
+   ```
+3. **Register the formatter** in `test/test_helper.exs`:
+   ```elixir
+   ExUnit.configure(formatters: [JUnitFormatter, ExUnit.CLIFormatter])
+   ExUnit.start()
+   ```
+4. **Purge stale results:** Configure a cross-platform mix alias (e.g. `test: [fn _ -> File.rm_rf!("test/allure-results") end, "test"]`) so historical results are removed before each test cycle.
+5. **Allure CLI:** Ensure the Allure command-line tool is installed. Generate the HTML report with `allure generate test/allure-results -o test/allure-report --clean`, or view it locally with `allure serve test/allure-results`.
 
 ### 4. PhoenixTest and Playwright Integration
 To support robust End-to-End (E2E) and integration testing, configure both PhoenixTest and Playwright:
 
 1. **PhoenixTest Setup:** 
-   - Add `{:phoenix_test, "~> 0.3.0", only: :test, runtime: false}` to your `mix.exs` dependencies.
-   - Configure it to seamlessly traverse LiveView and static pages within ExUnit tests without overhead.
+   - Add `{:phoenix_test, "> 0.0.0", only: :test, runtime: false}` to your `mix.exs` dependencies (use the latest stable version).
+   - Configure it to traverse LiveView and static pages within ExUnit tests without browser overhead.
 2. **Playwright Setup (for JS/Browser E2E):**
    - Alternatively or additionally to Wallaby, if Playwright is preferred for deep browser automation interacting with LiveView:
-   - Run `npm init playwright@latest` inside your `apps/my_app_web/assets/` (or equivalent) directory.
-   - Configure playwright to target the Phoenix test server port and ensure tests are output to `test/playwright-results/` to respect the artifact isolation rule.
+   - Run `npm init playwright@latest` inside your `apps/my_app/assets/` (or equivalent) directory.
+   - Configure Playwright to target the Phoenix test server port and ensure results are output to `test/playwright-results/` to respect the artifact isolation rule.
 
 ### 5. QA, Linting, and Security Analysis Standards
-To ensure code quality, predictable retries, and strict type safety, configure the following QA tools in your `mix.exs` dependencies. Instruct the agent to use the latest stable versions compatible with the stack:
+To ensure code quality and type safety, configure the following QA tools in your `mix.exs` dependencies. Use the latest stable versions compatible with the stack:
 
 1. **Formatting:** Use the built-in `mix format` to enforce standard Elixir code style across the project.
-2. **Credo** (`{:credo, "> 0.0.0", only: [:dev, :test], runtime: false}`): Focuses on code consistency and "teaching" idiomatic Elixir. It catches high-level design smells that bytecode analysis might ignore. Fast and should be run frequently (`mix credo --strict`).
+2. **Credo** (`{:credo, "> 0.0.0", only: [:dev, :test], runtime: false}`): Focuses on code consistency and idiomatic Elixir. It catches high-level design smells that bytecode analysis might ignore. Fast and should be run frequently (`mix credo --strict`).
 3. **Dialyzer/Dialyxir** (`{:dialyxir, "> 0.0.0", only: [:dev, :test], runtime: false}`): Uses "Success Typing" to catch type errors. Ensures the data boundaries and type checks are right.
-4. **Litmus** (`{:litmus, "> 0.0.0", only: [:dev, :test], runtime: false}`): Performs "purity analysis" by checking if functions have side effects that aren't explicitly declared. Vital for predictable retries (idempotency in Oban), bytecode verification across OS environments, and statically identifying potential "uncaught" exceptions.
-5. **Boundary** (`{:boundary, "> 0.0.0", runtime: false}`): Enforces a "pluggable" design by preventing one module from calling internal functions of another module without a proper public API. Requires defining boundaries in the `mix.exs` for each app. Fast and should be run frequently.
-6. **Sobelow** (`{:sobelow, "> 0.0.0", only: [:dev, :test], runtime: false}`): Essential for Phoenix LiveView frontends to identify security vulnerabilities (like XSS or insecure uploads) where pure bytecode analysis falls short.
+4. **Boundary** (`{:boundary, "> 0.0.0", runtime: false}`): Enforces a modular design by preventing one module from calling internal functions of another module without a proper public API. Add `:boundary` to the `compilers` list in `mix.exs` and define boundaries per context. Violations surface as compiler warnings.
+5. **Sobelow** (`{:sobelow, "> 0.0.0", only: [:dev, :test], runtime: false}`): Essential for Phoenix LiveView frontends to identify security vulnerabilities (like XSS or insecure uploads).
 
 ## Step 7: Configure Documentation Generation
 
 Elixir has robust built-in standards for documentation. You must configure the project to use these native tools:
 
 1. **Inline Documentation:** Use `@moduledoc` and `@doc` attributes to document all public modules and functions.
-2. **Developer Documentation:** Add `{:ex_doc, "~> 0.31", only: :dev, runtime: false}` to your `mix.exs` dependencies to generate HTML/Epub documentation using `mix docs`.
+2. **Developer Documentation:** Add `{:ex_doc, "> 0.0.0", only: :dev, runtime: false}` (latest stable) to your `mix.exs` dependencies to generate HTML/Epub documentation using `mix docs`.
 
 ## Step 8: Generate Inline Documentation Rule
 
-Create a @.agents/rules/docs-enforce.md file that contains the following verbatim content:
+Create a `.agents/rules/docs-enforce.md` file that contains the following verbatim content:
 
 ---
 description: Ensure all code is comprehensively documented using Elixir's native documentation attributes.
@@ -206,15 +245,15 @@ For custom frontend scripts in `assets/`, the agent MUST use standard `JSDoc` sy
 
 ## Step 9: Generate QA and Linting Rule
 
-Create a @.agents/rules/qa-enforce.md file that contains the following verbatim content:
+Create a `.agents/rules/qa-enforce.md` file that contains the following verbatim content:
 
 ---
-description: Ensure all code is cleanly formatted, passes purity analysis, typings, and security checks before testing or committing.
+description: Ensure all code is cleanly formatted, passes typing, boundary, and security checks before testing or committing.
 ---
 
 # Parallel QA Execution and Linting Enforcement
 
-**Purpose:** This rule dictates the exact QA pipeline and CLI commands that an AI agent MUST execute to validate both the Elixir backend codebase (purity, typing, styles, boundary isolation, security) and Javascript frontend assets.
+**Purpose:** This rule dictates the exact QA pipeline and CLI commands that an AI agent MUST execute to validate both the Elixir backend codebase (typing, style, boundary isolation, security) and Javascript frontend assets.
 
 ## Active Enforcement
 
@@ -244,22 +283,15 @@ mix dialyzer
 ```
 *If this fails:* Proactively fix type mismatches or incorrect `@spec` definitions.
 
-### 4. Bytecode Purity Analysis (Litmus)
-* **Litmus:** Performs bytecode purity analysis and exception path tracing. Run each time *after* compiling to ensure functions intended to be idempotent remain pure and side-effect free.
+### 4. Encapsulation Verification (Boundary)
+* **Boundary:** Runs as a Mix compiler and reports cross-boundary calls as warnings.
 ```bash
-mix compile && mix litmus
+mix compile --warnings-as-errors
 ```
-*If this fails:* Refactor logic to isolate side-effects explicitly and ensure core retryable paths remain pure.
+*If this fails:* Expose the required function via a public API or correct the unauthorized cross-module call.
 
-### 5. Encapsulation Verification (Boundary)
-* **Boundary:** Verifies no cross-app encapsulation leaks exist.
-```bash
-mix compile && mix boundary
-```
-*If this fails:* Expose the required private function via a public API or correct the unauthorized cross-module call.
-
-### 6. Format and Lint Frontend Assets
-Navigate to the Phoenix assets directory (e.g., `apps/my_app_web/assets/`) and run the Javascript/CSS formatters and linters:
+### 5. Format and Lint Frontend Assets
+Navigate to the Phoenix assets directory (e.g., `apps/my_app/assets/`) and run the Javascript/CSS formatters and linters:
 ```bash
 npx prettier --write .
 npx eslint . --fix
@@ -279,15 +311,15 @@ The agent MUST:
 
 ## Step 10: Generate Architecture Decision Records (ADRs)
 
-Use the `@.agents/rules/adr-formatting.md` rule to write ADRs to the `@resources/architecture/ADRs/` directory. Be sure to include separate ADRs specifically for the choice of:
-1) Test runners and reporting frameworks.
+Use the [`adr-formatting.md`](../../rules/adr-formatting.md) rule to write ADRs to the `resources/architecture/ADRs/` directory. Be sure to include separate ADRs specifically for the choice of:
+1) Test runners and reporting frameworks (ExUnit, Wallaby/PhoenixTest, `junit_formatter` + Allure).
 2) Inline code docs generators.
 3) Parallel QA execution tools, coding style standards, and static typing tooling (including Credo, Dialyzer, and Sobelow).
-4) Bytecode purity analysis (Litmus) and boundary enforcement (Boundary) to guarantee idempotent retries and architectural encapsulation.
+4) Boundary enforcement (Boundary) to guarantee architectural encapsulation.
 5) The centralized observability stack (Loki, Redpanda, Promtail, Prometheus, Grafana).
-6) Use of Horde for distributed registries, Oban Engines for node-specific job routing, and Erlang PartitionSupervisor for GPU execution limitation.
-7) Advanced provisioning choices including Terraform for VMs/VPCs and Ansible for GPU/CUDA provisioning and release deploy mechanics.
-8) The architecture-agnostic Environment Detection fallback strategies in `runtime.exs` and RPC vs JSON REST decision.
+6) The `runtime.exs` environment configuration strategy.
+
+If any optional items from Step 3 or Step 4 are adopted, also write an ADR for each (e.g. clustering and distributed registries, node-specific job routing, ML/compute backends and hardware fallback, object storage, provisioning tooling, RPC vs JSON REST between nodes).
 
 ## Step 11: Configure Global `.gitignore`
 
@@ -299,7 +331,8 @@ The root directory already contains a `.gitignore` file. You MUST strictly appen
 **/coverage/
 **/playwright-report/
 **/allure-results/
-test/wallaby_screenshots/
+**/allure-report/
+**/test/wallaby_screenshots/
 
 # Dependency directories
 **/deps/
@@ -331,5 +364,5 @@ When initializing the observability stack, you MUST ensure that the raw configur
 ## Step 13: Update Documentation
 
 1. **Insert** platform-agnostic Elixir/Erlang installation instructions into the top of the `README.md` file (e.g., referencing official guides or version managers like `asdf`, `mise`, etc.) to ensure a zero-friction setup for new developers. **CRITICAL: You MUST NOT delete or overwrite any existing content in the `README.md` file when adding this section.**
-2. **Update** the `## Run tests` section (or append one if it doesn't exist) in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure. You MUST also explicitly instruct the user to run `npx playwright install` within their frontend setup routines so they download the necessary end-to-end testing browsers. **CRITICAL: You MUST NOT delete or overwrite any existing unrelated content in the `README.md` file when updating this section.**
+2. **Update** the `## Run tests` section (or append one if it doesn't exist) in the `README.md` in the project's root directory with instructions on how to execute each respective test suites, including which directories to run them from, where to find their raw results and how to get an overview of all test results in a tool like Allure. If Playwright is used, you MUST also explicitly instruct the user to run `npx playwright install` within their frontend setup routines so they download the necessary end-to-end testing browsers. **CRITICAL: You MUST NOT delete or overwrite any existing unrelated content in the `README.md` file when updating this section.**
 3. **Update** the `## View logs` section (located under `# Setup Development Environment`) in the root `README.md` with explicit instructions on how to install/spin up the centralized logging tools (Loki, Redpanda, Promtail, Prometheus, Grafana) via `docker-compose`, and how to access the Grafana UI locally.

@@ -23,4 +23,5 @@ Progressive disclosure listing for `.agents/kb/` — an [OKF v0.2](./okf.md) Kno
 
 # Implementation playbooks
 
-* [Tauri 2](./tauri-2.md) - Rust desktop host: capabilities, IPC, plugins, testing, and distribution (stable major 2).
+* [BEAM / Elixir / Phoenix stack](./beam-elixir-stack.md) - Optional BEAM/Elixir stack reference: baseline libraries, `apps/` layout, testing, releases, clustering, observability.
+* [Tauri 2](./tauri-2.md) - Optional Rust/JS + Tauri stack playbook: desktop host capabilities, IPC, plugins, testing, and distribution (stable major 2).

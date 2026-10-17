@@ -1,7 +1,7 @@
 ---
 description: Ensure all tasks follow the Branch-Per-Task workflow and generate required execution documentation.
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # Task Execution Workflow

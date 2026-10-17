@@ -1,6 +1,6 @@
 ---
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # Dependency Version Management

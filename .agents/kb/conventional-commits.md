@@ -70,6 +70,6 @@ If a commit introduces a breaking API change (correlates with a MAJOR release), 
 ## Example Commits
 
 *   `docs: update ISO 42010 compliance rule in AGENTS.md`
-*   `feat: implement Gemini 3.1 Pro integration for intel fetching`
-*   `test: add Gherkin scenario for live ticker monitoring`
+*   `feat(auth): add password reset endpoint`
+*   `test: add Gherkin scenario for user login`
 *   `fix!: drop support for older SQLite schemas`

@@ -1,19 +1,19 @@
 ---
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # Sync Logic Rule
 
 ## Context Refresh
 
-Whenever a task starts, refresh context from @PRD, @SRS, @resources/architecture/ADRs/, and @resources/implementation-plan.md. 
+Whenever a task starts, refresh context from `resources/prd.md`, `resources/srs.md` (and any `apps/[Module Name]/resources/srs.md`), `resources/architecture/ADRs/`, and `resources/implementation-plan.md`. 
 
 ## Cascading Upstream Updates (Proactive Protocol)
 
 When new technical requirements, architectural decisions, testing frameworks, or core library dependencies are introduced during development:
-1. **ADR → SRS:** The agent MUST immediately update the relevant `SRS.md` modules to reflect the new system parameters, bounding constraints, or testing boundaries.
-2. **SRS → PRD:** The agent MUST then immediately verify if the newly updated `SRS.md` necessitates an upstream tweak to the `resources/prd.md` (e.g., adding the new tech to the `# Technical Stack` list).
+1. **ADR → SRS:** The agent MUST immediately update the relevant `srs.md` modules to reflect the new system parameters, bounding constraints, or testing boundaries.
+2. **SRS → PRD:** The agent MUST then immediately verify if the newly updated `srs.md` necessitates an upstream tweak to the `resources/prd.md` (e.g., adding the new tech to the `# Technical Stack` list).
 3. **Execution Report:** The agent MUST output a `## Sync Execution Report` in its final reply outlining exactly which documents it cascaded the changes into so the human developer is explicitly aware of the upstream edits.
 
 ## Conflict Detection (Defensive Protocol)
