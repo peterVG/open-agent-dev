@@ -136,7 +136,7 @@ Use Cargo and the frontend scaffolder **inside** `apps/` (`cargo new` in `apps/c
 
 Same monorepo requirements method as the BEAM init skill, with PRD at `resources/prd.md` (this repo does not use root `prd.md`).
 
-1. **Global source of truth:** [`resources/prd.md`](../../../resources/prd.md) and [`resources/product-vision.md`](../../../resources/product-vision.md).
+1. **Global source of truth:** `resources/prd.md` and `resources/product-vision.md`.
 2. **Localized specs:** Each app MUST have `resources/srs.md` bounded to that app (`core`, `backend`, `frontend`, `desktop`).
 3. **Traceability metadata** at the top of each `srs.md`:
    ```yaml

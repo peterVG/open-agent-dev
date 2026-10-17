@@ -1,8 +1,8 @@
 # UI mockups
 
-Design artifacts used when generating [`resources/srs.md`](../srs.md): wireframes, mockups, flows, and look-and-feel examples.
+Design artifacts used when generating `resources/srs.md`: wireframes, mockups, flows, and look-and-feel examples.
 
-These files are hard look-and-feel requirements for the surfaces they show. Outcome-level product needs stay in [`resources/prd.md`](../prd.md). The SRS writer records what each mockup shows as ISO/IEC/IEEE 29148 requirements that are unambiguous, verifiable, consistent, and traced. A pixel or two of browser rendering difference is acceptable.
+These files are hard look-and-feel requirements for the surfaces they show. Outcome-level product needs stay in `resources/prd.md`. The SRS writer records what each mockup shows as ISO/IEC/IEEE 29148 requirements that are unambiguous, verifiable, consistent, and traced. A pixel or two of browser rendering difference is acceptable.
 
 ## What goes here
 

@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
-
-# Prevent direct commits to main/master to enforce the Branch-Per-Task workflow.
+# SPDX-FileCopyrightText: 2026 Peter Van Garderen <petervg@iona.ltd>
+#
+# SPDX-License-Identifier: MIT
+#
+# Block direct commits to main/master to enforce the Branch-Per-Task workflow.
 
 BRANCH_NAME=$(git branch --show-current)
 

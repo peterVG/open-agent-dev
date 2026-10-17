@@ -1,6 +1,9 @@
 #!/usr/bin/env bash
-
-# Master Pre-Commit Hook
+# SPDX-FileCopyrightText: 2026 Peter Van Garderen <petervg@iona.ltd>
+#
+# SPDX-License-Identifier: MIT
+#
+# Master pre-commit hook: run every verify_*.sh gate in order and stop at the first failure.
 
 echo "========================================"
 echo "Running Pre-Commit Hooks..."
@@ -41,24 +44,39 @@ if [ $? -ne 0 ]; then
   exit 1
 fi
 
-# 4. Validate workspace boundaries
+# 5. Validate workspace boundaries
 ./scripts/verify_workspace_boundaries.sh
 if [ $? -ne 0 ]; then
   echo "❌ pre-commit failed: Workspace Boundary Validation"
   exit 1
 fi
 
-# 5. Validate centralized logging
+# 6. Validate centralized logging
 ./scripts/verify_centralized_logging.sh
 if [ $? -ne 0 ]; then
   echo "❌ pre-commit failed: Centralized Logging Validation"
   exit 1
 fi
 
-# 6. Validate Elixir formatting
+# 7. Validate formatting (Rust, TypeScript, Elixir)
 ./scripts/verify_formatting.sh
 if [ $? -ne 0 ]; then
   echo "❌ pre-commit failed: Formatting Validation"
+  exit 1
+fi
+
+# 8. Validate documentation (ADR structure, PRD allocation, links, task cleanup)
+./scripts/verify_docs.sh
+if [ $? -ne 0 ]; then
+  echo "❌ pre-commit failed: Documentation Validation"
+  exit 1
+fi
+
+# 9. Lint and tests (Clippy, Cargo workspace and per-crate tests, rustdoc, UI lint/check/tests).
+#    No hosted CI: this is the gate before a push. VERIFY_SKIP_TESTS=1 skips it for WIP commits.
+./scripts/verify_tests.sh
+if [ $? -ne 0 ]; then
+  echo "❌ pre-commit failed: Lint and Test Validation"
   exit 1
 fi
 

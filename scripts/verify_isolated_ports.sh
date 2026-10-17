@@ -1,4 +1,9 @@
 #!/usr/bin/env bash
+# SPDX-FileCopyrightText: 2026 Peter Van Garderen <petervg@iona.ltd>
+#
+# SPDX-License-Identifier: MIT
+#
+# Ensure each app under apps/ binds a unique port that matches between dev.exs and runtime.exs.
 
 # Exit immediately if a command exits with a non-zero status
 set -e

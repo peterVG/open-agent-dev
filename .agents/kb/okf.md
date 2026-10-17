@@ -552,7 +552,6 @@ bundles/finance/
 | Resource | Role |
 |----------|------|
 | [OKF SPEC.md](https://github.com/GoogleCloudPlatform/knowledge-catalog/blob/main/okf/SPEC.md) | Upstream normative source |
-| [.agents/kb/ocfl.md](./ocfl.md) | Object storage layout (orthogonal; package OKF bundles *inside* OCFL if preserving corpora) |
 | [.agents/kb/agent-skills-1.0.md](./agent-skills-1.0.md) | Agent Skills packaging (may back `executor.resource`) |
 
 ---
