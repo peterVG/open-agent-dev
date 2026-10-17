@@ -109,3 +109,6 @@ A well-generated PRD should:
 3. **Draft Gherkin** - Use Gherkin Architect skill to create test scenarios
 4. **Generate Implementation Plan** - `@PRD.md @SRS.md Generate Implementation Plan`
 
+---
+
+© Pieter Van Garderen (2026)

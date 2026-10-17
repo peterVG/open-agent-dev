@@ -139,3 +139,7 @@ sequenceDiagram
 | Frontend | [Framework] | [Why chosen?] |
 | Backend | [Framework] | [Why chosen?] |
 | Database | [Database] | [Why chosen?] |
+
+---
+
+© Pieter Van Garderen (2026)
