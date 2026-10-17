@@ -1,0 +1,19 @@
+COPYRIGHT
+  s_d468acf14d2d6f::t_0a851433515d02 1
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "b3a14801806a4e0d3a636831af0663f182d905b0",
+  "prompts": {},
+  "sessions": {
+    "s_d468acf14d2d6f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "89b657b4-bd43-4d9e-a4fc-f91c166c010b",
+        "model": "unknown"
+      },
+      "human_author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
