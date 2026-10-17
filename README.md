@@ -1,3 +1,7 @@
+<p align="center">
+  <img src="resources/assets/open-agent-dev-logo.png" alt="open-agent-dev logo">
+</p>
+
 # About this project
 
 # Setup Development Environment
