@@ -121,27 +121,11 @@ chmod +x .git/hooks/pre-commit
 
 [`pre-commit.sh`](./scripts/pre-commit.sh) then runs these checks in order and stops at the first failure: branch-per-task, port isolation, document sync, PRD/SRS traceability, portable links, workspace boundaries, centralized logging, formatting, documentation, and finally lint and tests. Every check can also be run by hand from the repository root, for example `./scripts/verify_tests.sh`.
 
-The scripts discover the stacks present under `apps/` (Rust `Cargo.toml`, npm `package.json`, Elixir `mix.exs`, Python `pyproject.toml` or `requirements.txt`) and the documents present under `resources/`, so they need no per-project edits. A detected stack whose tool is missing fails the gate with an install hint: `cargo`, `mix`, `npm` packages without `node_modules`, and Python apps without `ruff` or `pytest` (each looked up first in the app's `.venv`, then on `PATH`). Per stack:
-
-- **Formatting:** `cargo fmt`, Prettier, `mix format`, and `ruff format` plus `ruff check`.
-- **Lint and tests:** Clippy, `cargo test` and rustdoc; the npm `lint`, `check`, and `test` scripts; `mix test`; and `pytest`.
-- **Centralized logging:** rejects staged code that logs to files (Elixir `LoggerFileBackend`, Python file handlers, Node `fs.createWriteStream` to a `.log` file, Rust `tracing_appender::rolling`).
-- **Port isolation:** checks Elixir apps (`config/dev.exs` against `config/runtime.exs`) and skips other stacks with a message.
-- **Document sync:** any staged non-Markdown file under `apps/` counts as code and needs an accompanying Markdown change.
-- **PRD/SRS traceability:** passes with nothing to check until `resources/prd.md` exists. It then checks `[PRD <ID>]` references in whichever SRS files exist (`resources/srs.md`, `apps/*/resources/srs.md`), and checks PRD coverage once `resources/srs.md` exists.
-
-Three knobs exist:
+Options:
 
 - `VERIFY_SKIP_TESTS=1` skips the lint and test gate for a work-in-progress commit. Run `./scripts/verify_tests.sh` before pushing.
 - `VERIFY_E2E=1` also runs each npm package's `test:e2e` script, which is slow.
 - `STANDALONE_WORKSPACES` in [`verify_docs.sh`](./scripts/verify_docs.sh) lists `apps/` workspaces that must stay extractable to their own repository. Documents may not link across those boundaries. It is empty by default.
-
-The documentation validators under [`scripts/docs/`](./scripts/docs/) need `node` and `python3` and carry their own unit tests, which the documentation gate runs. To run them alone:
-
-```bash
-node --test scripts/docs/validate-adrs.test.mjs
-python3 -m unittest discover -s scripts/docs -p "test_*.py"
-```
 
 # License
 
