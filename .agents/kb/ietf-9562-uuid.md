@@ -248,7 +248,7 @@ Where feasible, store the **128-bit binary** value (text is 288 bits). **SHOULD 
 1. When **minting** a UUID for this RFC’s variant: set version nibble and variant `10xx` (`N` ∈ `8,9,A,B`).
 2. When **minting UUIDv4**: CSPRNG 122 random bits (or 128 then overwrite ver/var). Do not use `Math.random` / non-crypto PRNGs if a CSPRNG exists.
 3. Canonical **exchange** form: hex-and-dash. Parsers **MUST** accept mixed case; project storage **MAY** normalize to lowercase.
-4. OCFL / URN object ids: `urn:uuid:` + hex-and-dash.
+4. URN object ids: `urn:uuid:` + hex-and-dash.
 5. Do not parse UUIDs for chronology unless the version is time-based (v1/v6/v7) and the task requires it.
 6. Do not treat Nil UUID as a generated identity.
 7. Do not invent a new version number; custom layouts are UUIDv8.

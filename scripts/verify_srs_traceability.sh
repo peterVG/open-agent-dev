@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SPDX-FileCopyrightText: 2026 Peter Van Garderen <petervg@iona.ltd>
+# SPDX-FileCopyrightText: 2026 Pieter Van Garderen
 #
 # SPDX-License-Identifier: MIT
 #
@@ -11,6 +11,8 @@
 #   3. Every PRD functional requirement (F-), non-functional requirement (NFR-) and technical constraint (TC-)
 #      has a matching "### SRS-<ID>:" heading in the product SRS.
 # Exit code 0 when all three hold, 1 otherwise. The script never edits a file.
+# When the PRD or the product SRS does not exist yet (a fresh repository), there
+# is nothing to trace, so the script passes without checking.
 
 set -e
 
@@ -20,8 +22,8 @@ SRS_FILE="resources/srs.md"
 echo "Starting PRD/SRS Traceability Validation..."
 
 if [ ! -f "$PRD_FILE" ] || [ ! -f "$SRS_FILE" ]; then
-  echo "🚨 VALIDATION FAILED: $PRD_FILE or $SRS_FILE not found"
-  exit 1
+  echo "ℹ️  $PRD_FILE or $SRS_FILE not found yet: nothing to check."
+  exit 0
 fi
 
 SRS_FILES="$SRS_FILE $(find apps -name 'srs.md' 2>/dev/null | tr '\n' ' ')"

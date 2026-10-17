@@ -4,7 +4,7 @@ description: Generates an interactive, traceable implementation plan based on PR
 allowed-tools:
   - code_interpreter
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # Implementation Plan Writer Skill
@@ -15,7 +15,7 @@ This skill enables the agent to translate Product Requirements Document (PRD), S
 
 ## When to Use This Skill
 
-- When asked to "Generate an implementation plan" using `prd.md` and `srs.md`
+- When asked to "Generate an implementation plan" using `resources/prd.md` and the `srs.md` files (`resources/srs.md` and/or `apps/<app>/resources/srs.md`)
 - When breaking down agreed-upon requirements into actionable developer tasks
 - When the user references this skill explicitly
 
@@ -29,15 +29,15 @@ Every task MUST be formatted as an interactive Markdown checkbox so that progres
 
 ```markdown
 - [ ] **Task 1.1: Project Setup & Configuration**
-  - **Description:** Initialize the Python virtual environment...
+  - **Description:** Initialize the development environment...
 ```
 
 ### 2. Module-Specific Task Prefixes
 
 When generating implementation plans that are NOT in the global root `resources/implementation-plan.md` (e.g., module-specific plans like `apps/[Module Name]/resources/implementation-plan.md`), you MUST prefix all Task numbers with the capitalized initials of the module name.
 For example:
-- **arkrim_engine** task 1.1 = `Task AE-1.1`
-- **arkrim_upload** task 3.5 = `Task AU-3.5`
+- **billing_engine** task 1.1 = `Task BE-1.1`
+- **user_profile** task 3.5 = `Task UP-3.5`
 
 Global root tasks should remain standard without a prefix (e.g., `Task 1.1`).
 
@@ -52,8 +52,8 @@ Every task MUST explicitly link back to its originating requirements (PRD/SRS).
   - **Description:** Implement robust error catching...
   - **Estimated Time:** 1 hour
   - **Dependencies:** Task 2.3
-  - **Related Requirements:** [SRS-SEC-001](../srs.md#srs-sec-001-local-sovereignty--transparency), [NFR-002](../prd.md#nfr-002-api-transparency)
-  - **Related Tests:** [`local_sovereignty_SRS-SEC-001_test.exs`](../../test/features/local_sovereignty_SRS-SEC-001_test.exs)
+  - **Related Requirements:** [SRS-SEC-001](./srs.md#srs-sec-001-input-validation), [NFR-002](../../../resources/prd.md#nfr-002-api-error-reporting)
+  - **Related Tests:** [`input_validation_SRS-SEC-001_test.exs`](../test/features/input_validation_SRS-SEC-001_test.exs)
   - **Agent Prompt:** `@AGENTS.md Begin by creating a new feature branch for Task [Task ID]. Follow @.agents/rules/task-workflow.md. Then begin development, executing all commands strictly within the isolated apps/[Module Name]/ directory (if applicable). Upon completion, YOU MUST perfectly construct the apps/[Module Name]/resources/tasks/Task-[Task ID]-Walkthrough.md file linking explicit SRS mappings (including BOTH the ID and full human-readable title text) in heading position 2 exclusively, and delete the Plan.md and ToDos.md files to preserve zero tracking cruft natively. Then check off the Markdown box locally in the appropriate resources/implementation-plan.md, commit your changes, and push the branch to origin.`
 ```
 
@@ -62,7 +62,7 @@ _If a task is purely structural (e.g., setting up a repository) and has no speci
 ### 4. Development Prompts
 
 Every task MUST include an actionable prompt for the agent to begin development. This prompt MUST NOT hardcode language-specific paths (like `/src` or `/tests`) unless a PRD and SRS explicitly dictate the finalized monorepo/folder architecture. Instead, instruct the agent to propose code and write tests in the "appropriate directories within the repository, adhering rigorously to the established Architecture Decision Records (ADRs)."
-Crucially, if the project employs a monorepo or Umbrella architecture (Python/JS or BEAM/Elixir), **the prompt MUST explicitly instruct the executing agent to run all framework tooling, tests, and configurations strictly isolated within the specific module's subdirectory** (e.g., `apps/frontend/` or `apps/arkrim_engine/`).
+Crucially, if the project employs a monorepo or Umbrella architecture (any supported monorepo stack), **the prompt MUST explicitly instruct the executing agent to run all framework tooling, tests, and configurations strictly isolated within the specific module's subdirectory** (e.g., `apps/frontend/` or `apps/my_app/`).
 For tasks that involve building user interfaces, the prompt MUST explicitly instruct the agent to write UI tests using the UI testing framework specified in the project's Architecture Decision Records (ADRs). The plan MUST mandate that these UI tests contain strict DOM assertions to explicitly catch hydration mismatches and SSR crashes, and that the agent ensures tests are run against built production artifacts.
 For tasks that involve external dependencies (APIs, databases, filesystems), the prompt MUST explicitly instruct the agent to write Integration tests using the Integration framework specified in the ADRs.
 The implementation plan MUST include a dedicated task in the Verification phase to write and execute Performance/Load tests (e.g., Locust) using the framework specified in the ADRs.
@@ -76,7 +76,7 @@ Tasks MUST be logically grouped into Phases (e.g., Phase 1: Foundation, Phase 2:
 
 ### 6. Holistic UI Planning
 
-When defining the Implementation Plan, the agent MUST NOT silo highly coupled UI mechanics (e.g., Canvas rendering and the Avatar that controls it) into separate sequential tasks. If the interaction model of a later requirement (e.g., Avatar Steering) supersedes or fundamentally alters the interaction model of an earlier requirement (e.g., Canvas Panning), they MUST be combined into a single holistic UI/UX task to prevent building throwaway interaction code. Abide by `.agents/rules/holistic-ui.md`.
+When defining the Implementation Plan, the agent MUST NOT silo highly coupled UI mechanics (e.g., a list view and the drag-and-drop reordering that operates on it) into separate sequential tasks. If the interaction model of a later requirement (e.g., Drag-and-Drop Reordering) supersedes or fundamentally alters the interaction model of an earlier requirement (e.g., Static List Sorting), they MUST be combined into a single holistic UI/UX task to prevent building throwaway interaction code. Abide by `.agents/rules/holistic-ui.md`.
 
 ## Template Structure
 
@@ -91,8 +91,8 @@ This document outlines the step-by-step implementation plan...
   - **Description:** [Actionable details]
   - **Estimated Time:** [Estimated developer hours]
   - **Dependencies:** [Previous tasks, e.g., Task 1.1 or None]
-  - **Related Requirements:** [[SRS/PRD mapping]](../srs.md)
-  - **Related Tests:** [[Path to formal test specification file or N/A]](../../test/)
+  - **Related Requirements:** [[SRS/PRD mapping]](./srs.md)
+  - **Related Tests:** [[Path to formal test specification file or N/A]](../test/)
   - **Agent Prompt:** `@AGENTS.md Begin by creating a new feature branch for Task [Task ID]. Follow @.agents/rules/task-workflow.md. Then begin development (ensuring all tool commands are run inside apps/[Module Name]/ if applicable)... Additionally, invoke the @feature-writer skill to translate SRS requirements into executable BDD feature tests. Upon completion, YOU MUST generate apps/[Module Name]/resources/tasks/Task-[Task ID]-Walkthrough.md directly in the project repository with clear SRS mapping (including BOTH the ID and full human-readable title text) in the secondary section, and strictly delete the internal tracking Plan/ToDos documents before checking off the Markdown box locally in the appropriate resources/implementation-plan.md. Then commit your changes and push the branch to origin.`
 
 ## Summary Timeline
@@ -139,7 +139,7 @@ This document outlines the step-by-step implementation plan...
 
 ### Step 1: Read all Context
 
-Scan the @prd.md, @srs.md documents and the ADR files in the @resources/architecture/ADRs/ directory.
+Scan `resources/prd.md`, the `srs.md` documents (`resources/srs.md` and every `apps/<app>/resources/srs.md`), and the ADR files in the @resources/architecture/ADRs/ directory.
 
 ### Step 2: Group by Phase
 
@@ -151,7 +151,7 @@ Draft the plan using the interactive `- [ ]` markdown syntax.
 
 ### Step 4: Generate Output to Workspace
 
-> **CRITICAL ARTIFACT ISOLATION OVERRIDE:** You MUST save the generated checklists directly into the project's permanent file structure depending on the plan's scope, and NEVER as an `implementation_plan.md` artifact hidden in your internal system/brain directory.
+> **CRITICAL ARTIFACT ISOLATION OVERRIDE:** You MUST save the generated checklists directly into the project's permanent file structure depending on the plan's scope, and NEVER as an `implementation_plan.md` artifact hidden in an internal agent scratchpad or system directory.
 > 
 > When architecting a system or fulfilling a holistic PRD mandate across a monorepo, you MUST generate the plans in this specific sequential order:
 > 1. **Global Project Plan:** First, generate the high-level project roadmap and save it to `resources/implementation-plan.md` in the repository root.
@@ -159,7 +159,7 @@ Draft the plan using the interactive `- [ ]` markdown syntax.
 
 ### Step 5: Map Tests and Requirements
 
-Carefully trace each task to its matching @srs.md block.
+Carefully trace each task to its matching block in the relevant `srs.md`.
 
 ### Step 6: Gather Dependencies
 
@@ -169,8 +169,8 @@ Review the final plan, SRS, and ADRs to identify all necessary third-party libra
 
 Ensure the final Phase of the implementation plan includes a task to populate or update the main `README.md` sections (Development Environment, Viewing Developer Documentation, Production Environment, etc.) based on the finalized tech stack and any Architecture Decision Records (ADRs).
 For this final task, you MUST use the following exact Agent Prompt:
-`@AGENTS.md Begin by creating a new feature branch. Follow @.agents/rules/task-workflow.md. Then read the project's Architecture Decision Records (ADRs) and the finalized tech stack to populate or update the 'Setup Development Environment' (including 'Run the Application' and 'Run tests') and 'Setup Production Environment' (including 'Deploy to Production' and 'Monitor and Update') sections of the README.md file. Ensure installation instructions are platform-agnostic (e.g., don't assume macOS/Homebrew) or explicitly accommodate multiple operating systems as required by the ADRs. However, if the project requires Dockerization, ensure the final Phase of the implementation plan includes a task to populate or update the `Dockerfile` based on the finalized tech stack and ADRs as well as include a "How to Dockerize" section in the README.md file that includes a basic overview of how Docker works and its main components.`
-Make sure to check off the task as complete in the appropriate resources/implementation-plan.md once finished. Then commit your changes and push the branch to origin.`
+`@AGENTS.md Begin by creating a new feature branch. Follow @.agents/rules/task-workflow.md. Then read the project's Architecture Decision Records (ADRs) and the finalized tech stack to populate or update the 'Setup Development Environment' (including 'Run the Application' and 'Run tests') and 'Setup Production Environment' (including 'Deploy to Production' and 'Monitor and Update') sections of the README.md file. Ensure installation instructions are platform-agnostic (e.g., don't assume macOS/Homebrew) or explicitly accommodate multiple operating systems as required by the ADRs. However, if the project requires Dockerization, ensure the final Phase of the implementation plan includes a task to populate or update the Dockerfile based on the finalized tech stack and ADRs as well as include a "How to Dockerize" section in the README.md file that includes a basic overview of how Docker works and its main components.`
+Make sure to check off the task as complete in the appropriate resources/implementation-plan.md once finished. Then commit your changes and push the branch to origin.
 
 ### Step 8: Architecture Synthesis
 

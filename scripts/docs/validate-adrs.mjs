@@ -1,3 +1,6 @@
+// SPDX-FileCopyrightText: 2026 Pieter Van Garderen
+//
+// SPDX-License-Identifier: MIT
 /**
  * Validate every Architecture Decision Record in the repository against the
  * project's ADR rules (.agents/rules/adr-formatting.md, .agents/kb/iso-42010-adr.md):

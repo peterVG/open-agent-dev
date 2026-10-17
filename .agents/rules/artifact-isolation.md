@@ -1,7 +1,7 @@
 ---
 description: Ensure all testing and linting artifacts, caches, and reports are safely isolated in the tests/ directory.
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # Strict Artifact Isolation

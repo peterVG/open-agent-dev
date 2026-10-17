@@ -1,46 +1,56 @@
 # Agent Skills 1.0 Compliance
 
-This template follows the **Agent Skills 1.0 specification** to ensure compatibility with multiple AI coding assistants (Antigravity, Claude Code, Cursor, etc.).
+This template follows the **Agent Skills 1.0 specification** (see [agent-skills-1.0.md](./kb/agent-skills-1.0.md)) to stay compatible with multiple AI coding assistants (e.g., Claude Code, Cursor, Codex).
 
 ## Directory Structure
 
 ```
 .agents/
-├── skills/                  # Reusable capabilities
-│   └── gherkin-architect/   # BDD scenario generation
-│       └── SKILL.md         # Skill instructions (YAML + Markdown)
-├── rules/                   # Project-specific guardrails
-│   └── sync-logic.md        # Documentation sync enforcement
-├── scripts/                 # Executable scripts for agents
-│   └── README.md            # Details on agent scripts
-└── kb/                      # Synthesized AI knowledge base
-    └── agent-skills-1.0.md  # Domain concepts for the AI
+├── skills/                      # Reusable capabilities, one folder per skill
+│   ├── vision-writer/           # Product vision drafting
+│   ├── prd-writer/              # Product Requirements Document drafting
+│   ├── requirements-extractor/  # Requirement extraction from source material
+│   ├── srs-writer/              # Software Requirements Specification drafting
+│   ├── architecture-writer/     # ISO 42010 system architecture document
+│   ├── feature-writer/          # BDD / Gherkin feature files
+│   │   └── SKILL-feature-writer.md  # Skill instructions (YAML + Markdown)
+│   ├── plan-writer/             # Implementation plans
+│   ├── kb-synthesizer/          # OKF knowledge-base concepts in kb/
+│   ├── init-python-js/          # Python/JS stack initialization
+│   ├── init-beam-elixir/        # BEAM/Elixir stack initialization
+│   └── init-rust-js/            # Rust/JS (Axum + Tauri) stack initialization
+├── rules/                       # Project-specific guardrails
+│   └── sync-logic.md            # Documentation sync enforcement
+├── scripts/                     # Task-specific helper scripts for agents
+│   └── README.md                # Details on agent scripts
+└── kb/                          # Synthesized AI knowledge base (OKF bundle)
+    └── agent-skills-1.0.md      # Domain concepts for the AI
+```
 
 *Note: Raw technical specifications and whitepapers are kept in `resources/references/` rather than within `.agents/` to maintain a clear separation between project documentation and AI context.*
-```
 
 ## Why `.agents/` instead of `.agent/`?
 
-The `.agents/` directory is the **standard** defined by Agent Skills 1.0, ensuring:
+The `.agents/` directory is the convention used by this template, following Agent Skills 1.0, to provide:
 - ✅ **Vendor neutrality** - Works across different AI coding assistants
 - ✅ **Portability** - Skills can be shared between projects and tools
-- ✅ **Discoverability** - AI assistants automatically detect `.agents/` directories
-- ✅ **Future-proof** - Aligned with emerging industry standards
+- ✅ **Discoverability** - One predictable location for agent instructions
+- ✅ **Future-proof** - Aligned with emerging industry conventions
 
 ## Core Components
 
 ### 1. Skills (`.agents/skills/`)
 **Reusable capabilities** that can be activated when needed.
 
-**Example:** `gherkin-architect/SKILL.md`
+**Example:** [`skills/feature-writer/SKILL-feature-writer.md`](./skills/feature-writer/SKILL-feature-writer.md)
 - Translates SRS requirements into Gherkin scenarios
-- Activated when user says "Draft Gherkin scenarios"
+- Activated when the user asks for BDD feature files or Gherkin scenarios
 - Can be copied to other projects
 
 ### 2. Rules (`.agents/rules/`)
 **Project-specific guardrails** that are always enforced.
 
-**Example:** `sync-logic.md`
+**Example:** [`rules/sync-logic.md`](./rules/sync-logic.md)
 - Enforces consistency between PRD, SRS, Architecture, and Implementation Plan
 - Always active - checked before any code is written
 - Specific to this project's workflow
@@ -56,9 +66,10 @@ The `.agents/` directory is the **standard** defined by Agent Skills 1.0, ensuri
 - Loaded *only* when a specific Skill explicitly requests it via its YAML frontmatter, saving tokens and improving accuracy for low-level tasks.
 
 ### 5. Scripts (`.agents/scripts/`)
-**Executable scripts** that the AI agent can run using the `code_interpreter` tool.
+**Task-specific helper scripts** that the AI agent can run using its shell or code-execution tool.
 - Used to validate logic, simulate load, or perform automated checks without deploying code.
 - Often executed by specific Skills to verify architecture decisions or calculations.
+- The repository's verification gates live in the top-level [`scripts/`](../scripts/) directory, not here.
 
 ## Agent Skills 1.0 Format
 
@@ -66,7 +77,7 @@ Each skill follows this structure:
 
 ```markdown
 ---
-name: Skill Name
+name: skill-name
 description: Brief description of what this skill does
 ---
 
@@ -84,9 +95,10 @@ description: Brief description of what this skill does
 
 ## Compatibility Matrix
 
+Support varies by tool and version; check your assistant's current documentation.
+
 | AI Assistant | `.agents/skills/` Support | `.agents/rules/` Support |
 |--------------|----------------------|---------------------|
-| Antigravity  | ✅ Full              | ✅ Full             |
 | Claude Code  | ✅ Full              | ✅ Full             |
 | Cursor       | ✅ Full              | ⚠️ Partial          |
 | GitHub Copilot | ⚠️ Limited         | ❌ No               |
@@ -110,15 +122,15 @@ Then update all references in your documentation from `.agent/` to `.agents/`.
 
 ## Creating New Skills
 
-1. Create a directory: `.agents/skills/my-skill/`
-2. Add `SKILL.md` with YAML frontmatter
+1. Create a directory: `.agents/skills/<name>/`
+2. Add `SKILL-<name>.md` with YAML frontmatter (this repository's naming convention)
 3. (Optional) Add `assets/` for templates or examples
 4. Reference in documentation
 
 **Example:**
 ```
 .agents/skills/api-generator/
-├── SKILL.md
+├── SKILL-api-generator.md
 └── assets/
     └── openapi-template.yaml
 ```
@@ -150,5 +162,5 @@ All new code MUST be written in TypeScript, not JavaScript.
 
 ## Learn More
 
-- [Agent Skills 1.0 Specification](https://github.com/agent-skills/spec)
-- [Example Skills Repository](https://github.com/agent-skills/examples)
+- [Agent Skills 1.0 (project synthesis)](./kb/agent-skills-1.0.md)
+- [Knowledge Base Bundle Guide](./kb/README.md)

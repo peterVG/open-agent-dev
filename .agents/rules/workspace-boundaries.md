@@ -2,7 +2,7 @@
 trigger: always_on
 description: Ensure the repository explicitly defines workspace boundaries (apps/) to maintain a language-agnostic root and proper separation of concerns.
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # Root Workspace Project Boundaries
@@ -13,10 +13,10 @@ The Open Agent Dev repository enforces strict organizational boundaries based on
 If initialized with the Python/JS stack, the application is structured as a polyglot Monorepo containing `/apps` exclusively.
 - **`/apps`**: Houses all independent, deployable applications, regardless of whether they are client-side or server-side (e.g., the JavaScript frontend in `apps/frontend/` and the Python API in `apps/backend/`).
 
-## 2. BEAM/Elixir Stack (Umbrella Project)
-If initialized with the BEAM/Elixir stack, the application is structured as a standard Phoenix Umbrella project.
-- **`/apps`**: In an Umbrella project, *both* backend logic and frontend web interfaces are stored as separate OTP applications inside the `/apps` directory (e.g., `apps/my_app/` and `apps/my_app_web/`).
-- **Targeted Tooling**: The root contains the global umbrella configuration (`mix.exs`, `config/`), but all substantive code must execute within the scoped `apps/` folders.
+## 2. BEAM/Elixir Stack (Monorepo)
+If initialized with the BEAM/Elixir stack, the application is structured as a Monorepo containing `/apps` exclusively.
+- **`/apps`**: Each BEAM application (or umbrella project) lives in its own directory under `apps/<app>/`, with its own `mix.exs` and `config/` (e.g., `apps/my_app/` and `apps/my_app_web/`). Backend logic and web interfaces MAY be separate OTP applications.
+- **Targeted Tooling**: Do not add a root `mix.exs` or root `config/`. If an umbrella is used, its root (`mix.exs`, `config/`, nested `apps/`) lives inside `apps/<app>/`, not at the repository root.
 
 ## 3. Rust/Javascript Stack (Web + Tauri desktop)
 If initialized with the Rust/JS stack, the application is structured as a polyglot Monorepo containing `/apps` exclusively.

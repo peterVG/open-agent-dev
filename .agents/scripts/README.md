@@ -1,6 +1,8 @@
 # Scripts Directory
 
-This directory contains **executable scripts** that the AI agent can run using the `code_interpreter` tool to validate logic, simulate load, or perform automated checks.
+This directory contains **task-specific helper scripts** that the AI agent can run using the agent's shell or code-execution tool to validate logic, simulate load, or perform automated checks.
+
+> **Note:** The repository's actual verification gates (pre-commit checks for branches, formatting, docs, links, logging, ports, tests, and workspace boundaries) live in the top-level [`scripts/`](../../scripts/) directory. This folder is for ad hoc, task-specific helpers. The script names and code below are illustrative examples, not files shipped with the template.
 
 ## Purpose
 
@@ -15,7 +17,7 @@ Scripts enable the agent to:
 ### Validation Scripts
 Scripts that verify business logic or calculations:
 - `validate_chunking_logic.py` - Verify file chunking algorithm
-- `calculate_storage_fees.py` - Estimate Arweave storage costs
+- `calculate_storage_fees.py` - Estimate object-storage costs for expected data volume
 - `verify_encryption.py` - Test encryption/decryption logic
 
 ### Simulation Scripts
@@ -26,7 +28,7 @@ Scripts that simulate system behavior:
 
 ### Analysis Scripts
 Scripts that analyze or report on data:
-- `analyze_retention_policy.py` - Verify records retention logic
+- `validate_rate_limits.py` - Verify API rate-limit logic
 - `audit_dependencies.py` - Check for "high gravity" dependencies
 - `generate_coverage_report.py` - Test coverage analysis
 
@@ -41,40 +43,40 @@ scripts/
 │   ├── simulate_concurrent_uploads.py
 │   └── generate_test_data.py
 └── analysis/
-    └── analyze_retention_policy.py
+    └── validate_rate_limits.py
 ```
 
 ## How Skills Use Scripts
 
-Skills can execute scripts using the `code_interpreter` tool:
+Skills can execute scripts using the agent's shell or code-execution tool:
 
 ```yaml
 ---
 name: Architecture Validator
 description: Validates system architecture decisions
 allowed-tools:
-  - code_interpreter
+  - code-execution
 scripts:
-  - scripts/validation/calculate_storage_fees.py
+  - .agents/scripts/validation/calculate_storage_fees.py
 ---
 
 # Architecture Validator Skill
 
 When validating the file upload architecture:
 1. Read the architecture.md
-2. Execute scripts/validation/calculate_storage_fees.py
+2. Execute .agents/scripts/validation/calculate_storage_fees.py
 3. Verify that estimated costs align with PRD budget constraints
 4. Report any issues
 ```
 
 ## Example Script: Chunking Validation
 
-**`scripts/validation/validate_chunking_logic.py`:**
+**`.agents/scripts/validation/validate_chunking_logic.py`:**
 
 ```python
 #!/usr/bin/env python3
 """
-Validates file chunking logic for Arweave uploads.
+Validates file chunking logic for multipart uploads to cloud object storage.
 
 Usage:
     python validate_chunking_logic.py --file-size 450 --chunk-size 100
@@ -144,7 +146,7 @@ if __name__ == "__main__":
 USER: Verify that our chunking logic meets the SRS requirements
 
 AGENT: [Activates Architecture Validator skill]
-AGENT: [Skill specifies scripts/validation/validate_chunking_logic.py]
+AGENT: [Skill specifies .agents/scripts/validation/validate_chunking_logic.py]
 AGENT: [Executes script with test cases]
 AGENT: [Reports results]
 
@@ -159,7 +161,7 @@ OUTPUT:
 
 ### 1. Make Scripts Executable
 ```bash
-chmod +x scripts/validation/validate_chunking_logic.py
+chmod +x .agents/scripts/validation/validate_chunking_logic.py
 ```
 
 ### 2. Include Documentation
@@ -197,71 +199,75 @@ Scripts are only loaded and executed when:
 
 This saves tokens and execution time when scripts aren't needed.
 
-## Example: Local-First Records Retention
+## Example: API Rate-Limit Validation
 
-**`scripts/analysis/analyze_retention_policy.py`:**
+**`.agents/scripts/analysis/validate_rate_limits.py`:**
 
 ```python
 #!/usr/bin/env python3
 """
-Analyzes records retention policy for compliance.
+Validates a fixed-window API rate-limit policy against SRS requirements.
 
-Validates that retention periods meet legal requirements
-and calculates storage costs for permanent archival.
+Simulates a burst of requests from one client and checks that requests
+beyond the limit are rejected and the window resets as specified.
+
+Usage:
+    python validate_rate_limits.py --limit 100 --window 60 --requests 150
 """
 
-import json
-from datetime import datetime, timedelta
+import argparse
 
-def analyze_retention(records_file, retention_years=7):
-    """Analyze records retention policy."""
-    with open(records_file) as f:
-        records = json.load(f)
-    
-    results = {
-        "total_records": len(records),
-        "compliant": 0,
-        "non_compliant": 0,
-        "permanent": 0,
-        "estimated_cost_usd": 0
-    }
-    
-    for record in records:
-        created = datetime.fromisoformat(record["created_at"])
-        retention_end = created + timedelta(days=retention_years * 365)
-        
-        if record["retention_type"] == "permanent":
-            results["permanent"] += 1
-            results["compliant"] += 1
-            # Arweave permanent storage cost estimation
-            size_mb = record["size_mb"]
-            cost_per_mb = 0.005  # Example rate
-            results["estimated_cost_usd"] += size_mb * cost_per_mb
-        elif datetime.now() < retention_end:
-            results["compliant"] += 1
-        else:
-            results["non_compliant"] += 1
-    
-    return results
+
+def simulate_window(limit, requests):
+    """Return (accepted, rejected) counts for one window of requests."""
+    accepted = min(requests, limit)
+    return accepted, requests - accepted
+
+
+def validate_rate_limits(limit, window_s, requests):
+    """Validate rate-limit behaviour against requirements."""
+    accepted, rejected = simulate_window(limit, requests)
+    errors = []
+
+    # SRS-API-010: A client MUST NOT exceed `limit` requests per window
+    if accepted > limit:
+        errors.append(f"Accepted {accepted} requests, limit is {limit}")
+
+    # SRS-API-011: Requests beyond the limit MUST be rejected (HTTP 429)
+    if requests > limit and rejected != requests - limit:
+        errors.append(f"Expected {requests - limit} rejections, got {rejected}")
+
+    # SRS-API-012: The window MUST be between 1 and 3600 seconds
+    if not 1 <= window_s <= 3600:
+        errors.append(f"Window {window_s}s is outside 1-3600s")
+
+    return {"accepted": accepted, "rejected": rejected, "errors": errors}
+
 
 if __name__ == "__main__":
-    import sys
-    results = analyze_retention(sys.argv[1])
-    print(json.dumps(results, indent=2))
+    parser = argparse.ArgumentParser(description="Validate rate-limit logic")
+    parser.add_argument("--limit", type=int, required=True)
+    parser.add_argument("--window", type=int, default=60)
+    parser.add_argument("--requests", type=int, required=True)
+    args = parser.parse_args()
+
+    results = validate_rate_limits(args.limit, args.window, args.requests)
+    print(results)
+    exit(1 if results["errors"] else 0)
 ```
 
 **Agent uses this to:**
-1. Validate retention logic before deployment
-2. Estimate storage costs for budget planning
-3. Verify compliance with legal requirements
+1. Validate rate-limit logic before deployment
+2. Check edge cases (exactly at the limit, one over, invalid window)
+3. Verify compliance with the SRS requirements it cites
 
-## Integration with Antigravity Workflow
+## Integration with the Agent Workflow
 
 ```
-1. Write SRS requirement: "Records must be retained for 7 years"
-2. Create validation script: scripts/analysis/analyze_retention_policy.py
+1. Write SRS requirement: "A client MUST NOT exceed 100 requests per 60-second window"
+2. Create validation script: .agents/scripts/analysis/validate_rate_limits.py
 3. Agent executes script during architecture validation
-4. Script verifies logic meets SRS-RET-001
+4. Script verifies logic meets SRS-API-010
 5. Agent reports compliance status
 ```
 

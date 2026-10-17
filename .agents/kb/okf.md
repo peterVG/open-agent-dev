@@ -135,7 +135,7 @@ Optional families: provenance / trust / lifecycle (§5); computation fields for 
 - Consumers **SHOULD** preserve unknown keys when round-tripping.
 - Consumers **MUST NOT** reject documents with unrecognized fields.
 
-Project KB metadata keys such as `kb-title`, `source-reference`, `spec-version` are valid **extensions** under this rule.
+Project KB metadata keys such as `kb-title`, `source-url`, `spec-version` are valid **extensions** under this rule.
 
 ### Body conventions (Source: §4.2)
 
@@ -202,11 +202,11 @@ Kept distinct: who wrote ≠ who confirmed.
 generated: { by: reference_agent/gemini-2.5-pro, at: 2026-06-20T22:53:05Z }
 
 verified:
-  - { by: human:ahormati, at: 2026-06-25T09:00:00Z }
+  - { by: human:jdoe, at: 2026-06-25T09:00:00Z }
   - { by: process:finance-nightly, at: 2026-06-26T02:00:00Z }
 
 # Bare mapping MUST be treated as a one-element list:
-verified: { by: human:ahormati, at: 2026-06-25T09:00:00Z }
+verified: { by: human:jdoe, at: 2026-06-25T09:00:00Z }
 ```
 
 | Field | Rule |
@@ -280,7 +280,7 @@ Each accepts:
 | Pattern | Use |
 |---------|-----|
 | `<producer>/<version>` | Agents/tools, e.g. `reference_agent/gemini-2.5-pro` |
-| `human:<id>` | Person, e.g. `human:ahormati` |
+| `human:<id>` | Person, e.g. `human:jdoe` |
 | `process:<id>` | Automated process, e.g. `process:finance-nightly` |
 
 Trust classification keys off the `human:` prefix — producers **MUST** use it for hand-authored or human-confirmed content. (Source: §7)
@@ -367,11 +367,11 @@ executor:
 attester:
   resource: references/attesters/revenue.py
 generated: { by: reference_agent/gemini-2.5-pro, at: 2026-06-20T22:53:05Z }
-verified: { by: human:ahormati, at: 2026-06-25T09:00:00Z }
+verified: { by: human:jdoe, at: 2026-06-25T09:00:00Z }
 stale_after: 2026-09-23
 sources:
   - id: rev-policy
-    resource: https://wiki.acme/finance/revenue-recognition
+    resource: https://wiki.example.com/finance/revenue-recognition
     title: Revenue recognition policy
 ```
 
@@ -514,7 +514,7 @@ flowchart TB
 9. **Attested numbers:** put SQL/dbt/python in `Attested Computation` concepts; narrative Metrics **link** to them; agents only fill `parameters`; never let the agent rewrite the computation text.
 10. **Do not persist receipts** in the bundle; attestation is per-run evidence outside OKF storage.
 11. **v0.1 interop:** if reading old docs, map `timestamp` → `generated.at` and `# Citations` → `sources` when possible.
-12. **This KB file:** uses OKF `type: Reference` plus project extension keys (`kb-title`, `source-reference`, …) — valid under §4.1 extensions.
+12. **This KB file:** uses OKF `type: Reference` plus project extension keys (`kb-title`, `source-url`, …) — valid under §4.1 extensions.
 
 ### Success criteria for an OKF writer/reader
 

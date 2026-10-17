@@ -1,5 +1,5 @@
 #!/usr/bin/env bash
-# SPDX-FileCopyrightText: 2026 Peter Van Garderen <petervg@iona.ltd>
+# SPDX-FileCopyrightText: 2026 Pieter Van Garderen
 #
 # SPDX-License-Identifier: MIT
 #
@@ -13,6 +13,12 @@ FORBIDDEN_FILES=(
   "mix.exs"
   "package.json"
   "requirements.txt"
+  "pyproject.toml"
+  "Cargo.toml"
+  "go.mod"
+  "pom.xml"
+  "build.gradle"
+  "composer.json"
   "Gemfile"
 )
 

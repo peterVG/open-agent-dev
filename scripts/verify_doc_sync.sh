@@ -1,9 +1,10 @@
 #!/usr/bin/env bash
-# SPDX-FileCopyrightText: 2026 Peter Van Garderen <petervg@iona.ltd>
+# SPDX-FileCopyrightText: 2026 Pieter Van Garderen
 #
 # SPDX-License-Identifier: MIT
 #
-# Require a Markdown documentation change whenever staged Elixir code changes.
+# Require a Markdown documentation change whenever staged application code changes.
+# Any staged file under apps/ that is not Markdown counts as code, whatever the stack.
 
 # Exit immediately if a command exits with a non-zero status
 set -e
@@ -18,10 +19,10 @@ if [ -z "$STAGED_FILES" ]; then
   exit 0
 fi
 
-# Check if any source code was modified
+# Check if any application code (a non-Markdown file under apps/) was modified
 CODE_MODIFIED=0
 for FILE in $STAGED_FILES; do
-  if [[ "$FILE" == *.ex ]] || [[ "$FILE" == *.exs ]]; then
+  if [[ "$FILE" == apps/* ]] && [[ "$FILE" != *.md ]]; then
     CODE_MODIFIED=1
     break
   fi

@@ -1,7 +1,10 @@
 ---
+name: Python/JavaScript Project Initialization
 description: Initialize a new Python/Javascript project with best practice root directory structure
+allowed-tools:
+  - code_interpreter
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # Python/Javascript Project Initialization
@@ -60,7 +63,7 @@ project-root/
 │           └── allure-results/
 ```
 
-Use appropriate commands (e.g. `npx create-react-app`, `npx create-next-app` for frontend; `pip install` or direct directory creation for backend) to generate these structures STRICTLY within the `apps/` subdirectory (under `apps/frontend/` and `apps/backend/`). **DO NOT generate workspace manifests or applications inside the repository root.**
+Use appropriate commands (e.g. `npm create vite@latest` or `npx create-next-app` for frontend; `pip install` or direct directory creation for backend) to generate these structures STRICTLY within the `apps/` subdirectory (under `apps/frontend/` and `apps/backend/`). **DO NOT generate workspace manifests or applications inside the repository root.**
 
 ## Step 2 Populate the apps/README.md file to explain directory structure
 
@@ -154,7 +157,7 @@ The main test execution environments are driven by `pytest` for the backend, and
 
 ### 3. Global Test Reporting: `allure`
 - **Purpose**: Generates interactive and highly detailed test execution reports globally.
-- **Integration**: Plugs cleanly into both Python and JavaScript ecosystems (`allure-pytest`, `allure-behave`, `allure-playwright`, `allure-cyopress`).
+- **Integration**: Plugs cleanly into both Python and JavaScript ecosystems (`allure-pytest`, `allure-behave`, `allure-playwright`, `allure-cypress`).
 - **Configuration**: Results from both environments MUST explicitly output ONLY to their localized folders (`apps/backend/tests/allure-results` and `apps/frontend/tests/allure-results`) strictly avoiding the global root. Furthermore, backend testing suites (e.g. `pytest.ini`) MUST explicitly configure the `--clean-alluredir` flag, and frontend environments MUST run a custom `pretest` execution hook (e.g. `rm -rf tests/allure-results`) to automatically purge historical JSON payloads before initiating new test cycles.
 
 ### 4. Code Formatting and Linting (Python Backend): `ruff`

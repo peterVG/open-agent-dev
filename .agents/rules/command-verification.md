@@ -1,7 +1,7 @@
 ---
 description: Ensure all terminal commands, build steps, and execution scripts documented for humans are actually functional.
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # Strict Command Verification

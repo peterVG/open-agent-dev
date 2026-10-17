@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# SPDX-FileCopyrightText: 2026 Peter Van Garderen <petervg@iona.ltd>
+# SPDX-FileCopyrightText: 2026 Pieter Van Garderen
 #
 # SPDX-License-Identifier: MIT
 #
-# Lint and test validation: run clippy, cargo test, npm, and mix test gates for every stack under apps/.
+# Lint and test validation: run clippy, cargo test, npm, mix test, and pytest gates for every stack under apps/.
 #
 # This repository has no hosted CI; these are the gates that would otherwise
 # run there. Like verify_formatting.sh, it discovers every stack present under
@@ -22,6 +22,10 @@
 #          (end-to-end runs usually build and start the app; slow)
 #   - Elixir (a directory under apps/ holding a mix.exs):
 #       7. mix test
+#   - Python (a directory under apps/ holding a pyproject.toml or
+#     requirements.txt):
+#       8. pytest (skipped with a message when pytest is not on PATH; lint
+#          runs in verify_formatting.sh via ruff)
 #
 # Environment:
 #   VERIFY_SKIP_TESTS=1  skip this script (work-in-progress commits only;
@@ -104,11 +108,26 @@ run_elixir_app() {
   run_step "ExUnit" "$1" mix test
 }
 
+is_python_app() {
+  # $1 = app directory. True when it holds a Python project manifest.
+  [ -f "$1/pyproject.toml" ] || [ -f "$1/requirements.txt" ]
+}
+
+run_python_app() {
+  # $1 = app directory holding pyproject.toml or requirements.txt
+  if ! command -v pytest >/dev/null 2>&1; then
+    echo "⚠️  [SKIPPING] $1: pytest is not installed. Install it to run Python tests."
+    return
+  fi
+  run_step "Pytest" "$1" pytest
+}
+
 for APP_PATH in "$APPS_DIR"/*; do
   [ -d "$APP_PATH" ] || continue
   [ -f "$APP_PATH/Cargo.toml" ] && run_rust_workspace "$APP_PATH"
   [ -f "$APP_PATH/package.json" ] && run_npm_package "$APP_PATH"
   [ -f "$APP_PATH/mix.exs" ] && run_elixir_app "$APP_PATH"
+  is_python_app "$APP_PATH" && run_python_app "$APP_PATH"
   for SUB_PATH in "$APP_PATH"/*; do
     [ -d "$SUB_PATH" ] && [ -f "$SUB_PATH/package.json" ] && run_npm_package "$SUB_PATH"
   done

@@ -5,7 +5,7 @@ allowed-tools:
   - file_system
   - code_interpreter
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # Architecture Writer Skill
@@ -37,7 +37,7 @@ Text alone is insufficient for architecture. The agent MUST generate and render 
 - **Physical/Deployment Diagram:** Must illustrate the infrastructure topology (servers, containers, databases).
 - **Sequence Diagram:** Must illustrate complex flows like Authentication or Data Ingestion.
 
-_Note: Ensure Mermaid syntax is valid. NEVER use spaces, hyphens, or special characters in Mermaid node IDs (the programmatic identifiers before the brackets). Always use `CamelCase` or `snake_case` for node IDs (e.g., use `IA_API[Internet Archive]` instead of `IA API[Internet Archive]`)._
+_Note: Ensure Mermaid syntax is valid. NEVER use spaces, hyphens, or special characters in Mermaid node IDs (the programmatic identifiers before the brackets). Always use `CamelCase` or `snake_case` for node IDs (e.g., use `Ext_API[External API]` instead of `Ext API[External API]`)._
 
 ### 3. Traceability to ADRs
 

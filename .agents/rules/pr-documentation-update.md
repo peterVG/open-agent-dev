@@ -1,7 +1,7 @@
 ---
 description: Ensure all core documentation is updated before a Pull Request is prepared.
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # Pull Request Documentation Updates

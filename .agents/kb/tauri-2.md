@@ -16,9 +16,9 @@ tags:
 - cross-platform
 status: stable
 generated:
-  by: process:tauri2-kb-synthesizer
+  by: process:kb-synthesizer
   at: '2026-09-16T22:38:58Z'
-stale_after: '2026-09-30'
+stale_after: '2027-04-30'
 spec-version: '0.2'
 research-as-of: '2026-09-16'
 scope:
@@ -49,8 +49,8 @@ validation:
   example-status: Original illustrative examples; integrate and test in the actual project.
 sources:
 - id: okf
-  resource: User-provided Open Knowledge Format (OKF) 0.2 technical reference (okf.md)
-  title: Open Knowledge Format (OKF) 0.2 — Technical Reference; user attachment
+  resource: .agents/kb/okf.md
+  title: Open Knowledge Format (OKF) 0.2 — Technical Reference (project KB concept)
 - id: versions
   resource: https://v2.tauri.app/release/
   title: Tauri ecosystem stable release matrix
@@ -647,7 +647,7 @@ Choose distribution channels and support targets before promising portability. T
 | macOS | `.app` and `.dmg`; separate App Store path | macOS build/signing; Intel/Apple Silicon or validated universal bundle; correct entitlements |
 | Linux | AppImage, `.deb`, `.rpm`; additional distribution channels | Supported libc/native dependencies, desktop integration, permissions, architecture |
 
-Windows WebView2 deployment can download a bootstrapper, embed installation material, or use a fixed runtime, with different offline/size/update tradeoffs. WiX MSI creation requires Windows tooling; do not assume every format can be cross-built from the development Mac. Keep installer upgrade identity stable and test install, upgrade, repair/uninstall behavior as applicable.[^windows-installer]
+Windows WebView2 deployment can download a bootstrapper, embed installation material, or use a fixed runtime, with different offline/size/update tradeoffs. WiX MSI creation requires Windows tooling; do not assume every format can be cross-built from a single development host. Keep installer upgrade identity stable and test install, upgrade, repair/uninstall behavior as applicable.[^windows-installer]
 
 Build Linux artifacts on the **oldest supported base that provides WebKitGTK 4.1**. Current AppImage guidance names Ubuntu 22.04 / Debian 12 as examples; using a newer glibc can prevent execution on older systems. AppImage is not a guarantee of universal Linux compatibility. ARM AppImage construction needs ARM execution or emulation rather than ordinary linuxdeploy cross-compilation.[^appimage]
 
@@ -728,7 +728,7 @@ Use version-2 reference/schema evidence over old examples—even an official nar
 
 Before implementing an unfamiliar feature, resolve the relevant `sources[].resource`, then its installed-version API/permission definitions. This is especially necessary for optional plugin features, unstable/multiwebview APIs, platform exceptions, installer options, authentication integrations, and store distribution rules. Never invent a permission identifier, Cargo feature, configuration field, or method to fill a documentation gap.
 
-[^okf]: Open Knowledge Format (OKF) 0.2 — Technical Reference; user attachment.
+[^okf]: Open Knowledge Format (OKF) 0.2 — Technical Reference (project KB concept `okf.md`).
 [^versions]: Tauri ecosystem stable release matrix.
 [^stable-rust]: Rust tauri package versions and release history.
 [^dependency-updates]: Updating Tauri and plugin dependencies.

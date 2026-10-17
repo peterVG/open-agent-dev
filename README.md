@@ -20,7 +20,7 @@
 
 # About Open Agent Dev
 
-This project has been created using Open Agent Dev, an opionated AI Agent project template focused on docs-as-code development. 
+This project has been created using Open Agent Dev, an opinionated AI Agent project template focused on docs-as-code development. 
 
 It enforces a strict Branch-Per-Task workflow and Test-Driven Development (TDD). Designed to guide AI dev agents to comply with industry standards and best practices. Tech stack and AI agent neutral.
 
@@ -42,7 +42,7 @@ If this is a product for a non-profit project, use the [alternate template](./re
 
 If you want AI Agent assistance to write the product vision document, you can invoke the bundled skill:
 ```text
-/product-vision I want to build [XYZ]. Refer to the @.agents/kb/ folder for any relevant background information.
+@AGENTS.md Use the @.agents/skills/vision-writer/SKILL-vision-writer.md skill to write resources/product-vision.md. I want to build [XYZ]. Refer to the @.agents/kb/ folder for any relevant background information.
 ```
 
 ## Create a Product Requirements Document
@@ -54,21 +54,19 @@ Review and revise `resources/prd.md` as needed. Check the [PRD template](./resou
 
 ## Initialize the project
 
-Open Agent Dev currently supports best practices for the Python/Javascript, Rust/Javascript, and BEAM/Elixir tech stacks.
+Open Agent Dev currently ships initialization skills and pre-commit gates for the Python/JavaScript, Rust/JavaScript, and BEAM/Elixir tech stacks. Pick the skill that matches the stack decisions in your PRD.
 
 ```text
-@AGENTS.md Initialize the project using the @.agents/skills/SKILL-init-beam-elixir.md skill, the technical stack decisions in @resources/prd.md and the principles in the AGENTS.md file.
+@AGENTS.md Initialize the project using the @.agents/skills/init-beam-elixir/SKILL-init-beam-elixir.md skill, the technical stack decisions in @resources/prd.md and the principles in the AGENTS.md file.
 ```
 OR
 ```text
-@AGENTS.md Initialize the project using the @.agents/skills/SKILL-init-rust-js.md skill, the technical stack decisions in @resources/prd.md and the principles in the AGENTS.md file.
+@AGENTS.md Initialize the project using the @.agents/skills/init-rust-js/SKILL-init-rust-js.md skill, the technical stack decisions in @resources/prd.md and the principles in the AGENTS.md file.
 ```
-
-
 OR
 
 ```text
-@AGENTS.md Initialize the project using the @.agents/skills/SKILL-init-python-js.md skill, the technical stack decisions in @resources/prd.md and the principles in the AGENTS.md file.
+@AGENTS.md Initialize the project using the @.agents/skills/init-python-js/SKILL-init-python-js.md skill, the technical stack decisions in @resources/prd.md and the principles in the AGENTS.md file.
 ```
 
 ## Add UI mockups and examples
@@ -93,14 +91,14 @@ Use this when you have updated the core PRD or added entirely new modules to a m
 Use this when you've just drilled down into defining a specific app in a monorepo (e.g., you heavily updated apps/app_123/resources/srs.md) and just want to regenerate that specific localized checklist without touching the global roadmap or other apps.
 
 ```text
-@AGENTS.md Please invoke the @plan-writer skill to generate an implementation plan strictly for the \app_123` module. Read its specific @apps/app_123/resources/srs.md, the global @resources/prd.md, and relevant ADRs, and output the tracking checklist directly into @apps/app_123/resources/implementation-plan.md.`
+@AGENTS.md Please invoke the @plan-writer skill to generate an implementation plan strictly for the `app_123` module. Read its specific @apps/app_123/resources/srs.md, the global @resources/prd.md, and relevant ADRs, and output the tracking checklist directly into @apps/app_123/resources/implementation-plan.md.
 ```
 
 ## Use the AGENTS.md prompts in your Implementation Plan
-Check @resources/implementation-plan.md for specific task prompts in your implementation plan.These will guide you through the task list to generate and test your code in compliance with the Open Dev Agent principles and workflow.
+Check @resources/implementation-plan.md for specific task prompts in your implementation plan. These will guide you through the task list to generate and test your code in compliance with the Open Agent Dev principles and workflow.
 
 ## NOTE: Branch-per-task enforcement
-A branch-per-task workflow is strictly enforced to ensure all code is reviewed before merging. Direct commits to the `main` branch is blocked by local pre-commit hooks.
+A branch-per-task workflow is strictly enforced to ensure all code is reviewed before merging. Direct commits to the `main` branch are blocked by local pre-commit hooks.
 
 If you are a human developer and absolutely must push a hotfix directly to `main`, you can override this safeguard by prefixing your commit command:
 
@@ -119,7 +117,16 @@ chmod +x .git/hooks/pre-commit
 
 [`pre-commit.sh`](./scripts/pre-commit.sh) then runs these checks in order and stops at the first failure: branch-per-task, port isolation, document sync, PRD/SRS traceability, portable links, workspace boundaries, centralized logging, formatting, documentation, and finally lint and tests. Every check can also be run by hand from the repository root, for example `./scripts/verify_tests.sh`.
 
-The scripts discover the stacks present under `apps/` (Rust `Cargo.toml`, npm `package.json`, Elixir `mix.exs`) and the documents present under `resources/`, so they need no per-project edits. Three knobs exist:
+The scripts discover the stacks present under `apps/` (Rust `Cargo.toml`, npm `package.json`, Elixir `mix.exs`, Python `pyproject.toml` or `requirements.txt`) and the documents present under `resources/`, so they need no per-project edits. A stack tool that is not installed (for example `ruff` or `pytest`) is skipped with a message rather than failing the gate. Per stack:
+
+- **Formatting:** `cargo fmt`, Prettier, `mix format`, and `ruff format` plus `ruff check`.
+- **Lint and tests:** Clippy, `cargo test` and rustdoc; the npm `lint`, `check`, and `test` scripts; `mix test`; and `pytest`.
+- **Centralized logging:** rejects staged code that logs to files (Elixir `LoggerFileBackend`, Python file handlers, Node `fs.createWriteStream` to a `.log` file, Rust `tracing_appender::rolling`).
+- **Port isolation:** checks Elixir apps (`config/dev.exs` against `config/runtime.exs`) and skips other stacks with a message.
+- **Document sync:** any staged non-Markdown file under `apps/` counts as code and needs an accompanying Markdown change.
+- **PRD/SRS traceability:** passes with nothing to check until `resources/prd.md` and `resources/srs.md` exist.
+
+Three knobs exist:
 
 - `VERIFY_SKIP_TESTS=1` skips the lint and test gate for a work-in-progress commit. Run `./scripts/verify_tests.sh` before pushing.
 - `VERIFY_E2E=1` also runs each npm package's `test:e2e` script, which is slow.
@@ -131,3 +138,7 @@ The documentation validators under [`scripts/docs/`](./scripts/docs/) need `node
 node --test scripts/docs/validate-adrs.test.mjs
 python3 -m unittest discover -s scripts/docs -p "test_*.py"
 ```
+
+# License
+
+Code is released under the [MIT License](./LICENSE).

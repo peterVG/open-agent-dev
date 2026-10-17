@@ -1,4 +1,7 @@
 #!/usr/bin/env python3
+# SPDX-FileCopyrightText: 2026 Pieter Van Garderen
+#
+# SPDX-License-Identifier: MIT
 """Relative-link checker for the repository's Markdown documentation.
 
 Purpose:

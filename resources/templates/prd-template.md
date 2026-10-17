@@ -1,4 +1,4 @@
-# Project Requirements Document: [Project Name]
+# Product Requirements Document: [Project Name]
 
 # Executive Summary
 
@@ -14,17 +14,17 @@
 
 ## F-001: [Feature Name]
 **Priority:** [Mandatory/Optional]
-**User Story:** As a [name of actor type], I want to [action] to create [result]] because [benefit]
+**User Story:** As a [name of actor type], I want to [action] to create [result] because [benefit]
 
 ### Acceptance Criteria
-- eg, User can select files up to 500MB
-- eg, User can add metadata fields (title, description, tags)
-- eg, Upload progress is visible
-- eg, User receives confirmation upon completion
+- eg, User can pick an available appointment slot from a calendar
+- eg, User can add a note for the clinic (reason for visit)
+- eg, Slots already taken are not selectable
+- eg, User receives a confirmation upon completion
 
 ## F-002: [Feature Name]
 **Priority:** [Mandatory/Optional]
-**User Story:** As a [name of actor type], I want to [action] to create [result]] because [benefit]
+**User Story:** As a [name of actor type], I want to [action] to create [result] because [benefit]
 
 ### Acceptance Criteria
 -
@@ -56,58 +56,41 @@
 # Technical Constraints
 
 ## TC-001: Frontend Framework
-**Constraint:** Must use React
-**Rationale:** Team expertise, component reusability
+**Constraint:** Must use [Framework]
+**Rationale:** [e.g., Team expertise, component reusability]
 
 ## TC-002: Storage Solution
-**Constraint:** Must use Arweave for permanent storage
-**Rationale:** Zero hosting costs, permanent data retention
+**Constraint:** Must use [Database or storage service]
+**Rationale:** [e.g., Managed backups, low hosting costs, data residency]
 
 ## Out of Scope (For Now)
-- Real-time collaboration
-- Version control for files
+- eg, Real-time collaboration
+- eg, Payment processing
 
 
 ## Success Criteria
-- User can upload 100MB file and retrieve it 10 years later
-- Search returns results in under 2 seconds
+- eg, User can book an appointment in under 1 minute
+- eg, Search returns results in under 2 seconds
 
 # Release Criteria
 
-## RC-001: Data Permanence
-**Criteria:** User can upload a 100MB file and retrieve it 10 years later
-**Verification:** Upload test file, verify transaction on Arweave explorer
+## RC-001: Data Durability
+**Criteria:** [e.g., A saved record can be retrieved after a backup and restore]
+**Verification:** [e.g., Save a test record, restore the storage from backup, verify the record is returned unchanged]
 
 ## RC-002: Search Performance
-**Criteria:** Search returns results in under 2 seconds
-**Verification:** Load test with 1000 records, measure p95 latency
+**Criteria:** [e.g., Search returns results in under 2 seconds]
+**Verification:** [e.g., Load test with 1000 records, measure p95 latency]
 
 
-## AGENTS.md Principles Integration
-
-The PRD Generator ensures principles defined in AGENTS.md are reflected in product requirements:
-
-### Minimize Dependencies → Feature Simplicity
-### Scale-to-Zero → Performance Requirements
-### Security by Design → Security Requirements
-
-## PRD Success Criteria
-
-A well-generated PRD should:
-- ✅ Map all AGENTS.md sections to appropriate PRD sections
-- ✅ Expand high-level features into detailed user stories
-- ✅ Include acceptance criteria for each feature
-- ✅ Reflect Antigravity principles in requirements
-- ✅ Define measurable release criteria
-- ✅ Be ready for stakeholder review
-- ✅ Serve as input for SRS Generator skill
-
-## Next Steps After PRD Generation
-
-1. **Review PRD** - User reviews and refines generated PRD
-2. **Generate SRS** - Use SRS Generator skill: `@PRD.md Generate SRS`
-3. **Draft Gherkin** - Use Gherkin Architect skill to create test scenarios
-4. **Generate Implementation Plan** - `@PRD.md @SRS.md Generate Implementation Plan`
+<!--
+Next steps after the PRD is reviewed (remove this comment from the finished PRD):
+1. Review and refine resources/prd.md.
+2. Generate the SRS with the srs-writer skill (.agents/skills/srs-writer/SKILL-srs-writer.md), based on resources/prd.md.
+3. Write BDD feature files with the feature-writer skill (.agents/skills/feature-writer/SKILL-feature-writer.md).
+4. Generate the implementation plan with the plan-writer skill (.agents/skills/plan-writer/SKILL-plan-writer.md), based on resources/prd.md and resources/srs.md.
+This template is filled in by the prd-writer skill (.agents/skills/prd-writer/SKILL-prd-writer.md), which also maps the AGENTS.md principles to PRD sections.
+-->
 
 ---
 

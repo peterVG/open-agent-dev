@@ -1,7 +1,7 @@
 ---
 description: Ensure all code is comprehensively documented using the standard inline documentation formats for this stack.
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # Inline Documentation Enforcement
@@ -23,5 +23,16 @@ These docstrings MUST be parseable by `pdoc` to generate the final developer doc
 
 ### Javascript/TypeScript (Frontend) Standards
 The agent MUST use standard `JSDoc` syntax (using `/** ... */`) for all frontend logic, hooks, utility functions, and complex React/Svelte components.
+
+### Elixir Standards
+The agent MUST use `@moduledoc` for every module and `@doc` (with `@spec`) for every public function. Private functions and complex blocks MUST use `#` comments explaining intent.
+These attributes MUST be parseable by `ExDoc` (`mix docs`) to generate the final developer documentation site.
+
+### Rust Standards
+The agent MUST use `///` doc comments for every public item (structs, enums, traits, functions, methods) and `//!` for crate- and module-level documentation, including `# Errors` and `# Panics` sections where applicable.
+These comments MUST be parseable by `rustdoc` (`cargo doc`) to generate the final developer documentation site.
+
+### Other Stacks
+For any other language, the agent MUST use that ecosystem's standard documentation-comment format and generator as selected in the project's documentation ADR in `resources/architecture/ADRs/`.
 
 *Failure to document code according to these standards violates the core AGENTS.md manifesto.*

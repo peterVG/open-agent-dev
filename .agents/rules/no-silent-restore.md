@@ -1,6 +1,6 @@
 ---
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # No Silent Restore of User File Changes
@@ -32,4 +32,4 @@ When any of the following occur, the agent MUST treat the change as potentially 
 
 ## Enforcement
 
-This rule overrides default “helpful recovery” behavior. It applies to all agents operating in this repository (Grok, Cursor, and others that load `Agents.md` / `.agents/rules/`).
+This rule overrides default “helpful recovery” behavior. It applies to any AI agent that loads `AGENTS.md` / `.agents/rules/` in this repository.

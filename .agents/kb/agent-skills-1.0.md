@@ -34,11 +34,11 @@ To avoid overwhelming the agent's context window (which leads to hallucinations 
 
 ### 2. Vendor Neutrality
 Agent skills and instructions MUST NOT be hardcoded to rely on the proprietary quirks of a single AI model (e.g., Claude, Gemini, OpenAI). 
-*   **Actionable Rule:** Use standard industry formats (Markdown, YAML, JSON) for definitions. Ensure that prompt instructions are clear, logical, and universally understandable by any capable frontier model. Use standard standard terminology (like RFC 2119).
+*   **Actionable Rule:** Use standard industry formats (Markdown, YAML, JSON) for definitions. Ensure that prompt instructions are clear, logical, and universally understandable by any capable frontier model. Use standard terminology (like RFC 2119).
 
 ### 3. Multi-Tool Support
 Agents are expected to combine multiple specialized tools dynamically to solve complex problems.
-*   **Actionable Rule:** When a skill defines `allowed-tools` (e.g., `google_search`, `code_interpreter`, `file_system`), the agent MUST proactively use these tools to verify reality rather than relying on its pre-trained memory. (e.g., *Always* search the web to verify a library version; *always* run a script to validate a cost calculation).
+*   **Actionable Rule:** When a skill defines `allowed-tools` (e.g., web search, code execution, file system), the agent MUST proactively use these tools to verify reality rather than relying on its pre-trained memory. (e.g., *Always* search the web to verify a library version; *always* run a script to validate a cost calculation).
 
 ### 4. Explicit Grounding (Knowledge Bases)
 The repository acts as the primary source of truth. The agent's pre-trained knowledge is secondary.
@@ -46,7 +46,7 @@ The repository acts as the primary source of truth. The agent's pre-trained know
 
 ## Writing a Skill
 
-Skills in this repository (located in `.agents/skills/` or `.agent/workflows/`) should follow this standard Markdown structure:
+Skills in this repository (located in `.agents/skills/<name>/SKILL-<name>.md`) should follow this standard Markdown structure:
 
 1.  **YAML Frontmatter:** Defining `name`, `description`, `allowed-tools`, and `references`.
 2.  **Purpose:** What the skill does.

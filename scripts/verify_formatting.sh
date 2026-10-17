@@ -1,9 +1,9 @@
 #!/usr/bin/env bash
-# SPDX-FileCopyrightText: 2026 Peter Van Garderen <petervg@iona.ltd>
+# SPDX-FileCopyrightText: 2026 Pieter Van Garderen
 #
 # SPDX-License-Identifier: MIT
 #
-# Format validation: check Rust, npm, and Elixir formatting under apps/ without changing files.
+# Format validation: check Rust, npm, Elixir, and Python formatting under apps/ without changing files.
 #
 # Checks formatting for every stack present under apps/ without changing files:
 #   - Rust: `cargo fmt --all --check` in each product-local Cargo workspace
@@ -12,6 +12,9 @@
 #     apps/ or apps/*/ that holds a package.json). Requires `npm ci` to have
 #     been run in that package; the check fails with that instruction otherwise.
 #   - Elixir: `mix format --check-formatted` in each app with a mix.exs.
+#   - Python: `ruff format --check .` and `ruff check .` in each app with a
+#     pyproject.toml or requirements.txt. Skipped with a message when ruff is
+#     not on PATH.
 #
 # Usage: ./scripts/verify_formatting.sh   (from the repository root)
 
@@ -61,11 +64,33 @@ check_elixir_app() {
   fi
 }
 
+is_python_app() {
+  # $1 = app directory. True when it holds a Python project manifest.
+  [ -f "$1/pyproject.toml" ] || [ -f "$1/requirements.txt" ]
+}
+
+check_python_app() {
+  # $1 = app directory holding pyproject.toml or requirements.txt
+  local dir="$1"
+  echo "🔍 Validating Python formatting and lint in $dir..."
+  if ! command -v ruff >/dev/null 2>&1; then
+    echo "⚠️  [SKIPPING] $dir: ruff is not installed. Install it to check Python formatting."
+    return
+  fi
+  if (cd "$dir" && ruff format --check . >/dev/null 2>&1 && ruff check . >/dev/null 2>&1); then
+    echo "✅ $dir is properly formatted."
+  else
+    echo "❌ ERROR ($dir): Python format or lint violation. Run 'ruff format .' and 'ruff check .' in $dir."
+    FAILED=1
+  fi
+}
+
 for APP_PATH in "$APPS_DIR"/*; do
   [ -d "$APP_PATH" ] || continue
   [ -f "$APP_PATH/Cargo.toml" ] && check_rust_workspace "$APP_PATH"
   [ -f "$APP_PATH/package.json" ] && check_npm_package "$APP_PATH"
   [ -f "$APP_PATH/mix.exs" ] && check_elixir_app "$APP_PATH"
+  is_python_app "$APP_PATH" && check_python_app "$APP_PATH"
   for SUB_PATH in "$APP_PATH"/*; do
     [ -d "$SUB_PATH" ] && [ -f "$SUB_PATH/package.json" ] && check_npm_package "$SUB_PATH"
   done

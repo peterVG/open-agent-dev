@@ -2,12 +2,12 @@
 name: Product Vision Architect
 description: Guides the user through a structured discovery process to populate the product-vision-template.md
 allowed-tools:
-  - google_search
+  - web_search
   - code_interpreter
 references:
   - resources/templates/product-vision-template.md
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # Product Vision Architect Skill
@@ -16,7 +16,7 @@ license: CC-BY
 This skill facilitates a collaborative, Socratic dialogue to help the user define and refine their product strategy. It transforms abstract ideas into a concrete, validated `resources/product-vision.md` file based on the official template.
 
 ## When to Use This Skill
-- When the user invokes `/product-vision`
+- When the user invokes `/vision-writer` (or references the `vision-writer` skill)
 - During the initial "Discovery" phase of a new project or feature
 - When a product idea lacks market validation, technical stack clarity, or defined "moats"
 
@@ -29,14 +29,14 @@ The agent reads the existing `product-vision-template.md` to understand the requ
 The agent does NOT present a wall of text. It engages in **Progressive Discovery**:
 1. **Inquiry:** Focuses on 1-2 related sections (e.g., "Product Vision" and "Target Users").
 2. **Challenge:** Uses Socratic reasoning to test assumptions. 
-   - *Example:* "You mentioned the target is the Dutch public sector; how does this reconcile with the decentralized Arweave storage given current GDPR sovereignty trends?"
+   - *Example:* "You target regulated healthcare providers; how does that fit the plan to use third-party cloud storage?"
 3. **Refinement:** Suggests "Gains" and "Pains" based on the user's professional context.
 
 ### Step 3: Market & Technical Grounding
-- **Verification:** Uses `Google Search` to find "Key Competitors" or verify "Standards, Laws, and Regulations" (e.g., latest e-ARK or ERC-3643 updates).
+- **Verification:** Uses web search (`web_search`) to find "Key Competitors" or verify "Standards, Laws, and Regulations" (e.g., latest GDPR or WCAG updates).
 - **Reference Downloads & Uploads:** Offer to download for the user any specific "Standards, Laws, Regulations" OR "Technical and Domain References" documents that they mention, and store them directly into the `resources/references/` folder. Also instruct the user to manually upload any private files to this folder.
 - **KB Refinement Prompt:** Explicitly prompt the user to ask whether any of the raw reference resources now in `resources/references/` should be further refined to create a synthesized `.agents/kb/` file.
-- **Feasibility:** Uses `code_interpreter` for "Cost Structure" estimates (e.g., Arweave storage fees or infrastructure overhead).
+- **Feasibility:** Uses `code_interpreter` for "Cost Structure" estimates (e.g., cloud storage fees or infrastructure overhead).
 
 ### Step 4: Drafting & Iteration
 The agent maintains a working draft. After each section is "settled," it provides a summary and asks if the user wants to move to the next block of the template.
@@ -55,16 +55,16 @@ If the user previously indicated they want any raw reference resources in `resou
 
 ## Integration with AI Agent Workflow
 
-USER: /product-vision I want to build a NextCloud plugin for Arweave archiving.
+USER: /vision-writer I want to build a team expense-tracking app.
 AGENT: [Activates Product Vision Architect]
-AGENT: [Searches Dutch public sector NextCloud usage to ground the conversation]
-AGENT: "I see you're targeting the Dutch public sector. Would this primarily serve as a 'dark archive' for compliance, or a functional extension for daily users? This will help us define the 'Product Vision' and 'Core Features'."
+AGENT: [Searches existing expense-tracking tools and their pricing to ground the conversation]
+AGENT: "Is this primarily for finance teams who approve and reconcile expenses, or for employees who need to submit receipts quickly on the go? This will help us define the 'Product Vision' and 'Core Features'."
 ...
 AGENT: [Finalizes all sections]
-AGENT: [Creates resources/vision.md]
+AGENT: [Creates resources/product-vision.md]
 
 ## Success Criteria
-- ✅ **Completness:** Every placeholder in the template is replaced with specific, high-fidelity content.
+- ✅ **Completeness:** Every placeholder in the template is replaced with specific, high-fidelity content.
 - ✅ **Internal Consistency:** The "Value Proposition" directly addresses the "Pains" in the Customer Profile.
 - ✅ **Technical Realism:** The "Technical Stack" is compatible with the "Key Constraints."
 - ✅ **Strategic Depth:** The "Unfair Advantage" identifies a genuine barrier to entry.

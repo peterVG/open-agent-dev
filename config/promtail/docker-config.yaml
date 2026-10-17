@@ -9,6 +9,9 @@ clients:
   - url: http://loki:3100/loki/api/v1/push
 
 scrape_configs:
+  # Host log scraping: assumes a Linux host. On Docker Desktop (macOS, Windows)
+  # the /var/log mount is the Docker VM's, not the host's, so this job sees the
+  # VM's logs. Container stdout is collected by the docker job below either way.
   - job_name: system
     static_configs:
     - targets:

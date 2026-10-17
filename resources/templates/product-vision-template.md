@@ -1,8 +1,8 @@
-# [PRODUCT]: 
+# [Product Name]: Product Vision
 
 ## Product Vision
 **Description:** What is this product meant to achieve? Why should it exist?
-**Placeholder:** e.g., A decentralized records management system for the EU market...
+**Placeholder:** e.g., A scheduling app for small clinics that lets patients book, reschedule, and cancel appointments without phoning the front desk...
 > 
 
 ## Target Users & Customer Profile
@@ -11,24 +11,24 @@
 
 ## Core Features
 **Description:** What is the product's main functionality?
-**Placeholder:** List features like: DKG notarization, retention schedule scanning...
+**Placeholder:** List features like: online booking, automated appointment reminders, a staff calendar view...
 >
 
 ## User Requirements
 **Description:** "I want", "I need" statements.
 
 ## Technical Stack
-**Description:** Technologies and tools used (NextCloud, Arweave, OriginTrail, etc.)
-**Placeholder:** Mention specific stacks like the Anti-Gravity stack.
+**Description:** Technologies and tools used, if any are already decided.
+**Placeholder:** [Frontend framework, backend language/framework, database, hosting]
 > 
 
 ## Standards, Laws, and Regulations
-**Description:** Applicable legal rules (GDPR) and technical standards (e-ARK, ERC-3643). These should be stored in the resources/references folder. Can be used as the source of system requirements.
+**Description:** Applicable laws, regulations, and technical standards (e.g. GDPR, WCAG 2.2, ISO 27001). These should be stored in the resources/references folder. Can be used as the source of system requirements.
 > 
 
 ## Technical & Domain References
 **Description:** External documentation that guides the development of the product, explaining its objectives and constraints. Can be used as the source of system requirements.
-**Placeholder:** Example: [e-ARK Standards](./references/e_ark_standards.md)
+**Placeholder:** Example: [Standard X](./references/standard-x.md)
 > 
 
 ## Value Propositions

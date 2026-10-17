@@ -4,7 +4,7 @@ description: Synthesizes resources/references into OKF v0.2-conformant concept f
 allowed-tools:
   - code_interpreter
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # Knowledge Base (KB) Synthesizer Skill
@@ -19,7 +19,7 @@ This skill reads raw technical documents in `resources/references/` (PDFs, white
 
 ## When to Use This Skill
 
-- Explicit user request (e.g., "Synthesize the ERC-3643 spec into a KB file").
+- Explicit user request (e.g., "Synthesize the OAuth 2.1 spec into a KB file").
 - After `vision-writer` when the user confirms new reference files should be synthesized.
 - When revising existing `.agents/kb/` entries for OKF compliance.
 
@@ -107,8 +107,7 @@ Preserve project metadata as OKF extensions (§4.1):
 | Key | Purpose |
 |-----|---------|
 | `kb-title` | Alias of title for older tooling (SHOULD match `title`) |
-| `source-reference` | Primary path under `resources/references/` |
-| `source-url` | Canonical web URL of the specification |
+| `source-url` | Canonical public web URL of the specification. Record local `resources/references/` paths in `sources[].resource`, not in a separate key. |
 | `spec-version` | Version string of the source standard |
 | `domain` | Short domain label(s) |
 | `last-updated` | ISO 8601 when this concept was last revised |
@@ -118,9 +117,9 @@ Preserve project metadata as OKF extensions (§4.1):
 When a body claim derives from a source, use a markdown footnote whose label equals `sources[].id`:
 
 ```markdown
-OCFL digests SHOULD be sha512.[^ocfl-3.4]
+Clients MUST use PKCE with the authorization code grant.[^oauth-2-1-4.1.1]
 
-[^ocfl-3.4]: OCFL 1.1 §3.4 Digests
+[^oauth-2-1-4.1.1]: OAuth 2.1 §4.1.1 Authorization Request
 ```
 
 Also allow inline `(Source: §X)` citations for dense constraint lists.
@@ -136,7 +135,7 @@ Also allow inline `(Source: §X)` citations for dense constraint lists.
 #### Filename rules
 
 - Concept ID = path within the bundle **without** `.md`.
-- Use intuitive kebab-case names: `ocfl.md`, `c2pa.md`, `rfc-2119-req-terms.md`.
+- Use intuitive kebab-case names: `oauth-2-1.md`, `openapi-3-1.md`, `rfc-2119-req-terms.md`.
 - **MUST NOT** name a concept `index.md` or `log.md`.
 
 #### Template (copy and fill)
@@ -158,7 +157,6 @@ sources:
     title: <Source title>
     author: process:<publisher-or-org>
 kb-title: <same as title>
-source-reference: resources/references/<filename>
 source-url: <https://…>
 spec-version: "<version>"
 last-updated: <RFC3339 UTC>
@@ -223,5 +221,5 @@ After adding or revising concepts under `.agents/kb/`:
 ## Reference
 
 - Full OKF agent reference: [`.agents/kb/okf.md`](../../kb/okf.md)
-- Upstream OKF v0.2: `resources/references/GoogleOpenKnowledgeFormat_v0.2.pdf`
+- Upstream OKF v0.2 source and citation: see the provenance in [`.agents/kb/okf.md`](../../kb/okf.md)
 - Bundle index: [`.agents/kb/index.md`](../../kb/index.md)

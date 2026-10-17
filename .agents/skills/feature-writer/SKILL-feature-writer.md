@@ -4,7 +4,7 @@ description: Translates SRS requirements into executable BDD feature scenarios b
 allowed-tools:
   - code_interpreter
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # Feature Writer Skill
@@ -23,9 +23,11 @@ This skill enables the agent to translate Product Requirement Document (PRD) spe
 ## Core Principles
 
 ### 1. Identify the Tech Stack
-Before writing any output, you MUST detect the project's initialized tech stack:
-- **BEAM/Elixir Stack:** Identified by the presence of a `mix.exs` file in the root directory.
-- **Python/Javascript Stack:** Identified by a polyglot Monorepo structure, typically with a `requirements.txt` or `package.json` setup for the backend/frontend.
+Before writing any output, you MUST detect the tech stack of the app you are writing features for. Each app lives under `apps/<app>/`; there is no language tooling at the repository root.
+- **BEAM/Elixir Stack:** Identified by a `mix.exs` file in the app directory (e.g. `apps/my_app/mix.exs`).
+- **Rust/JavaScript Stack:** Identified by a `Cargo.toml` file in the app directory (e.g. `apps/backend/Cargo.toml`, `apps/desktop/src-tauri/Cargo.toml`).
+- **Python/Javascript Stack:** Identified by a `requirements.txt`, `pyproject.toml`, or `package.json` in the app directory (e.g. `apps/backend/`, `apps/frontend/`).
+- **Otherwise:** Follow the testing ADR in `resources/architecture/ADRs/` for the BDD framework, file format, and directory.
 
 ### 2. Traceability
 Every scenario MUST map back to a specific SRS requirement.
@@ -40,21 +42,21 @@ Feature: File Upload
     Then the upload should complete successfully
 ```
 
-### 2. Coverage Strategy
+### 3. Coverage Strategy
 For each core feature, write scenarios covering:
 - **Happy Path** (1-2 scenarios): Normal, expected usage
 - **Edge Cases** (2-3 scenarios): Boundary conditions, limits
 - **Error Cases** (1-2 scenarios): What happens when things go wrong
-- **User Interactions** (1-2 scenarios): Explicit scenarios for UI elements (e.g., "When the user clicks the 'Ingest' button...", "When the user toggles the sidebar...").
+- **User Interactions** (1-2 scenarios): Explicit scenarios for UI elements (e.g., "When the user clicks the 'Upload' button...", "When the user toggles the sidebar...").
 
-### 3. Declarative Style
+### 4. Declarative Style
 Write scenarios that describe **WHAT** happens, not **HOW** it happens.
 
 **Good:**
 ```gherkin
-Given I have an authenticated session
+Given I am signed in
 When I upload a file
-Then the file should be stored permanently
+Then the file should appear in my files
 ```
 
 **Bad:**
@@ -124,7 +126,7 @@ Verify the outcome. Use **should** or **present tense**.
 ```gherkin
 Then the file should be uploaded successfully
 Then I should see 5 search results
-Then a permanent link should be generated
+Then a shareable link should be generated
 ```
 
 ## Anti-Patterns to Avoid
@@ -140,7 +142,7 @@ Then the database should insert a row in the files table
 ```gherkin
 # GOOD
 When I upload a file
-Then the file should be stored permanently
+Then the file should appear in my files
 ```
 
 ### ❌ Don't: Write UI-Specific Steps
@@ -228,11 +230,11 @@ Feature: Client-Side File Encryption
 Feature: Large File Upload
   As a researcher
   I want to upload large datasets
-  So that I can permanently archive my research data
+  So that I can share my research data with my team
 
   Background:
-    Given I am authenticated with my wallet
-    And I have sufficient storage credits
+    Given I am signed in
+    And I have enough storage quota remaining
 
   # Happy Path
   Scenario: Upload small file successfully
@@ -240,7 +242,7 @@ Feature: Large File Upload
     When I upload the file
     Then the upload should complete in under 2 seconds
     And the file should be stored with metadata
-    And I should receive a permanent link
+    And I should receive a shareable link
 
   # Happy Path
   Scenario: Upload large file with chunking
@@ -249,7 +251,7 @@ Feature: Large File Upload
     Then the file should be split into 5 chunks
     And each chunk should be uploaded separately
     And the upload should complete successfully
-    And I should receive a permanent link
+    And I should receive a shareable link
 
   # Edge Case
   Scenario: Upload file at maximum size limit
@@ -298,17 +300,26 @@ When asked to draft feature scenarios, the agent MUST adjust its output format a
 
 ### For the Python/Javascript Stack:
 1. **Format:** Use standard Gherkin `.feature` syntax.
-2. **Directory:** Create the `.feature` file in `tests/features/` (Plural `tests/`).
+2. **Directory:** Create the `.feature` file in the app's `tests/features/` directory (Plural `tests/`, e.g. `apps/backend/tests/features/`).
 3. **Naming Conventions:** Name the file after the feature (e.g., `file_upload.feature`) and append the SRS requirement ID (e.g., `file_upload_SRS-UPLOAD-001.feature`).
 4. **Traceability:** Include the SRS header traceability comment at the top, and append a Source block at the bottom mapping the feature to the SRS and PRD origin (e.g. `# Source` \n `# - srs.md SRS-UPLOAD-001...`).
 
 ### For the BEAM/Elixir Stack:
 1. **Format:** Use the native Elixir `Wallaby.Feature` macros (e.g., `defmodule MyAppWeb.FileUploadFeatureTest do use Wallaby.Feature...`). Pure text `.feature` files are completely banned.
-2. **Directory:** Create the `.exs` file strictly in `test/features/` (Singular `test/`).
+2. **Directory:** Create the `.exs` file strictly in the app's `test/features/` directory (Singular `test/`, e.g. `apps/my_app/test/features/`).
 3. **Naming Conventions:** Name the file following Elixir conventions (e.g., `file_upload_feature_test.exs`) and append the SRS requirement ID (e.g., `file_upload_SRS-UPLOAD-001_feature_test.exs`).
 4. **Traceability:** Include `@moduledoc` tags or comments at the top of the module for SRS traceability, and append a comment block at the bottom mapping the feature to the SRS and PRD origin.
 
-## Integration with Antigravity Workflow
+### For the Rust/JavaScript Stack:
+1. **Format:** Use standard Gherkin `.feature` syntax executed by `cucumber` (cucumber-rs), with step definitions in a Rust test harness.
+2. **Directory:** Create the `.feature` file in the crate's `tests/features/` directory (e.g. `apps/backend/tests/features/`, `apps/desktop/src-tauri/tests/features/`). Register the harness as a `[[test]]` target with `harness = false` in that crate's `Cargo.toml`.
+3. **Naming Conventions:** Name the file after the feature and append the SRS requirement ID (e.g., `file_upload_SRS-UPLOAD-001.feature`).
+4. **Traceability:** Include the SRS header traceability comment at the top, and append a Source block at the bottom mapping the feature to the SRS and PRD origin.
+
+### For Any Other Stack:
+Follow the testing ADR in `resources/architecture/ADRs/` for the BDD framework, file format, directory, and naming conventions. Keep the same traceability header and Source block.
+
+## Integration with the Agent Workflow
 
 ```
 USER: Using the SRS, write 5 scenarios for file upload.
@@ -316,8 +327,8 @@ USER: Using the SRS, write 5 scenarios for file upload.
 AGENT: [Activates Feature Writer skill]
 AGENT: [Reads @resources/srs.md]
 AGENT: [Identifies relevant requirements: SRS-UPLOAD-001, SRS-SEC-002, SRS-PERF-001]
-AGENT: [Checks repository for mix.exs] -> (Detects Python/JS Stack)
-AGENT: [Creates tests/features/file_upload.feature]
+AGENT: [Checks apps/backend/ for mix.exs, Cargo.toml, or requirements.txt] -> (Detects Python/JS Stack)
+AGENT: [Creates apps/backend/tests/features/file_upload_SRS-UPLOAD-001.feature]
 AGENT: [Writes standard Gherkin scenarios]
 AGENT: [Asks clarifying question if needed]
 ```
@@ -330,4 +341,4 @@ A well-written Gherkin scenario should:
 - ✅ Focus on behavior, not implementation
 - ✅ Cover happy path, edge cases, and errors
 - ✅ Use declarative language (WHAT, not HOW)
-- ✅ Be executable by a test framework (Cucumber, Behave, etc.)
+- ✅ Be executable by a test framework (Cucumber, cucumber-rs, Behave, Wallaby, etc.)

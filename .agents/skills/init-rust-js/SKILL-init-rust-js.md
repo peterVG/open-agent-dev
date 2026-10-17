@@ -6,7 +6,7 @@ allowed-tools:
 references:
   - ../../kb/tauri-2.md
 copyright: Pieter Van Garderen (2026)
-license: CC-BY
+license: MIT
 ---
 
 # Rust / JavaScript Project Initialization
@@ -120,7 +120,7 @@ project-root/
 └── README.md
 ```
 
-Use Cargo and the frontend scaffolder **inside** `apps/` (`cargo new` in `apps/core`, `apps/backend`; Vite/React/Svelte/etc. in `apps/frontend`). **DO NOT** generate workspace manifests or applications inside the repository root. **DO NOT** generate `apps/frontend` + `apps/backend` as FastAPI/SPA Python, Phoenix OTP apps, or WordPress plugins.
+Use Cargo and the frontend scaffolder **inside** `apps/` (`cargo new` in `apps/core`, `apps/backend`; Vite/React/Svelte/etc. in `apps/frontend`). **DO NOT** generate workspace manifests or applications inside the repository root. **DO NOT** generate `apps/frontend` + `apps/backend` as FastAPI/SPA Python, or Phoenix OTP apps.
 
 **Tauri scaffolder:** `npm create tauri-app` writes `package.json` next to `src-tauri/`. If you use it, run it in a scratch directory and **relocate** the frontend into `apps/frontend/` and the Rust host into `apps/desktop/src-tauri/` so no `package.json` / `Cargo.toml` lands at the repository root. Prefer composing Tauri by hand on top of the Vite app in `apps/frontend/`.
 
@@ -134,7 +134,7 @@ Use Cargo and the frontend scaffolder **inside** `apps/` (`cargo new` in `apps/c
 
 ## Step 2: Enforce Documentation Traceability & Sync
 
-Same monorepo requirements method as the BEAM init skill, with PRD at `resources/prd.md` (this repo does not use root `prd.md`).
+Every Rust/JavaScript project MUST follow a Monorepo Requirements Engineering methodology: one global PRD at `resources/prd.md`, and one SRS per app at `apps/<app>/resources/srs.md` that traces every requirement back to the PRD. The agent MUST enforce the following rules when creating or updating requirements:
 
 1. **Global source of truth:** `resources/prd.md` and `resources/product-vision.md`.
 2. **Localized specs:** Each app MUST have `resources/srs.md` bounded to that app (`core`, `backend`, `frontend`, `desktop`).
@@ -152,7 +152,7 @@ Same monorepo requirements method as the BEAM init skill, with PRD at `resources
 
 ## Step 3: Enforce Technical Stack
 
-You MUST configure the following. Do not add FastAPI, Phoenix, WordPress, Actix, Rocket, Dioxus, or Leptos unless a later ADR explicitly replaces this stack.
+You MUST configure the following. Do not add FastAPI, Phoenix, Actix, Rocket, Dioxus, or Leptos unless a later ADR explicitly replaces this stack.
 
 **Web runtime (production):**
 - Stable Rust toolchain pinned in each crate’s `rust-toolchain.toml` (`channel = "stable"`, components `rustfmt` and `clippy`). Verify the current stable compiler against the actual dependency graph; do not copy an old MSRV from a plugin README.
@@ -216,7 +216,7 @@ Load [`.agents/kb/tauri-2.md`](../../kb/tauri-2.md) before implementing this ste
 
 ## Step 5: Populate `apps/README.md`
 
-Create or replace `apps/README.md` so it describes **this** stack (not FastAPI/Phoenix/WordPress). Use the following text, adjusted only if app directory names change:
+Create or replace `apps/README.md` so it describes **this** stack (not FastAPI/Phoenix). Use the following text, adjusted only if app directory names change:
 
 The best practice for a Rust/JavaScript product is a monorepo of **independent apps** under `apps/`. Domain logic lives in a shared Rust crate. Two hosts consume it: an Axum HTTP server (web) and a Tauri 2 process (desktop). One JavaScript/TypeScript UI talks HTTP in the browser and typed IPC inside the desktop webview. The repository root stays language-agnostic: no `Cargo.toml` or `package.json` at the root.
 
@@ -303,7 +303,7 @@ Mirror the Python/JS taxonomy with Rust-native tools on the hosts and JS tools o
 
 ## Step 8: Generate Inline Documentation Rule
 
-Create or **replace** `.agents/rules/docs-enforce.md` with this content (this stack is Rust + JS, not Python, Elixir, or PHP):
+Create or **replace** `.agents/rules/docs-enforce.md` with this content (this stack is Rust + JS, not Python or Elixir):
 
 ```markdown
 ---
@@ -481,7 +481,7 @@ Verify every documented command actually runs ([command-verification.md](../../r
 - [ ] Domain logic is in `apps/core`; Axum and Tauri depend on it; the frontend does not reimplement privileged operations.
 - [ ] `resources/srs.md` exists per app with PRD parent links.
 - [ ] Test folders match the taxonomy; Allure output is under each app `tests/`.
-- [ ] `docs-enforce.md` and `lint-enforce.md` describe rustdoc/rustfmt/Clippy/JS, not Ruff, Mix, or PHPCS.
+- [ ] `docs-enforce.md` and `lint-enforce.md` describe rustdoc/rustfmt/Clippy/JS, not Ruff or Mix.
 - [ ] ADRs exist for test, docs, lint, Axum, Tauri 2, `apps/core`, observability, and distribution, and they do not contradict earlier accepted ADRs.
 - [ ] Tauri stays on stable major 2; `AppManifest`, capabilities, production CSP, and `frontendDist` are configured; no v1 allowlist/`devPath` APIs.
 - [ ] Root README explains rustup/Node/Tauri prerequisites, web vs desktop run/test/log paths, without erasing About this project.

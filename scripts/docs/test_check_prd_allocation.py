@@ -1,3 +1,6 @@
+# SPDX-FileCopyrightText: 2026 Pieter Van Garderen
+#
+# SPDX-License-Identifier: MIT
 """Unit tests for check_prd_allocation.py.
 
 Each test writes its own vision and PRD files into a temporary directory, so

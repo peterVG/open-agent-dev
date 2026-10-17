@@ -14,7 +14,7 @@
 - Preserve sequential user requirement IDs `U-01`, `U-02`, …; **do not use a `V-` prefix**. This template also uses `O-` for outcomes, `CAP-` for capabilities, `CON-` for constraints, `M-` for measures, and `REF-` for sources. Keep issued IDs stable across revisions; do not reassign retired IDs.
 - Complete the essential reasoning first: mission contribution, evidenced need, relevant people, outcomes, initial scope, user requirements, and operating/funding approach. Add depth where it changes a product decision. Section 19 records readiness and unresolved questions.
 
-This is an original adaptation of the supplied commercial product vision template, informed by the methods acknowledged at the end. It does not claim compliance with a single nonprofit planning standard.
+This is an original adaptation of [product-vision-template.md](./product-vision-template.md), informed by the methods acknowledged at the end. It does not claim compliance with a single nonprofit planning standard.
 
 ## Document context
 
