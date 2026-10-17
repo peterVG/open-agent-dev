@@ -1,0 +1,19 @@
+README.md
+  s_c92dee02659a40::t_e00fcd1e762982 1-4
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9826d10548bdf9561b5aa1470958c1fe594edc49",
+  "prompts": {},
+  "sessions": {
+    "s_c92dee02659a40": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "20c58417-828d-4ab6-81eb-386aed46c4f6",
+        "model": "unknown"
+      },
+      "human_author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
