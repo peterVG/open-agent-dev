@@ -1,0 +1,75 @@
+scripts/pre-commit.sh
+  s_521605fef1aff6::t_e7cc7da4f5d5ea 76
+  s_521605fef1aff6::t_ac9ab6db1cb32a 2-6,47,54,61,68-71,75
+  s_521605fef1aff6::t_12ffc0be7c76f9 72-74,77-81
+  s_521605fef1aff6::t_e1bf7bb9d7032e 82
+scripts/verify_centralized_logging.sh
+  s_521605fef1aff6::t_ac9ab6db1cb32a 2-7
+scripts/verify_workspace_boundaries.sh
+  s_521605fef1aff6::t_ac9ab6db1cb32a 2-7
+scripts/verify_srs_traceability.sh
+  s_521605fef1aff6::t_ac9ab6db1cb32a 2-6
+  s_521605fef1aff6::t_9839b9db5994bd 7-9
+  s_521605fef1aff6::t_522e1aa83bbd03 10-13,18,20,22-24,27,29-30,32-33,36-37,42-44,46-49,53,55,59
+scripts/verify_tests.sh
+  s_521605fef1aff6::t_ac9ab6db1cb32a 2-7
+  s_521605fef1aff6::t_b3baf838ce79a7 9-114
+  s_521605fef1aff6::t_a957a505a813fd 1,8,115-124
+scripts/verify_formatting.sh
+  s_521605fef1aff6::t_ac9ab6db1cb32a 2-7,15
+  s_521605fef1aff6::t_e0fe9563a1a231 8-14,16,23-48,50-71,77
+scripts/verify_isolated_ports.sh
+  s_521605fef1aff6::t_ac9ab6db1cb32a 2-6
+scripts/verify_branch.sh
+  s_521605fef1aff6::t_ac9ab6db1cb32a 2-6
+scripts/verify_doc_sync.sh
+  s_521605fef1aff6::t_ac9ab6db1cb32a 2-6
+scripts/verify_relative_links.sh
+  s_521605fef1aff6::t_ac9ab6db1cb32a 2-7
+scripts/verify_task_cleanup.sh
+  s_521605fef1aff6::t_ac9ab6db1cb32a 2-6
+scripts/verify_docs.sh
+  s_521605fef1aff6::t_ac9ab6db1cb32a 1-48
+  s_521605fef1aff6::t_e178e6f22f0c4a 49-51
+  s_521605fef1aff6::t_70b79d9ec8bd93 52-79
+scripts/docs/test_check_prd_allocation.py
+  s_521605fef1aff6::t_2378b2b847f736 1-120
+scripts/docs/test_check_workspace_links.py
+  s_521605fef1aff6::t_cb8e9a952ca819 1-56
+.agents/kb/index.md
+  s_521605fef1aff6::t_b506041c35d577 20
+.agents/rules/task-workflow.md
+  s_521605fef1aff6::t_b779be86f17e0f 13,21,23
+.agents/skills/init-rust-js/SKILL-init-rust-js.md
+  s_521605fef1aff6::t_3fd5b6a06756bc 139
+README.md
+  s_521605fef1aff6::t_e053f118bb9b51 39,53,76,83,110-133
+resources/ui-mockups/README.md
+  s_521605fef1aff6::t_b493f8f21e44ea 3,5
+scripts/docs/check_links.py
+  s_521605fef1aff6::t_9254910e038ec4 1-114
+scripts/docs/check_prd_allocation.py
+  s_521605fef1aff6::t_ad8454e0235dac 1-226
+scripts/docs/check_workspace_links.py
+  s_521605fef1aff6::t_ca00aab8027f5e 1-107
+scripts/docs/validate-adrs.mjs
+  s_521605fef1aff6::t_6e974702c8a291 1-292
+scripts/docs/validate-adrs.test.mjs
+  s_521605fef1aff6::t_6c2f076a9b04f1 1-172
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "75925e1fbca546bcb3bef8f6f035b154cc753dc9",
+  "prompts": {},
+  "sessions": {
+    "s_521605fef1aff6": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "cb48c80f-adf9-4390-99bc-9803dc5d1db9",
+        "model": "claude-fable-5-1"
+      },
+      "human_author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
