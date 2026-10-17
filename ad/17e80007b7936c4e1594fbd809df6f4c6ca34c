@@ -1,0 +1,19 @@
+LICENSE
+  s_d468acf14d2d6f::t_652c90081f94d7 1-21
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "ad17e80007b7936c4e1594fbd809df6f4c6ca34c",
+  "prompts": {},
+  "sessions": {
+    "s_d468acf14d2d6f": {
+      "agent_id": {
+        "tool": "claude",
+        "id": "89b657b4-bd43-4d9e-a4fc-f91c166c010b",
+        "model": "unknown"
+      },
+      "human_author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
