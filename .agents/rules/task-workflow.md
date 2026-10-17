@@ -1,7 +1,7 @@
 ---
 description: Ensure all tasks follow the Branch-Per-Task workflow and generate required execution documentation.
 copyright: Pieter Van Garderen (2026)
-license: MIT
+license: CC-BY
 ---
 
 # Task Execution Workflow
@@ -10,8 +10,10 @@ Define the Git workflow and development methodology that MUST be followed for ev
 
 ## Branch-Per-Task
 
-- **Branches Required for ALL Tasks:** All work, including every Task defined in `resources/implementation-plan.md`, new features, documentation updates, and bug fixes MUST be developed on dedicated branches (e.g., `task/0.1-project-scaffold`, `task/be-0.5-user-endpoints`, `docs/update-guide`, `fix/login-bug`). No exceptions.
+- **Branches Required for ALL Tasks:** All work, including every Task defined in `resources/implementation-plan.md`, new features, documentation updates, and bug fixes MUST be developed on dedicated branches named `<type>/<slug>`, where `<type>` is a permitted Conventional Commit type (e.g., `feat/0.1-project-scaffold`, `feat/be-0.5-user-endpoints`, `docs/update-guide`, `fix/login-bug`). No exceptions. `scripts/verify_branch.sh` rejects any other prefix.
 - **Mandatory Push on Completion:** Upon completing a task (after all code is written, tests pass, and the Walkthrough document is generated), you MUST commit all work on your feature branch using Conventional Commits and push the branch to the remote origin (`git push --set-upstream origin <branch-name>`). Do not leave finished task branches persisting only in your local environment.
+- **Pull Requests:** After the push, you MAY open a pull request against `main`, push further commits to it, and fix and reply to review comments on it.
+- **Human-Only Merge:** Only a human operator MAY approve and merge a pull request into `main`. You MUST NOT merge your own or any other pull request.
 - **No Direct Pushes to Main:** The `main` branch contains only approved, stable requirements and code. You MUST NEVER commit or push code directly to the `main` branch unless explicitly told to do so in a user prompt.
 
 ## Global versus module prompts

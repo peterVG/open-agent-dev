@@ -19,7 +19,7 @@
 - **Walkthrough Documentation:** When executing tests, the agent MUST copy the raw CLI output of the test runs into a permanent `apps/[Module Name]/resources/tasks/Task-[Task ID]-Walkthrough.md` file to provide immediate visual proof of passing tests, in addition to generating the structured test reports.
 - **Unit Test Traceability:** When code changes make a unit test obsolete or require modifications to the underlying implementation, the agent MUST explicitly update, refactor, or remove the corresponding unit tests to remain in sync with the source code.
 - **Strict Artifact Isolation:** This principle is tactically enforced on all AI agents via the instructions in [artifact-isolation.md](./.agents/rules/artifact-isolation.md).
-- **PR Review Mandate:** All proposed Pull Requests MUST be reviewed by an external AI agent acting as a Senior Software Engineer. The agent will analyze code changes, enforce project paradigms, check for logic flaws, and provide change requests. Any identified issues will be fixed and pushed to the PR before final human review and merge to main branch. 
+- **PR Review Mandate:** All proposed Pull Requests MUST be reviewed by an external AI agent acting as a Senior Software Engineer. The agent will analyze code changes, enforce project paradigms, check for logic flaws, and provide change requests. Agents MAY open Pull Requests, push commits to them, and fix and reply to review comments. Only a human operator MAY approve and merge a Pull Request into the `main` branch; agents MUST NOT merge their own or any other Pull Request.
 
 ## 2. Branch-Per-Task
 
@@ -39,19 +39,27 @@
 
 - **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in [command-verification.md](./.agents/rules/command-verification.md).
 
-## 5. Pull Request Documentation Updates
+## 5. Local Verification, No Hosted CI
+
+**Purpose:** Keep every quality gate fast, deterministic and under the developer's control. This repository does NOT use GitHub Actions or any other hosted CI; every gate runs locally through the repository's pre-commit hook before a push.
+
+- **No hosted CI:** Agents MUST NOT add `.github/workflows/` or any other hosted CI configuration. Pull request status comes from the local hook, the external AI review and human review.
+- **Pre-commit is the gate:** `scripts/pre-commit.sh` runs the branch, port, document-sync, traceability, link, workspace-boundary, logging, formatting, documentation and lint/test verifiers. A commit that fails the hook MUST NOT be pushed.
+- **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in [local-verification.md](./.agents/rules/local-verification.md).
+
+## 6. Pull Request Documentation Updates
 
 **Purpose:** Guarantee that the permanent project documentation stays strictly synchronized with the codebase whenever new features, architecture changes, or schema updates are introduced.
 
 - **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in [pr-documentation-update.md](./.agents/rules/pr-documentation-update.md).
 
-## 6. Sync Logic Verification
+## 7. Sync Logic Verification
 **Purpose:** Guarantee that upstream documentation (PRD, SRS, ADRs, Implementation Plan) is consistently aligned before writing implementation code, and to require explicit human review for any detected contradictions.
 
 - **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in [sync-logic.md](./.agents/rules/sync-logic.md).
 - **Search Before Denial:** AI agents MUST explicitly search `resources/architecture/ADRs/` before denying technology use or claiming an ADR doesn't exist. This is tactically enforced via [adr-verification.md](./.agents/rules/adr-verification.md).
 
-## 7. Portable Documentation (Relative Links)
+## 8. Portable Documentation (Relative Links)
 
 **Purpose:** Ensure that the project's documentation remains universally portable, readable across any environment, and correctly navigable natively within Git hosting services like Github.
 
@@ -59,13 +67,13 @@
 - **Strictly Relative Links:** Anytime an AI agent generates documenting artifacts, readmes, technical specs, or logs that cross-reference another file in this project, it MUST use standard Markdown relative linking (e.g., `[PRD](../prd.md)` or `[Task 1.1](./tasks/Task-1.1-Plan.md)`).
 - **Prohibited Absolute Paths:** The agent MUST NEVER write absolute file paths native to its current execution environment (e.g., `/Users/johnathondoe/...`) into the permanent project repository files. Absolute paths break immediately upon push to a remote repository or clone by another developer.
 
-## 8. Platform-Agnostic Documentation
+## 9. Platform-Agnostic Documentation
 
 **Purpose:** Ensure that the project does not alienate users on different operating systems by hardcoding platform-specific assumptions (e.g., assuming macOS and Homebrew are the default).
 
 - **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in [platform-agnostic.md](./.agents/rules/platform-agnostic.md).
 
-## 9. Standards Compliance
+## 10. Standards Compliance
 
 **Purpose:** Ensure the project adheres to established industry standards for interoperability, requirements engineering, and documentation.
 
@@ -76,7 +84,7 @@
 - **RFC 2119:** All requirements documentation (PRD, SRS) must use explicit RFC 2119 terminology (e.g., MUST, MUST NOT, REQUIRED, SHALL, SHALL NOT, SHOULD, SHOULD NOT, RECOMMENDED, MAY, OPTIONAL) to define the significance of each requirement. Exact definitions are located in [`.agents/kb/rfc-2119-req-terms.md`](./.agents/kb/rfc-2119-req-terms.md).
 - **RFC 3339:** All date and time specifications in projects MUST use the RFC 3339 standard. UTC MUST be used as the default timezone for all logs, databases, and internal timestamps. Exact definitions are located in [`.agents/kb/rfc-3339-date-and-time.md`](./.agents/kb/rfc-3339-date-and-time.md).
 
-## 10. Centralized Logging & Observability
+## 11. Centralized Logging & Observability
 
 **Purpose:** Ensure that the application treats logs as event streams, writing unbuffered to `stdout` rather than managing logfiles, adhering to modern centralized observability methodologies. This provides the foundation for a modern event streaming and observability stack.
 
@@ -90,13 +98,13 @@
   - **Grafana:** Provides the centralized UI to dashboard, introspect, and correlate the logs and metrics.
 - **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in [logging-enforce.md](./.agents/rules/logging-enforce.md).
 
-## 11. Decoupled Execution Timelines
+## 12. Decoupled Execution Timelines
 
 **Purpose:** Guarantee architectural specs can survive aggressive timeline refactoring without requiring massive document rewrites by isolating execution phases from the core requirements.
 
 - **Active Enforcement:** This principle is tactically enforced on all AI agents via the instructions in [decoupled-execution.md](./.agents/rules/decoupled-execution.md).
 
-## 12. Security by Design
+## 13. Security by Design
 
 **Purpose:** Suggest security requirements and architectural decisions that protect user data.
 
@@ -104,20 +112,20 @@
 - [e.g., "Zero-knowledge architecture - server never sees unencrypted data"]
 - [e.g., "User controls their own encryption keys"]
 
-## 13. Privacy by Design
+## 14. Privacy by Design
 
 **Purpose:** Suggest privacy requirements and architectural decisions that protect user identification or other information about the user that should remain private.
 
 - [e.g., the application should use W3C Verifiable Credentials]
 
-## 14. Modularity
+## 15. Modularity
 
 **Purpose:** Ensure that the application is modular and can be easily extended in the future by dividing functionality into modules. Each module should be self-contained and have a clear interface.
 
 - [e.g., "The application is divided into modules that can be independently developed and tested"]
 - [e.g., "The application is divided into modules that can be independently deployed and scaled"]
 
-## 15. Interface-First Design
+## 16. Interface-First Design
 
 **Purpose:** Describe how components communicate and how their API or web sockets access enables future extensibility.
 
@@ -126,7 +134,7 @@
 - [e.g., "Frontend and backend communicate only through documented endpoints"]
 - [e.g., "API designed for third-party integrations"]
 
-## 16. Minimize Dependencies
+## 17. Minimize Dependencies
 
 **Purpose:** Ensure the application has minimal dependencies on external services, libraries, and vendor lock-in.
 
@@ -134,7 +142,7 @@
 - [e.g., "No authentication service - use [your approach]"]
 - [e.g., "Limit npm packages to essential utilities only"]
 
-## 17. Scale-to-Zero
+## 18. Scale-to-Zero
 
 **Purpose:** Ensure the application can scale to zero when idle.
 
@@ -142,14 +150,14 @@
 - [e.g., "Serverless backend - pay only for actual usage"]
 - [e.g., "No always-on databases or services"]
 
-## 18. Local-First
+## 19. Local-First
 
 **Purpose:** If applicable, describe how the app works offline, prioritizes local data, and syncs data when back online.
 
 - [e.g., "App functions fully offline, syncs when connected"]
 - [e.g., "Local storage is source of truth, cloud is backup"]
 
-## 19. Zero-Friction Setup
+## 20. Zero-Friction Setup
 
 **Purpose:** Guarantee that the application is as easy as possible to install and run locally, minimizing "time to first value" for new developers and users.
 
@@ -157,22 +165,22 @@
 - **Interactive Auth Prompts:** If the application requires API keys or authentication secrets, the application MUST automatically detect if they are missing on startup and interactively prompt the user for them (or generate a `.env` template automatically) rather than simply crashing with a stack trace.
 - **Create Installers:** Whenever possible, create installers for the application that can be used to install the application on a developer and production system. 
 
-## 20. Keep code linear
+## 21. Keep code linear
 No deeply nested conditionals and early-exit chains. No hidden jumps. Keep the logic flat at one level as much as possible. Code should read top to bottom like a well-constructed argument — premise, reasoning, conclusion.
 
-##  21. Bound every loop
+##  22. Bound every loop
 Ensure there are maximum caps for polling loops, retry logic, and recursive crawlers. Provide a safe path forward for when the cap is hit.
 
-## 22. Close every resource you open
+## 23. Close every resource you open
 Every resource you open, you must close. Every connection you borrow, you must return. Resource lifetime must be declared, not assumed — and it must be correct on the error path too, not just the happy one. Don’t acquire what you can’t account for. Follow the code through every exit path and confirm it closes what it opened.
 
-## 23. One function, one job
+## 24. One function, one job
 Each function should do exactly one thing — small enough to be describable in a sentence without the word “and.” Do not generate monolithic functions that do many things at once because you're optimizing for task completion. You should optimize for maintainability. Apply decomposition upfront, not as a refactoring afterthought. No function longer than 60 lines.
 
-## 24. Every exception is caught
+## 25. Every exception is caught
 Every error must be logged, raised, or explicitly returned. You cannot generate empty catch blocks or unchecked return values.
 
-## 25. Clear separation of side-effect operations
+## 26. Clear separation of side-effect operations
 I/O, mutations, and network calls should be named and obvious at the call site. Not hidden inside helpers, not wrapped in abstractions with meaningless names, not multiple layers deep in a chain of decorators. If a function writes to a database, its name and call site should make that clear. Do not bury API calls inside what appear to be utility functions. Ensure you have a clear structural separation between pure computation and side-effectful operations.
 
 ---
