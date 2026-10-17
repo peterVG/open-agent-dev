@@ -1,0 +1,20 @@
+resources/templates/architecture-template.md
+  h_10c93bba641ef0 142-145
+resources/templates/prd-template.md
+  h_10c93bba641ef0 112-114
+resources/templates/product-vision-template.md
+  h_10c93bba641ef0 73-76
+resources/templates/product-vision-template-non-profit.md
+  h_10c93bba641ef0 424-426
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "d5c9ebc5c26ec5619b35ce4536e7486a51fe983b",
+  "prompts": {},
+  "humans": {
+    "h_10c93bba641ef0": {
+      "author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
