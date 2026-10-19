@@ -1,0 +1,14 @@
+.agents/kb/go.md
+  h_10c93bba641ef0 1-3450
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "9a1bb6a144cb419a30f4337171fb31d02c20f802",
+  "prompts": {},
+  "humans": {
+    "h_10c93bba641ef0": {
+      "author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
