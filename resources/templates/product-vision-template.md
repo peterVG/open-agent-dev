@@ -70,7 +70,3 @@
 ## Key Metrics
 **Description:** Numbers and criteria to track success or failure.
 >
-
----
-
-© Pieter Van Garderen (2026)
