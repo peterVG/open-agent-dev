@@ -91,7 +91,3 @@ Next steps after the PRD is reviewed (remove this comment from the finished PRD)
 4. Generate the implementation plan with the plan-writer skill (.agents/skills/plan-writer/SKILL-plan-writer.md), based on resources/prd.md and resources/srs.md.
 This template is filled in by the prd-writer skill (.agents/skills/prd-writer/SKILL-prd-writer.md), which also maps the AGENTS.md principles to PRD sections.
 -->
-
----
-
-© Pieter Van Garderen (2026)
