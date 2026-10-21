@@ -421,6 +421,3 @@ These methods inform the template's questions. They do not constitute product-sp
 6. Principles for Digital Development, [Design with people](https://digitalprinciples.org/principles/design-with-people/) and [Build for sustainability](https://digitalprinciples.org/principles/build-for-sustainability/).
 7. HM Treasury / Evaluation Task Force, [Magenta Book Annex A: Analytical methods for use within an evaluation](https://www.gov.uk/government/publications/the-magenta-book/magenta-book-annex-a-analytical-methods-for-use-within-an-evaluation-html), updated 15 May 2026; section A1.4, Contribution analysis.
 
----
-
-© Pieter Van Garderen (2026)
