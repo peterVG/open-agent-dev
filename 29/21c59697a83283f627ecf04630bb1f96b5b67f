@@ -1,0 +1,28 @@
+.agents/kb/c2pa.md
+  h_10c93bba641ef0 1-334
+.agents/kb/dcmi-terms.md
+  h_10c93bba641ef0 1-300
+.agents/kb/ietf-rfc-style-rules.md
+  h_10c93bba641ef0 1-326
+.agents/kb/json-ld.md
+  h_10c93bba641ef0 1-280
+.agents/kb/ocfl.md
+  h_10c93bba641ef0 1-393
+.agents/kb/prov-o.md
+  h_10c93bba641ef0 1-336
+.agents/kb/schema-org.md
+  h_10c93bba641ef0 1-658
+.agents/kb/skos.md
+  h_10c93bba641ef0 1-263
+---
+{
+  "schema_version": "authorship/3.0.0",
+  "git_ai_version": "1.7.5",
+  "base_commit_sha": "2921c59697a83283f627ecf04630bb1f96b5b67f",
+  "prompts": {},
+  "humans": {
+    "h_10c93bba641ef0": {
+      "author": "Peter Van Garderen <vangarderen.peter@gmail.com>"
+    }
+  }
+}
